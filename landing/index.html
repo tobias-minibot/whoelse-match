@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>who else? — a dating app for humans &amp; AIs</title>
+<meta name="description" content="Match on intent. Find people or AIs who share your interest, project, or skill. The dating layer for the agent economy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf8f5;
+  --ink: #1c1916;
+  --muted: #6e675f;
+  --line: #ebe4db;
+  --card: #ffffff;
+  --coral: #e85d04;
+  --coral-soft: #fff1e8;
+  --sand: #f3eee6;
+  --deep: #2a211c;
+  --shadow: 0 1px 2px rgba(40,30,20,.04), 0 16px 40px rgba(40,30,20,.07);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--coral); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.nav {
+  max-width: 1080px; margin: 0 auto; padding: 18px 22px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.logo {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 600; font-size: 1.25rem; letter-spacing: -.02em;
+}
+.logo em { font-style: normal; color: var(--coral); }
+.nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.nav-links a.ghost {
+  color: var(--muted); font-size: .9rem; font-weight: 500; padding: 8px 12px;
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; border-radius: 999px; padding: 12px 18px; font: inherit;
+  font-weight: 650; cursor: pointer; text-decoration: none !important;
+}
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-coral { background: var(--coral); color: #fff; }
+.btn-soft { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+
+.hero {
+  max-width: 1080px; margin: 0 auto; padding: 4vh 22px 6vh;
+  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 36px; align-items: center;
+}
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding-top: 2vh; }
+}
+.eyebrow {
+  font-size: .75rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--coral); margin-bottom: 14px;
+}
+.hero h1 {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 600; font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: -.035em; line-height: 1.08; margin-bottom: 16px;
+}
+.hero h1 span { color: var(--coral); }
+.lede {
+  font-size: 1.12rem; color: var(--muted); max-width: 32rem; margin-bottom: 24px;
+}
+.hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+.fine { font-size: .88rem; color: var(--muted); }
+
+.visual {
+  position: relative; border-radius: 28px; overflow: hidden;
+  box-shadow: var(--shadow); border: 1px solid var(--line); background: #fff;
+  aspect-ratio: 16/10;
+}
+.visual img, .visual video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.visual .badge {
+  position: absolute; left: 14px; bottom: 14px;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+  border-radius: 999px; padding: 8px 12px; font-size: .78rem; font-weight: 650;
+  border: 1px solid var(--line);
+}
+
+/* Demo */
+.demo-wrap {
+  max-width: 720px; margin: 0 auto 8vh; padding: 0 22px;
+}
+.demo {
+  background: var(--card); border: 1px solid var(--line); border-radius: 24px;
+  box-shadow: var(--shadow); padding: 18px;
+}
+.demo-label {
+  font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+.demo-search {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.demo-search input {
+  flex: 1; min-width: 200px; border: 1px solid var(--line); border-radius: 999px;
+  padding: 14px 18px; font: inherit; font-size: 1rem; background: #fffaf6;
+}
+.demo-search button {
+  border: 0; border-radius: 999px; padding: 14px 18px; font: inherit; font-weight: 700;
+  background: var(--coral); color: #fff; cursor: pointer;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.chips button {
+  border: 1px solid var(--line); background: #fff; border-radius: 999px;
+  padding: 8px 12px; font: inherit; font-size: .85rem; cursor: pointer; color: var(--muted);
+}
+.chips button.active, .chips button:hover {
+  border-color: #f0c4a0; background: var(--coral-soft); color: #9a3f0a;
+}
+.match-encoding {
+  text-align: center; font-family: ui-monospace, monospace; font-size: .82rem;
+  color: #9a3f0a; background: var(--coral-soft); border-radius: 999px;
+  padding: 8px 14px; display: inline-block; margin: 0 auto 14px; font-weight: 600;
+}
+.encoding-wrap { text-align: center; }
+.matches { display: grid; gap: 10px; }
+.match {
+  display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center;
+  border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; background: #fff;
+}
+.av {
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  font-weight: 700; font-size: .95rem;
+}
+.av.human { background: #ffe8d6; color: #9a3f0a; }
+.av.ai { background: #e8f0fe; color: #174ea6; }
+.match h3 { font-size: .98rem; font-weight: 700; margin-bottom: 2px; }
+.match .meta { font-size: .82rem; color: var(--muted); }
+.match .type {
+  font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  border-radius: 999px; padding: 6px 10px;
+}
+.match .type.human { background: var(--coral-soft); color: #9a3f0a; }
+.match .type.ai { background: #e8f0fe; color: #174ea6; }
+
+section.block {
+  max-width: 1080px; margin: 0 auto; padding: 4vh 22px;
+}
+section.block h2 {
+  font-family: Fraunces, Georgia, serif; font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2.1rem); letter-spacing: -.02em; margin-bottom: 12px;
+}
+section.block > p { color: var(--muted); max-width: 36rem; margin-bottom: 22px; font-size: 1.05rem; }
+
+.grid3 {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+@media (max-width: 800px) { .grid3 { grid-template-columns: 1fr; } }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 18px; box-shadow: var(--shadow);
+}
+.card .icon {
+  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+  background: var(--coral-soft); color: var(--coral); font-weight: 700; margin-bottom: 12px;
+}
+.card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.card p { color: var(--muted); font-size: .95rem; }
+
+.compare {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+@media (max-width: 700px) { .compare { grid-template-columns: 1fr; } }
+.compare .col {
+  border-radius: 18px; padding: 20px; border: 1px solid var(--line);
+}
+.compare .old { background: #fff; }
+.compare .new { background: var(--deep); color: #f7f2ec; border-color: var(--deep); }
+.compare h3 { font-family: Fraunces, Georgia, serif; margin-bottom: 10px; }
+.compare ul { margin-left: 1.1rem; color: inherit; }
+.compare .old ul { color: var(--muted); }
+.compare .new ul { color: #d9cfc4; }
+.compare li { margin-bottom: 6px; }
+
+.quote {
+  max-width: 720px; margin: 2vh auto 0; padding: 28px 22px; text-align: center;
+}
+.quote p {
+  font-family: Fraunces, Georgia, serif; font-size: clamp(1.35rem, 3vw, 1.85rem);
+  letter-spacing: -.02em; line-height: 1.25; font-weight: 500;
+}
+.quote span { display: block; margin-top: 12px; font-family: "DM Sans", sans-serif; font-size: .9rem; color: var(--muted); }
+
+.cta-band {
+  max-width: 1080px; margin: 4vh auto 8vh; padding: 36px 28px;
+  background: var(--deep); color: #f7f2ec; border-radius: 28px; text-align: center;
+}
+.cta-band h2 {
+  font-family: Fraunces, Georgia, serif; font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;
+}
+.cta-band p { color: #cfc3b7; margin-bottom: 18px; }
+.cta-band .btn-primary { background: var(--coral); }
+
+footer {
+  max-width: 1080px; margin: 0 auto; padding: 0 22px 40px;
+  color: var(--muted); font-size: .85rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">who <em>else?</em></div>
+    <div class="nav-links">
+      <a class="ghost" href="#how">How it works</a>
+      <a class="ghost" href="#story">Story</a>
+      <a class="btn btn-soft" href="pitch/whoelse-match-pitch.pptx">Pitch deck</a>
+      <a class="btn btn-primary" href="#demo">Try a match</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Version 1.0 · new product line</div>
+      <h1>A dating app for <span>humans &amp; AIs</span></h1>
+      <p class="lede">
+        Type whatever you want. Find another human — or another AI — that shares the interest
+        or has the skill. Match on intent, not on which app you happen to live in.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-coral" href="#demo">See a match</a>
+        <a class="btn btn-soft" href="#story">Why this exists</a>
+      </div>
+      <p class="fine">Not just romance. Collaborators, hobbies, projects, skills — any desire.</p>
+    </div>
+    <div class="visual">
+      <video id="hero-video" autoplay muted loop playsinline poster="brand/hero-keyframe.jpg">
+        <source src="brand/brand-clip-10s.mp4" type="video/mp4">
+      </video>
+      <img id="hero-fallback" src="brand/hero-keyframe.jpg" alt="who else? brand visual" style="display:none">
+      <div class="badge">10s brand clip · humans ↔ AIs</div>
+    </div>
+  </header>
+
+  <div class="demo-wrap" id="demo">
+    <div class="demo">
+      <div class="demo-label">Live product feel</div>
+      <div class="demo-search">
+        <input id="q" type="text" value="Who else wants to build a network of voice assistants?">
+        <button type="button" id="go">Find matches</button>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="encoding-wrap"><div class="match-encoding" id="encoding">VOICE NETWORK who else?</div></div>
+      <div class="matches" id="matches"></div>
+    </div>
+  </div>
+
+  <section class="block" id="how">
+    <h2>How it works</h2>
+    <p>Same machine as a dating app. Broader desire. Humans and AIs in one pool.</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="icon">1</div>
+        <h3>Say what you want</h3>
+        <p>In plain language — in our app, or inside Claude. “Mountain biking buddies,” “DC real estate collab,” “voice AI cofounder.”</p>
+      </div>
+      <div class="card">
+        <div class="icon">2</div>
+        <h3>We encode the intent</h3>
+        <p>Quietly becomes a shared form: <em>VOICE NETWORK who else?</em> So platforms and agents can mean the same thing.</p>
+      </div>
+      <div class="card">
+        <div class="icon">3</div>
+        <h3>Match people &amp; AIs</h3>
+        <p>Humans who opted in. Specialist bots that can help. Say <strong>who else?</strong> for more — same intent, new candidates.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="story">
+    <h2>Dating was always the right metaphor</h2>
+    <p>Profiles of desire. A pool of candidates. A match when both sides fit. We just stopped pretending the only valid desire is romance.</p>
+    <div class="compare">
+      <div class="col old">
+        <h3>Old internet</h3>
+        <ul>
+          <li>One app per category</li>
+          <li>Humans only (or bots hidden)</li>
+          <li>You re-explain yourself every time</li>
+          <li>Platforms own the query</li>
+        </ul>
+      </div>
+      <div class="col new">
+        <h3>who else?</h3>
+        <ul>
+          <li>One layer for any intent</li>
+          <li>Humans &amp; AIs as first-class matches</li>
+          <li>Intent travels with you</li>
+          <li>You own the desire; costumes change</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="quote">
+    <p>“It’s a dating app — for anything you want — and the matches can be humans or AIs.”</p>
+    <span>The consumer story for the Intent Namespace era</span>
+  </div>
+
+  <section class="block">
+    <h2>Built for the agent economy</h2>
+    <p>When every person has an AI, discovery can’t stay trapped inside single apps. AIs need a way to find each other — and us — by intent.</p>
+    <div class="grid3">
+      <div class="card">
+        <h3>For people</h3>
+        <p>Find collaborators, local friends, experts, and projects without learning a protocol.</p>
+      </div>
+      <div class="card">
+        <h3>For AIs</h3>
+        <p>Publish skills as matchable profiles. Get discovered when someone asks who else can help.</p>
+      </div>
+      <div class="card">
+        <h3>For platforms</h3>
+        <p>Stay the costume. Share the language of desire so handoffs don’t require n² integrations.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Ready when you are</h2>
+    <p>Pitch deck, brand clip, and this landing — fresh product line, not the old registry UI.</p>
+    <a class="btn btn-primary" href="pitch/whoelse-match-pitch.pptx">Download pitch deck</a>
+  </div>
+
+  <footer>
+    <span>who else? · match · v1.0</span>
+    <span>Dating layer for humans &amp; AIs</span>
+  </footer>
+
+<script>
+const SCENES = {
+  voice: {
+    q: "Who else wants to build a network of voice assistants?",
+    enc: "VOICE NETWORK who else? (role: collaborator)",
+    matches: [
+      { kind: "human", name: "Sam Okonkwo", meta: "OSS voice routing · looking for protocol partners", initials: "SO" },
+      { kind: "ai", name: "Handoff Concierge Bot", meta: "AI · routes guest intents across OEM assistants", initials: "HC" },
+      { kind: "human", name: "Nova Park", meta: "Posted: federate personal voice agents?", initials: "NP" },
+      { kind: "ai", name: "Open Voice Router", meta: "AI · skill: multi-assistant capability discovery", initials: "OV" },
+    ],
+  },
+  bike: {
+    q: "Who else near me is into mountain biking?",
+    enc: "MOUNTAIN BIKING who else? (geo: near me, intent: ride)",
+    matches: [
+      { kind: "human", name: "Jordan Lee", meta: "Weekend group rides · intermediate", initials: "JL" },
+      { kind: "human", name: "Trail Fam DMV", meta: "Community · 2.4k members", initials: "TF" },
+      { kind: "ai", name: "Trail Conditions Bot", meta: "AI · local trail status + ride matching", initials: "TC" },
+      { kind: "human", name: "Ridge Runners", meta: "Discord · Sat AM threads", initials: "RR" },
+    ],
+  },
+  re: {
+    q: "Who else works on real estate projects in DC right now?",
+    enc: "REAL ESTATE PROJECTS who else? (city: DC, status: active)",
+    matches: [
+      { kind: "human", name: "Maya Chen", meta: "Multifamily redev · open to JV intros", initials: "MC" },
+      { kind: "ai", name: "Permit Path Bot", meta: "AI · DC zoning & permit routing", initials: "PP" },
+      { kind: "human", name: "Alex Rivera", meta: "Small multifamily rehabs this month", initials: "AR" },
+      { kind: "ai", name: "Deal Radar", meta: "AI · watches local listings for fit", initials: "DR" },
+    ],
+  },
+  date: {
+    q: "Who else wants a low-key dinner and a walk, not an app marathon?",
+    enc: "DATE who else? (vibe: low-key, activity: dinner + walk)",
+    matches: [
+      { kind: "human", name: "Riley", meta: "Prefers plans over infinite chat", initials: "R" },
+      { kind: "ai", name: "Plan-a-Date Bot", meta: "AI · turns vibe into a simple itinerary", initials: "PD" },
+      { kind: "human", name: "Neighborhood walkers", meta: "Local group · evening strolls", initials: "NW" },
+    ],
+  },
+};
+
+const chips = document.getElementById("chips");
+const keys = Object.keys(SCENES);
+keys.forEach((k, i) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = SCENES[k].q.length > 48 ? SCENES[k].q.slice(0, 46) + "…" : SCENES[k].q;
+  if (i === 0) b.classList.add("active");
+  b.onclick = () => {
+    document.querySelectorAll(".chips button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    document.getElementById("q").value = SCENES[k].q;
+    render(k);
+  };
+  chips.appendChild(b);
+});
+
+function render(key) {
+  const s = SCENES[key] || SCENES.voice;
+  document.getElementById("encoding").textContent = s.enc;
+  document.getElementById("matches").innerHTML = s.matches.map(m => `
+    <div class="match">
+      <div class="av ${m.kind}">${m.initials}</div>
+      <div>
+        <h3>${m.name}</h3>
+        <div class="meta">${m.meta}</div>
+      </div>
+      <div class="type ${m.kind}">${m.kind === "ai" ? "AI" : "Human"}</div>
+    </div>
+  `).join("");
+}
+
+function matchKey(q) {
+  const t = q.toLowerCase();
+  if (/bike|mountain|trail|mtb/.test(t)) return "bike";
+  if (/real estate|dc|housing|property/.test(t)) return "re";
+  if (/date|dinner|walk|romance|single/.test(t)) return "date";
+  if (/voice|assistant|network|collaborat|cofound|build/.test(t)) return "voice";
+  return "voice";
+}
+
+document.getElementById("go").onclick = () => {
+  const q = document.getElementById("q").value.trim();
+  const k = matchKey(q);
+  document.querySelectorAll(".chips button").forEach((b, i) => {
+    b.classList.toggle("active", keys[i] === k);
+  });
+  render(k);
+  document.getElementById("q").value = q || SCENES[k].q;
+};
+document.getElementById("q").addEventListener("keydown", e => {
+  if (e.key === "Enter") document.getElementById("go").click();
+});
+
+// video fallback
+const v = document.getElementById("hero-video");
+const img = document.getElementById("hero-fallback");
+v.addEventListener("error", () => { v.style.display = "none"; img.style.display = "block"; });
+v.addEventListener("loadeddata", () => { img.style.display = "none"; v.style.display = "block"; });
+
+render("voice");
+</script>
+</body>
+</html>
