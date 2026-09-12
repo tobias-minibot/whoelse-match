@@ -172,6 +172,7 @@ pnpm mcp
 pnpm mcp:tools          # must list whoelse.find
 pnpm mcp:smoke          # capability + dating via whoelse.find
 pnpm test               # core + MCP client tests (all required queries)
+pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfood queries
 ```
 
 **Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `exclude`, `knownEntities`, `entityId`, `limit`, `mode`, `ranking`, `minTrust`.
@@ -250,6 +251,38 @@ export WHOELSE_SEED_PATH=/abs/path/to/data/seed.json
 ```
 
 Privacy: the demo never scrapes, never phones home unless you set an API key, and keeps feedback in memory.
+
+---
+
+## Deploy the human surface (Vercel)
+
+GitHub repo: **`tobias-minibot/whoelse-match`**. Do **not** use Origin. MCP stays stdio/local — only the Next.js app + `/api/*` HTTP surface go to Vercel.
+
+Import: [vercel.com/new](https://vercel.com/new) → **Import Git Repository** → GitHub → `tobias-minibot/whoelse-match`.
+
+### Project settings (exact)
+
+| Setting | Value |
+| --- | --- |
+| **Framework Preset** | Next.js |
+| **Root Directory** | `packages/web` |
+| **Install Command** | `cd ../.. && pnpm install` |
+| **Build Command** | `pnpm run build` (runs `prebuild` → copies `data/seed.json` into the web package, then `next build`) |
+| **Output Directory** | leave default (`.next`) |
+| **Node.js** | 20.x or newer |
+
+`packages/web/vercel.json` already sets Framework, Install, and Build. **Root Directory must still be set to `packages/web` in the dashboard** — Vercel does not read that from `vercel.json`. Leave it blank and the import will look for Next.js at the repo root and fail.
+
+Production branch: `main` (merge this follow-up first if you want the first-five ranker + this config).
+
+Optional env: `OPENAI_API_KEY` (rerank / richer AI chat). Seed is bundled — do not set `WHOELSE_SEED_PATH` on Vercel.
+
+After deploy, check `GET /api/health` for seed counts (`humans`, `ais`, `byType`).
+
+### GitHub import blockers
+
+- Vercel GitHub app must be installed on `tobias-minibot` with access to `whoelse-match`.
+- This agent’s Vercel MCP has **no team** — it cannot create the project from here. Tobias (or anyone with the Vercel + GitHub link) does the import once; later pushes to `main` auto-deploy.
 
 ---
 

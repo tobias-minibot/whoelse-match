@@ -52,12 +52,21 @@ const STOPWORDS = new Set([
   "very",
   "more",
   "like",
+  "likes",
   "want",
   "wants",
   "looking",
   "find",
   "near",
   "me",
+  "should",
+  "can",
+  "could",
+  "would",
+  "rather",
+  "has",
+  "have",
+  "give",
 ]);
 
 export function tokenize(text: string): string[] {

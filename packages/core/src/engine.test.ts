@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import { WhoElseEngine } from "./engine.js";
 
 const engine = WhoElseEngine.fromSeed();
+const fromEntities = WhoElseEngine.fromEntities(engine.store.all());
 
 describe("seed integrity", () => {
   it("has at least 20 synthetic humans and 10 labeled AIs", () => {
@@ -28,6 +29,12 @@ describe("seed integrity", () => {
     for (const need of ["Nova", "Socrates", "FounderBot"]) {
       assert.ok(names.includes(need), `missing ${need}`);
     }
+  });
+
+  it("fromEntities loads the same pool as fromSeed", () => {
+    const again = WhoElseEngine.fromEntities(engine.store.all());
+    assert.equal(again.store.all().length, engine.store.all().length);
+    assert.ok(again.whoelse({ context: "Who else likes cycling?", limit: 1 }).candidates.length > 0);
   });
 
   it("gives every entity offers and seeks; type is open-ended", () => {

@@ -27,11 +27,18 @@ export class WhoElseEngine {
     private readonly index: TfidfIndex,
   ) {}
 
-  static fromSeed(seedPath?: string): WhoElseEngine {
-    const store = EntityStore.fromSeed(seedPath);
+  static fromEntities(entities: Entity[]): WhoElseEngine {
+    return WhoElseEngine.fromStore(new EntityStore(entities));
+  }
+
+  static fromStore(store: EntityStore): WhoElseEngine {
     const index = new TfidfIndex();
     for (const entity of store.all()) index.add(entity.id, entityText(entity));
     return new WhoElseEngine(store, index);
+  }
+
+  static fromSeed(seedPath?: string): WhoElseEngine {
+    return WhoElseEngine.fromStore(EntityStore.fromSeed(seedPath));
   }
 
   whoelse(request: WhoElseRequest): WhoElseResult {
@@ -86,6 +93,10 @@ export class WhoElseEngine {
       const location = locationScore(entity, inferredConstraints, contextEntity);
       const typeAffinity = typeScore(entity, inferredMode, contextEntity);
       const feedback = this.store.feedbackScore(entity.id, request.context);
+      // Kill the 0.04 type-only floor that filled first-five with random humans.
+      if (!contextEntity && text < 0.03 && structured < 0.05 && location === 0 && feedback === 0) {
+        continue;
+      }
       const textW = contextEntity ? EXEMPLAR_TEXT_W : TEXT_W;
       const structW = contextEntity ? EXEMPLAR_STRUCT_W : STRUCT_W;
       const total =
