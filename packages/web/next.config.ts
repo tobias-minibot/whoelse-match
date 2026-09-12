@@ -6,7 +6,7 @@ const webRoot = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(webRoot, "../..");
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@whoelse/core"],
+  transpilePackages: ["@whoelse/core", "@whoelse/mcp-server"],
   outputFileTracingRoot: repoRoot,
   outputFileTracingIncludes: {
     "/api/**/*": ["./data/seed.json", "../../data/seed.json"],

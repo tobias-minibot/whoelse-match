@@ -30,6 +30,10 @@ export interface MachineMatch {
     reputation?: unknown;
     contextAccess?: unknown;
     geoLegal?: unknown;
+    endpoint?: unknown;
+    apiEndpoint?: unknown;
+    mcpEndpoint?: unknown;
+    authRequirements?: unknown;
   };
   trust: {
     status: string;
@@ -71,6 +75,10 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       reputation: attrs.reputation,
       contextAccess: attrs.contextAccess,
       geoLegal: attrs.geoLegal,
+      endpoint: attrs.endpoint,
+      apiEndpoint: attrs.apiEndpoint,
+      mcpEndpoint: attrs.mcpEndpoint,
+      authRequirements: attrs.authRequirements,
     },
     trust: {
       status: e.trust?.status ?? "unscored",
@@ -98,15 +106,22 @@ function nextStep(entity: Entity): MachineNextStep {
       note: "Human surface stub — no message is sent.",
     };
   }
-  if (entity.type === "ai" || entity.type === "agent") {
+  if (entity.type === "agent") {
+    const attrs = entity.attributes ?? {};
+    const via = String(attrs.apiEndpoint ?? attrs.endpoint ?? `/api/agents/${entity.id}/invoke`);
     return {
-      action: entity.type === "agent" ? "invoke" : "chat",
+      action: "invoke",
+      via: `POST ${via}`,
+      capability: offersOf(entity)[0],
+      note: "Demo invoke stub — structured 'I would do X', not real execution.",
+    };
+  }
+  if (entity.type === "ai") {
+    return {
+      action: "chat",
       via: "POST /api/chat",
       capability: offersOf(entity)[0],
-      note:
-        entity.type === "agent"
-          ? "No execution runtime in this MVP. Invoke is a stub next-step."
-          : "Labeled AI chat stub. Never treat as a human.",
+      note: "Labeled AI chat stub. Never treat as a human.",
     };
   }
   return {

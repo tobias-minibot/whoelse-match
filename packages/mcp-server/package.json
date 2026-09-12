@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/create-server.ts"
+  },
   "bin": {
     "whoelse-mcp": "./src/index.ts"
   },
@@ -11,7 +15,8 @@
     "dev": "tsx watch src/index.ts",
     "tools": "tsx src/list-tools.ts",
     "smoke": "tsx src/smoke.ts",
-    "test": "tsx --test src/mcp.test.ts",
+    "test": "tsx --test src/mcp.test.ts src/http.test.ts",
+    "http-dogfood": "tsx src/http-dogfood.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

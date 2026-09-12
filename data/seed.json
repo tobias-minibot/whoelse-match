@@ -425,7 +425,7 @@
       "id": "human-devon-walsh",
       "type": "human",
       "name": "Devon Walsh",
-      "description": "Indie hacker shipping a tiny product every month. Obsessed with AI tools, likes building things, and would rather discuss a crazy idea over coffee than attend a networking event.",
+      "description": "Indie hacker shipping a tiny AI startup product every month. Obsessed with AI tools, likes building things, and would rather discuss a crazy idea over coffee than attend a networking event.",
       "attributes": {
         "age": 27,
         "occupation": "Indie hacker",
@@ -889,7 +889,7 @@
       "id": "human-sasha-kim",
       "type": "human",
       "name": "Sasha Kim",
-      "description": "Second-time founder obsessed with AI, building things in the agent economy. Prefers a crazy idea over coffee to any networking event.",
+      "description": "Second-time founder of an AI startup, obsessed with AI, building things in the agent economy. Prefers a crazy idea over coffee to any networking event.",
       "attributes": {
         "age": 39,
         "occupation": "Founder",
@@ -1556,7 +1556,7 @@
       "id": "ai-nova",
       "type": "ai",
       "name": "Nova",
-      "description": "A clearly labeled AI companion for curious builders. Helps you notice what you actually want more of \u2014 never pretends to be human.",
+      "description": "A clearly labeled AI companion for curious builders. Helps you notice what you actually want more of — never pretends to be human.",
       "attributes": {
         "persona": "curious generalist companion",
         "isAI": true,
@@ -1755,7 +1755,7 @@
       "id": "ai-trail-conditions",
       "type": "ai",
       "name": "Trail Conditions Bot",
-      "description": "AI for local DMV trail status and ride matching. Not a human rider \u2014 a clearly labeled trail conditions agent.",
+      "description": "AI for local DMV trail status and ride matching. Not a human rider — a clearly labeled trail conditions agent.",
       "attributes": {
         "persona": "trail conditions + ride matching",
         "isAI": true,
@@ -2057,7 +2057,7 @@
       "id": "ai-atlas",
       "type": "ai",
       "name": "Atlas",
-      "description": "Research copilot AI for policy, housing, and climate briefs. Useful next to civic humans \u2014 not a substitute for them.",
+      "description": "Research copilot AI for policy, housing, and climate briefs. Useful next to civic humans — not a substitute for them.",
       "attributes": {
         "persona": "research copilot",
         "isAI": true,
@@ -2175,12 +2175,21 @@
         "pricing": "stub-cheap",
         "isAI": true,
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "reliability": "unscored-stub",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-pdf-summarizer/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-pdf-summarizer/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2223,13 +2232,22 @@
         "latency": "seconds",
         "isAI": true,
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "pricing": "stub",
         "reliability": "unscored-stub",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-web-browser/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-web-browser/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2248,7 +2266,7 @@
     {
       "id": "agent-translator-de-en",
       "type": "agent",
-      "name": "Bridge DE\u2192EN",
+      "name": "Bridge DE→EN",
       "description": "Agent that translates German to English. Capability worker, not a bilingual human.",
       "offers": [
         "german to english translation",
@@ -2269,16 +2287,29 @@
           "en"
         ],
         "isAI": true,
-        "tools": [],
+        "tools": [
+          "german to english translation",
+          "translate german to english",
+          "de-en"
+        ],
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "pricing": "stub",
         "latency": "seconds",
         "reliability": "unscored-stub",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-translator-de-en/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-translator-de-en/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2317,15 +2348,28 @@
         "owner": "synthetic-lab",
         "reliability": "stub",
         "isAI": true,
-        "tools": [],
+        "tools": [
+          "result verification",
+          "verify this result",
+          "claim checking"
+        ],
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "pricing": "stub",
         "latency": "seconds",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-verifier/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-verifier/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2363,14 +2407,27 @@
         "pricing": "stub-cheap",
         "latency": "minutes",
         "isAI": true,
-        "tools": [],
+        "tools": [
+          "cheap task execution",
+          "run this task more cheaply",
+          "budget inference"
+        ],
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "reliability": "unscored-stub",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-cheap-runner/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-cheap-runner/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2411,14 +2468,23 @@
         ],
         "isAI": true,
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "pricing": "stub",
         "latency": "seconds",
         "reliability": "unscored-stub",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-workflow/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-workflow/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2456,15 +2522,28 @@
         "owner": "synthetic-lab",
         "reliability": "stub-backup",
         "isAI": true,
-        "tools": [],
+        "tools": [
+          "failover takeover",
+          "take over if the primary agent fails",
+          "backup execution"
+        ],
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "pricing": "stub",
         "latency": "seconds",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-failover/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-failover/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2501,16 +2580,29 @@
       "attributes": {
         "owner": "synthetic-lab",
         "isAI": true,
-        "tools": [],
+        "tools": [
+          "capability index",
+          "exposes this capability",
+          "capability resolution"
+        ],
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "pricing": "stub",
         "latency": "seconds",
         "reliability": "unscored-stub",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-capability-index/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-capability-index/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2547,16 +2639,29 @@
       "attributes": {
         "owner": "synthetic-lab",
         "isAI": true,
-        "tools": [],
+        "tools": [
+          "delegation advice",
+          "task routing",
+          "routing suggestion"
+        ],
         "permissions": [
-          "discover"
+          "discover",
+          "invoke-stub"
         ],
         "pricing": "stub",
         "latency": "seconds",
         "reliability": "unscored-stub",
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
-        "geoLegal": "synthetic-demo"
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-delegate/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-delegate/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on"
       },
       "preferences": {},
       "availability": "always on",
@@ -2576,7 +2681,7 @@
       "id": "resource-apartment-adams",
       "type": "resource",
       "name": "Adams Morgan one-bedroom (stub)",
-      "description": "Thin stub listing: a one-bedroom apartment. Proves housing is another vertical on the same primitive \u2014 not a dating profile.",
+      "description": "Thin stub listing: a one-bedroom apartment. Proves housing is another vertical on the same primitive — not a dating profile.",
       "offers": [
         "apartment",
         "one-bedroom",

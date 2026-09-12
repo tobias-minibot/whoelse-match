@@ -47,6 +47,16 @@ describe("seed integrity", () => {
     assert.ok(types.has("human") && types.has("ai") && types.has("agent"));
     assert.ok(types.has("resource") && types.has("service"));
   });
+
+  it("gives every agent an invoke stub endpoint", () => {
+    const agents = engine.store.all().filter((e) => e.type === "agent");
+    assert.ok(agents.length >= 9, `agents=${agents.length}`);
+    for (const a of agents) {
+      assert.match(String(a.attributes.apiEndpoint), /\/api\/agents\/.+\/invoke/);
+      assert.equal(a.attributes.mcpEndpoint, "/api/mcp");
+      assert.ok(a.attributes.authRequirements);
+    }
+  });
 });
 
 describe("WHOELSE", () => {
