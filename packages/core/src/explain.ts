@@ -9,6 +9,9 @@ const LABEL_KEYS = [
   "vibe",
   "occupation",
   "persona",
+  "neighborhood",
+  "listingKind",
+  "amenities",
 ];
 
 export function labelsOf(entity: Entity): string[] {
@@ -36,10 +39,16 @@ export function buildExplanation(opts: {
   const whyBits: string[] = [];
   if (common.length) whyBits.push(`shares ${common.slice(0, 3).join(", ")}`);
   const offered = offersOf(entity).slice(0, 2);
+  const sought = seeksOf(entity).slice(0, 2);
   if (entity.type === "ai" || entity.type === "agent") {
     if (offered.length) whyBits.push(`offers: ${offered.join(", ")}`);
+  } else if (resourceBits(entity)) {
+    whyBits.push(resourceBits(entity)!);
   } else if (occupation(entity)) {
     whyBits.push(occupation(entity)!);
+  }
+  if (entity.attributes?.role === "seeker" && sought.length) {
+    whyBits.push(`seeks: ${sought.join(", ")}`);
   }
   if (locationMatch && entity.location?.city) {
     whyBits.push(`same city (${entity.location.city})`);
@@ -60,6 +69,22 @@ export function buildExplanation(opts: {
 function occupation(entity: Entity): string | undefined {
   const value = entity.attributes.occupation ?? entity.attributes.persona;
   return typeof value === "string" ? value : undefined;
+}
+
+function resourceBits(entity: Entity): string | undefined {
+  const a = entity.attributes ?? {};
+  const bits: string[] = [];
+  if (typeof a.bedrooms === "number") {
+    bits.push(a.bedrooms === 0 ? "studio" : `${a.bedrooms}-bedroom`);
+  }
+  if (typeof a.rent === "number") {
+    const symbol = a.currency === "EUR" ? "€" : "$";
+    bits.push(`${symbol}${a.rent}`);
+  }
+  if (a.furnished === true) bits.push("furnished");
+  if (a.pets === true) bits.push("pets ok");
+  if (typeof a.neighborhood === "string") bits.push(a.neighborhood);
+  return bits.length ? bits.join(" · ") : undefined;
 }
 
 function inferQueryLabels(query: string): string[] {

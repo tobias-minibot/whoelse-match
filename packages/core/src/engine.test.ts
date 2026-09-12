@@ -37,6 +37,22 @@ describe("seed integrity", () => {
     assert.ok(again.whoelse({ context: "Who else likes cycling?", limit: 1 }).candidates.length > 0);
   });
 
+  it("seeds a labeled apartment vertical with listings and seekers", () => {
+    const apts = engine.store.all().filter((e) => e.metadata.vertical === "apartment");
+    assert.ok(apts.length >= 30, `apartment entities=${apts.length}`);
+    const listings = apts.filter((e) => e.attributes.role === "listing");
+    const seekers = apts.filter((e) => e.attributes.role === "seeker");
+    assert.ok(listings.length >= 20, `listings=${listings.length}`);
+    assert.ok(seekers.length >= 10, `seekers=${seekers.length}`);
+    const cities = new Set(apts.map((e) => e.location?.city));
+    assert.ok(cities.has("Washington") && cities.has("Berlin"));
+    assert.ok(cities.size >= 3, `cities=${[...cities].join(",")}`);
+    for (const e of apts) {
+      assert.equal(e.provenance, "synthetic");
+      assert.match(String(e.metadata.demoLabel), /DEMO|synthetic/i);
+    }
+  });
+
   it("gives every entity offers and seeks; type is open-ended", () => {
     for (const e of engine.store.all()) {
       assert.ok(e.offers.length > 0, `${e.id} missing offers`);
@@ -150,6 +166,9 @@ describe("same primitive, other verticals", () => {
     ["Who else should I meet?", /Sam|Nia|Nova|Jordan/i],
     ["Who else has an apartment?", /apartment|Adams/i],
     ["Who else can give me a ride?", /Ride|transport/i],
+    ["Who else has a 1-bedroom apartment in DC under $2,500?", /Adams|Georgetown|Shaw|Petworth|1-bedroom/i],
+    ["Who else has a furnished sublet in Berlin for three months?", /Mitte|Friedrichshain|Prenzlauer|sublet/i],
+    ["Who else needs a furnished apartment in Berlin?", /Lena|Omar|Jonas/i],
   ];
 
   for (const [query, expect] of cases) {
@@ -163,4 +182,119 @@ describe("same primitive, other verticals", () => {
       assert.ok(result.byType);
     });
   }
+});
+
+describe("apartment offer / seek on the same operator", () => {
+  it("filters 1-bedroom DC listings under $2500", () => {
+    const result = engine.whoelse({
+      context: "Who else has a 1-bedroom apartment in DC under $2,500?",
+      limit: 8,
+    });
+    assert.equal(result.inferredConstraints.side, "offer");
+    assert.equal(result.inferredConstraints.city, "Washington");
+    assert.ok(result.candidates.length > 0);
+    for (const c of result.candidates) {
+      assert.notEqual(c.entity.attributes.role, "seeker");
+      if (c.entity.attributes.role === "listing") {
+        assert.equal(c.entity.attributes.bedrooms, 1);
+        assert.ok(Number(c.entity.attributes.rent) <= 2500);
+        assert.equal(c.entity.attributes.currency, "USD");
+      }
+    }
+    const names = result.candidates.map((c) => c.entity.name).join(" ");
+    assert.match(names, /Adams|Shaw|Petworth|Georgetown/i);
+    assert.doesNotMatch(names, /Navy Yard/);
+  });
+
+  it("finds furnished Berlin sublets for three months", () => {
+    const result = engine.whoelse({
+      context: "Who else has a furnished sublet in Berlin for three months?",
+      limit: 5,
+    });
+    assert.ok(result.candidates.some((c) => c.entity.attributes.listingKind === "sublet"));
+    for (const c of result.candidates.filter((x) => x.entity.attributes.role === "listing")) {
+      assert.equal(c.entity.location?.city, "Berlin");
+      assert.equal(c.entity.attributes.furnished, true);
+      assert.equal(c.entity.attributes.listingKind, "sublet");
+    }
+  });
+
+  it("ranks Georgetown when asked for a place near Georgetown", () => {
+    const result = engine.whoelse({
+      context: "Who else has a place near Georgetown?",
+      limit: 5,
+    });
+    assert.equal(result.inferredConstraints.neighborhood, "Georgetown");
+    assert.ok(
+      result.candidates.some((c) => c.entity.attributes.neighborhood === "Georgetown"),
+      result.candidates.map((c) => c.entity.name).join(", "),
+    );
+  });
+
+  it("keeps pet-friendly listings for accepts-pets", () => {
+    const result = engine.whoelse({ context: "Who else accepts pets?", limit: 8 });
+    assert.ok(result.candidates.length > 0);
+    for (const c of result.candidates.filter((x) => x.entity.attributes.role === "listing")) {
+      assert.equal(c.entity.attributes.pets, true);
+    }
+  });
+
+  it("prefers listings available next month", () => {
+    const result = engine.whoelse({
+      context: "Who else has something available next month?",
+      limit: 8,
+    });
+    assert.ok(result.candidates.length > 0);
+    for (const c of result.candidates.filter((x) => x.entity.attributes.availableFrom)) {
+      assert.ok(String(c.entity.attributes.availableFrom) <= "2026-10-31");
+    }
+  });
+
+  it("reverse: who else needs a furnished apartment in Berlin", () => {
+    const result = engine.whoelse({
+      context: "Who else needs a furnished apartment in Berlin?",
+      limit: 5,
+    });
+    assert.equal(result.inferredConstraints.side, "seek");
+    assert.ok(result.candidates.every((c) => c.entity.attributes.role !== "listing"));
+    const names = result.candidates.map((c) => c.entity.name).join(" ");
+    assert.match(names, /Lena|Omar|Jonas/i);
+  });
+
+  it("reverse: good tenant for a Georgetown listing", () => {
+    const listing = engine.store.get("resource-apt-dc-georgetown-1br");
+    assert.ok(listing);
+    const result = engine.whoelse({
+      context: "Who else might be a good tenant for this listing?",
+      entityId: listing.id,
+      limit: 5,
+    });
+    assert.equal(result.inferredConstraints.side, "seek");
+    assert.ok(result.candidates.every((c) => c.entity.id !== listing.id));
+    assert.ok(result.candidates.some((c) => /Kai|Marcus|Nora|Priya/i.test(c.entity.name)));
+  });
+
+  it("exemplar cheaper stays in-cluster and under the asking rent", () => {
+    const listing = engine.store.get("resource-apt-dc-georgetown-1br");
+    assert.ok(listing);
+    const result = engine.whoelse({
+      context: "Who else has something like this apartment, but cheaper?",
+      entityId: listing.id,
+      limit: 5,
+    });
+    assert.ok(result.candidates.length > 0);
+    for (const c of result.candidates.filter((x) => x.entity.attributes.role === "listing")) {
+      assert.ok(Number(c.entity.attributes.rent) < Number(listing.attributes.rent));
+    }
+  });
+
+  it("dating first-five is not flooded by apartment listings", () => {
+    const result = engine.whoelse({
+      context: "Who else wants to build a network of voice assistants?",
+      limit: 5,
+    });
+    const apt = result.candidates.filter((c) => c.entity.metadata.vertical === "apartment");
+    assert.ok(apt.length <= 1, `apartment leaked: ${result.candidates.map((c) => c.entity.name).join(", ")}`);
+    assert.ok(result.candidates.some((c) => c.entity.type === "human" && c.entity.metadata.vertical !== "apartment"));
+  });
 });

@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { SiteNav } from "@/components/SiteNav";
 import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
 
-const EXAMPLES = [
+const DATING_EXAMPLES = [
   "Who else wants to build a network of voice assistants?",
   "Who else near me is into mountain biking?",
   "Who else works on real estate projects in DC right now?",
@@ -12,10 +12,37 @@ const EXAMPLES = [
   "Who else is a founder looking for a thought partner?",
 ];
 
-type TrailItem = { label: string; context: string; entityId?: string; exclude: string[] };
+const SEEK_EXAMPLES = [
+  "Who else has a 1-bedroom apartment in DC under $2,500?",
+  "Who else has a furnished sublet in Berlin for three months?",
+  "Who else has a place near Georgetown?",
+  "Who else accepts pets?",
+  "Who else has something available next month?",
+];
+
+const OFFER_EXAMPLES = [
+  "I have a furnished 1-bedroom in Georgetown for $2,200 that allows pets",
+  "Who else needs a furnished apartment in Berlin?",
+  "Who else is looking for exactly the apartment I have?",
+  "Who else might be a good tenant for this listing?",
+  "Who else is looking for a 2-bedroom in DC?",
+];
+
+type Vertical = "dating" | "apartment";
+type ApartmentSide = "seek" | "offer";
+type TrailItem = {
+  label: string;
+  context: string;
+  entityId?: string;
+  exclude: string[];
+  mode?: string;
+  constraints?: Record<string, unknown>;
+};
 
 export function DiscoverApp() {
-  const [query, setQuery] = useState(EXAMPLES[0]);
+  const [vertical, setVertical] = useState<Vertical>("dating");
+  const [apartmentSide, setApartmentSide] = useState<ApartmentSide>("seek");
+  const [query, setQuery] = useState(DATING_EXAMPLES[0]);
   const [activeChip, setActiveChip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<WhoElsePayload | null>(null);
@@ -27,20 +54,47 @@ export function DiscoverApp() {
   const [chatInput, setChatInput] = useState("");
   const [hidden, setHidden] = useState<Set<string>>(new Set());
 
-  const humans = useMemo(
-    () => (result?.humans ?? []).filter((c) => !hidden.has(c.entity.id)),
+  const examples =
+    vertical === "dating" ? DATING_EXAMPLES : apartmentSide === "offer" ? OFFER_EXAMPLES : SEEK_EXAMPLES;
+
+  const visible = useMemo(
+    () => (result?.candidates ?? []).filter((c) => !hidden.has(c.entity.id)),
     [result, hidden],
   );
-  const ais = useMemo(
-    () => (result?.ais ?? []).filter((c) => !hidden.has(c.entity.id)),
-    [result, hidden],
+
+  const datingHumans = useMemo(
+    () =>
+      visible.filter(
+        (c) => c.entity.type === "human" && c.entity.metadata.vertical !== "apartment",
+      ),
+    [visible],
+  );
+  const datingAis = useMemo(
+    () => visible.filter((c) => c.entity.type === "ai"),
+    [visible],
+  );
+  const listings = useMemo(
+    () => visible.filter((c) => c.entity.attributes.role === "listing" || c.entity.type === "resource"),
+    [visible],
+  );
+  const seekers = useMemo(
+    () => visible.filter((c) => c.entity.attributes.role === "seeker"),
+    [visible],
   );
   const others = useMemo(
     () =>
-      (result?.candidates ?? []).filter(
-        (c) => !hidden.has(c.entity.id) && c.entity.type !== "human" && c.entity.type !== "ai",
-      ),
-    [result, hidden],
+      visible.filter((c) => {
+        if (vertical === "dating") {
+          return (
+            c.entity.type !== "human" &&
+            c.entity.type !== "ai" &&
+            c.entity.metadata.vertical !== "apartment"
+          );
+        }
+        const role = c.entity.attributes.role;
+        return role !== "listing" && role !== "seeker" && c.entity.type !== "resource";
+      }),
+    [visible, vertical],
   );
 
   function flash(message: string) {
@@ -48,7 +102,41 @@ export function DiscoverApp() {
     window.setTimeout(() => setToast(null), 2800);
   }
 
-  async function runFind(context: string, extras: { entityId?: string; exclude?: string[]; mode?: string } = {}) {
+  function switchVertical(next: Vertical) {
+    setVertical(next);
+    setResult(null);
+    setTrail([]);
+    setSeen([]);
+    setHidden(new Set());
+    setActiveChip(0);
+    if (next === "dating") setQuery(DATING_EXAMPLES[0]);
+    else setQuery(apartmentSide === "offer" ? OFFER_EXAMPLES[0] : SEEK_EXAMPLES[0]);
+  }
+
+  function switchApartmentSide(next: ApartmentSide) {
+    setApartmentSide(next);
+    setResult(null);
+    setTrail([]);
+    setSeen([]);
+    setHidden(new Set());
+    setActiveChip(0);
+    setQuery(next === "offer" ? OFFER_EXAMPLES[0] : SEEK_EXAMPLES[0]);
+  }
+
+  function apartmentConstraints(side: ApartmentSide = apartmentSide): Record<string, unknown> | undefined {
+    if (vertical !== "apartment") return undefined;
+    return { side: side === "offer" ? "seek" : "offer" };
+  }
+
+  async function runFind(
+    context: string,
+    extras: {
+      entityId?: string;
+      exclude?: string[];
+      mode?: string;
+      constraints?: Record<string, unknown>;
+    } = {},
+  ) {
     setLoading(true);
     try {
       const path = extras.entityId ? "/api/whoelse/more-like" : "/api/whoelse";
@@ -58,10 +146,9 @@ export function DiscoverApp() {
         body: JSON.stringify({
           context,
           entityId: extras.entityId,
-          // Recursion is a new exemplar — only exclude who we were told to.
-          // Repeating the same free-text WhoElse? can skip already-shown ids.
           exclude: extras.exclude ?? (extras.entityId ? [extras.entityId] : seen),
           mode: extras.mode,
+          constraints: extras.constraints,
           limit: 8,
         }),
       });
@@ -78,9 +165,10 @@ export function DiscoverApp() {
   }
 
   function askWhoElse() {
-    const next: TrailItem = { label: query, context: query, exclude: seen };
+    const constraints = apartmentConstraints();
+    const next: TrailItem = { label: query, context: query, exclude: seen, constraints };
     setTrail((t) => [...t, next]);
-    void runFind(query);
+    void runFind(query, { constraints });
   }
 
   function recursiveWhoElse(candidate: Candidate) {
@@ -92,6 +180,32 @@ export function DiscoverApp() {
       { label: `like ${candidate.entity.name}`, context, entityId: candidate.entity.id, exclude: [candidate.entity.id] },
     ]);
     void runFind(context, { entityId: candidate.entity.id, exclude: [candidate.entity.id] });
+  }
+
+  function reverseWhoElse(candidate: Candidate) {
+    const isListing = candidate.entity.attributes.role === "listing" || candidate.entity.type === "resource";
+    const context = isListing
+      ? `Who else might be a good tenant for this listing?`
+      : `Who else has something that matches these constraints?`;
+    const constraints = { side: isListing ? "seek" : "offer" };
+    setQuery(context);
+    setActiveChip(-1);
+    setApartmentSide(isListing ? "offer" : "seek");
+    setTrail((t) => [
+      ...t,
+      {
+        label: isListing ? `needs ${candidate.entity.name}` : `has like ${candidate.entity.name}`,
+        context,
+        entityId: candidate.entity.id,
+        exclude: [candidate.entity.id],
+        constraints,
+      },
+    ]);
+    void runFind(context, {
+      entityId: candidate.entity.id,
+      exclude: [candidate.entity.id],
+      constraints,
+    });
   }
 
   function moreLikeThis(candidate: Candidate) {
@@ -139,6 +253,10 @@ export function DiscoverApp() {
       flash(`${candidate.entity.name} is a ${candidate.entity.type} stub — no transaction ran.`);
       return;
     }
+    if (candidate.entity.metadata.vertical === "apartment") {
+      flash("Synthetic seeker — no message sent, no application filed.");
+      return;
+    }
     const res = await fetch("/api/interest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -162,6 +280,15 @@ export function DiscoverApp() {
     setChatLog((prev) => [...prev, { role: "assistant", content: data.reply ?? data.error }]);
   }
 
+  const heading =
+    vertical === "dating"
+      ? "Who are you looking for?"
+      : apartmentSide === "offer"
+        ? "I have…"
+        : "What are you looking for?";
+  const cta =
+    loading ? "Looking…" : vertical === "apartment" && apartmentSide === "offer" ? "Who else needs this?" : "Who else?";
+
   return (
     <div className="app">
       <SiteNav current="home" />
@@ -171,14 +298,74 @@ export function DiscoverApp() {
         <a href="/ais">Connect an agent →</a>
       </p>
 
-      <div className="banner">
-        Demo pool only. Every human is <strong>synthetic</strong>. Every AI is labeled AI — never a stand-in person.
-        No real dating sites were used. WhoElse is for humans and machines.
+      <div className={`banner ${vertical === "apartment" ? "banner-demo" : ""}`}>
+        {vertical === "apartment" ? (
+          <>
+            <strong>DEMO data.</strong> Every apartment listing and seeker is <strong>synthetic</strong> — not a real
+            home, not a real person, not scraped from any site. Same WhoElse engine as dating. Same{" "}
+            <code>whoelse.find</code>.
+          </>
+        ) : (
+          <>
+            Demo pool only. Every human is <strong>synthetic</strong>. Every AI is labeled AI — never a stand-in person.
+            No real dating sites were used. WhoElse is for humans and machines.
+          </>
+        )}
       </div>
 
       <section className="search-panel">
-        <div className="eyebrow">Dating vertical · humans & AIs</div>
-        <h1>Who are you looking for?</h1>
+        <div className="mode-tabs" role="tablist" aria-label="Vertical">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={vertical === "dating"}
+            className={vertical === "dating" ? "active" : ""}
+            onClick={() => switchVertical("dating")}
+          >
+            Dating
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={vertical === "apartment"}
+            className={vertical === "apartment" ? "active" : ""}
+            onClick={() => switchVertical("apartment")}
+          >
+            Apartment
+          </button>
+        </div>
+
+        {vertical === "apartment" && (
+          <div className="mode-tabs side-tabs" role="tablist" aria-label="Offer or seek">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={apartmentSide === "seek"}
+              className={apartmentSide === "seek" ? "active" : ""}
+              onClick={() => switchApartmentSide("seek")}
+            >
+              I need
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={apartmentSide === "offer"}
+              className={apartmentSide === "offer" ? "active" : ""}
+              onClick={() => switchApartmentSide("offer")}
+            >
+              I have
+            </button>
+          </div>
+        )}
+
+        <div className="eyebrow">
+          {vertical === "dating"
+            ? "Dating vertical · humans & AIs"
+            : apartmentSide === "offer"
+              ? "Apartment · I HAVE · who else needs this?"
+              : "Apartment · SEEK · who else has this?"}
+        </div>
+        <h1>{heading}</h1>
         <div className="search-row">
           <textarea
             value={query}
@@ -192,14 +379,14 @@ export function DiscoverApp() {
                 askWhoElse();
               }
             }}
-            aria-label="Who are you looking for?"
+            aria-label={heading}
           />
           <button className="btn btn-coral" type="button" onClick={askWhoElse} disabled={loading}>
-            {loading ? "Looking…" : "Who else?"}
+            {cta}
           </button>
         </div>
         <div className="chips">
-          {EXAMPLES.map((example, i) => (
+          {examples.map((example, i) => (
             <button
               key={example}
               type="button"
@@ -216,8 +403,10 @@ export function DiscoverApp() {
         {result && (
           <div className="meta-row">
             mode <strong>{result.inferredMode}</strong>
-            {result.inferredConstraints.city
-              ? ` · city ${String(result.inferredConstraints.city)}`
+            {result.inferredConstraints.side ? ` · side ${String(result.inferredConstraints.side)}` : ""}
+            {result.inferredConstraints.city ? ` · city ${String(result.inferredConstraints.city)}` : ""}
+            {result.inferredConstraints.neighborhood
+              ? ` · near ${String(result.inferredConstraints.neighborhood)}`
               : ""}
             {result.usedOpenAiRerank ? " · OpenAI rerank on" : " · local TF-IDF + structured match"}
           </div>
@@ -232,7 +421,12 @@ export function DiscoverApp() {
               type="button"
               onClick={() => {
                 setQuery(step.context);
-                void runFind(step.context, { entityId: step.entityId, exclude: step.exclude });
+                void runFind(step.context, {
+                  entityId: step.entityId,
+                  exclude: step.exclude,
+                  mode: step.mode,
+                  constraints: step.constraints,
+                });
               }}
             >
               {step.label}
@@ -241,17 +435,26 @@ export function DiscoverApp() {
         </div>
       )}
 
-      {!result && <p className="empty">Ask who else — not swipe. Results split humans then AIs so the type is never ambiguous.</p>}
+      {!result && (
+        <p className="empty">
+          {vertical === "dating"
+            ? "Ask who else — not swipe. Results split humans then AIs so the type is never ambiguous."
+            : apartmentSide === "offer"
+              ? "Describe what you have. WhoElse finds who needs it — the reverse marketplace question."
+              : "Describe the apartment you need. Same Who else? as dating. Not a listings grid."}
+        </p>
+      )}
 
-      {result && (
+      {result && vertical === "dating" && (
         <>
           <h2 className="section-title">Humans</h2>
           <div className="cards">
-            {humans.length === 0 && <p className="empty">No human matches in this slice.</p>}
-            {humans.map((c) => (
+            {datingHumans.length === 0 && <p className="empty">No human matches in this slice.</p>}
+            {datingHumans.map((c) => (
               <ResultCard
                 key={c.entity.id}
                 candidate={c}
+                vertical="dating"
                 onWhoElse={() => recursiveWhoElse(c)}
                 onMore={() => moreLikeThis(c)}
                 onLess={() => void lessLikeThis(c)}
@@ -262,11 +465,12 @@ export function DiscoverApp() {
 
           <h2 className="section-title">AIs</h2>
           <div className="cards">
-            {ais.length === 0 && <p className="empty">No AI matches in this slice.</p>}
-            {ais.map((c) => (
+            {datingAis.length === 0 && <p className="empty">No AI matches in this slice.</p>}
+            {datingAis.map((c) => (
               <ResultCard
                 key={c.entity.id}
                 candidate={c}
+                vertical="dating"
                 onWhoElse={() => recursiveWhoElse(c)}
                 onMore={() => moreLikeThis(c)}
                 onLess={() => void lessLikeThis(c)}
@@ -284,7 +488,71 @@ export function DiscoverApp() {
                   <ResultCard
                     key={c.entity.id}
                     candidate={c}
+                    vertical="dating"
                     onWhoElse={() => recursiveWhoElse(c)}
+                    onMore={() => moreLikeThis(c)}
+                    onLess={() => void lessLikeThis(c)}
+                    onChat={() => void chatOrInterest(c)}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </>
+      )}
+
+      {result && vertical === "apartment" && (
+        <>
+          <h2 className="section-title">{apartmentSide === "offer" ? "People who need this" : "Who else has this"}</h2>
+          <div className="cards">
+            {(apartmentSide === "offer" ? seekers : listings).length === 0 && (
+              <p className="empty">No matches in this slice.</p>
+            )}
+            {(apartmentSide === "offer" ? seekers : listings).map((c) => (
+              <ResultCard
+                key={c.entity.id}
+                candidate={c}
+                vertical="apartment"
+                onWhoElse={() => recursiveWhoElse(c)}
+                onReverse={() => reverseWhoElse(c)}
+                onMore={() => moreLikeThis(c)}
+                onLess={() => void lessLikeThis(c)}
+                onChat={() => void chatOrInterest(c)}
+              />
+            ))}
+          </div>
+
+          {(apartmentSide === "offer" ? listings : seekers).length > 0 && (
+            <>
+              <h2 className="section-title">{apartmentSide === "offer" ? "Similar listings" : "People looking"}</h2>
+              <div className="cards">
+                {(apartmentSide === "offer" ? listings : seekers).map((c) => (
+                  <ResultCard
+                    key={c.entity.id}
+                    candidate={c}
+                    vertical="apartment"
+                    onWhoElse={() => recursiveWhoElse(c)}
+                    onReverse={() => reverseWhoElse(c)}
+                    onMore={() => moreLikeThis(c)}
+                    onLess={() => void lessLikeThis(c)}
+                    onChat={() => void chatOrInterest(c)}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {others.length > 0 && (
+            <>
+              <h2 className="section-title">Also in the network</h2>
+              <div className="cards">
+                {others.map((c) => (
+                  <ResultCard
+                    key={c.entity.id}
+                    candidate={c}
+                    vertical="apartment"
+                    onWhoElse={() => recursiveWhoElse(c)}
+                    onReverse={() => reverseWhoElse(c)}
                     onMore={() => moreLikeThis(c)}
                     onLess={() => void lessLikeThis(c)}
                     onChat={() => void chatOrInterest(c)}
@@ -329,13 +597,17 @@ export function DiscoverApp() {
 
 function ResultCard({
   candidate,
+  vertical,
   onWhoElse,
+  onReverse,
   onMore,
   onLess,
   onChat,
 }: {
   candidate: Candidate;
+  vertical: Vertical;
   onWhoElse: () => void;
+  onReverse?: () => void;
   onMore: () => void;
   onLess: () => void;
   onChat: () => void;
@@ -346,17 +618,19 @@ function ResultCard({
     .slice(0, 2)
     .map((p) => p[0])
     .join("");
-  const loc = [e.location?.city, e.location?.region].filter(Boolean).join(", ");
-  const demo =
-    e.type === "human"
-      ? String(e.metadata.demoLabel ?? "synthetic human")
-      : String(e.metadata.aiDisclosure ?? "AI — not a human");
+  const loc = [e.attributes.neighborhood, e.location?.city, e.location?.region].filter(Boolean).join(", ");
+  const demo = String(
+    e.metadata.demoLabel ??
+      (e.type === "human" ? "synthetic human" : e.metadata.aiDisclosure ?? "AI — not a human"),
+  );
+  const role = String(e.attributes.role ?? e.type);
+  const facts = listingFacts(e);
 
   return (
     <article className="card">
       <div className="card-top">
         <div className="identity">
-          <div className={`av ${e.type}`}>{initials}</div>
+          <div className={`av ${e.type === "resource" ? "resource" : e.type}`}>{initials}</div>
           <div>
             <h3>{e.name}</h3>
             <p>
@@ -364,10 +638,9 @@ function ResultCard({
             </p>
           </div>
         </div>
-        <span className={`badge ${e.type === "human" || e.type === "ai" ? e.type : "ai"}`}>
-          {e.type === "ai" ? "AI" : e.type === "human" ? "Human" : e.type}
-        </span>
+        <span className={`badge ${badgeClass(e)}`}>{badgeLabel(e)}</span>
       </div>
+      {facts && <p className="facts">{facts}</p>}
       <p className="why">{candidate.explanation.why}</p>
       <div className="pills">
         {candidate.explanation.commonalities.slice(0, 5).map((c) => (
@@ -383,16 +656,53 @@ function ResultCard({
         <button className="btn btn-coral btn-sm" type="button" onClick={onWhoElse}>
           Who else?
         </button>
+        {vertical === "apartment" && onReverse && (
+          <button className="btn btn-ink btn-sm" type="button" onClick={onReverse}>
+            {role === "listing" || e.type === "resource" ? "Who else needs this?" : "Who else has this?"}
+          </button>
+        )}
         <button className="btn btn-soft btn-sm" type="button" onClick={onMore}>
           More like this
         </button>
         <button className="btn btn-soft btn-sm" type="button" onClick={onLess}>
           Less like this
         </button>
-        <button className={`btn btn-sm ${e.type === "human" ? "btn-ink" : "btn-ai"}`} type="button" onClick={onChat}>
-          {e.type === "human" ? "Chat (interest)" : e.type === "ai" || e.type === "agent" ? "Chat" : "Open"}
-        </button>
+        {vertical === "dating" && (
+          <button className={`btn btn-sm ${e.type === "human" ? "btn-ink" : "btn-ai"}`} type="button" onClick={onChat}>
+            {e.type === "human" ? "Chat (interest)" : e.type === "ai" || e.type === "agent" ? "Chat" : "Open"}
+          </button>
+        )}
       </div>
     </article>
   );
+}
+
+function listingFacts(e: Entity): string | null {
+  const a = e.attributes ?? {};
+  const bits: string[] = [];
+  if (typeof a.bedrooms === "number") bits.push(a.bedrooms === 0 ? "studio" : `${a.bedrooms} bed`);
+  if (typeof a.rent === "number" || typeof a.budget === "number") {
+    const n = Number(a.rent ?? a.budget);
+    const symbol = a.currency === "EUR" ? "€" : "$";
+    bits.push(`${symbol}${n}${a.role === "seeker" ? " budget" : ""}`);
+  }
+  if (a.furnished === true) bits.push("furnished");
+  if (a.pets === true) bits.push("pets ok");
+  if (typeof a.listingKind === "string" && a.listingKind !== "rent") bits.push(String(a.listingKind));
+  return bits.length ? bits.join(" · ") : null;
+}
+
+function badgeClass(e: Entity): string {
+  if (e.attributes.role === "listing" || e.type === "resource") return "resource";
+  if (e.attributes.role === "seeker") return "seeker";
+  if (e.type === "human" || e.type === "ai") return e.type;
+  return "ai";
+}
+
+function badgeLabel(e: Entity): string {
+  if (e.attributes.role === "listing") return "Listing";
+  if (e.attributes.role === "seeker") return "Seeker";
+  if (e.type === "ai") return "AI";
+  if (e.type === "human") return "Human";
+  return e.type;
 }

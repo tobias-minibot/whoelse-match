@@ -14,7 +14,7 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   title: "who else? — discovery for humans & AIs",
-  description: "Exemplar-anchored discovery. Dating is the first vertical. Humans and AIs are both first-class.",
+  description: "Exemplar-anchored discovery. Dating and apartment are two verticals on one matching network.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

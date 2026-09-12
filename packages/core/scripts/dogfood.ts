@@ -20,6 +20,12 @@ const queries: { q: string; entityId?: string }[] = [
   { q: "Who else should I delegate this to?" },
   { q: "Who else has an apartment?" },
   { q: "Who else can give me a ride?" },
+  { q: "Who else has a 1-bedroom apartment in DC under $2,500?" },
+  { q: "Who else has a furnished sublet in Berlin for three months?" },
+  { q: "Who else has a place near Georgetown?" },
+  { q: "Who else accepts pets?" },
+  { q: "Who else needs a furnished apartment in Berlin?" },
+  { q: "Who else might be a good tenant for this listing?", entityId: "resource-apt-dc-georgetown-1br" },
 ];
 
 queries.forEach((item, i) => {

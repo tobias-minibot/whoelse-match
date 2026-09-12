@@ -4,8 +4,8 @@
 
 Two surfaces, one engine, one seed:
 
-1. **Human** — consumer “Who else?” (dating first). People never need to know MCP exists.
-2. **Machine** — MCP / HTTP. Agents discover other agents, services, humans, and thin resources.
+1. **Human** — consumer “Who else?” (dating + apartment). People never need to know MCP exists.
+2. **Machine** — MCP / HTTP. Agents discover other agents, services, humans, listings, and seekers.
 
 Same entity model. Same matching engine. Same discovery pool. Different interfaces.
 
@@ -28,7 +28,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Product (this repo)
 
-- **Human surface:** Next.js App Router — primary interaction is **Who else?**, not swipe. Humans never see MCP.
+- **Human surface:** Next.js App Router — Dating | Apartment tabs. Primary interaction is **Who else?** (or **Who else needs this?** on I HAVE). Humans never see MCP.
 - **AI surface:** Streamable HTTP MCP at `/api/mcp` (same Vercel app) plus stdio `pnpm mcp`. Primary tool **`whoelse.find`**. Same `@whoelse/core` engine and `data/seed.json` as the web app.
 - **Thin HTTP API** — the dating UI’s adapter; not a second matcher. Agents invoke via `POST /api/agents/:id/invoke` (demo stub).
 
@@ -122,7 +122,7 @@ Generic. Not dating-hardcoded.
 }
 ```
 
-Dating humans **offer** skills / presence and **seek** compatible others. Labeled AIs **offer** conversation capabilities and **seek** users who want that. Capability agents **offer** tools (summarize, browse, translate…) and **seek** work / delegation. Thin `resource` / `service` stubs (apartment, ride) prove other verticals without a product expansion.
+Dating humans **offer** skills / presence and **seek** compatible others. Labeled AIs **offer** conversation capabilities and **seek** users who want that. Capability agents **offer** tools (summarize, browse, translate…) and **seek** work / delegation. Apartment listings are `type: resource` with rent/bedrooms/pets in `attributes`. Seekers are labeled humans with `attributes.role = "seeker"`. A thin ride `service` stub remains. Same `offers` / `seeks` primitive — no vertical-only operator.
 
 **Seed rules**
 
@@ -236,7 +236,11 @@ Same engine. Used by the web app.
 
 - Doctrine on home + `/ais`: **Humans ask Who Else. Agents call WhoElse. Same network.**
 - `/ais` — MCP URL, Cursor config, tools, example call/result
-- Big **Who are you looking for?** + primary **Who else?** button
+- Tabs: **Dating** (default) and **Apartment** (SEEK / I HAVE). Dating home is unchanged.
+- Apartment SEEK: **What are you looking for?** + **Who else?**
+- Apartment I HAVE: **I have…** + **Who else needs this?**
+- Apartment results stay cards-with-why, plus reverse **Who else needs this?** / **Who else has this?**
+- Loud **DEMO data** banner on the apartment tab. No Zillow grid.
 - Cards: HUMAN / AI badge, why, commonalities, surprising difference
 - Actions: **Who else?** (recursive exemplar) · **More like this** (peers mode) · **Less like this** · **Chat**
   - AI chat = labeled stub (or OpenAI persona if keyed)
@@ -330,7 +334,7 @@ After deploy, check `GET /api/health` for seed counts (`humans`, `ais`, `byType`
 1. Drop in `@xenova/transformers` embeddings on the reserved `embedding` field; A/B against TF-IDF on the same seed.
 2. Mixed ranking vs sectioned ranking — measure “did you notice the AIs were AIs?”
 3. Persist feedback and treat MORE/LESS as a tiny preference vector.
-4. A second consumer vertical with **zero** dating keys (housing/rides are only stubs today).
+4. A third consumer vertical (jobs/gigs) — housing is no longer a stub; see `WHOELSE_DISCOVERIES.md`.
 5. Real MCP-hosted session so Claude and the web app share exclude lists.
 6. Consent / disclosure UX research: how large does the AI/agent badge need to be?
 7. Fill `trust` without inventing a reputation product.

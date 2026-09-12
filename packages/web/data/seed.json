@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "disclaimer": "Human profiles are synthetic demo data. AI and agent profiles are labeled and never presented as human. Resource/service rows are thin stubs to prove other verticals on the same primitive. No real sites were scraped. Agents are discoverable entities in this pool, not only API clients.",
+  "disclaimer": "Human dating profiles are synthetic demo data. Apartment listings and seekers are DEMO synthetic data — not real homes or people, not scraped. AI and agent profiles are labeled and never presented as human. Resource/service rows prove other verticals on the same primitive.",
   "entities": [
     {
       "id": "human-maya-chen",
@@ -2678,48 +2678,6 @@
       "created_at": "2026-09-12T00:00:00.000Z"
     },
     {
-      "id": "resource-apartment-adams",
-      "type": "resource",
-      "name": "Adams Morgan one-bedroom (stub)",
-      "description": "Thin stub listing: a one-bedroom apartment. Proves housing is another vertical on the same primitive — not a dating profile.",
-      "offers": [
-        "apartment",
-        "one-bedroom",
-        "housing listing"
-      ],
-      "seeks": [
-        "renter",
-        "roommate inquiry"
-      ],
-      "capabilities": [
-        "housing listing"
-      ],
-      "attributes": {
-        "bedrooms": 1,
-        "neighborhood": "Adams Morgan",
-        "stub": true
-      },
-      "preferences": {},
-      "availability": "listed",
-      "location": {
-        "city": "Washington",
-        "region": "DC",
-        "country": "US"
-      },
-      "metadata": {
-        "demo": true,
-        "demoLabel": "synthetic resource",
-        "vertical": "housing"
-      },
-      "trust": {
-        "status": "stub",
-        "provenance": "synthetic",
-        "notes": "not a real listing"
-      },
-      "provenance": "synthetic",
-      "created_at": "2026-09-12T00:00:00.000Z"
-    },
-    {
       "id": "service-dc-ride",
       "type": "service",
       "name": "Mall-to-Trail Ride (stub)",
@@ -2759,6 +2717,3089 @@
       },
       "provenance": "synthetic",
       "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "resource-apartment-adams",
+      "type": "resource",
+      "name": "Adams Morgan one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Adams Morgan, Washington. $2300/mo, unfurnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Adams Morgan",
+        "place near Adams Morgan",
+        "Washington apartment",
+        "1-bedroom apartment in DC",
+        "apartment under $2500"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 2300,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Adams Morgan",
+        "amenities": [
+          "laundry",
+          "hardwood"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-georgetown-1br",
+      "type": "resource",
+      "name": "Georgetown furnished one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Georgetown, Washington. $2450/mo, furnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Georgetown",
+        "place near Georgetown",
+        "Washington apartment",
+        "furnished apartment in DC",
+        "1-bedroom apartment in DC"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 2450,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Georgetown",
+        "amenities": [
+          "dishwasher",
+          "near campus"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-georgetown-2br",
+      "type": "resource",
+      "name": "Georgetown two-bedroom walk-up",
+      "description": "DEMO synthetic listing — not a real apartment. 2-bedroom apartment in Georgetown, Washington. $3200/mo, unfurnished, no pets. Available from 2026-11-01.",
+      "offers": [
+        "apartment",
+        "2-bedroom",
+        "2-bedroom apartment",
+        "unfurnished",
+        "no pets",
+        "housing listing",
+        "rent in Georgetown",
+        "place near Georgetown",
+        "Washington apartment",
+        "2-bedroom apartment in DC"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "rent": 3200,
+        "currency": "USD",
+        "furnished": false,
+        "pets": false,
+        "availableFrom": "2026-11-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Georgetown",
+        "amenities": [
+          "fireplace"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "listed",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-capitol-studio",
+      "type": "resource",
+      "name": "Capitol Hill studio",
+      "description": "DEMO synthetic listing — not a real apartment. studio apartment in Capitol Hill, Washington. $1800/mo, unfurnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "studio",
+        "studio apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Capitol Hill",
+        "place near Capitol Hill",
+        "Washington apartment",
+        "studio in DC",
+        "apartment under $2500"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 0,
+        "rent": 1800,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Capitol Hill",
+        "amenities": [
+          "pets ok"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-shaw-1br",
+      "type": "resource",
+      "name": "Shaw furnished one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Shaw, Washington. $2100/mo, furnished, pets allowed. Available from 2026-09-15.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Shaw",
+        "place near Shaw",
+        "Washington apartment",
+        "1-bedroom apartment in DC",
+        "furnished apartment in DC",
+        "apartment under $2500"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 2100,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-09-15",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Shaw",
+        "amenities": [
+          "in-unit laundry"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-columbia-room",
+      "type": "resource",
+      "name": "Columbia Heights furnished room",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom room in Columbia Heights, Washington. $1200/mo, furnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "room",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "room in Columbia Heights",
+        "place near Columbia Heights",
+        "Washington room",
+        "room in DC",
+        "furnished room"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "room",
+        "bedrooms": 1,
+        "rent": 1200,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Columbia Heights",
+        "amenities": [
+          "shared kitchen"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-dupont-2br",
+      "type": "resource",
+      "name": "Dupont Circle two-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 2-bedroom apartment in Dupont Circle, Washington. $2900/mo, furnished, no pets. Available from 2026-10-15.",
+      "offers": [
+        "apartment",
+        "2-bedroom",
+        "2-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "rent in Dupont Circle",
+        "place near Dupont Circle",
+        "Washington apartment",
+        "2-bedroom apartment in DC",
+        "furnished apartment in DC"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "rent": 2900,
+        "currency": "USD",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-15",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Dupont Circle",
+        "amenities": [
+          "elevator"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-petworth-1br",
+      "type": "resource",
+      "name": "Petworth one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Petworth, Washington. $1950/mo, unfurnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Petworth",
+        "place near Petworth",
+        "Washington apartment",
+        "1-bedroom apartment in DC",
+        "apartment under $2500"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 1950,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Petworth",
+        "amenities": [
+          "porch"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-navyyard-1br",
+      "type": "resource",
+      "name": "Navy Yard one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Navy Yard, Washington. $2600/mo, furnished, no pets. Available from 2026-11-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "rent in Navy Yard",
+        "place near Navy Yard",
+        "Washington apartment",
+        "1-bedroom apartment in DC",
+        "furnished apartment in DC"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 2600,
+        "currency": "USD",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-11-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Navy Yard",
+        "amenities": [
+          "gym"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "listed",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-georgetown-sublet",
+      "type": "resource",
+      "name": "Georgetown three-month sublet",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom furnished sublet in Georgetown, Washington. $2200/mo, furnished, pets allowed. Available 2026-10-01 to 2026-12-31.",
+      "offers": [
+        "apartment",
+        "furnished sublet",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "sublet in Georgetown",
+        "place near Georgetown",
+        "Washington furnished sublet",
+        "sublet for three months"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "sublet",
+        "bedrooms": 1,
+        "rent": 2200,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": "2026-12-31",
+        "durationMonths": 3,
+        "neighborhood": "Georgetown",
+        "amenities": [
+          "near campus"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-adams-2br",
+      "type": "resource",
+      "name": "Adams Morgan two-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 2-bedroom apartment in Adams Morgan, Washington. $2800/mo, unfurnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "2-bedroom",
+        "2-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Adams Morgan",
+        "place near Adams Morgan",
+        "Washington apartment",
+        "2-bedroom apartment in DC"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "rent": 2800,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Adams Morgan",
+        "amenities": [
+          "backyard"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-dc-foggy-studio",
+      "type": "resource",
+      "name": "Foggy Bottom studio",
+      "description": "DEMO synthetic listing — not a real apartment. studio apartment in Foggy Bottom, Washington. $2000/mo, unfurnished, no pets. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "studio",
+        "studio apartment",
+        "unfurnished",
+        "no pets",
+        "housing listing",
+        "rent in Foggy Bottom",
+        "place near Foggy Bottom",
+        "Washington apartment",
+        "studio in DC",
+        "place near Georgetown",
+        "apartment under $2500"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 0,
+        "rent": 2000,
+        "currency": "USD",
+        "furnished": false,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Foggy Bottom",
+        "amenities": [
+          "metro"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-mitte-sublet",
+      "type": "resource",
+      "name": "Mitte furnished three-month sublet",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom furnished sublet in Mitte, Berlin. €1600/mo, furnished, no pets. Available 2026-10-01 to 2026-12-31.",
+      "offers": [
+        "apartment",
+        "furnished sublet",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "sublet in Mitte",
+        "place near Mitte",
+        "Berlin furnished sublet",
+        "furnished sublet in Berlin",
+        "furnished apartment in Berlin",
+        "sublet for three months"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "sublet",
+        "bedrooms": 1,
+        "rent": 1600,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": "2026-12-31",
+        "durationMonths": 3,
+        "neighborhood": "Mitte",
+        "amenities": [
+          "wifi"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-kreuzberg-2br",
+      "type": "resource",
+      "name": "Kreuzberg furnished two-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 2-bedroom apartment in Kreuzberg, Berlin. €1900/mo, furnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "2-bedroom",
+        "2-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Kreuzberg",
+        "place near Kreuzberg",
+        "Berlin apartment",
+        "furnished apartment in Berlin",
+        "2-bedroom apartment in Berlin"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "rent": 1900,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Kreuzberg",
+        "amenities": [
+          "balcony"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-prenzlauer-1br",
+      "type": "resource",
+      "name": "Prenzlauer Berg one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Prenzlauer Berg, Berlin. €1400/mo, unfurnished, pets allowed. Available from 2026-09-20.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Prenzlauer Berg",
+        "place near Prenzlauer Berg",
+        "Berlin apartment",
+        "1-bedroom apartment in Berlin",
+        "apartment under €2000"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 1400,
+        "currency": "EUR",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-09-20",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Prenzlauer Berg",
+        "amenities": [
+          "courtyard"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-neukolln-room",
+      "type": "resource",
+      "name": "Neukölln furnished room",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom room in Neukölln, Berlin. €750/mo, furnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "room",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "room in Neukölln",
+        "place near Neukölln",
+        "Berlin room",
+        "room in Berlin",
+        "furnished room"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "room",
+        "bedrooms": 1,
+        "rent": 750,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Neukölln",
+        "amenities": [
+          "shared flat"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-friedrichshain-sublet",
+      "type": "resource",
+      "name": "Friedrichshain furnished sublet",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom furnished sublet in Friedrichshain, Berlin. €1700/mo, furnished, no pets. Available 2026-10-01 to 2026-12-31.",
+      "offers": [
+        "apartment",
+        "furnished sublet",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "sublet in Friedrichshain",
+        "place near Friedrichshain",
+        "Berlin furnished sublet",
+        "furnished sublet in Berlin",
+        "sublet for three months"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "sublet",
+        "bedrooms": 1,
+        "rent": 1700,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": "2026-12-31",
+        "durationMonths": 3,
+        "neighborhood": "Friedrichshain",
+        "amenities": [
+          "near Warschauer"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-mitte-2br",
+      "type": "resource",
+      "name": "Mitte two-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 2-bedroom apartment in Mitte, Berlin. €2400/mo, unfurnished, no pets. Available from 2026-11-01.",
+      "offers": [
+        "apartment",
+        "2-bedroom",
+        "2-bedroom apartment",
+        "unfurnished",
+        "no pets",
+        "housing listing",
+        "rent in Mitte",
+        "place near Mitte",
+        "Berlin apartment",
+        "2-bedroom apartment in Berlin"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "rent": 2400,
+        "currency": "EUR",
+        "furnished": false,
+        "pets": false,
+        "availableFrom": "2026-11-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Mitte",
+        "amenities": [
+          "elevator"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "listed",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-kreuzberg-1br",
+      "type": "resource",
+      "name": "Kreuzberg one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Kreuzberg, Berlin. €1250/mo, unfurnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Kreuzberg",
+        "place near Kreuzberg",
+        "Berlin apartment",
+        "1-bedroom apartment in Berlin",
+        "apartment under €2000"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 1250,
+        "currency": "EUR",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Kreuzberg",
+        "amenities": [
+          "canal"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-prenzlauer-studio-sublet",
+      "type": "resource",
+      "name": "Prenzlauer Berg studio sublet",
+      "description": "DEMO synthetic listing — not a real apartment. studio furnished sublet in Prenzlauer Berg, Berlin. €1100/mo, furnished, no pets. Available 2026-10-01 to 2026-12-31.",
+      "offers": [
+        "apartment",
+        "furnished sublet",
+        "studio",
+        "studio apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "sublet in Prenzlauer Berg",
+        "place near Prenzlauer Berg",
+        "Berlin furnished sublet",
+        "furnished sublet in Berlin",
+        "sublet for three months"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "sublet",
+        "bedrooms": 0,
+        "rent": 1100,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": "2026-12-31",
+        "durationMonths": 3,
+        "neighborhood": "Prenzlauer Berg",
+        "amenities": [
+          "compact"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-neukolln-2br",
+      "type": "resource",
+      "name": "Neukölln furnished two-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 2-bedroom apartment in Neukölln, Berlin. €1600/mo, furnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "2-bedroom",
+        "2-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Neukölln",
+        "place near Neukölln",
+        "Berlin apartment",
+        "furnished apartment in Berlin",
+        "2-bedroom apartment in Berlin"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "rent": 1600,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Neukölln",
+        "amenities": [
+          "park view"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-berlin-wedding-1br",
+      "type": "resource",
+      "name": "Wedding one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Wedding, Berlin. €980/mo, unfurnished, pets allowed. Available from 2026-09-12.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Wedding",
+        "place near Wedding",
+        "Berlin apartment",
+        "1-bedroom apartment in Berlin",
+        "apartment under €2000"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 980,
+        "currency": "EUR",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-09-12",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Wedding",
+        "amenities": [
+          "quiet courtyard"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-nyc-brooklyn-1br",
+      "type": "resource",
+      "name": "Brooklyn furnished one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Brooklyn, New York. $2400/mo, furnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Brooklyn",
+        "place near Brooklyn",
+        "New York apartment",
+        "1-bedroom apartment in NYC",
+        "furnished apartment"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 2400,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Brooklyn",
+        "amenities": [
+          "brownstone"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-nyc-harlem-2br",
+      "type": "resource",
+      "name": "Harlem two-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 2-bedroom apartment in Harlem, New York. $2800/mo, unfurnished, pets allowed. Available from 2026-11-01.",
+      "offers": [
+        "apartment",
+        "2-bedroom",
+        "2-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Harlem",
+        "place near Harlem",
+        "New York apartment",
+        "2-bedroom apartment in NYC"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "rent": 2800,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-11-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Harlem",
+        "amenities": [
+          "pre-war"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "listed",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-nyc-astoria-1br",
+      "type": "resource",
+      "name": "Astoria one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Astoria, New York. $1900/mo, unfurnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Astoria",
+        "place near Astoria",
+        "New York apartment",
+        "1-bedroom apartment in NYC",
+        "apartment under $2500"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 1900,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Astoria",
+        "amenities": [
+          "N/W train"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-nyc-brooklyn-room",
+      "type": "resource",
+      "name": "Brooklyn furnished room",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom room in Brooklyn, New York. $1400/mo, furnished, no pets. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "room",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "room in Brooklyn",
+        "place near Brooklyn",
+        "New York room",
+        "room in NYC",
+        "furnished room"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "room",
+        "bedrooms": 1,
+        "rent": 1400,
+        "currency": "USD",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Brooklyn",
+        "amenities": [
+          "shared loft"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-nyc-harlem-sublet",
+      "type": "resource",
+      "name": "Harlem furnished sublet",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom furnished sublet in Harlem, New York. $2200/mo, furnished, no pets. Available 2026-10-01 to 2026-12-31.",
+      "offers": [
+        "apartment",
+        "furnished sublet",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "sublet in Harlem",
+        "place near Harlem",
+        "New York furnished sublet",
+        "sublet for three months"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "sublet",
+        "bedrooms": 1,
+        "rent": 2200,
+        "currency": "USD",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": "2026-12-31",
+        "durationMonths": 3,
+        "neighborhood": "Harlem",
+        "amenities": [
+          "short stay"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-nyc-williamsburg-1br",
+      "type": "resource",
+      "name": "Williamsburg one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Williamsburg, New York. $3100/mo, furnished, no pets. Available from 2026-11-15.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "rent in Williamsburg",
+        "place near Williamsburg",
+        "New York apartment",
+        "furnished apartment in NYC"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 3100,
+        "currency": "USD",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-11-15",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Williamsburg",
+        "amenities": [
+          "rooftop"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "listed",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-lisbon-alfama-1br",
+      "type": "resource",
+      "name": "Alfama one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Alfama, Lisbon. €1400/mo, furnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Alfama",
+        "place near Alfama",
+        "Lisbon apartment",
+        "furnished apartment in Lisbon",
+        "1-bedroom apartment in Lisbon"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 1400,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Alfama",
+        "amenities": [
+          "tiles",
+          "river glimpse"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-lisbon-graca-2br",
+      "type": "resource",
+      "name": "Graça two-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 2-bedroom apartment in Graça, Lisbon. €1700/mo, unfurnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "2-bedroom",
+        "2-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Graça",
+        "place near Graça",
+        "Lisbon apartment",
+        "2-bedroom apartment in Lisbon"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "rent": 1700,
+        "currency": "EUR",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Graça",
+        "amenities": [
+          "viewpoint"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-lisbon-bairro-sublet",
+      "type": "resource",
+      "name": "Bairro Alto studio sublet",
+      "description": "DEMO synthetic listing — not a real apartment. studio furnished sublet in Bairro Alto, Lisbon. €1100/mo, furnished, no pets. Available 2026-10-01 to 2026-12-31.",
+      "offers": [
+        "apartment",
+        "furnished sublet",
+        "studio",
+        "studio apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "sublet in Bairro Alto",
+        "place near Bairro Alto",
+        "Lisbon furnished sublet",
+        "furnished sublet in Lisbon",
+        "sublet for three months"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "sublet",
+        "bedrooms": 0,
+        "rent": 1100,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": "2026-12-31",
+        "durationMonths": 3,
+        "neighborhood": "Bairro Alto",
+        "amenities": [
+          "nightlife"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-lisbon-alfama-room",
+      "type": "resource",
+      "name": "Alfama furnished room",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom room in Alfama, Lisbon. €700/mo, furnished, no pets. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "room",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "room in Alfama",
+        "place near Alfama",
+        "Lisbon room",
+        "room in Lisbon"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "room",
+        "bedrooms": 1,
+        "rent": 700,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Alfama",
+        "amenities": [
+          "shared house"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-lisbon-chiado-1br",
+      "type": "resource",
+      "name": "Chiado furnished one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Chiado, Lisbon. €1900/mo, furnished, no pets. Available from 2026-11-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "furnished",
+        "no pets",
+        "housing listing",
+        "rent in Chiado",
+        "place near Chiado",
+        "Lisbon apartment",
+        "furnished apartment in Lisbon"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 1900,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-11-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Chiado",
+        "amenities": [
+          "tram"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "listed",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "resource-apt-lisbon-graca-1br",
+      "type": "resource",
+      "name": "Graça one-bedroom",
+      "description": "DEMO synthetic listing — not a real apartment. 1-bedroom apartment in Graça, Lisbon. €1200/mo, unfurnished, pets allowed. Available from 2026-10-01.",
+      "offers": [
+        "apartment",
+        "1-bedroom",
+        "1-bedroom apartment",
+        "unfurnished",
+        "pets allowed",
+        "housing listing",
+        "rent in Graça",
+        "place near Graça",
+        "Lisbon apartment",
+        "1-bedroom apartment in Lisbon"
+      ],
+      "seeks": [
+        "tenant",
+        "renter",
+        "good tenant"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "role": "listing",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "rent": 1200,
+        "currency": "EUR",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Graça",
+        "amenities": [
+          "quiet street"
+        ],
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "available next month",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic listing — not a real apartment",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic demo listing — not scraped, not bookable"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-priya-dc",
+      "type": "human",
+      "name": "Priya Nair",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a unfurnished-ok 1-bedroom in Shaw, Washington. Budget $2500. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter",
+        "references",
+        "quiet tenant"
+      ],
+      "seeks": [
+        "unfurnished-ok apartment",
+        "1-bedroom apartment",
+        "apartment in Washington",
+        "rent",
+        "1-bedroom apartment in DC",
+        "apartment under $2500",
+        "pet-friendly apartment"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "budget": 2500,
+        "rent": 2500,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Shaw",
+        "occupation": "policy analyst",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-marcus-georgetown",
+      "type": "human",
+      "name": "Marcus Hale",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Georgetown, Washington. Budget $2500. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter",
+        "campus nearby"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in Washington",
+        "furnished apartment in Washington",
+        "rent",
+        "furnished apartment in DC",
+        "place near Georgetown",
+        "exactly this apartment",
+        "1-bedroom near Georgetown"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "budget": 2500,
+        "rent": 2500,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Georgetown",
+        "occupation": "grad student",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-aisha-room",
+      "type": "human",
+      "name": "Aisha Rahman",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Columbia Heights, Washington. Budget $1300. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in Washington",
+        "furnished apartment in Washington",
+        "room",
+        "room in DC",
+        "furnished room"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "room",
+        "bedrooms": 1,
+        "budget": 1300,
+        "rent": 1300,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Columbia Heights",
+        "occupation": "nurse",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-ben-capitol",
+      "type": "human",
+      "name": "Ben Okada",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a unfurnished-ok 2-bedroom in Capitol Hill, Washington. Budget $3000. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "unfurnished-ok apartment",
+        "2-bedroom apartment",
+        "apartment in Washington",
+        "rent",
+        "2-bedroom apartment in DC"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "budget": 3000,
+        "rent": 3000,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Capitol Hill",
+        "occupation": "staffer",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-lena-berlin",
+      "type": "human",
+      "name": "Lena Vogt",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Mitte, Berlin. Budget €1800. no pets.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter",
+        "short-stay renter",
+        "references"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in Berlin",
+        "furnished apartment in Berlin",
+        "3-month sublet",
+        "furnished sublet in Berlin",
+        "sublet for three months"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "sublet",
+        "bedrooms": 1,
+        "budget": 1800,
+        "rent": 1800,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": "2026-12-31",
+        "durationMonths": 3,
+        "neighborhood": "Mitte",
+        "occupation": "visiting researcher",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-jonas-berlin",
+      "type": "human",
+      "name": "Jonas Keller",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 2-bedroom in Kreuzberg, Berlin. Budget €2000. no pets.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "2-bedroom apartment",
+        "apartment in Berlin",
+        "furnished apartment in Berlin",
+        "rent",
+        "2-bedroom apartment in Berlin"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "budget": 2000,
+        "rent": 2000,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Kreuzberg",
+        "occupation": "designer",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-freya-berlin",
+      "type": "human",
+      "name": "Freya Berg",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a unfurnished-ok 1-bedroom in Kreuzberg, Berlin. Budget €1500. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "unfurnished-ok apartment",
+        "1-bedroom apartment",
+        "apartment in Berlin",
+        "rent",
+        "pet-friendly apartment in Berlin",
+        "1-bedroom apartment in Berlin"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "budget": 1500,
+        "rent": 1500,
+        "currency": "EUR",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Kreuzberg",
+        "occupation": "musician",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-omar-berlin",
+      "type": "human",
+      "name": "Omar Said",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Mitte, Berlin. Budget €1700. no pets.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in Berlin",
+        "furnished apartment in Berlin",
+        "rent",
+        "apartment in Mitte"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "budget": 1700,
+        "rent": 1700,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Mitte",
+        "occupation": "engineer",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-diego-nyc",
+      "type": "human",
+      "name": "Diego Alvarez",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Brooklyn, New York. Budget $2500. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in New York",
+        "furnished apartment in New York",
+        "rent",
+        "1-bedroom apartment in NYC",
+        "furnished apartment in Brooklyn"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "budget": 2500,
+        "rent": 2500,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Brooklyn",
+        "occupation": "chef",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-naomi-nyc",
+      "type": "human",
+      "name": "Naomi Brooks",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Harlem, New York. Budget $2300. no pets.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in New York",
+        "furnished apartment in New York",
+        "3-month sublet",
+        "furnished sublet in Harlem",
+        "sublet for three months"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "sublet",
+        "bedrooms": 1,
+        "budget": 2300,
+        "rent": 2300,
+        "currency": "USD",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": 3,
+        "neighborhood": "Harlem",
+        "occupation": "writer",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-ellis-nyc",
+      "type": "human",
+      "name": "Ellis Cho",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Astoria, New York. Budget $1500. no pets.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in New York",
+        "furnished apartment in New York",
+        "room",
+        "room in NYC",
+        "furnished room"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "room",
+        "bedrooms": 1,
+        "budget": 1500,
+        "rent": 1500,
+        "currency": "USD",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Astoria",
+        "occupation": "student",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-ines-lisbon",
+      "type": "human",
+      "name": "Inês Costa",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Alfama, Lisbon. Budget €1500. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in Lisbon",
+        "furnished apartment in Lisbon",
+        "rent",
+        "1-bedroom apartment in Lisbon",
+        "furnished apartment in Alfama"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "budget": 1500,
+        "rent": 1500,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Alfama",
+        "occupation": "archivist",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-tiago-lisbon",
+      "type": "human",
+      "name": "Tiago Mendes",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished studio in Bairro Alto, Lisbon. Budget €1200. no pets.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "studio apartment",
+        "apartment in Lisbon",
+        "furnished apartment in Lisbon",
+        "3-month sublet",
+        "furnished sublet in Lisbon",
+        "sublet for three months"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "sublet",
+        "bedrooms": 0,
+        "budget": 1200,
+        "rent": 1200,
+        "currency": "EUR",
+        "furnished": true,
+        "pets": false,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": 3,
+        "neighborhood": "Bairro Alto",
+        "occupation": "photographer",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-sofia-lisbon",
+      "type": "human",
+      "name": "Sofia Ramos",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a unfurnished-ok 2-bedroom in Graça, Lisbon. Budget €1800. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter"
+      ],
+      "seeks": [
+        "unfurnished-ok apartment",
+        "2-bedroom apartment",
+        "apartment in Lisbon",
+        "rent",
+        "2-bedroom apartment in Lisbon",
+        "pet-friendly apartment"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 2,
+        "budget": 1800,
+        "rent": 1800,
+        "currency": "EUR",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Graça",
+        "occupation": "teacher",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Lisbon",
+        "region": "Lisboa",
+        "country": "PT"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-kai-exact",
+      "type": "human",
+      "name": "Kai Moreau",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a furnished 1-bedroom in Georgetown, Washington. Budget $2500. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter",
+        "excellent references",
+        "quiet tenant"
+      ],
+      "seeks": [
+        "furnished apartment",
+        "1-bedroom apartment",
+        "apartment in Washington",
+        "furnished apartment in Washington",
+        "rent",
+        "exactly the apartment I have",
+        "furnished 1-bedroom in Georgetown",
+        "place near Georgetown",
+        "looking for exactly this apartment"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "budget": 2500,
+        "rent": 2500,
+        "currency": "USD",
+        "furnished": true,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Georgetown",
+        "occupation": "remote PM",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "human-seeker-nora-tenant",
+      "type": "human",
+      "name": "Nora Ellison",
+      "description": "DEMO synthetic seeker — not a real person, not a dating profile. Looking for a unfurnished-ok 1-bedroom in Adams Morgan, Washington. Budget $2400. needs pet-friendly.",
+      "offers": [
+        "tenant",
+        "good tenant",
+        "renter",
+        "references",
+        "stable income",
+        "quiet tenant"
+      ],
+      "seeks": [
+        "unfurnished-ok apartment",
+        "1-bedroom apartment",
+        "apartment in Washington",
+        "rent",
+        "1-bedroom apartment in DC",
+        "pet-friendly apartment",
+        "good fit for this listing"
+      ],
+      "capabilities": [
+        "tenant"
+      ],
+      "attributes": {
+        "role": "seeker",
+        "listingKind": "rent",
+        "bedrooms": 1,
+        "budget": 2400,
+        "rent": 2400,
+        "currency": "USD",
+        "furnished": false,
+        "pets": true,
+        "availableFrom": "2026-10-01",
+        "availableTo": null,
+        "durationMonths": null,
+        "neighborhood": "Adams Morgan",
+        "occupation": "accountant",
+        "synthetic": true
+      },
+      "preferences": {},
+      "availability": "moving next month",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic seeker — not a real person",
+        "vertical": "apartment"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic seeker — not a dating profile"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
     }
   ]
 }

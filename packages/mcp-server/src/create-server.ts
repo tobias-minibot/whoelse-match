@@ -28,6 +28,10 @@ export const findInput = {
   city: z.string().optional(),
   location: z.string().optional().describe("Free-text location; treated as city when possible"),
   availability: z.string().optional(),
+  side: z
+    .enum(["offer", "seek"])
+    .optional()
+    .describe("Marketplace direction: offer = who HAS it, seek = who NEEDS it. Inferred from intent when omitted."),
   exclude: z.array(z.string()).optional(),
   knownEntities: z.array(z.string()).optional().describe("Ids already known / shown"),
   entityId: z.string().optional().describe("Exemplar id — recursive more-like without a second tool"),
@@ -49,6 +53,7 @@ type FindArgs = {
   city?: string;
   location?: string;
   availability?: string;
+  side?: "offer" | "seek";
   exclude?: string[];
   knownEntities?: string[];
   entityId?: string;
@@ -80,7 +85,12 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
       context: context || "Who else like this?",
       predicate: args.predicate,
       requester: args.requester,
-      constraints: { type: args.type, city: args.city ?? args.location, limit: args.limit },
+      constraints: {
+        type: args.type,
+        city: args.city ?? args.location,
+        limit: args.limit,
+        side: args.side,
+      },
       exclude: args.exclude,
       knownEntities: args.knownEntities,
       entityId: args.entityId,

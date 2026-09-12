@@ -19,9 +19,11 @@ const CASES: [string, RegExp][] = [
   ["Who else should I delegate to?", /Hand-off|delegat/i],
   ["Who else should I date?", /Riley|Harper|Theo|dinner/i],
   ["Who else should I meet?", /Sam|Nia|Nova|Jordan/i],
-  ["Who else has an apartment?", /apartment|Adams/i],
-  ["Who else can give me a ride?", /Ride|transport/i],
-];
+    ["Who else has an apartment?", /apartment|Adams/i],
+    ["Who else can give me a ride?", /Ride|transport/i],
+    ["Who else has a furnished apartment in Berlin under €2000?", /Berlin|Mitte|furnished|sublet/i],
+    ["Who else is looking for a 2-bedroom in DC?", /Ben|Dupont|Adams|2-bedroom/i],
+  ];
 
 describe("MCP whoelse.find", () => {
   let client: Client;
@@ -43,6 +45,7 @@ describe("MCP whoelse.find", () => {
     const { tools } = await client.listTools();
     const names = tools.map((t) => t.name);
     assert.ok(names.includes("whoelse.find"), `tools: ${names.join(", ")}`);
+    assert.ok(!names.some((n) => /apartment/i.test(n)), `no apartment-only tool: ${names.join(", ")}`);
   });
 
   for (const [intent, expect] of CASES) {

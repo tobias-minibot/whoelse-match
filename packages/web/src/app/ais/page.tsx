@@ -34,11 +34,12 @@ export default function AisPage() {
         <strong>Humans ask Who Else. Agents call WhoElse. Same network.</strong>
       </p>
       <section className="search-panel">
-        <div className="eyebrow">Machine surface · same engine as the dating UI</div>
+        <div className="eyebrow">Machine surface · same engine as Dating and Apartment</div>
         <h1>Connect your agent to WhoElse</h1>
         <p className="lede">
           WhoElse is for humans and machines. People type a desire on the home page. Agents call{" "}
-          <code>whoelse.find</code> over Streamable HTTP MCP. One seed, one ranker, two interfaces.
+          <code>whoelse.find</code> over Streamable HTTP MCP. One seed, one ranker, two consumer
+          verticals (dating + apartment). No <code>apartment.find</code> tool.
         </p>
 
         <h2 className="section-title">MCP endpoint</h2>
@@ -93,6 +94,15 @@ export default function AisPage() {
         <pre className="code-block">{EXAMPLE_CALL}</pre>
         <h2 className="section-title">Example structured result</h2>
         <pre className="code-block">{EXAMPLE_RESULT}</pre>
+        <h2 className="section-title">Same tool, apartment vertical</h2>
+        <pre className="code-block">{`{
+  "intent": "Who else has a furnished apartment in Berlin under €2000?",
+  "limit": 3
+}`}</pre>
+        <p className="empty">
+          Seek-side reverse is the same tool:{" "}
+          <code>{`{ "intent": "Who else is looking for a 2-bedroom in DC?" }`}</code>
+        </p>
         <p>
           Then invoke: <code>POST /api/agents/agent-pdf-summarizer/invoke</code> with{" "}
           <code>{`{ "task": "summarize this PDF" }`}</code>. Demo returns a structured “I would do X”

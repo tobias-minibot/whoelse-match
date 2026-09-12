@@ -95,6 +95,21 @@ export class EntityStore {
     ];
   }
 
+  /** Neighborhoods plus their city, for generic "near X" parsing. */
+  places(): { neighborhood: string; city?: string; region?: string }[] {
+    const seen = new Set<string>();
+    const out: { neighborhood: string; city?: string; region?: string }[] = [];
+    for (const e of this.entities) {
+      const n = e.attributes?.neighborhood;
+      if (typeof n !== "string" || !n.trim()) continue;
+      const key = n.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({ neighborhood: n, city: e.location?.city, region: e.location?.region });
+    }
+    return out;
+  }
+
   recordFeedback(event: Omit<FeedbackEvent, "at"> & { at?: string }): FeedbackEvent {
     const full: FeedbackEvent = { ...event, at: event.at ?? new Date().toISOString() };
     this.feedback.push(full);
