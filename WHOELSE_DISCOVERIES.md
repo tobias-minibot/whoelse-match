@@ -191,7 +191,151 @@ A dedicated `apartment.find` would have proved the opposite of the thesis.
 
 ### Recommended third vertical (do not build)
 
-**Jobs / gigs** — “Who else is hiring for this?” and “Who else can do this work?” Humans on *both* sides, time windows, a budget/salary number, and the first place `trust` stops being a stub. Rides are already a one-row tease; jobs would stress offer/seek harder than housing because the “listing” is also a person. Compute/GPU is the agent-native version of the same sentence. Do not build it until this apartment reverse still feels obvious in production.
+**Jobs / gigs** — built next. See **JOBS VERTICAL** below. Apartment reverse still holds.
+
+---
+
+## JOBS VERTICAL — third costume, same operator (PRODUCTION)
+
+Dating asked: *Who else should I meet?*
+Apartment asked both: *Who else has this?* and *Who else needs this?*
+Jobs asks both **and** a harder sentence: *Who else can do this work?* where the doer may be a human, a company, an AI agent, or a hybrid.
+
+Built without a second architecture. Same `@whoelse/core`, same `whoelse.find`, same seed pool. No `jobs.find`.
+
+### Forced to add (generic — not job types)
+
+- `WhoElseConstraints.roles` — marketplace role keep-list (`opening` / `employer` / `worker` / `applicant` / `driver` / `passenger` / `provider` / `client`). Same switch apartment used as `listing`/`seeker`.
+- `AttributeOp.neq` — rides have changing `state` (`open` / `full` / `departing` / `completed`). “Who else can give me a ride” drops `completed`.
+- Price parse now picks a **key** (`rent` / `rate` / `price` / `budget`) from vocabulary. Apartment `$2500` stays `rent`. Gigs `$5000` become `rate`.
+- `durationWeeks`, `start=immediate`, `licensed`, `urgency`, `origin`, `destination`, `seats` — all generic attribute keys.
+- `trust.evidence` — `{ verified, verifiedBy, portfolio, outcomes, licenses, references }`. Status may be `evidence`. Not a score, not a market.
+- `inferredVertical` — costume hint from language. **Does not switch the matcher.** Tabs stay user-chosen.
+
+### Universal (still enough)
+
+`id`, `type`, `name`, `description`, `offers`, `seeks`, `attributes`, `preferences`, `availability`, `location`, `metadata`, `provenance`, `trust`.
+
+Job openings are **not a new type**. They are `type: resource` + `attributes.role = opening` + `attributes.owner = company-id` — the apartment listing pattern. Employers also carry the role as an offer on the company entity (`role: employer`). We seeded **both** on purpose.
+
+### Domain-specific (keys only)
+
+`roleTitle`, `rate`, `salary`, `durationWeeks`, `start`, `fallbackTo`, `latencyMs`, `priceUsd`. Living in `attributes`. The ranker does not import “job”.
+
+### Dating vs Jobs
+
+| | Dating | Jobs |
+| --- | --- | --- |
+| Human question | Who else should I meet? | Who else is hiring? **and** Who else can do this work? |
+| Entity | profile | employer / opening / worker / applicant / agent-as-worker |
+| Offers | skills / presence | a role **or** labor / capability |
+| Seeks | collaborator / date | a worker **or** a role |
+| Rank feel | sectioned Humans then AIs | **mixed score** — type on the badge |
+| MCP | `whoelse.find` | `whoelse.find` — no `jobs.find` |
+
+### Is a job opening an entity or an offer?
+
+**Both, and that is the finding.** Prefer offer/seek on entities.
+
+- **Offer attached to a company** (`role: employer`) wins for “Who else should I recruit?” / org-level sentences. The company *is* the entity; the opening is vocabulary on `offers`.
+- **Opening as an entity** (`role: opening`, `owner` → company) wins for reverse: “Who else needs this role?” / “Who else might be a good hire for this opening?” — same reason apartment listings are entities.
+
+We did **not** invent `JobOpening` as a type. `resource` + `role` was enough. If we had only companies, reverse matching lost a handle. If we had only openings, “who else is hiring” still worked but felt like a listings grid.
+
+### Task vs job
+
+**They collapse.** Hire-human / delegate-to-AI / call-MCP / contract-company is one operator:
+
+> Find an entity capable of outcome X under constraints C.
+
+Evidence: `Who else can do this work for under $5,000?` returns `role: worker` across `human`, `company` (vendor), and `agent` in the same first eight. Constraints (`rate lte 5000`) are generic. The client decides chat vs invoke vs stub interest. The engine does not.
+
+What does **not** collapse: dating still needs type louder than rank. Jobs can interleave because the user is asking for an *outcome*, not a *person to meet*.
+
+### Trust / evidence / verification / reputation
+
+They are **different**. Smallest useful abstraction:
+
+| Word | What we stored | What we refused |
+| --- | --- | --- |
+| evidence | portfolio links, past-outcome stubs, license strings | a score |
+| verification | `verified: true` + `verifiedBy: "demo-stub"` | a verifier network |
+| reputation | field left as `unscored-stub` on agents | a market, graph, or leaderboard |
+| trust | the existing stub, now able to hold `evidence` | payments, credentials, identity |
+
+“Who else has done this exact kind of work before?” boosts entities that *attached outcomes*, ~0.06–0.16 on the score. That is enough to feel real for a demo hire. It is not enough to be a marketplace.
+
+### Reciprocal matching
+
+First-class on every non-dating costume: **Who else needs this?** / **Who else has this?** Jobs needed it more than apartments because the same human is often *both* a worker (offers labor) and an applicant (seeks a role). `roles` is what keeps “hiring” from returning applicants and “looking for a role” from returning openings. Complementary Jaccard was already there; `roles` is the missing switch that `side` alone could not be — because jobs have **two** markets on one entity (job market vs labor market).
+
+### NL vs mode tabs
+
+NL **can** infer vertical (`inferVertical`) and side/roles. We **do not auto-switch tabs**. Auto-switch would fight the costume (a dating query typed on Jobs would jump away) and leak job humans into the dating Humans section. Result: tabs are costumes; the pool is shared; the meta line says `NL reads as jobs` when language and tab disagree.
+
+### What broke / what we removed
+
+- **`people` as a type lock.** “Hiring AI people in Washington” inferred `type=human` and emptied the opening/employer pool. Lookbehind + hire-language exception.
+- **`someone` as a type lock.** “Needs someone with my background” hid companies. Same class of bug as apartment “agent” ≠ type=ai.
+- **Price key defaulting to `rent`.** Gig `$5000` would have filtered apartments and missed `rate`. Vocabulary picks the key; aliases do **not** map `rate` ↔ `rent`.
+- **ReDoS.** `from .+ to` on ride language hung a hiring query for minutes. Bounded token pattern now.
+- **Nothing removed from dating/apartment.** Sectioned Humans→AIs and listing/seeker reverse are unchanged. Job humans are tagged `metadata.vertical=jobs` and stay out of the dating Humans section.
+
+### What each vertical taught
+
+- **Jobs** taught the two-market problem (job vs labor) and forced `roles`. Forced trust to become evidence. Forced mixed rank.
+- **Rides** taught **state**. An offer that was true this morning can be `full` or `completed`. Apartment availability was a date string; rides need a discrete state.
+- **Services** taught **license as evidence, not a type**. Unlicensed cheaper vs licensed emergency is a trust contrast, not `type: plumber`.
+- **Agents** taught fallback is just another offer (`fallbackTo` + Understudy/FallbackCoder) discovered by the same `whoelse.find`. Delegation is a sentence, not a runtime.
+
+### Where the abstraction breaks
+
+- Currency still not converted.
+- Synonyms still lose (“fullstack” vs “full stack”) unless the seed says both.
+- `roles` hard-filter drops a capable agent that forgot `role: worker`. Sparse data is punished — same as apartment `pets`.
+- Two-market entities (freelancer = worker + applicant) cannot be both sides of one query. We pick from language. That is honest and lossy.
+- Mixed rank on dating still feels like a trust failure. Do not generalize jobs interleaving backward.
+- STATE is an attribute, not a first-class timeline. No calendar, no seat hold, no booking.
+- ACTION is still `next.action` stubs (`invoke` / `chat` / `record_interest` / `open`). Find does not fulfill.
+- RELATION is `attributes.owner`. Not a graph. Enough for “this opening belongs to Northwind.”
+- Products / Experts remain eval-only stubs (`eval-product-drill`, `eval-expert-notary`). No UI.
+
+---
+
+## RIDES (experimental slice)
+
+Same operator. `role: driver | passenger`. `origin`, `destination`, `seats`, `state`, `price`. Synthetic only. Legacy `service-dc-ride` was patched into this shape so “Who else can give me a ride?” did not need a new tool.
+
+Changing state is the new primitive. `neq completed` is generic. A full ride still appears (state is visible on the card) so the costume can show that the world moved.
+
+## SERVICES (experimental slice)
+
+Same operator. `role: provider | client`. `trade`, `licensed`, `urgency`, `rate`. License lives on `trust.evidence.licenses`. The unlicensed cheap card is labeled DEMO and is a contrast, not inventory.
+
+## AGENTS / MCP (deepened, not a new app)
+
+Existing nine agents gained `latencyMs`, `priceUsd`, `reliability` (0–1 stub), `fallbackTo`, `delegation: "whoelse.find"`. New job-capable workers (CodeSmith, Gigwright, Reviewer, HireScout, PairCoder, ImmediateBot, BudgetCoder, DomainHopper, FallbackCoder) sit in the same pool with `role: worker`. Invoke stubs expanded. Still one tool.
+
+---
+
+### GROK (this phase)
+
+- Jobs is where offer/seek stops being a housing trick and becomes the product. The scary sentence is not “who else is hiring.” It is “who else can do this work” with humans and AIs in one list and the badge doing the trust work dating refused to skip.
+- `roles` is more load-bearing than `side` once one entity participates in two markets.
+- Evidence fields changed the *feel* of a hire query more than any ranker tweak. Drew Ibarra exists because the seed says “done this exact kind of work,” and `trust.evidence.outcomes` makes the why-line honest.
+- NL vertical inference works on the example set and must not drive navigation. The costume is a promise to the human, not a filter the engine needs.
+
+### TOBIAS (this phase)
+
+The hierarchy held: one core, one `whoelse.find`, many domains. Jobs is the production costume. Rides/services/agents are slices in the same repo, same PR, same schema. Reciprocal discovery is now a button on every non-dating card. Trust started small and stayed small.
+
+### IMPLEMENTATION (this phase)
+
+23. **`roles` is the jobs-shaped twin of apartment `side`.** `side` still drops seeker↔listing families. `roles` names which family you meant when both families are offer-shaped (hiring vs can-do-work).
+24. **Openings as `resource` + `role: opening` + `owner`.** Not a type. Reverse works. Companies still exist as employers.
+25. **Heterogeneous rank is a UI choice, not an engine fork.** The engine already returned one scored list. Dating sections it. Jobs does not.
+26. **Agent deepening is attributes, not a capability registry.** `fallbackTo` is data. “Who else can take over if CodeSmith fails?” is `whoelse.find`.
+27. **Seed generator is idempotent** (`scripts/generate-vertical-seeds.ts`, `metadata.scale = 2026-verticals`). Re-run does not duplicate.
 
 ---
 

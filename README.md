@@ -4,14 +4,14 @@
 
 Two surfaces, one engine, one seed:
 
-1. **Human** — consumer “Who else?” (dating + apartment). People never need to know MCP exists.
-2. **Machine** — MCP / HTTP. Agents discover other agents, services, humans, listings, and seekers.
+1. **Human** — consumer “Who else?” (dating, apartment, jobs, plus experimental rides/services). People never need to know MCP exists.
+2. **Machine** — MCP / HTTP. Agents discover other agents, services, humans, listings, openings, and seekers.
 
 Same entity model. Same matching engine. Same discovery pool. Different interfaces.
 
 > Dating is the first ontology, not the type system. The core is a universal matching layer between entities, needs, capabilities, preferences, availability, and intent.
 >
-> Landing / brand / pitch stay as the story layer. This repo ships the dating MVP — not a giant platform.
+> Landing / brand / pitch stay as the story layer. Dating remains the first costume. Jobs is the production third. Not a giant platform.
 
 ---
 
@@ -28,7 +28,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Product (this repo)
 
-- **Human surface:** Next.js App Router — Dating | Apartment tabs. Primary interaction is **Who else?** (or **Who else needs this?** on I HAVE). Humans never see MCP.
+- **Human surface:** Next.js App Router — Dating | Apartment | Jobs | Rides | Services tabs. Primary interaction is **Who else?** (or **Who else needs this?** on I HAVE). Humans never see MCP. Jobs ranks humans, companies, and AIs in one list. Dating stays sectioned.
 - **AI surface:** Streamable HTTP MCP at `/api/mcp` (same Vercel app) plus stdio `pnpm mcp`. Primary tool **`whoelse.find`**. Same `@whoelse/core` engine and `data/seed.json` as the web app.
 - **Thin HTTP API** — the dating UI’s adapter; not a second matcher. Agents invoke via `POST /api/agents/:id/invoke` (demo stub).
 
@@ -62,8 +62,8 @@ Documented so they can be undone without a rewrite:
 | Dating fields in `attributes` / `preferences` | Core stays vertical-agnostic | New verticals add keys, not types |
 | `offers` + `seeks` on every entity | Both sides of matching (capability ↔ need) | Same primitive as later agent coordination |
 | `type` is an open string | Seed uses `human` \| `ai`; reserved: agent, service, company, product, dataset, resource | Add types in data, not a core fork |
-| `trust` is a stub | Provenance exists; no reputation graph | Fill later without renaming fields |
-| Default UI: **Humans then AIs** | Trust — type is never ambiguous | Mixed ranking is an open experiment (see below) |
+| `trust` holds optional `evidence` | Jobs needed portfolio / outcomes / verified stubs — not a reputation market | Drop `evidence`; status stays a stub |
+| Default UI: **Humans then AIs** on dating | Trust — type is never ambiguous | Jobs uses mixed rank; dating stays sectioned |
 | Default mode for dating = `expand` | “Who else?” means more of this, not a replacement | Pass `mode: substitute \| peers` |
 | In-memory feedback | Honest about MVP scope | Persist later; the signal shape is stable |
 
@@ -116,13 +116,13 @@ Generic. Not dating-hardcoded.
   location?: { city?, region?, country? }
   embedding?: number[]                  // reserved
   metadata: Record<string, unknown>     // demo labels, AI/agent disclosure
-  trust?: { status, provenance, notes } // stub — not a reputation graph
+  trust?: { status, provenance, notes, evidence? } // evidence stubs, not a reputation market
   provenance: "synthetic" | "ai_generated" | "user"
   created_at: string
 }
 ```
 
-Dating humans **offer** skills / presence and **seek** compatible others. Labeled AIs **offer** conversation capabilities and **seek** users who want that. Capability agents **offer** tools (summarize, browse, translate…) and **seek** work / delegation. Apartment listings are `type: resource` with rent/bedrooms/pets in `attributes`. Seekers are labeled humans with `attributes.role = "seeker"`. A thin ride `service` stub remains. Same `offers` / `seeks` primitive — no vertical-only operator.
+Dating humans **offer** skills / presence and **seek** compatible others. Labeled AIs **offer** conversation capabilities and **seek** users who want that. Capability agents **offer** tools (summarize, browse, translate…) and **seek** work / delegation. Apartment listings are `type: resource` with rent/bedrooms/pets in `attributes`. Job openings reuse that pattern (`role: opening`, `owner` → company) instead of a `JobOpening` type. Freelancers, vendor companies, and AI workers share `role: worker`. Seekers / applicants / passengers / clients are the complementary `role`. Same `offers` / `seeks` primitive — no vertical-only operator. Never `jobs.find` / `rides.find`.
 
 **Seed rules**
 
@@ -181,7 +181,7 @@ pnpm test               # core + MCP stdio + Streamable HTTP client tests
 pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfood queries
 ```
 
-**Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `exclude`, `knownEntities`, `entityId`, `limit`, `mode`, `ranking`, `minTrust`.
+**Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `side`, `roles`, `exclude`, `knownEntities`, `entityId`, `limit`, `mode`, `ranking`, `minTrust`.
 
 **Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, next }] }`
 
@@ -236,17 +236,17 @@ Same engine. Used by the web app.
 
 - Doctrine on home + `/ais`: **Humans ask Who Else. Agents call WhoElse. Same network.**
 - `/ais` — MCP URL, Cursor config, tools, example call/result
-- Tabs: **Dating** (default) and **Apartment** (SEEK / I HAVE). Dating home is unchanged.
+- Tabs: **Dating** (default), **Apartment**, **Jobs**, **Rides**, **Services**. Dating home is unchanged. Non-dating tabs have SEEK / I HAVE. Jobs does **not** force `side` — NL infers it.
 - Apartment SEEK: **What are you looking for?** + **Who else?**
 - Apartment I HAVE: **I have…** + **Who else needs this?**
 - Apartment results stay cards-with-why, plus reverse **Who else needs this?** / **Who else has this?**
-- Loud **DEMO data** banner on the apartment tab. No Zillow grid.
+- Loud **DEMO data** banner on every non-dating tab. No Zillow / LinkedIn / Uber clone.
 - Cards: HUMAN / AI badge, why, commonalities, surprising difference
 - Actions: **Who else?** (recursive exemplar) · **More like this** (peers mode) · **Less like this** · **Chat**
   - AI chat = labeled stub (or OpenAI persona if keyed)
   - Human chat = interest recorded stub
 - Default layout: **Humans** section, then **AIs** section (trust)
-- Mixed ranking (one interleaved list) is an **open experiment**, not the default
+- Mixed ranking is the **Jobs default** (outcome query). Dating stays sectioned.
 
 ---
 
@@ -333,11 +333,10 @@ After deploy, check `GET /api/health` for seed counts (`humans`, `ais`, `byType`
 
 1. Drop in `@xenova/transformers` embeddings on the reserved `embedding` field; A/B against TF-IDF on the same seed.
 2. Mixed ranking vs sectioned ranking — measure “did you notice the AIs were AIs?”
-3. Persist feedback and treat MORE/LESS as a tiny preference vector.
-4. A third consumer vertical (jobs/gigs) — housing is no longer a stub; see `WHOELSE_DISCOVERIES.md`.
-5. Real MCP-hosted session so Claude and the web app share exclude lists.
-6. Consent / disclosure UX research: how large does the AI/agent badge need to be?
-7. Fill `trust` without inventing a reputation product.
+3. Persist feedback (web + MCP isolates) and treat MORE/LESS as a tiny preference vector.
+4. Real MCP-hosted session so Claude and the web app share exclude lists.
+5. Consent / disclosure UX research: how large does the AI/agent badge need to be on a mixed jobs list?
+6. Products / Experts UI — eval stubs exist; do not build the costume until jobs reverse still feels obvious in production.
 
 ---
 

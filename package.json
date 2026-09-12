@@ -19,6 +19,7 @@
     "dogfood": "pnpm --filter @whoelse/core exec tsx scripts/dogfood.ts",
     "legacy:catalog": "python3 scripts/build-reconstructed-catalog.py",
     "legacy:probe": "node --experimental-strip-types --no-warnings scripts/legacy-live-probe.ts",
+    "seed:verticals": "npx tsx scripts/generate-vertical-seeds.ts",
     "typecheck": "pnpm -r typecheck"
   }
 }

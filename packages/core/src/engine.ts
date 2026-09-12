@@ -1,5 +1,5 @@
 import { buildExplanation, labelsOf } from "./explain.js";
-import { inferConstraints, inferMode, queryText, wantsCheaper } from "./parse.js";
+import { inferConstraints, inferMode, inferVertical, queryText, wantsCheaper } from "./parse.js";
 import { maybeChat, maybeRerankAndExplain } from "./openai.js";
 import { entityText, EntityStore, offersOf, seeksOf, stringList } from "./store.js";
 import { jaccard } from "./text.js";
@@ -16,6 +16,7 @@ import type {
   WhoElseRequest,
   WhoElseResult,
 } from "./types.js";
+import { OFFER_ROLES, SEEK_ROLES } from "./types.js";
 
 const TEXT_W = 0.5;
 const STRUCT_W = 0.28;
@@ -87,7 +88,11 @@ export class WhoElseEngine {
       }
       if (request.minTrust && request.minTrust !== "any") {
         const status = entity.trust?.status ?? "unscored";
-        if (status !== request.minTrust) continue;
+        if (request.minTrust === "evidence") {
+          if (status !== "evidence" && !entity.trust?.evidence) continue;
+        } else if (status !== request.minTrust) {
+          continue;
+        }
       }
       if (inferredConstraints.interests?.length) {
         const have = labelsOf(entity).map((s) => s.toLowerCase());
@@ -95,8 +100,10 @@ export class WhoElseEngine {
         if (!need.some((n) => have.some((h) => h.includes(n) || n.includes(h)))) continue;
       }
       if (!passesSide(entity, inferredConstraints.side)) continue;
+      if (!passesRoles(entity, inferredConstraints.roles)) continue;
       if (!passesAttributes(entity, inferredConstraints.attributes)) continue;
       if (!passesNeighborhood(entity, inferredConstraints)) continue;
+      if (inferredConstraints.state && !matchState(entity, inferredConstraints.state)) continue;
 
       const text = this.index.similarity(entity.id, qVec);
       const structured = structuredScore(
@@ -109,6 +116,7 @@ export class WhoElseEngine {
       const location = locationScore(entity, inferredConstraints, contextEntity);
       const typeAffinity = typeScore(entity, inferredMode, contextEntity);
       const feedback = this.store.feedbackScore(entity.id, request.context);
+      const evidence = evidenceScore(entity, rawQuery);
       // Kill the 0.04 type-only floor that filled first-five with random humans.
       // Attribute hits are already relevant — "accepts pets" should not die on TF-IDF.
       const constrained = Boolean(inferredConstraints.attributes?.length);
@@ -118,7 +126,8 @@ export class WhoElseEngine {
         text < 0.03 &&
         structured < 0.05 &&
         location === 0 &&
-        feedback === 0
+        feedback === 0 &&
+        evidence === 0
       ) {
         continue;
       }
@@ -129,7 +138,8 @@ export class WhoElseEngine {
         structW * structured +
         LOC_W * location +
         TYPE_W * typeAffinity +
-        feedback;
+        feedback +
+        evidence;
 
       const sharedTerms = this.index.topTerms(entity.id, rawQuery);
       const breakdown: ScoreBreakdown = {
@@ -156,7 +166,14 @@ export class WhoElseEngine {
     scored.sort((a, b) => b.score - a.score);
     const limit = request.limit ?? request.constraints?.limit ?? 8;
     const top = scored.slice(0, Math.max(limit, 8));
-    return finish(request.context, inferredMode, inferredConstraints, false, top.slice(0, limit));
+    return finish(
+      request.context,
+      inferredMode,
+      inferredConstraints,
+      inferVertical(userText),
+      false,
+      top.slice(0, limit),
+    );
   }
 
   async whoelseAsync(request: WhoElseRequest): Promise<WhoElseResult> {
@@ -167,6 +184,7 @@ export class WhoElseEngine {
       request.context,
       local.inferredMode,
       local.inferredConstraints,
+      local.inferredVertical,
       reranked.used,
       reranked.candidates.slice(0, limit),
     );
@@ -300,7 +318,11 @@ function inheritExemplarFilters(
   entity?: Entity,
 ) {
   if (!entity) return;
-  if (!/\blike this\b|\bsomething like\b|\bthis (apartment|listing|place|one)\b/i.test(userText)) {
+  if (
+    !/\blike this\b|\bsomething like\b|\bthis (apartment|listing|place|one|role|job|ride|gig)\b/i.test(
+      userText,
+    )
+  ) {
     return;
   }
   const a = entity.attributes ?? {};
@@ -314,6 +336,10 @@ function inheritExemplarFilters(
   if (a.furnished === true) add("furnished", "truthy", true);
   if (a.furnished === false) add("furnished", "eq", false);
   if (typeof a.currency === "string") add("currency", "eq", a.currency);
+  if (typeof a.durationWeeks === "number") add("durationWeeks", "eq", a.durationWeeks);
+  if (typeof a.origin === "string") add("origin", "includes", a.origin);
+  if (typeof a.destination === "string") add("destination", "includes", a.destination);
+  if (a.licensed === true) add("licensed", "truthy", true);
   if (!constraints.city && entity.location?.city) constraints.city = entity.location.city;
   if (!constraints.region && entity.location?.region) constraints.region = entity.location.region;
 }
@@ -324,20 +350,44 @@ function applyCheaperFromExemplar(
   contextEntity?: Entity,
 ) {
   if (!contextEntity || !wantsCheaper(query)) return;
-  const rent = asNumber(contextEntity.attributes?.rent ?? contextEntity.attributes?.price);
-  if (rent == null) return;
+  const amount = asNumber(
+    contextEntity.attributes?.rent ??
+      contextEntity.attributes?.rate ??
+      contextEntity.attributes?.price ??
+      contextEntity.attributes?.priceUsd,
+  );
+  if (amount == null) return;
   const attrs = (constraints.attributes ??= []);
-  if (!attrs.some((a) => a.key === "rent" && a.op === "lte")) {
-    attrs.push({ key: "rent", op: "lte", value: rent - 1 });
+  const key =
+    contextEntity.attributes?.rate != null
+      ? "rate"
+      : contextEntity.attributes?.price != null
+        ? "price"
+        : "rent";
+  if (!attrs.some((a) => a.key === key && a.op === "lte")) {
+    attrs.push({ key, op: "lte", value: amount - 1 });
   }
 }
 
 function passesSide(entity: Entity, side?: MatchSide): boolean {
   if (!side) return true;
   const role = typeof entity.attributes?.role === "string" ? entity.attributes.role : "";
-  if (side === "offer" && role === "seeker") return false;
-  if (side === "seek" && role === "listing") return false;
+  if (!role) return true;
+  if (side === "offer" && (SEEK_ROLES as readonly string[]).includes(role)) return false;
+  if (side === "seek" && (OFFER_ROLES as readonly string[]).includes(role)) return false;
   return true;
+}
+
+function passesRoles(entity: Entity, roles?: string[]): boolean {
+  if (!roles?.length) return true;
+  const role = typeof entity.attributes?.role === "string" ? entity.attributes.role : "";
+  return roles.includes(role);
+}
+
+function matchState(entity: Entity, want: string): boolean {
+  const have = entity.attributes?.state;
+  if (have == null || have === "") return true;
+  return eq(String(have), want);
 }
 
 function passesNeighborhood(entity: Entity, constraints: WhoElseConstraints): boolean {
@@ -351,13 +401,33 @@ function passesNeighborhood(entity: Entity, constraints: WhoElseConstraints): bo
 function passesAttributes(entity: Entity, attrs?: AttributeConstraint[]): boolean {
   if (!attrs?.length) return true;
   for (const constraint of attrs) {
-    const have = entity.attributes?.[constraint.key] ?? entity.preferences?.[constraint.key];
+    const have = readAttr(entity, constraint.key);
     if (!matchAttribute(have, constraint)) return false;
   }
   return true;
 }
 
+const ATTR_ALIASES: Record<string, string[]> = {
+  rate: ["rate", "priceUsd", "price"],
+  budget: ["budget", "salary"],
+  price: ["price", "priceUsd", "rate"],
+  salary: ["salary", "budget"],
+};
+
+function readAttr(entity: Entity, key: string): unknown {
+  const keys = ATTR_ALIASES[key] ?? [key];
+  for (const k of keys) {
+    const have = entity.attributes?.[k] ?? entity.preferences?.[k];
+    if (have != null && have !== "") return have;
+  }
+  return entity.attributes?.[key] ?? entity.preferences?.[key];
+}
+
 function matchAttribute(have: unknown, constraint: AttributeConstraint): boolean {
+  if (constraint.op === "neq") {
+    if (have == null || have === "") return true;
+    return String(have).toLowerCase() !== String(constraint.value).toLowerCase();
+  }
   if (constraint.op === "truthy") {
     return have === true || have === "true" || have === "yes";
   }
@@ -424,10 +494,26 @@ function eq(a?: string, b?: string): boolean {
   return (a ?? "").toLowerCase() === (b ?? "").toLowerCase();
 }
 
+function evidenceScore(entity: Entity, query: string): number {
+  const ev = entity.trust?.evidence;
+  if (!ev) return 0;
+  const wants = /\b(done this|portfolio|verified|licensed|past (work|outcome)|exact kind)\b/i.test(
+    query,
+  );
+  if (!wants) return ev.verified ? 0.015 : 0;
+  let score = 0;
+  if (ev.verified) score += 0.08;
+  if (ev.outcomes?.length) score += 0.06;
+  if (ev.portfolio?.length) score += 0.04;
+  if (ev.licenses?.length) score += 0.04;
+  return Math.min(0.16, score);
+}
+
 function finish(
   query: string,
   inferredMode: WhoElseMode,
   inferredConstraints: WhoElseResult["inferredConstraints"],
+  inferredVertical: WhoElseResult["inferredVertical"],
   usedOpenAiRerank: boolean,
   candidates: Candidate[],
 ): WhoElseResult {
@@ -435,6 +521,7 @@ function finish(
     query,
     inferredMode,
     inferredConstraints,
+    inferredVertical,
     usedOpenAiRerank,
     candidates,
     humans: candidates.filter((c) => c.entity.type === "human"),

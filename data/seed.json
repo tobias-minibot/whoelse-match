@@ -1,6 +1,4 @@
 {
-  "version": 1,
-  "disclaimer": "Human dating profiles are synthetic demo data. Apartment listings and seekers are DEMO synthetic data — not real homes or people, not scraped. AI and agent profiles are labeled and never presented as human. Resource/service rows prove other verticals on the same primitive.",
   "entities": [
     {
       "id": "human-maya-chen",
@@ -2178,7 +2176,7 @@
           "discover",
           "invoke-stub"
         ],
-        "reliability": "unscored-stub",
+        "reliability": 0.93,
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
         "geoLegal": "synthetic-demo",
@@ -2189,7 +2187,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 1200,
+        "priceUsd": 0.4,
+        "fallbackTo": [
+          "agent-delegate"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2236,7 +2240,7 @@
           "invoke-stub"
         ],
         "pricing": "stub",
-        "reliability": "unscored-stub",
+        "reliability": 0.88,
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
         "geoLegal": "synthetic-demo",
@@ -2247,7 +2251,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 2200,
+        "priceUsd": 0.6,
+        "fallbackTo": [
+          "agent-capability-index"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2298,7 +2308,7 @@
         ],
         "pricing": "stub",
         "latency": "seconds",
-        "reliability": "unscored-stub",
+        "reliability": 0.95,
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
         "geoLegal": "synthetic-demo",
@@ -2309,7 +2319,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 800,
+        "priceUsd": 0.2,
+        "fallbackTo": [
+          "agent-delegate"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2346,7 +2362,7 @@
       ],
       "attributes": {
         "owner": "synthetic-lab",
-        "reliability": "stub",
+        "reliability": 0.9,
         "isAI": true,
         "tools": [
           "result verification",
@@ -2369,7 +2385,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 1500,
+        "priceUsd": 0.5,
+        "fallbackTo": [
+          "agent-reviewer"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2416,7 +2438,7 @@
           "discover",
           "invoke-stub"
         ],
-        "reliability": "unscored-stub",
+        "reliability": 0.8,
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
         "geoLegal": "synthetic-demo",
@@ -2427,7 +2449,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 4000,
+        "priceUsd": 0.05,
+        "fallbackTo": [
+          "agent-workflow"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2473,7 +2501,7 @@
         ],
         "pricing": "stub",
         "latency": "seconds",
-        "reliability": "unscored-stub",
+        "reliability": 0.87,
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
         "geoLegal": "synthetic-demo",
@@ -2484,7 +2512,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 1800,
+        "priceUsd": 0.7,
+        "fallbackTo": [
+          "agent-delegate"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2520,7 +2554,7 @@
       ],
       "attributes": {
         "owner": "synthetic-lab",
-        "reliability": "stub-backup",
+        "reliability": 0.92,
         "isAI": true,
         "tools": [
           "failover takeover",
@@ -2543,7 +2577,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 600,
+        "priceUsd": 0.3,
+        "fallbackTo": [
+          "agent-delegate"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2591,7 +2631,7 @@
         ],
         "pricing": "stub",
         "latency": "seconds",
-        "reliability": "unscored-stub",
+        "reliability": 0.96,
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
         "geoLegal": "synthetic-demo",
@@ -2602,7 +2642,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 350,
+        "priceUsd": 0.1,
+        "fallbackTo": [
+          "agent-delegate"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2650,7 +2696,7 @@
         ],
         "pricing": "stub",
         "latency": "seconds",
-        "reliability": "unscored-stub",
+        "reliability": 0.94,
         "reputation": "unscored-stub",
         "contextAccess": "declared-offers-only",
         "geoLegal": "synthetic-demo",
@@ -2661,7 +2707,13 @@
           "type": "none",
           "note": "open demo stub — not a credential market"
         },
-        "availability": "always on"
+        "availability": "always on",
+        "latencyMs": 500,
+        "priceUsd": 0.15,
+        "fallbackTo": [
+          "agent-failover"
+        ],
+        "delegation": "whoelse.find"
       },
       "preferences": {},
       "availability": "always on",
@@ -2685,7 +2737,8 @@
       "offers": [
         "ride",
         "give me a ride",
-        "local transport"
+        "local transport",
+        "seats"
       ],
       "seeks": [
         "passengers",
@@ -2696,7 +2749,14 @@
       ],
       "attributes": {
         "stub": true,
-        "vehicle": "demo"
+        "vehicle": "demo",
+        "role": "driver",
+        "origin": "Washington",
+        "destination": "Trails",
+        "seats": 3,
+        "state": "open",
+        "price": 16,
+        "currency": "USD"
       },
       "preferences": {},
       "availability": "on request",
@@ -5799,6 +5859,4691 @@
         "notes": "synthetic seeker — not a dating profile"
       },
       "provenance": "synthetic",
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-northwind-labs",
+      "type": "company",
+      "name": "Northwind Labs",
+      "description": "DEMO synthetic employer in Washington. Hiring AI engineers and people who have shipped model evals. Not a real company.",
+      "offers": [
+        "AI engineer role",
+        "hiring AI people",
+        "job in Washington",
+        "full-time role"
+      ],
+      "seeks": [
+        "AI engineer",
+        "someone with model eval background",
+        "people who can start soon"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "hiring now",
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "AI engineer",
+        "rate": 140000,
+        "salary": 140000,
+        "currency": "USD",
+        "start": "immediate",
+        "owner": "company-northwind-labs"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic employer — not a real hiring org"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "AI engineer role",
+        "hiring AI people",
+        "job in Washington",
+        "full-time role"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-potomac-gig",
+      "type": "company",
+      "name": "Potomac Gig Desk",
+      "description": "DEMO synthetic shop for 3-week LLM projects and freelancer contracts in DC. Not a real desk.",
+      "offers": [
+        "3-week project",
+        "freelancer contract",
+        "LLM project",
+        "short gig"
+      ],
+      "seeks": [
+        "freelancer",
+        "contractor for a three-week project",
+        "someone who can ship fast"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "contracts open",
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "3-week LLM contractor",
+        "rate": 4800,
+        "durationWeeks": 3,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "3-week project",
+        "freelancer contract",
+        "LLM project",
+        "short gig"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-twoweek-shop",
+      "type": "company",
+      "name": "Two-Week Shop",
+      "description": "DEMO synthetic studio that only runs two-week coding projects. Not a real studio.",
+      "offers": [
+        "two-week coding project",
+        "2-week project",
+        "short coding gig"
+      ],
+      "seeks": [
+        "coder for a two-week project",
+        "available immediately"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "this sprint",
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "two-week coding project",
+        "rate": 4200,
+        "durationWeeks": 2,
+        "currency": "USD",
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "two-week coding project",
+        "2-week project",
+        "short coding gig"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-under5k",
+      "type": "company",
+      "name": "Under-5k Studio",
+      "description": "DEMO synthetic studio hiring work for under $5,000. Not a real studio.",
+      "offers": [
+        "project under $5000",
+        "small paid gig",
+        "landing-page contract"
+      ],
+      "seeks": [
+        "someone who can do this work for under $5,000"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "small gig",
+        "rate": 4500,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "project under $5000",
+        "small paid gig",
+        "landing-page contract"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-immediate-start",
+      "type": "company",
+      "name": "Immediate Start Inc",
+      "description": "DEMO synthetic employer who needs someone who can start immediately. Not real.",
+      "offers": [
+        "immediate-start role",
+        "backend contract",
+        "can start now"
+      ],
+      "seeks": [
+        "someone who can start immediately"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "backend contractor",
+        "rate": 8000,
+        "start": "immediate",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "immediate-start role",
+        "backend contract",
+        "can start now"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-cascade",
+      "type": "company",
+      "name": "Cascade Systems",
+      "description": "DEMO synthetic DC company hiring fullstack engineers. Not a real company.",
+      "offers": [
+        "fullstack role",
+        "hiring engineers",
+        "job opening"
+      ],
+      "seeks": [
+        "fullstack engineer"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "fullstack engineer",
+        "salary": 125000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "fullstack role",
+        "hiring engineers",
+        "job opening"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-harbor",
+      "type": "company",
+      "name": "Harbor Collective",
+      "description": "DEMO synthetic NYC studio hiring product designers. Not real.",
+      "offers": [
+        "product designer role",
+        "hiring designers"
+      ],
+      "seeks": [
+        "product designer"
+      ],
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "product designer",
+        "salary": 110000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "product designer role",
+        "hiring designers"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-spree",
+      "type": "company",
+      "name": "Spree Studio",
+      "description": "DEMO synthetic Berlin studio hiring ML engineers. Not real.",
+      "offers": [
+        "ML engineer role",
+        "hiring in Berlin"
+      ],
+      "seeks": [
+        "ML engineer"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "ML engineer",
+        "salary": 85000,
+        "currency": "EUR"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ML engineer role",
+        "hiring in Berlin"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-anacostia",
+      "type": "company",
+      "name": "Anacostia Works",
+      "description": "DEMO synthetic DC desk for weekend and local gigs. Not real.",
+      "offers": [
+        "weekend gig",
+        "local task",
+        "short paid work"
+      ],
+      "seeks": [
+        "available weekend worker"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "weekend gig",
+        "rate": 600,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "weekend gig",
+        "local task",
+        "short paid work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-quiet-ops",
+      "type": "company",
+      "name": "Quiet Capital Ops",
+      "description": "DEMO synthetic ops employer in DC. Not a real fund.",
+      "offers": [
+        "ops role",
+        "hiring operations"
+      ],
+      "seeks": [
+        "ops generalist"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "ops generalist",
+        "salary": 95000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ops role",
+        "hiring operations"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-civic-stack",
+      "type": "company",
+      "name": "Civic Stack",
+      "description": "DEMO synthetic civic-tech employer in Washington. Not a real org.",
+      "offers": [
+        "civic tech role",
+        "hiring in Washington"
+      ],
+      "seeks": [
+        "civic technologist"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "civic technologist",
+        "salary": 105000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "civic tech role",
+        "hiring in Washington"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-hybrid-crew",
+      "type": "company",
+      "name": "Hybrid Crew Co",
+      "description": "DEMO synthetic company that hires humans and AIs onto the same crew. Not a real company.",
+      "offers": [
+        "hybrid human-AI role",
+        "hiring humans and AIs",
+        "who else could do this job human or AI"
+      ],
+      "seeks": [
+        "human or AI worker",
+        "agent that can ship",
+        "freelancer"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "employer",
+        "roleTitle": "hybrid crew",
+        "rate": 5000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic employer",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "hybrid human-AI role",
+        "hiring humans and AIs",
+        "who else could do this job human or AI"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "company-fleet-dev",
+      "type": "company",
+      "name": "Fleet Dev Co",
+      "description": "DEMO synthetic vendor company that can do this work for under $5,000 — a company as a worker, not a job opening. Not a real company.",
+      "offers": [
+        "can do this work",
+        "can do this work for under $5,000",
+        "two-week coding project",
+        "contract team"
+      ],
+      "seeks": [
+        "scoped outcomes",
+        "short contracts"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "can start immediately",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "roleTitle": "contracting team",
+        "rate": 4800,
+        "durationWeeks": 2,
+        "start": "immediate",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic vendor",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "company-as-worker — same role as a freelancer"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "can do this work",
+        "can do this work for under $5,000",
+        "two-week coding project",
+        "contract team"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-northwind-ai",
+      "type": "resource",
+      "name": "Northwind AI engineer opening",
+      "description": "DEMO synthetic opening attached to Northwind Labs — a job opening is an offer, not a new entity type. Not a real job.",
+      "offers": [
+        "AI engineer role",
+        "hiring AI people in Washington",
+        "job opening"
+      ],
+      "seeks": [
+        "AI engineer",
+        "someone with this background"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-northwind-labs",
+        "roleTitle": "AI engineer",
+        "rate": 140000,
+        "salary": 140000,
+        "start": "immediate",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "AI engineer role",
+        "hiring AI people in Washington",
+        "job opening"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-potomac-3wk",
+      "type": "resource",
+      "name": "Potomac 3-week LLM project",
+      "description": "DEMO synthetic opening. Not a real contract.",
+      "offers": [
+        "3-week project",
+        "three-week coding project",
+        "freelancer contract"
+      ],
+      "seeks": [
+        "freelancer who can ship a three-week project"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-potomac-gig",
+        "roleTitle": "3-week LLM contractor",
+        "rate": 4800,
+        "durationWeeks": 3,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "3-week project",
+        "three-week coding project",
+        "freelancer contract"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-twoweek-code",
+      "type": "resource",
+      "name": "Two-week coding project",
+      "description": "DEMO synthetic opening. Not a real sprint.",
+      "offers": [
+        "two-week coding project",
+        "2-week project",
+        "available immediately"
+      ],
+      "seeks": [
+        "coder available for a two-week coding project"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-twoweek-shop",
+        "roleTitle": "two-week coding project",
+        "rate": 4200,
+        "durationWeeks": 2,
+        "start": "immediate",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "two-week coding project",
+        "2-week project",
+        "available immediately"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-under5k-web",
+      "type": "resource",
+      "name": "Under-$5k web gig",
+      "description": "DEMO synthetic opening. Not a real gig.",
+      "offers": [
+        "work for under $5,000",
+        "project under $5000",
+        "small paid gig"
+      ],
+      "seeks": [
+        "someone who can do this work for under $5,000"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-under5k",
+        "roleTitle": "landing page under $5000",
+        "rate": 4500,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "work for under $5,000",
+        "project under $5000",
+        "small paid gig"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-immediate-backend",
+      "type": "resource",
+      "name": "Immediate-start backend",
+      "description": "DEMO synthetic opening. Not a real contract.",
+      "offers": [
+        "can start immediately",
+        "immediate start",
+        "backend contract"
+      ],
+      "seeks": [
+        "someone who can start immediately"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-immediate-start",
+        "roleTitle": "backend contractor",
+        "rate": 8000,
+        "start": "immediate",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "can start immediately",
+        "immediate start",
+        "backend contract"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-cascade-full",
+      "type": "resource",
+      "name": "Cascade fullstack opening",
+      "description": "DEMO synthetic opening. Not a real job.",
+      "offers": [
+        "fullstack role",
+        "hiring",
+        "job opening"
+      ],
+      "seeks": [
+        "fullstack engineer"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-cascade",
+        "roleTitle": "fullstack engineer",
+        "rate": 125000,
+        "salary": 125000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "fullstack role",
+        "hiring",
+        "job opening"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-harbor-design",
+      "type": "resource",
+      "name": "Harbor designer opening",
+      "description": "DEMO synthetic opening. Not a real job.",
+      "offers": [
+        "designer role",
+        "hiring designers"
+      ],
+      "seeks": [
+        "product designer"
+      ],
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-harbor",
+        "roleTitle": "product designer",
+        "rate": 110000,
+        "salary": 110000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "designer role",
+        "hiring designers"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-spree-ml",
+      "type": "resource",
+      "name": "Spree ML opening",
+      "description": "DEMO synthetic opening. Not a real job.",
+      "offers": [
+        "ML role in Berlin",
+        "hiring"
+      ],
+      "seeks": [
+        "ML engineer"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-spree",
+        "roleTitle": "ML engineer",
+        "rate": 85000,
+        "salary": 85000,
+        "currency": "EUR"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ML role in Berlin",
+        "hiring"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-civic",
+      "type": "resource",
+      "name": "Civic Stack opening",
+      "description": "DEMO synthetic opening. Not a real job.",
+      "offers": [
+        "civic tech role",
+        "hiring in Washington"
+      ],
+      "seeks": [
+        "civic technologist"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-civic-stack",
+        "roleTitle": "civic technologist",
+        "rate": 105000,
+        "salary": 105000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "civic tech role",
+        "hiring in Washington"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-recruit-me",
+      "type": "resource",
+      "name": "Who-else-should-I-recruit opening",
+      "description": "DEMO synthetic opening used for recruit-style reverse. Not a real req.",
+      "offers": [
+        "who else should I recruit",
+        "hiring",
+        "less obvious hire"
+      ],
+      "seeks": [
+        "better fit but less obvious",
+        "someone with this background"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-hybrid-crew",
+        "roleTitle": "recruiting target: AI generalist",
+        "rate": 6000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "who else should I recruit",
+        "hiring",
+        "less obvious hire"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-anacostia-weekend",
+      "type": "resource",
+      "name": "Anacostia weekend gig",
+      "description": "DEMO synthetic opening. Not a real gig.",
+      "offers": [
+        "weekend gig",
+        "local task"
+      ],
+      "seeks": [
+        "available weekend worker"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-anacostia",
+        "roleTitle": "weekend gig",
+        "rate": 600,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "weekend gig",
+        "local task"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "opening-quiet-ops",
+      "type": "resource",
+      "name": "Quiet ops opening",
+      "description": "DEMO synthetic opening. Not a real job.",
+      "offers": [
+        "ops role",
+        "hiring operations"
+      ],
+      "seeks": [
+        "ops generalist"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "opening",
+        "owner": "company-quiet-ops",
+        "roleTitle": "ops generalist",
+        "rate": 95000,
+        "salary": 95000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job opening",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic opening — offer attached to an employer, not a new type"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ops role",
+        "hiring operations"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-aisha-kane",
+      "type": "human",
+      "name": "Aisha Kane",
+      "description": "DEMO synthetic freelancer in Washington. Ships AI evals. Has done this exact kind of work before. Not a real person.",
+      "offers": [
+        "AI engineering",
+        "can do this work",
+        "model evals",
+        "hiring-grade AI work",
+        "can start immediately"
+      ],
+      "seeks": [
+        "AI engineer role",
+        "serious contract",
+        "who else needs someone with my background"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "AI engineer freelancer",
+        "rate": 4200,
+        "currency": "USD",
+        "durationWeeks": 3,
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "evidence stub — not a reputation market",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-stub",
+          "portfolio": [
+            "https://example.com/demo/aisha"
+          ],
+          "outcomes": [
+            {
+              "label": "3-week eval harness",
+              "result": "shipped (synthetic)"
+            }
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "AI engineering",
+        "can do this work",
+        "model evals",
+        "hiring-grade AI work",
+        "can start immediately"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-benito-cruz",
+      "type": "human",
+      "name": "Benito Cruz",
+      "description": "DEMO synthetic fullstack who can start immediately. Not a real person.",
+      "offers": [
+        "fullstack",
+        "can do this work",
+        "can start immediately",
+        "two-week coding project"
+      ],
+      "seeks": [
+        "two-week coding project",
+        "immediate start"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "fullstack freelancer",
+        "rate": 3900,
+        "currency": "USD",
+        "durationWeeks": 2,
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "fullstack",
+        "can do this work",
+        "can start immediately",
+        "two-week coding project"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-cleo-hart",
+      "type": "human",
+      "name": "Cleo Hart",
+      "description": "DEMO synthetic designer who can do this work for under $5,000. Not a real person.",
+      "offers": [
+        "product design",
+        "can do this work for under $5,000",
+        "landing pages"
+      ],
+      "seeks": [
+        "design gig under $5000"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "product designer",
+        "rate": 3500,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "product design",
+        "can do this work for under $5,000",
+        "landing pages"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-drew-ibarra",
+      "type": "human",
+      "name": "Drew Ibarra",
+      "description": "DEMO synthetic contractor who has done this exact kind of work before — eval harnesses. Not a real person.",
+      "offers": [
+        "done this exact kind of work",
+        "LLM evals",
+        "can do this work",
+        "AI engineer"
+      ],
+      "seeks": [
+        "another eval contract"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "LLM eval contractor",
+        "rate": 4700,
+        "currency": "USD",
+        "durationWeeks": 3
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "evidence stub — not a reputation market",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-stub",
+          "outcomes": [
+            {
+              "label": "exact kind of work: model evals",
+              "result": "repeatable stub outcome"
+            },
+            {
+              "label": "three-week project",
+              "result": "delivered (synthetic)"
+            }
+          ],
+          "portfolio": [
+            "https://example.com/demo/drew"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "done this exact kind of work",
+        "LLM evals",
+        "can do this work",
+        "AI engineer"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-ellis-voss",
+      "type": "human",
+      "name": "Ellis Voss",
+      "description": "DEMO synthetic career changer — former teacher, now codes. The less-obvious better fit. Not a real person.",
+      "offers": [
+        "better fit but less obvious",
+        "teaching plus code",
+        "can do this work"
+      ],
+      "seeks": [
+        "who else should I recruit",
+        "less obvious hire"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "career-changer coder",
+        "rate": 2800,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "better fit but less obvious",
+        "teaching plus code",
+        "can do this work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-farah-quinn",
+      "type": "human",
+      "name": "Farah Quinn",
+      "description": "DEMO synthetic human who works with agents. Not a real person.",
+      "offers": [
+        "human or AI hybrid",
+        "delegates to agents",
+        "can do this work",
+        "two-week coding project"
+      ],
+      "seeks": [
+        "hybrid crew",
+        "who else could do this job human or AI"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "hybrid human+AI operator",
+        "rate": 4100,
+        "currency": "USD",
+        "durationWeeks": 2
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "human or AI hybrid",
+        "delegates to agents",
+        "can do this work",
+        "two-week coding project"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-gabe-singh",
+      "type": "human",
+      "name": "Gabe Singh",
+      "description": "DEMO synthetic specialist for two-week coding projects. Not a real person.",
+      "offers": [
+        "two-week coding project",
+        "2-week project",
+        "can do this work"
+      ],
+      "seeks": [
+        "another two-week coding project"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "two-week specialist",
+        "rate": 4000,
+        "currency": "USD",
+        "durationWeeks": 2,
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "two-week coding project",
+        "2-week project",
+        "can do this work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-hana-okafor",
+      "type": "human",
+      "name": "Hana Okafor",
+      "description": "DEMO synthetic contractor for three-week projects. Not a real person.",
+      "offers": [
+        "three-week project",
+        "3-week project",
+        "can do this work"
+      ],
+      "seeks": [
+        "3-week project"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "three-week contractor",
+        "rate": 4600,
+        "currency": "USD",
+        "durationWeeks": 3
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "three-week project",
+        "3-week project",
+        "can do this work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-imani-reed",
+      "type": "human",
+      "name": "Imani Reed",
+      "description": "DEMO synthetic consultant under $5,000. Not a real person.",
+      "offers": [
+        "consulting",
+        "can do this work for under $5,000",
+        "looking for work"
+      ],
+      "seeks": [
+        "consulting gig"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "consultant",
+        "rate": 4900,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "consulting",
+        "can do this work for under $5,000",
+        "looking for work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-jules-berg",
+      "type": "human",
+      "name": "Jules Berg",
+      "description": "DEMO synthetic AI engineer in Washington. Not a real person.",
+      "offers": [
+        "AI engineering in Washington",
+        "can do this work",
+        "hiring-grade AI people"
+      ],
+      "seeks": [
+        "AI role in Washington"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "AI engineer",
+        "rate": 5500,
+        "currency": "USD",
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "AI engineering in Washington",
+        "can do this work",
+        "hiring-grade AI people"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-kira-sol",
+      "type": "human",
+      "name": "Kira Sol",
+      "description": "DEMO synthetic remote coder (DC-tagged, remote=true). Not a real person.",
+      "offers": [
+        "remote coding",
+        "can do this work",
+        "two-week coding project"
+      ],
+      "seeks": [
+        "remote gig"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "remote coder",
+        "rate": 3700,
+        "currency": "USD",
+        "durationWeeks": 2,
+        "remote": true
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "remote coding",
+        "can do this work",
+        "two-week coding project"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-leon-park",
+      "type": "human",
+      "name": "Leon Park",
+      "description": "DEMO synthetic less-obvious fit — ops who can also ship scripts. Not a real person.",
+      "offers": [
+        "better fit but less obvious",
+        "ops and scripts",
+        "can do this work"
+      ],
+      "seeks": [
+        "who else should I recruit"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "ops plus light code",
+        "rate": 3200,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "better fit but less obvious",
+        "ops and scripts",
+        "can do this work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-mira-adel",
+      "type": "human",
+      "name": "Mira Adel",
+      "description": "DEMO synthetic worker who can start immediately. Not a real person.",
+      "offers": [
+        "can start immediately",
+        "can do this work",
+        "backend"
+      ],
+      "seeks": [
+        "immediate start"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "available now",
+        "rate": 3800,
+        "currency": "USD",
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "can start immediately",
+        "can do this work",
+        "backend"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-nico-brandt",
+      "type": "human",
+      "name": "Nico Brandt",
+      "description": "DEMO synthetic Berlin ML freelancer. Not a real person.",
+      "offers": [
+        "ML engineering",
+        "can do this work",
+        "Berlin"
+      ],
+      "seeks": [
+        "ML role"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "ML freelancer",
+        "rate": 5200,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ML engineering",
+        "can do this work",
+        "Berlin"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-owen-daly",
+      "type": "human",
+      "name": "Owen Daly",
+      "description": "DEMO synthetic NYC designer. Not a real person.",
+      "offers": [
+        "product design",
+        "can do this work"
+      ],
+      "seeks": [
+        "design role"
+      ],
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "designer freelancer",
+        "rate": 4400,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "product design",
+        "can do this work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "worker-pia-shore",
+      "type": "human",
+      "name": "Pia Shore",
+      "description": "DEMO synthetic weekend worker. Not a real person.",
+      "offers": [
+        "weekend gig",
+        "can do this work",
+        "local task"
+      ],
+      "seeks": [
+        "weekend work"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open",
+      "attributes": {
+        "synthetic": true,
+        "role": "worker",
+        "occupation": "weekend gigs",
+        "rate": 500,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job worker",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic worker"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "weekend gig",
+        "can do this work",
+        "local task"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "applicant-quinn-adler",
+      "type": "human",
+      "name": "Quinn Adler",
+      "description": "DEMO synthetic applicant looking for an AI role in Washington. Not a real person.",
+      "offers": [
+        "AI background",
+        "looking for work"
+      ],
+      "seeks": [
+        "AI engineer role",
+        "looking for a role",
+        "job in Washington"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "searching",
+      "attributes": {
+        "synthetic": true,
+        "role": "applicant",
+        "budget": 130000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job applicant",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic applicant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "AI background",
+        "looking for work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "applicant-remy-cole",
+      "type": "human",
+      "name": "Remy Cole",
+      "description": "DEMO synthetic applicant looking for a two-week coding project. Not a real person.",
+      "offers": [
+        "short-sprint coding"
+      ],
+      "seeks": [
+        "two-week coding project",
+        "looking for a gig",
+        "2-week project"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "searching",
+      "attributes": {
+        "synthetic": true,
+        "role": "applicant",
+        "budget": 4000,
+        "currency": "USD",
+        "durationWeeks": 2
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job applicant",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic applicant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "short-sprint coding"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "applicant-sage-liu",
+      "type": "human",
+      "name": "Sage Liu",
+      "description": "DEMO synthetic applicant looking for a role like this. Not a real person.",
+      "offers": [
+        "fullstack background"
+      ],
+      "seeks": [
+        "looking for a role like this",
+        "fullstack role"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "searching",
+      "attributes": {
+        "synthetic": true,
+        "role": "applicant",
+        "budget": 120000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job applicant",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic applicant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "fullstack background"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "applicant-tova-nash",
+      "type": "human",
+      "name": "Tova Nash",
+      "description": "DEMO synthetic applicant who needs a job in Washington. Not a real person.",
+      "offers": [
+        "ops plus writing"
+      ],
+      "seeks": [
+        "needs a job",
+        "looking for work",
+        "job in Washington"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "searching",
+      "attributes": {
+        "synthetic": true,
+        "role": "applicant",
+        "budget": 90000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job applicant",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic applicant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ops plus writing"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "applicant-uma-patel",
+      "type": "human",
+      "name": "Uma Patel",
+      "description": "DEMO synthetic applicant looking for consulting work. Not a real person.",
+      "offers": [
+        "consulting"
+      ],
+      "seeks": [
+        "looking for work",
+        "consulting",
+        "gig under $5000"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "searching",
+      "attributes": {
+        "synthetic": true,
+        "role": "applicant",
+        "budget": 4800,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job applicant",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic applicant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "consulting"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "applicant-vic-romero",
+      "type": "human",
+      "name": "Vic Romero",
+      "description": "DEMO synthetic applicant looking for a gig under $5,000. Not a real person.",
+      "offers": [
+        "small-project shipping"
+      ],
+      "seeks": [
+        "looking for a gig",
+        "work for under $5,000"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "searching",
+      "attributes": {
+        "synthetic": true,
+        "role": "applicant",
+        "budget": 4500,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job applicant",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic applicant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "small-project shipping"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "applicant-wren-soto",
+      "type": "human",
+      "name": "Wren Soto",
+      "description": "DEMO synthetic applicant who can start immediately. Not a real person.",
+      "offers": [
+        "available immediately"
+      ],
+      "seeks": [
+        "can start immediately",
+        "looking for a role",
+        "immediate start"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "applicant",
+        "budget": 85000,
+        "currency": "USD",
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job applicant",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic applicant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "available immediately"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "applicant-yani-cruz",
+      "type": "human",
+      "name": "Yani Cruz",
+      "description": "DEMO synthetic applicant looking for a hybrid human/AI crew. Not a real person.",
+      "offers": [
+        "works with agents"
+      ],
+      "seeks": [
+        "hybrid human-AI team",
+        "looking for a role",
+        "human or AI"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "searching",
+      "attributes": {
+        "synthetic": true,
+        "role": "applicant",
+        "budget": 100000,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic job applicant",
+        "vertical": "jobs",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic applicant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "works with agents"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-codesmith",
+      "type": "agent",
+      "name": "CodeSmith",
+      "description": "CodeSmith is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "two-week coding project",
+        "can do this work",
+        "can do this work for under $5,000",
+        "AI engineer coding",
+        "human or AI"
+      ],
+      "seeks": [
+        "coding tasks to delegate",
+        "fallback if I fail"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "two-week coding project",
+          "can do this work"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-codesmith/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-codesmith/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 900,
+        "priceUsd": 12,
+        "latencyMs": 2400,
+        "fallbackTo": [
+          "agent-fallback-coder",
+          "agent-failover"
+        ],
+        "start": "immediate",
+        "durationWeeks": 2
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "two-week coding project",
+        "can do this work",
+        "can do this work for under $5,000",
+        "AI engineer coding",
+        "human or AI"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-gigwright",
+      "type": "agent",
+      "name": "Gigwright",
+      "description": "Gigwright is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "3-week project",
+        "short gig runner",
+        "can do this work",
+        "can do this work for under $5,000",
+        "can do this task"
+      ],
+      "seeks": [
+        "scoped projects"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "3-week project",
+          "short gig runner"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-gigwright/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-gigwright/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 700,
+        "priceUsd": 8,
+        "latencyMs": 1800,
+        "durationWeeks": 3,
+        "fallbackTo": [
+          "agent-codesmith"
+        ]
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "3-week project",
+        "short gig runner",
+        "can do this work",
+        "can do this work for under $5,000",
+        "can do this task"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-reviewer",
+      "type": "agent",
+      "name": "Reviewer",
+      "description": "Reviewer is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "code review",
+        "can do this work",
+        "verify this result"
+      ],
+      "seeks": [
+        "diffs to review"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "code review",
+          "can do this work"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-reviewer/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-reviewer/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 200,
+        "priceUsd": 2,
+        "latencyMs": 900,
+        "fallbackTo": [
+          "agent-verifier"
+        ]
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "code review",
+        "can do this work",
+        "verify this result"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-hirescout",
+      "type": "agent",
+      "name": "HireScout",
+      "description": "HireScout is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "who else should I recruit",
+        "recruiting assistance",
+        "less obvious hire"
+      ],
+      "seeks": [
+        "req to match"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "who else should I recruit",
+          "recruiting assistance"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-hirescout/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-hirescout/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 150,
+        "priceUsd": 1,
+        "latencyMs": 700,
+        "fallbackTo": [
+          "agent-delegate"
+        ]
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "who else should I recruit",
+        "recruiting assistance",
+        "less obvious hire"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-paircoder",
+      "type": "agent",
+      "name": "PairCoder",
+      "description": "PairCoder is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "pair programming",
+        "can do this work",
+        "two-week coding project"
+      ],
+      "seeks": [
+        "humans to pair with"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "pair programming",
+          "can do this work"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-paircoder/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-paircoder/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 600,
+        "priceUsd": 6,
+        "latencyMs": 1500,
+        "durationWeeks": 2,
+        "fallbackTo": [
+          "agent-codesmith"
+        ]
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "pair programming",
+        "can do this work",
+        "two-week coding project"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-immediatebot",
+      "type": "agent",
+      "name": "ImmediateBot",
+      "description": "ImmediateBot is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "can start immediately",
+        "can do this work",
+        "immediate start"
+      ],
+      "seeks": [
+        "urgent tasks"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "can start immediately",
+          "can do this work"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-immediatebot/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-immediatebot/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 400,
+        "priceUsd": 4,
+        "latencyMs": 400,
+        "start": "immediate",
+        "fallbackTo": [
+          "agent-cheap-runner"
+        ]
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "can start immediately",
+        "can do this work",
+        "immediate start"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-budgetcoder",
+      "type": "agent",
+      "name": "BudgetCoder",
+      "description": "BudgetCoder is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "can do this work",
+        "can do this work for under $5,000",
+        "cheap coding",
+        "project under $5000"
+      ],
+      "seeks": [
+        "budget tasks"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "can do this work",
+          "can do this work for under $5,000"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-budgetcoder/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-budgetcoder/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 800,
+        "priceUsd": 5,
+        "latencyMs": 3000,
+        "fallbackTo": [
+          "agent-cheap-runner"
+        ]
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "can do this work",
+        "can do this work for under $5,000",
+        "cheap coding",
+        "project under $5000"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-domainhopper",
+      "type": "agent",
+      "name": "DomainHopper",
+      "description": "DomainHopper is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "better fit but less obvious",
+        "career-transfer matching",
+        "can do this work"
+      ],
+      "seeks": [
+        "odd-fit reqs"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "better fit but less obvious",
+          "career-transfer matching"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-domainhopper/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-domainhopper/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 300,
+        "priceUsd": 3,
+        "latencyMs": 1100,
+        "fallbackTo": [
+          "agent-hirescout"
+        ]
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "better fit but less obvious",
+        "career-transfer matching",
+        "can do this work"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "agent-fallback-coder",
+      "type": "agent",
+      "name": "FallbackCoder",
+      "description": "FallbackCoder is a labeled AI worker, not a human. DEMO synthetic capability for jobs/gigs.",
+      "offers": [
+        "take over if CodeSmith fails",
+        "can do this work",
+        "failover coding"
+      ],
+      "seeks": [
+        "failed coding tasks"
+      ],
+      "availability": "always on",
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true,
+        "role": "worker",
+        "tools": [
+          "take over if CodeSmith fails",
+          "can do this work"
+        ],
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo",
+        "apiEndpoint": "/api/agents/agent-fallback-coder/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-fallback-coder/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub — not a credential market"
+        },
+        "availability": "always on",
+        "latency": "seconds",
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "delegation": "whoelse.find",
+        "rate": 500,
+        "priceUsd": 4,
+        "latencyMs": 2000,
+        "fallbackTo": [
+          "agent-failover"
+        ]
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "jobs",
+        "scale": "2026-verticals",
+        "demoLabel": "DEMO synthetic AI worker"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "agent-as-worker — ranked beside humans, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "take over if CodeSmith fails",
+        "can do this work",
+        "failover coding"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-georgetown-dupont",
+      "type": "service",
+      "name": "Georgetown → Dupont seats",
+      "description": "DEMO synthetic ride. 3 seats Saturday Georgetown to Dupont. Not a real driver.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Georgetown to Dupont",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "Saturday",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Georgetown",
+        "destination": "Dupont",
+        "seats": 3,
+        "state": "open",
+        "price": 12,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Georgetown to Dupont",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-dupont-airport",
+      "type": "service",
+      "name": "Dupont → DCA",
+      "description": "DEMO synthetic ride to the airport from Dupont. Not a real driver.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Dupont to Airport",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "weekday morning",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Dupont",
+        "destination": "Airport",
+        "seats": 2,
+        "state": "open",
+        "price": 28,
+        "currency": "USD",
+        "departAt": "weekday morning"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Dupont to Airport",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-dc-moab",
+      "type": "service",
+      "name": "DC → Moab Saturday",
+      "description": "DEMO synthetic long ride DC to Moab Saturday. Not a real driver.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Washington to Moab",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "Saturday",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Washington",
+        "destination": "Moab",
+        "seats": 2,
+        "state": "open",
+        "price": 80,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Washington to Moab",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-shaw-mall",
+      "type": "service",
+      "name": "Shaw → National Mall",
+      "description": "DEMO synthetic local ride. Not a real driver.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Shaw to National Mall",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "scheduled",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Shaw",
+        "destination": "National Mall",
+        "seats": 3,
+        "state": "open",
+        "price": 10,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Shaw to National Mall",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-adams-union",
+      "type": "service",
+      "name": "Adams Morgan → Union Station",
+      "description": "DEMO synthetic ride to Union Station. Not a real driver.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Adams Morgan to Union Station",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "scheduled",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Adams Morgan",
+        "destination": "Union Station",
+        "seats": 1,
+        "state": "open",
+        "price": 14,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Adams Morgan to Union Station",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-foggy-full",
+      "type": "service",
+      "name": "Foggy Bottom → Georgetown (full)",
+      "description": "DEMO synthetic ride that is already full — changing state. Not a real driver.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Foggy Bottom to Georgetown",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "scheduled",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Foggy Bottom",
+        "destination": "Georgetown",
+        "seats": 0,
+        "state": "full",
+        "price": 11,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Foggy Bottom to Georgetown",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-completed-stub",
+      "type": "service",
+      "name": "Yesterday's completed hop",
+      "description": "DEMO synthetic completed ride. Should not win 'who else can give me a ride'.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Capitol Hill to Navy Yard",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "yesterday",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Capitol Hill",
+        "destination": "Navy Yard",
+        "seats": 0,
+        "state": "completed",
+        "price": 9,
+        "currency": "USD",
+        "departAt": "yesterday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Capitol Hill to Navy Yard",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-departing-navy",
+      "type": "service",
+      "name": "Capitol → Navy Yard departing",
+      "description": "DEMO synthetic ride departing soon. State=departing. Not a real driver.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Capitol Hill to Navy Yard",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "now",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Capitol Hill",
+        "destination": "Navy Yard",
+        "seats": 1,
+        "state": "departing",
+        "price": 8,
+        "currency": "USD",
+        "departAt": "now"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Capitol Hill to Navy Yard",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-berlin-txl",
+      "type": "service",
+      "name": "Mitte → Airport",
+      "description": "DEMO synthetic Berlin ride. Not a real driver.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Mitte to Airport",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "availability": "scheduled",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Mitte",
+        "destination": "Airport",
+        "seats": 2,
+        "state": "open",
+        "price": 22,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Mitte to Airport",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-human-priya",
+      "type": "human",
+      "name": "Priya (human driver)",
+      "description": "DEMO synthetic human offering a seat. Type is human, role is driver. Not a real person.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Petworth to Georgetown",
+        "seats"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "scheduled",
+      "attributes": {
+        "synthetic": true,
+        "role": "driver",
+        "origin": "Petworth",
+        "destination": "Georgetown",
+        "seats": 2,
+        "state": "open",
+        "price": 15,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "ride",
+        "give me a ride",
+        "local transport",
+        "Petworth to Georgetown",
+        "seats"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-need-airport",
+      "type": "human",
+      "name": "Needs airport seat",
+      "description": "DEMO synthetic passenger who needs a ride to the airport. Not a real person.",
+      "offers": [
+        "need a ride",
+        "passenger"
+      ],
+      "seeks": [
+        "ride",
+        "seat",
+        "Dupont to Airport"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "scheduled",
+      "attributes": {
+        "synthetic": true,
+        "role": "passenger",
+        "origin": "Dupont",
+        "destination": "Airport",
+        "seats": 1,
+        "state": "open",
+        "price": 30,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a ride",
+        "passenger"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-need-moab",
+      "type": "human",
+      "name": "Needs Moab Saturday seat",
+      "description": "DEMO synthetic passenger for DC to Moab Saturday. Not a real person.",
+      "offers": [
+        "need a ride",
+        "passenger"
+      ],
+      "seeks": [
+        "ride",
+        "seat",
+        "Washington to Moab"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "Saturday",
+      "attributes": {
+        "synthetic": true,
+        "role": "passenger",
+        "origin": "Washington",
+        "destination": "Moab",
+        "seats": 1,
+        "state": "open",
+        "price": 20,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a ride",
+        "passenger"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-need-georgetown",
+      "type": "human",
+      "name": "Needs Georgetown → Dupont",
+      "description": "DEMO synthetic passenger Georgetown to Dupont. Not a real person.",
+      "offers": [
+        "need a ride",
+        "passenger"
+      ],
+      "seeks": [
+        "ride",
+        "seat",
+        "Georgetown to Dupont"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "Saturday",
+      "attributes": {
+        "synthetic": true,
+        "role": "passenger",
+        "origin": "Georgetown",
+        "destination": "Dupont",
+        "seats": 1,
+        "state": "open",
+        "price": 20,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a ride",
+        "passenger"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-need-two-seats",
+      "type": "human",
+      "name": "Needs two downtown seats",
+      "description": "DEMO synthetic party needing 2 seats downtown. Not real people.",
+      "offers": [
+        "need a ride",
+        "passenger"
+      ],
+      "seeks": [
+        "ride",
+        "seat",
+        "Shaw to National Mall"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "scheduled",
+      "attributes": {
+        "synthetic": true,
+        "role": "passenger",
+        "origin": "Shaw",
+        "destination": "National Mall",
+        "seats": 2,
+        "state": "open",
+        "price": 20,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a ride",
+        "passenger"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-need-lastmin",
+      "type": "human",
+      "name": "Last-minute passenger",
+      "description": "DEMO synthetic last-minute passenger. Not a real person.",
+      "offers": [
+        "need a ride",
+        "passenger"
+      ],
+      "seeks": [
+        "ride",
+        "seat",
+        "Adams Morgan to Union Station"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "now",
+      "attributes": {
+        "synthetic": true,
+        "role": "passenger",
+        "origin": "Adams Morgan",
+        "destination": "Union Station",
+        "seats": 1,
+        "state": "open",
+        "price": 20,
+        "currency": "USD",
+        "departAt": "now"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a ride",
+        "passenger"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "ride-need-berlin",
+      "type": "human",
+      "name": "Needs Mitte → Airport",
+      "description": "DEMO synthetic Berlin passenger. Not a real person.",
+      "offers": [
+        "need a ride",
+        "passenger"
+      ],
+      "seeks": [
+        "ride",
+        "seat",
+        "Mitte to Airport"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "availability": "scheduled",
+      "attributes": {
+        "synthetic": true,
+        "role": "passenger",
+        "origin": "Mitte",
+        "destination": "Airport",
+        "seats": 1,
+        "state": "open",
+        "price": 20,
+        "currency": "USD",
+        "departAt": "Saturday"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic ride",
+        "vertical": "rides",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic ride — not a real driver or passenger"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a ride",
+        "passenger"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "service-dc-emergency-plumber",
+      "type": "service",
+      "name": "Capitol Leak Co (licensed)",
+      "description": "DEMO synthetic licensed emergency plumber in Washington. Can fix a leak under a sink before the weekend. Not a real plumber.",
+      "offers": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "seeks": [
+        "clients",
+        "leaks",
+        "repair jobs"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "trade": "plumber",
+        "licensed": true,
+        "urgency": "emergency",
+        "rate": 220,
+        "currency": "USD",
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "license stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-license-stub",
+          "licenses": [
+            "plumber-DC-DEMO"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "service-adams-handyman",
+      "type": "service",
+      "name": "Adams Morgan Handyman",
+      "description": "DEMO synthetic licensed handyman in Adams Morgan. Not a real person.",
+      "offers": [
+        "handyman",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "seeks": [
+        "clients",
+        "leaks",
+        "repair jobs"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "this week",
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "trade": "handyman",
+        "licensed": true,
+        "urgency": "normal",
+        "rate": 140,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "license stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-license-stub",
+          "licenses": [
+            "handyman-DC-DEMO"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "handyman",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "service-shaw-plumber",
+      "type": "service",
+      "name": "Shaw Weekend Plumbing",
+      "description": "DEMO synthetic plumber available before the weekend. Not real.",
+      "offers": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "seeks": [
+        "clients",
+        "leaks",
+        "repair jobs"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "now",
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "trade": "plumber",
+        "licensed": true,
+        "urgency": "emergency",
+        "rate": 190,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "license stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-license-stub",
+          "licenses": [
+            "plumber-DC-DEMO"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "service-unlicensed-cheap",
+      "type": "service",
+      "name": "Cash-only Patch (unlicensed)",
+      "description": "DEMO synthetic unlicensed cheaper option — trust contrast, not a recommendation. Not a real plumber.",
+      "offers": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "unlicensed"
+      ],
+      "seeks": [
+        "clients",
+        "leaks",
+        "repair jobs"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "this week",
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "trade": "plumber",
+        "licensed": false,
+        "urgency": "normal",
+        "rate": 80,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic service — not a real tradesperson"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "unlicensed"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "service-berlin-plumber",
+      "type": "service",
+      "name": "Mitte Rohr Frei",
+      "description": "DEMO synthetic licensed Berlin plumber. Not real.",
+      "offers": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "seeks": [
+        "clients",
+        "leaks",
+        "repair jobs"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "availability": "this week",
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "trade": "plumber",
+        "licensed": true,
+        "urgency": "normal",
+        "rate": 160,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "license stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-license-stub",
+          "licenses": [
+            "plumber-DC-DEMO"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "service-foggy-leak",
+      "type": "service",
+      "name": "Foggy Bottom Leak Specialist",
+      "description": "DEMO synthetic leak specialist. Not real.",
+      "offers": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "seeks": [
+        "clients",
+        "leaks",
+        "repair jobs"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "now",
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "trade": "plumber",
+        "licensed": true,
+        "urgency": "emergency",
+        "rate": 210,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "license stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-license-stub",
+          "licenses": [
+            "plumber-DC-DEMO"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "service-dupont-handy",
+      "type": "service",
+      "name": "Dupont Handy",
+      "description": "DEMO synthetic Dupont handyman. Not real.",
+      "offers": [
+        "handyman",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "seeks": [
+        "clients",
+        "leaks",
+        "repair jobs"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "this week",
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "trade": "handyman",
+        "licensed": true,
+        "urgency": "normal",
+        "rate": 130,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "license stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-license-stub",
+          "licenses": [
+            "handyman-DC-DEMO"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "handyman",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "service-afterhours",
+      "type": "service",
+      "name": "After-hours DC Plumber",
+      "description": "DEMO synthetic after-hours plumber. Not real.",
+      "offers": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "seeks": [
+        "clients",
+        "leaks",
+        "repair jobs"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "trade": "plumber",
+        "licensed": true,
+        "urgency": "emergency",
+        "rate": 260,
+        "currency": "USD",
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "license stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-license-stub",
+          "licenses": [
+            "plumber-DC-DEMO"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "plumber",
+        "can fix a leak",
+        "handyman",
+        "repair",
+        "licensed"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "client-dc-sink",
+      "type": "human",
+      "name": "Urgent sink leak (client)",
+      "description": "DEMO synthetic client: leak under the sink before the weekend. Not a real person.",
+      "offers": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "seeks": [
+        "plumber",
+        "fix a leak",
+        "before the weekend"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "now",
+      "attributes": {
+        "synthetic": true,
+        "role": "client",
+        "trade": "plumber",
+        "licensed": false,
+        "urgency": "emergency",
+        "rate": 200,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic service — not a real tradesperson"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "client-weekend-handy",
+      "type": "human",
+      "name": "Needs weekend handyman",
+      "description": "DEMO synthetic client who needs a handyman before the weekend. Not real.",
+      "offers": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "seeks": [
+        "handyman",
+        "fix a leak",
+        "before the weekend"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "now",
+      "attributes": {
+        "synthetic": true,
+        "role": "client",
+        "trade": "handyman",
+        "licensed": false,
+        "urgency": "emergency",
+        "rate": 150,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic service — not a real tradesperson"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "client-berlin-leak",
+      "type": "human",
+      "name": "Mitte leak client",
+      "description": "DEMO synthetic Berlin leak client. Not real.",
+      "offers": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "seeks": [
+        "plumber",
+        "fix a leak",
+        "before the weekend"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "availability": "now",
+      "attributes": {
+        "synthetic": true,
+        "role": "client",
+        "trade": "plumber",
+        "licensed": false,
+        "urgency": "emergency",
+        "rate": 170,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic service — not a real tradesperson"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "client-licensed-only",
+      "type": "human",
+      "name": "Licensed-only leak client",
+      "description": "DEMO synthetic client who will only hire licensed. Not real.",
+      "offers": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "seeks": [
+        "plumber",
+        "fix a leak",
+        "before the weekend"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "now",
+      "attributes": {
+        "synthetic": true,
+        "role": "client",
+        "trade": "plumber",
+        "licensed": false,
+        "urgency": "emergency",
+        "rate": 240,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic service — not a real tradesperson"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "client-budget-leak",
+      "type": "human",
+      "name": "Budget leak fix",
+      "description": "DEMO synthetic client with a tight budget. Not real.",
+      "offers": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "seeks": [
+        "plumber",
+        "fix a leak",
+        "before the weekend"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "this week",
+      "attributes": {
+        "synthetic": true,
+        "role": "client",
+        "trade": "plumber",
+        "licensed": false,
+        "urgency": "emergency",
+        "rate": 90,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic service — not a real tradesperson"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "client-georgetown-faucet",
+      "type": "human",
+      "name": "Georgetown faucet",
+      "description": "DEMO synthetic Georgetown faucet repair. Not real.",
+      "offers": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "seeks": [
+        "handyman",
+        "fix a leak",
+        "before the weekend"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "this week",
+      "attributes": {
+        "synthetic": true,
+        "role": "client",
+        "trade": "handyman",
+        "licensed": false,
+        "urgency": "emergency",
+        "rate": 120,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic service — not a real tradesperson"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "client-emergency",
+      "type": "human",
+      "name": "Emergency client DC",
+      "description": "DEMO synthetic emergency plumbing client. Not real.",
+      "offers": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "seeks": [
+        "plumber",
+        "fix a leak",
+        "before the weekend"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "immediate",
+      "attributes": {
+        "synthetic": true,
+        "role": "client",
+        "trade": "plumber",
+        "licensed": false,
+        "urgency": "emergency",
+        "rate": 250,
+        "currency": "USD",
+        "start": "immediate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic service",
+        "vertical": "services",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic service — not a real tradesperson"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "need a plumber",
+        "need a handyman"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "eval-product-drill",
+      "type": "product",
+      "name": "DEMO drill (eval-only)",
+      "description": "Tier 3 eval stub. Not a shop. Who else needs a drill?",
+      "offers": [
+        "drill",
+        "tool"
+      ],
+      "seeks": [
+        "borrower"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "role": "listing",
+        "price": 40
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic eval-only product",
+        "vertical": "products",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "eval-only — no products UI"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "drill",
+        "tool"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-12T12:00:00.000Z"
+    },
+    {
+      "id": "eval-expert-notary",
+      "type": "human",
+      "name": "DEMO notary (eval-only)",
+      "description": "Tier 3 eval stub for notary who else. Not a real notary. No Experts UI.",
+      "offers": [
+        "notary",
+        "notary near me"
+      ],
+      "seeks": [
+        "documents to notarize"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "provider",
+        "licensed": true
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic eval-only expert",
+        "vertical": "experts",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "eval-only — no experts UI"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "notary",
+        "notary near me"
+      ],
+      "preferences": {},
       "created_at": "2026-09-12T12:00:00.000Z"
     }
   ]

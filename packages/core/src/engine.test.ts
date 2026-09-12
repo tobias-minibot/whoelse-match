@@ -61,7 +61,7 @@ describe("seed integrity", () => {
     }
     const types = new Set(engine.store.all().map((e) => e.type));
     assert.ok(types.has("human") && types.has("ai") && types.has("agent"));
-    assert.ok(types.has("resource") && types.has("service"));
+    assert.ok(types.has("resource") && types.has("service") && types.has("company"));
   });
 
   it("gives every agent an invoke stub endpoint", () => {
@@ -169,6 +169,10 @@ describe("same primitive, other verticals", () => {
     ["Who else has a 1-bedroom apartment in DC under $2,500?", /Adams|Georgetown|Shaw|Petworth|1-bedroom/i],
     ["Who else has a furnished sublet in Berlin for three months?", /Mitte|Friedrichshain|Prenzlauer|sublet/i],
     ["Who else needs a furnished apartment in Berlin?", /Lena|Omar|Jonas/i],
+    ["Who else is hiring AI people in Washington?", /Northwind|opening|AI engineer/i],
+    ["Who else can do this work for under $5,000?", /Aisha|Cleo|Imani|BudgetCoder|Under-5k/i],
+    ["Who else can give me a ride from Georgetown to Dupont?", /Georgetown|Dupont|Ride/i],
+    ["Who else can fix a leak under my sink before the weekend?", /Leak|Plumber|Shaw/i],
   ];
 
   for (const [query, expect] of cases) {
@@ -296,5 +300,123 @@ describe("apartment offer / seek on the same operator", () => {
     const apt = result.candidates.filter((c) => c.entity.metadata.vertical === "apartment");
     assert.ok(apt.length <= 1, `apartment leaked: ${result.candidates.map((c) => c.entity.name).join(", ")}`);
     assert.ok(result.candidates.some((c) => c.entity.type === "human" && c.entity.metadata.vertical !== "apartment"));
+  });
+});
+
+describe("jobs on the same operator", () => {
+  it("seeds 40+ labeled job/gig entities", () => {
+    const jobs = engine.store.all().filter((e) => e.metadata.vertical === "jobs");
+    assert.ok(jobs.length >= 40, `jobs=${jobs.length}`);
+    const roles = new Set(jobs.map((e) => e.attributes.role));
+    assert.ok(roles.has("employer") && roles.has("opening") && roles.has("worker") && roles.has("applicant"));
+    assert.ok(jobs.some((e) => e.type === "company"));
+    assert.ok(jobs.some((e) => e.type === "human"));
+    assert.ok(jobs.some((e) => e.type === "agent"));
+    assert.ok(jobs.some((e) => e.trust?.status === "evidence"));
+  });
+
+  it("hiring AI people in Washington returns openings/employers", () => {
+    const result = engine.whoelse({
+      context: "Who else is hiring AI people in Washington?",
+      limit: 8,
+    });
+    assert.equal(result.inferredVertical, "jobs");
+    assert.ok(result.inferredConstraints.roles?.includes("opening"));
+    assert.ok(result.candidates.length > 0);
+    for (const c of result.candidates) {
+      const role = c.entity.attributes.role;
+      assert.ok(role === "opening" || role === "employer", `${c.entity.name} role=${role}`);
+    }
+    const blob = result.candidates.map((c) => c.entity.name).join(" ");
+    assert.match(blob, /Northwind|opening|Civic|Hybrid/i);
+  });
+
+  it("task vs job: human, company, and AI coexist for the same outcome", () => {
+    const result = engine.whoelse({
+      context: "Who else can do this work for under $5,000?",
+      limit: 8,
+    });
+    assert.ok(result.candidates.every((c) => c.entity.attributes.role === "worker"));
+    const types = new Set(result.candidates.map((c) => c.entity.type));
+    assert.ok(types.has("human"), `types=${[...types]}`);
+    assert.ok(
+      types.has("agent") || types.has("company") || result.candidates.some((c) => c.entity.type === "agent"),
+      `expected a machine or company in the labor pool: ${result.candidates.map((c) => `${c.entity.type}:${c.entity.name}`).join(", ")}`,
+    );
+    for (const c of result.candidates) {
+      const rate = Number(c.entity.attributes.rate ?? c.entity.attributes.priceUsd ?? 0);
+      if (rate) assert.ok(rate <= 5000, `${c.entity.name} rate=${rate}`);
+    }
+  });
+
+  it("looking for a role returns applicants, not openings", () => {
+    const result = engine.whoelse({
+      context: "Who else is looking for a role like this?",
+      limit: 5,
+    });
+    assert.equal(result.inferredConstraints.side, "seek");
+    assert.ok(result.candidates.every((c) => c.entity.attributes.role !== "opening"));
+    assert.ok(result.candidates.some((c) => c.entity.attributes.role === "applicant"));
+  });
+
+  it("done-this-before boosts evidence without becoming a reputation market", () => {
+    const result = engine.whoelse({
+      context: "Who else has done this exact kind of work before?",
+      limit: 8,
+    });
+    assert.ok(result.candidates.some((c) => /Drew|Aisha/i.test(c.entity.name)));
+    assert.ok(result.candidates.some((c) => c.entity.trust?.evidence?.outcomes?.length));
+  });
+
+  it("human or AI does not lock type=human", () => {
+    const result = engine.whoelse({
+      context: "Who else could do this job — human or AI?",
+      limit: 8,
+    });
+    assert.notEqual(result.inferredConstraints.type, "human");
+    const types = new Set(result.candidates.map((c) => c.entity.type));
+    assert.ok(types.has("human"));
+    assert.ok(types.has("agent") || types.has("ai"));
+  });
+
+  it("dating first-five is not flooded by job cards", () => {
+    const result = engine.whoelse({
+      context: "Who else wants to build a network of voice assistants?",
+      limit: 5,
+    });
+    const jobs = result.candidates.filter((c) => c.entity.metadata.vertical === "jobs");
+    assert.ok(jobs.length <= 1, `jobs leaked: ${result.candidates.map((c) => c.entity.name).join(", ")}`);
+  });
+});
+
+describe("rides and services slices", () => {
+  it("synthetic rides have origin, destination, seats, and changing state", () => {
+    const rides = engine.store.all().filter((e) => e.metadata.vertical === "rides");
+    assert.ok(rides.length >= 12, `rides=${rides.length}`);
+    assert.ok(rides.some((e) => e.attributes.state === "open"));
+    assert.ok(rides.some((e) => e.attributes.state === "full" || e.attributes.state === "completed"));
+    assert.ok(rides.some((e) => e.attributes.role === "driver"));
+    assert.ok(rides.some((e) => e.attributes.role === "passenger"));
+  });
+
+  it("ride query keeps open drivers and drops completed", () => {
+    const result = engine.whoelse({
+      context: "Who else can give me a ride from Georgetown to Dupont?",
+      limit: 8,
+    });
+    assert.ok(result.candidates.length > 0);
+    assert.ok(result.candidates.some((c) => /Georgetown|Dupont/i.test(c.entity.name + c.entity.description)));
+    assert.ok(result.candidates.every((c) => c.entity.attributes.state !== "completed"));
+  });
+
+  it("licensed emergency plumber ranks for the leak-under-sink sentence", () => {
+    const result = engine.whoelse({
+      context: "Who else can fix a leak under my sink before the weekend, not too pricey?",
+      limit: 5,
+    });
+    assert.ok(result.candidates.length > 0);
+    const blob = result.candidates.map((c) => `${c.entity.name} ${c.entity.offers.join(" ")}`).join(" ");
+    assert.match(blob, /plumb|leak|handyman/i);
+    assert.ok(result.candidates.some((c) => c.entity.attributes.licensed === true));
   });
 });

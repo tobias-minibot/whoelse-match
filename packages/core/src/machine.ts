@@ -36,6 +36,21 @@ export interface MachineMatch {
     listingKind?: unknown;
     amenities?: unknown;
     durationMonths?: unknown;
+    durationWeeks?: unknown;
+    roleTitle?: unknown;
+    rate?: unknown;
+    salary?: unknown;
+    start?: unknown;
+    seats?: unknown;
+    origin?: unknown;
+    destination?: unknown;
+    state?: unknown;
+    licensed?: unknown;
+    urgency?: unknown;
+    trade?: unknown;
+    fallbackTo?: unknown;
+    latencyMs?: unknown;
+    priceUsd?: unknown;
     tools?: unknown;
     permissions?: unknown;
     pricing?: unknown;
@@ -53,6 +68,7 @@ export interface MachineMatch {
     status: string;
     provenance: string;
     notes?: string;
+    evidence?: Entity["trust"] extends { evidence?: infer E } ? E : unknown;
   };
   next: MachineNextStep;
 }
@@ -94,6 +110,21 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       listingKind: attrs.listingKind,
       amenities: attrs.amenities,
       durationMonths: attrs.durationMonths,
+      durationWeeks: attrs.durationWeeks,
+      roleTitle: attrs.roleTitle,
+      rate: attrs.rate ?? attrs.priceUsd,
+      salary: attrs.salary,
+      start: attrs.start,
+      seats: attrs.seats,
+      origin: attrs.origin,
+      destination: attrs.destination,
+      state: attrs.state,
+      licensed: attrs.licensed,
+      urgency: attrs.urgency,
+      trade: attrs.trade,
+      fallbackTo: attrs.fallbackTo,
+      latencyMs: attrs.latencyMs,
+      priceUsd: attrs.priceUsd,
       owner: attrs.owner,
       tools: attrs.tools,
       permissions: attrs.permissions,
@@ -112,6 +143,7 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       status: e.trust?.status ?? "unscored",
       provenance: e.trust?.provenance ?? e.provenance,
       notes: e.trust?.notes,
+      ...(e.trust?.evidence ? { evidence: e.trust.evidence } : {}),
     },
     next: nextStep(e),
   };

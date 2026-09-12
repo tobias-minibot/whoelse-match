@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { inferConstraints, inferSide, parseAttributeConstraints, wantsCheaper } from "./parse.js";
+import {
+  inferConstraints,
+  inferRoles,
+  inferSide,
+  inferVertical,
+  parseAttributeConstraints,
+  wantsCheaper,
+} from "./parse.js";
 
 const cities = ["Washington", "Berlin", "New York", "Lisbon"];
 const places = [
@@ -56,5 +63,47 @@ describe("generic constraint parsing", () => {
     const c = inferConstraints("Who else wants to build a network of voice assistants?", cities);
     assert.equal(c.side, undefined);
     assert.equal(c.attributes, undefined);
+  });
+
+  it("infers jobs hire vs labor vs applicant without new tools", () => {
+    assert.equal(inferSide("Who else is hiring AI people in Washington?"), "offer");
+    assert.deepEqual(inferRoles("Who else is hiring AI people in Washington?"), ["opening", "employer"]);
+    assert.equal(inferSide("Who else can do this work for under $5,000?"), "offer");
+    assert.deepEqual(inferRoles("Who else can do this work for under $5,000?"), ["worker"]);
+    assert.equal(inferSide("Who else is looking for a role like this?"), "seek");
+    assert.deepEqual(inferRoles("Who else is looking for a role like this?"), ["applicant"]);
+    assert.equal(inferVertical("Who else is hiring AI people in Washington?"), "jobs");
+    assert.equal(inferVertical("Who else wants to build a network of voice assistants?"), "dating");
+    assert.equal(inferVertical("Who else has a 1-bedroom apartment in DC?"), "apartment");
+    assert.equal(inferVertical("Who else can give me a ride to the airport?"), "rides");
+    assert.equal(inferVertical("Who else can fix a leak under my sink?"), "services");
+    const hire = inferConstraints("Who else is hiring AI people in Washington?", cities);
+    assert.notEqual(hire.type, "human");
+    assert.equal(hire.side, "offer");
+  });
+
+  it("does not treat 'someone with my background' as a human-only type lock", () => {
+    const c = inferConstraints("Who else needs someone with my background?", cities);
+    assert.notEqual(c.type, "human");
+    assert.equal(c.side, "seek");
+  });
+
+  it("parses two-week, immediate start, and rate instead of rent for gigs", () => {
+    const attrs = parseAttributeConstraints(
+      "Who else is available for a two-week coding project under $5,000 and can start immediately?",
+      "offer",
+    );
+    assert.ok(attrs.some((a) => a.key === "durationWeeks" && a.value === 2));
+    assert.ok(attrs.some((a) => a.key === "start" && a.value === "immediate"));
+    assert.ok(attrs.some((a) => a.key === "rate" && a.op === "lte" && a.value === 5000));
+  });
+
+  it("parses ride origin/destination and service license", () => {
+    const ride = parseAttributeConstraints("Who else has a ride from Georgetown to Dupont?", "offer");
+    assert.ok(ride.some((a) => a.key === "origin" && String(a.value).includes("Georgetown")));
+    assert.ok(ride.some((a) => a.key === "destination" && String(a.value).includes("Dupont")));
+    const svc = parseAttributeConstraints("Who else is a licensed plumber for an emergency leak?", "offer");
+    assert.ok(svc.some((a) => a.key === "licensed" && a.op === "truthy"));
+    assert.ok(svc.some((a) => a.key === "urgency" && a.value === "emergency"));
   });
 });

@@ -101,6 +101,7 @@ button, input { font: inherit; }
 
 .mode-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 14px;
 }
@@ -135,8 +136,15 @@ button, input { font: inherit; }
 }
 
 .av.resource { background: #e8f5e9; color: #1b5e20; }
+.av.company { background: #e3f2fd; color: #0d47a1; }
+.av.agent { background: var(--ai-soft); color: var(--ai); }
 .badge.resource { background: #e8f5e9; color: #1b5e20; }
 .badge.seeker { background: #f3e8ff; color: #6b21a8; }
+.badge.opening { background: #e3f2fd; color: #0d47a1; }
+.badge.worker { background: #fff3e0; color: #e65100; }
+.badge.driver { background: #e0f2f1; color: #004d40; }
+.badge.company { background: #e3f2fd; color: #0d47a1; }
+.facts.evidence { font-weight: 500; color: var(--muted); }
 
 .search-panel {
   background: var(--card);
