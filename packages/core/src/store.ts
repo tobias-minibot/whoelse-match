@@ -141,7 +141,7 @@ export function stringList(entity: Entity, ...keys: string[]): string[] {
 function typeWords(type: string): string {
   if (type === "ai") return "AI artificial intelligence agent bot persona";
   if (type === "agent") return "agent bot service capability worker";
-  if (type === "human") return "human person people";
+  if (type === "human") return "human people";
   return type;
 }
 

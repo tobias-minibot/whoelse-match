@@ -25,7 +25,8 @@
         "lookingFor": [
           "thought partner",
           "collaborator",
-          "dinner date"
+          "dinner date",
+          "people to meet"
         ],
         "vibe": "low-key, ambitious, neighborhood-first",
         "funFact": "sketches stoops on Sunday mornings",
@@ -66,6 +67,7 @@
         "thought partner",
         "collaborator",
         "dinner date",
+        "people to meet",
         "people building things in DC"
       ],
       "trust": {
@@ -706,7 +708,8 @@
         ],
         "lookingFor": [
           "low-key dinner date",
-          "music hang"
+          "music hang",
+          "people to meet"
         ],
         "vibe": "soft-spoken, rhythmic, analog-digital",
         "funFact": "practices scales on the metro in his head",
@@ -742,7 +745,8 @@
       ],
       "seeks": [
         "low-key dinner date",
-        "music hang"
+        "music hang",
+        "people to meet"
       ],
       "trust": {
         "status": "unscored",
@@ -1104,7 +1108,8 @@
         ],
         "lookingFor": [
           "tabletop friend",
-          "playful date"
+          "playful date",
+          "people to meet"
         ],
         "vibe": "chaotic good, snack-forward",
         "funFact": "owns 140 dice and one houseplant",
@@ -1139,7 +1144,8 @@
       ],
       "seeks": [
         "tabletop friend",
-        "playful date"
+        "playful date",
+        "people to meet"
       ],
       "trust": {
         "status": "unscored",
@@ -1168,7 +1174,8 @@
         ],
         "lookingFor": [
           "values-aligned date",
-          "product collaborator"
+          "product collaborator",
+          "people to meet"
         ],
         "vibe": "calm, exacting, humane",
         "funFact": "maps clinics the way others map coffee",
@@ -1205,7 +1212,8 @@
       ],
       "seeks": [
         "values-aligned date",
-        "product collaborator"
+        "product collaborator",
+        "people to meet"
       ],
       "trust": {
         "status": "unscored",
@@ -1548,7 +1556,7 @@
       "id": "ai-nova",
       "type": "ai",
       "name": "Nova",
-      "description": "A clearly labeled AI companion for curious builders. Helps you notice what you actually want more of \u2014 never pretends to be a person.",
+      "description": "A clearly labeled AI companion for curious builders. Helps you notice what you actually want more of \u2014 never pretends to be human.",
       "attributes": {
         "persona": "curious generalist companion",
         "isAI": true,
@@ -1905,7 +1913,7 @@
       "id": "ai-open-voice-router",
       "type": "ai",
       "name": "Open Voice Router",
-      "description": "AI skill: multi-assistant capability discovery for a network of voice assistants. Open protocol, not a person.",
+      "description": "AI skill: multi-assistant capability discovery for a network of voice assistants. Open protocol, not a human stand-in.",
       "attributes": {
         "persona": "capability discovery agent",
         "isAI": true,
@@ -2143,7 +2151,7 @@
       "id": "agent-pdf-summarizer",
       "type": "agent",
       "name": "Summarizer",
-      "description": "Agent that summarizes PDFs and long documents. Discoverable worker, not a person.",
+      "description": "Agent that summarizes PDFs and long documents. Discoverable worker, not a human stand-in.",
       "offers": [
         "pdf summarization",
         "document summary",
