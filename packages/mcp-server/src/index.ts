@@ -1,12 +1,18 @@
 #!/usr/bin/env npx tsx
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { WhoElseEngine, type WhoElseMode } from "@whoelse/core";
+import { RESERVED_ENTITY_TYPES, SEEDED_ENTITY_TYPES, WhoElseEngine, type WhoElseMode } from "@whoelse/core";
 import { z } from "zod";
 
 const engine = WhoElseEngine.fromSeed();
 
 const modeSchema = z.enum(["substitute", "expand", "peers"]).optional();
+const typeSchema = z
+  .string()
+  .optional()
+  .describe(
+    `Optional entity type filter. Seeded: ${SEEDED_ENTITY_TYPES.join(", ")}. Reserved: ${RESERVED_ENTITY_TYPES.join(", ")}. Open-ended string.`,
+  );
 
 const server = new McpServer({
   name: "whoelse",
@@ -21,16 +27,16 @@ function json(data: unknown) {
 
 server.tool(
   "whoelse_find",
-  "Exemplar-anchored discovery: given a natural-language desire (and optional filters), return ranked humans and clearly labeled AIs.",
+  "Find entities matching an intent. Domain-agnostic: humans, labeled AIs, agents, services, and other types in the pool. Dating is only the seeded consumer dataset. Same primitive as the human Who else? surface.",
   {
     context: z
       .string()
-      .describe("What you want more of, e.g. 'Who else wants to build a network of voice assistants?'"),
-    predicate: z.string().optional().describe("Optional extra 'more of this' clause"),
-    type: z.enum(["human", "ai"]).optional(),
+      .describe("Natural-language intent, e.g. 'Who else can summarize this PDF?' or 'Who else wants a low-key dinner?'"),
+    predicate: z.string().optional().describe("Optional extra constraint on the intent (role, relation, capability)"),
+    type: typeSchema,
     city: z.string().optional(),
-    exclude: z.array(z.string()).optional(),
-    mode: modeSchema.describe("substitute | expand | peers. Dating default is expand."),
+    exclude: z.array(z.string()).optional().describe("Entity ids to skip"),
+    mode: modeSchema.describe("substitute | expand | peers. Default expand."),
     limit: z.number().int().min(1).max(20).optional(),
   },
   async ({ context, predicate, type, city, exclude, mode, limit }) => {
@@ -48,7 +54,7 @@ server.tool(
 
 server.tool(
   "whoelse_more_like",
-  "Recursive WhoElse: treat an existing entity as the new exemplar and find more like them.",
+  "Treat an existing entity as the new exemplar and find more entities like it. Domain-agnostic recursion of whoelse_find.",
   {
     entityId: z.string().describe("Entity id to expand from"),
     exclude: z.array(z.string()).optional(),
@@ -56,13 +62,8 @@ server.tool(
     limit: z.number().int().min(1).max(20).optional(),
   },
   async ({ entityId, exclude, mode, limit }) => {
-    const base = engine.moreLike(entityId, {
-      exclude,
-      mode: mode as WhoElseMode | undefined,
-      limit,
-    });
     const result = await engine.whoelseAsync({
-      context: base.query,
+      context: `Who else like this?`,
       entityId,
       exclude,
       mode: (mode as WhoElseMode | undefined) ?? "expand",
@@ -74,10 +75,10 @@ server.tool(
 
 server.tool(
   "whoelse_explain",
-  "Explain why a specific candidate matched a query or exemplar.",
+  "Explain why a specific entity matched an intent or exemplar. Returns score, why, commonalities, provenance/trust stub.",
   {
     entityId: z.string(),
-    context: z.string().describe("Original desire / query text"),
+    context: z.string().describe("Original intent text"),
     entityContextId: z.string().optional().describe("If the query was recursive, the exemplar id"),
   },
   async ({ entityId, context, entityContextId }) => {
@@ -89,7 +90,7 @@ server.tool(
 
 server.tool(
   "whoelse_feedback",
-  "Record more-like / less-like feedback so later WHOELSE calls shift.",
+  "Record more-like / less-like feedback so later discovery calls in this process shift. Not a reputation graph.",
   {
     entityId: z.string(),
     signal: z.enum(["more", "less"]),

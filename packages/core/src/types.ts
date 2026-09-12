@@ -1,5 +1,31 @@
-/** Generic first-class entity. Dating fields live in attributes / preferences. */
-export type EntityType = "human" | "ai";
+/**
+ * Generic first-class entity in a universal matching layer.
+ * Dating is the first ontology (seed + UI). Domain fields stay in attributes / preferences.
+ *
+ * Same primitive, two timescales:
+ *   Human dating:     identity + offers + seeks + matching + trust + interaction
+ *   Agent coordination: identity + offers + seeks + matching + trust + execution
+ * Trust / execution / reputation / payments are not implemented — fields are left open.
+ */
+
+/** Seeded now. Open string so later types do not require a core fork. */
+export const SEEDED_ENTITY_TYPES = ["human", "ai"] as const;
+
+/** Reserved — do not emit in the dating MVP; the matcher already accepts them. */
+export const RESERVED_ENTITY_TYPES = [
+  "agent",
+  "service",
+  "company",
+  "product",
+  "dataset",
+  "resource",
+] as const;
+
+export type SeededEntityType = (typeof SEEDED_ENTITY_TYPES)[number];
+export type ReservedEntityType = (typeof RESERVED_ENTITY_TYPES)[number];
+/** Open-ended. Seed uses human | ai. */
+export type EntityType = string;
+
 export type Provenance = "synthetic" | "ai_generated" | "user";
 export type WhoElseMode = "substitute" | "expand" | "peers";
 
@@ -14,14 +40,31 @@ export interface Entity {
   type: EntityType;
   name: string;
   description: string;
-  attributes: Record<string, unknown>;
+  /** What this entity can provide. Alias of the capability side of matching. */
+  offers: string[];
+  /** What this entity wants / needs / intends. */
+  seeks: string[];
+  /**
+   * @deprecated Prefer `offers`. Kept as a mirror so older clients keep working.
+   * Normalized to `offers` on load.
+   */
   capabilities: string[];
+  attributes: Record<string, unknown>;
   preferences: Record<string, unknown>;
   availability?: string;
   location?: GeoLocation;
   embedding?: number[];
   metadata: Record<string, unknown>;
   provenance: Provenance;
+  /**
+   * Stub only. Reputation / verification / payments are not implemented.
+   * Shape exists so later trust graphs do not require a schema break.
+   */
+  trust?: {
+    status: "unscored" | "stub";
+    provenance?: Provenance;
+    notes?: string;
+  };
   created_at: string;
 }
 
@@ -30,15 +73,19 @@ export interface WhoElseConstraints {
   city?: string;
   region?: string;
   country?: string;
+  /** Client-side keyword filter; not dating-specific. */
   interests?: string[];
+  offers?: string[];
+  seeks?: string[];
+  /** @deprecated Prefer `offers`. */
   capabilities?: string[];
   limit?: number;
 }
 
 export interface WhoElseRequest {
-  /** Natural-language desire, or an exemplar entity id, or both. */
+  /** Natural-language intent, or free text plus an optional exemplar. Not dating-specific. */
   context: string;
-  /** Optional extra “more of this” predicate (interests, vibe, role). */
+  /** Extra predicate on the intent (role, vibe, capability, …). */
   predicate?: string;
   constraints?: WhoElseConstraints;
   exclude?: string[];
@@ -76,8 +123,10 @@ export interface WhoElseResult {
   inferredConstraints: WhoElseConstraints;
   usedOpenAiRerank: boolean;
   candidates: Candidate[];
+  /** Convenience views for the dating client. Prefer `byType` for new surfaces. */
   humans: Candidate[];
   ais: Candidate[];
+  byType: Record<string, Candidate[]>;
 }
 
 export interface FeedbackEvent {

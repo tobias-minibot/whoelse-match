@@ -1,4 +1,4 @@
-export type EntityType = "human" | "ai";
+export type EntityType = string;
 
 export interface Entity {
   id: string;
@@ -6,6 +6,8 @@ export interface Entity {
   name: string;
   description: string;
   attributes: Record<string, unknown>;
+  offers?: string[];
+  seeks?: string[];
   capabilities: string[];
   preferences: Record<string, unknown>;
   availability?: string;
@@ -33,4 +35,5 @@ export interface WhoElsePayload {
   candidates: Candidate[];
   humans: Candidate[];
   ais: Candidate[];
+  byType?: Record<string, Candidate[]>;
 }

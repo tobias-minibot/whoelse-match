@@ -13,6 +13,7 @@
     "mcp": "pnpm --filter @whoelse/mcp-server start",
     "mcp:dev": "pnpm --filter @whoelse/mcp-server dev",
     "mcp:tools": "pnpm --filter @whoelse/mcp-server tools",
+    "mcp:smoke": "pnpm --filter @whoelse/mcp-server smoke",
     "test": "pnpm --filter @whoelse/core test",
     "typecheck": "pnpm -r typecheck"
   }

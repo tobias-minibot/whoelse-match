@@ -1,7 +1,7 @@
 import { buildExplanation, labelsOf } from "./explain.js";
 import { inferConstraints, inferMode, queryText } from "./parse.js";
 import { maybeChat, maybeRerankAndExplain } from "./openai.js";
-import { entityText, EntityStore, stringList } from "./store.js";
+import { entityText, EntityStore, offersOf, seeksOf, stringList } from "./store.js";
 import { jaccard } from "./text.js";
 import { TfidfIndex } from "./tfidf.js";
 import type {
@@ -54,6 +54,8 @@ export class WhoElseEngine {
     const queryLabels = [
       ...(inferredConstraints.interests ?? []),
       ...(inferredConstraints.capabilities ?? []),
+      ...(inferredConstraints.offers ?? []),
+      ...(inferredConstraints.seeks ?? []),
       ...labelsOf(contextEntity ?? emptyEntity(request.context)),
     ];
 
@@ -164,15 +166,15 @@ export class WhoElseEngine {
   }> {
     const entity = this.store.get(entityId);
     if (!entity) throw new Error(`Unknown entity ${entityId}`);
-    if (entity.type !== "ai") {
-      throw new Error("Chat stub is only available for clearly labeled AIs");
+    if (entity.type !== "ai" && entity.type !== "agent") {
+      throw new Error("Chat stub is only available for clearly labeled AIs and agents");
     }
     const last = messages.at(-1)?.content ?? "hello";
     const llm = await maybeChat(
       {
         name: entity.name,
         description: entity.description,
-        capabilities: entity.capabilities,
+        capabilities: offersOf(entity),
       },
       messages,
     );
@@ -197,15 +199,21 @@ function structuredScore(
   const self = labelsOf(entity);
   const target = contextEntity ? labelsOf(contextEntity) : queryLabels;
   const overlap = jaccard(self, target);
-  const caps = jaccard(entity.capabilities, contextEntity?.capabilities ?? queryLabels);
-  let score = 0.7 * overlap + 0.3 * caps;
+  const selfOffers = offersOf(entity);
+  const selfSeeks = seeksOf(entity);
+  const targetOffers = contextEntity ? offersOf(contextEntity) : queryLabels;
+  const targetSeeks = contextEntity ? seeksOf(contextEntity) : queryLabels;
+  const sameOffers = jaccard(selfOffers, targetOffers);
+  const sameSeeks = jaccard(selfSeeks, targetSeeks);
+  const complement = Math.max(jaccard(selfOffers, targetSeeks), jaccard(selfSeeks, targetOffers));
+  let score = 0.4 * overlap + 0.2 * sameSeeks + 0.15 * sameOffers + 0.25 * complement;
   if (mode === "peers" && contextEntity && entity.type === contextEntity.type) score += 0.08;
   if (mode === "substitute" && contextEntity) {
     const sameSlot = jaccard(
-      stringList(entity, "lookingFor", "occupation", "persona"),
-      stringList(contextEntity, "lookingFor", "occupation", "persona"),
+      stringList(entity, "occupation", "persona"),
+      stringList(contextEntity, "occupation", "persona"),
     );
-    score = 0.45 * sameSlot + 0.55 * score;
+    score = 0.45 * Math.max(sameSlot, sameOffers) + 0.55 * score;
   }
   return Math.max(0, Math.min(1, score));
 }
@@ -226,7 +234,11 @@ function locationScore(
 function typeScore(entity: Entity, mode: WhoElseMode, contextEntity?: Entity): number {
   if (mode === "peers" && contextEntity) return entity.type === contextEntity.type ? 1 : 0.15;
   if (mode === "substitute" && contextEntity) return entity.type === contextEntity.type ? 0.8 : 1;
-  return entity.type === "human" ? 0.55 : 0.5;
+  return 0.5;
+}
+
+function isMachineType(type: string): boolean {
+  return type === "ai" || type === "agent" || type === "service";
 }
 
 function passesGeo(
@@ -234,13 +246,11 @@ function passesGeo(
   constraints: { city?: string; region?: string; country?: string },
 ): boolean {
   if (constraints.city && entity.location?.city && !eq(entity.location.city, constraints.city)) {
-    // Soft filter: keep AIs (often not geo-bound) and remote-capable humans
-    if (entity.type === "ai") return true;
-    if (entity.attributes.remote === true) return true;
+    if (isMachineType(entity.type) || entity.attributes.remote === true) return true;
     return false;
   }
   if (constraints.country && entity.location?.country && !eq(entity.location.country, constraints.country)) {
-    return entity.type === "ai";
+    return isMachineType(entity.type);
   }
   return true;
 }
@@ -264,7 +274,16 @@ function finish(
     candidates,
     humans: candidates.filter((c) => c.entity.type === "human"),
     ais: candidates.filter((c) => c.entity.type === "ai"),
+    byType: groupByType(candidates),
   };
+}
+
+function groupByType(candidates: Candidate[]): Record<string, Candidate[]> {
+  const out: Record<string, Candidate[]> = {};
+  for (const c of candidates) {
+    (out[c.entity.type] ??= []).push(c);
+  }
+  return out;
 }
 
 function emptyEntity(context: string): Entity {
@@ -274,6 +293,8 @@ function emptyEntity(context: string): Entity {
     name: "query",
     description: context,
     attributes: {},
+    offers: [],
+    seeks: [context],
     capabilities: [],
     preferences: {},
     metadata: {},
@@ -283,7 +304,7 @@ function emptyEntity(context: string): Entity {
 }
 
 function stubChat(entity: Entity, last: string): string {
-  const skill = entity.capabilities[0] ?? "conversation";
+  const skill = offersOf(entity)[0] ?? "conversation";
   return `${entity.name} here — I'm an AI, not a person. You said “${trim(last)}.” I can help with ${skill}. This is a local chat stub; set OPENAI_API_KEY for a richer persona.`;
 }
 

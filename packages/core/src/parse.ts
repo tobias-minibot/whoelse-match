@@ -54,7 +54,8 @@ export function queryText(input: {
       fieldText(input.entity, "skills"),
       fieldText(input.entity, "occupation"),
       fieldText(input.entity, "persona"),
-      input.entity.capabilities.join(" "),
+      (input.entity.offers ?? input.entity.capabilities).join(" "),
+      (input.entity.seeks ?? []).join(" "),
     );
   }
   return parts.filter(Boolean).join(" ");

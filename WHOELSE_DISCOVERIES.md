@@ -14,7 +14,25 @@ The bet that dating is the right *costume* for a generic operator, not a categor
 - **The Intent Namespace story is downstream.** You do not need a shared encoding on day one to feel the operator. You need a seed that clusters, a recursive action, and honest labels. The encoding (`VOICE NETWORK who else?`) can stay a landing-page metaphor until a second vertical forces it.
 - **MCP is the second client, not a garnish.** If Claude can call `whoelse_find` and get the same JSON the web app renders, the product is a layer. If the web app has a private matcher, it is another silo.
 
-What we built to test it: a generic `Entity` (no dating types in core), `WHOELSE(context, predicate?, constraints?, exclude?, mode?)`, four MCP tools, a thin HTTP wrapper, and a UI whose only primary CTA is **Who else?**
+**Doctrine:** Humans ask Who Else. Agents call WhoElse.
+
+Two surfaces, one network — already true in this repo:
+
+- **Human surface:** Next.js “Who else?” dating client. No MCP literacy required.
+- **Machine surface:** `whoelse_find` (plus more_like / explain / feedback). Domain-agnostic tool text. Dating is the seeded dataset, not the tool contract.
+
+What we built to test it: an open-ended `Entity.type`, first-class `offers` / `seeks`, `WHOELSE(context, predicate?, constraints?, exclude?, mode?)`, four MCP tools, a thin HTTP wrapper, and a UI whose only primary CTA is **Who else?**
+
+The reusable mapping we are testing (not a platform we are building):
+
+| Dating now | Agent later | Field |
+| --- | --- | --- |
+| profile | identity | entity |
+| personality / skills | capability | `offers` |
+| looking for | request / need | `seeks` |
+| match | match | WHOELSE |
+| “do I trust this person” | reputation / verify | `trust` stub |
+| chat / interest | execution / delegate | client stubs only |
 
 ---
 
@@ -52,6 +70,9 @@ Concrete things the code taught us. Reversible.
 11. **“Agents” is not a type word.** Sam’s interest in “federated agents” was inferred as `constraints.type = ai`, so recursive WhoElse on a human returned only bots. The AI regex now wants `AI` / `bot` / `LLM` / `artificial intelligence`, not the word *agent*. Same lesson as seed craft: the vocabulary of the agent economy collides with type filters.
 12. **Exemplar queries must not dump every attribute.** Stringifying `lookingFor` / `collaborator` pulled Maya and Chris into “more like Sam.” Query text for recursion is now name + description + interests/skills/occupation/capabilities. Structured weight also goes up when an exemplar is present.
 13. **Next.js will not resolve NodeNext `.js` specifiers in a workspace TypeScript package.** `extensionAlias: { ".js": [".ts", ".js"] }` was the smallest reversible fix; compiling core to `dist` is the alternative.
+14. **`offers` / `seeks` made complementary match cheap.** A dinner-walk human *seeks* a date; Plan-a-Date Bot *offers* an itinerary. A founder *seeks* a thought partner; FounderBot *offers* pitch critique. Same score term will later match “I need a PDF summary” to an agent that *offers* summarization. Dating did not need a `lookingForRelationship` top-level field.
+15. **Open `type` plus a reserved list is enough.** Seeded `human` \| `ai`. Reserved `agent` \| `service` \| `company` \| `product` \| `dataset` \| `resource`. Capability queries (`summarize this PDF`, `translate German`) hit `type: agent` rows. Housing/ride queries hit thin `resource` / `service` stubs. The dating UI still sections Humans then AIs and only shows “Also in the network” when another type appears — so the consumer surface stays a dating app.
+16. **Agents are entities, not just API clients.** If WhoElse is only a tool agents *call*, it is a gateway. If agents are also *in the pool* (identity, offers, seeks, availability, stub pricing/latency), one agent can ask “who else can do this?” and get other agents. We seeded that shape. We did not seed a reputation market.
 
 ### Open questions we would run next
 

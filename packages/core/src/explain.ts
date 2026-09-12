@@ -1,6 +1,6 @@
 import type { Entity } from "./types.js";
 import { sharedLabels } from "./text.js";
-import { stringList } from "./store.js";
+import { offersOf, seeksOf, stringList } from "./store.js";
 
 const LABEL_KEYS = [
   "interests",
@@ -12,7 +12,7 @@ const LABEL_KEYS = [
 ];
 
 export function labelsOf(entity: Entity): string[] {
-  return stringList(entity, ...LABEL_KEYS);
+  return uniqueCap([...stringList(entity, ...LABEL_KEYS), ...offersOf(entity), ...seeksOf(entity)]);
 }
 
 export function buildExplanation(opts: {
@@ -35,9 +35,9 @@ export function buildExplanation(opts: {
 
   const whyBits: string[] = [];
   if (common.length) whyBits.push(`shares ${common.slice(0, 3).join(", ")}`);
-  if (entity.type === "ai") {
-    const cap = entity.capabilities.slice(0, 2);
-    if (cap.length) whyBits.push(`AI skills: ${cap.join(", ")}`);
+  const offered = offersOf(entity).slice(0, 2);
+  if (entity.type === "ai" || entity.type === "agent") {
+    if (offered.length) whyBits.push(`offers: ${offered.join(", ")}`);
   } else if (occupation(entity)) {
     whyBits.push(occupation(entity)!);
   }
@@ -75,9 +75,10 @@ function surprisingDifference(entity: Entity, known: Set<string>): string | unde
     extras.find((label) => !/synthetic|demo|ai/i.test(label)) ??
     (typeof entity.attributes.funFact === "string" ? entity.attributes.funFact : undefined);
   if (!pick) return undefined;
-  return entity.type === "ai"
-    ? `Unlike the request, ${entity.name} is an AI — and also brings ${pick}`
-    : `Also into ${pick}, which the query did not ask for`;
+  if (entity.type === "ai" || entity.type === "agent") {
+    return `Unlike the request, ${entity.name} is a labeled ${entity.type} — and also brings ${pick}`;
+  }
+  return `Also into ${pick}, which the query did not ask for`;
 }
 
 function uniqueCap(values: string[]): string[] {

@@ -34,6 +34,13 @@ export function DiscoverApp() {
     () => (result?.ais ?? []).filter((c) => !hidden.has(c.entity.id)),
     [result, hidden],
   );
+  const others = useMemo(
+    () =>
+      (result?.candidates ?? []).filter(
+        (c) => !hidden.has(c.entity.id) && c.entity.type !== "human" && c.entity.type !== "ai",
+      ),
+    [result, hidden],
+  );
 
   function flash(message: string) {
     setToast(message);
@@ -116,15 +123,19 @@ export function DiscoverApp() {
   }
 
   async function chatOrInterest(candidate: Candidate) {
-    if (candidate.entity.type === "ai") {
+    if (candidate.entity.type === "ai" || candidate.entity.type === "agent") {
       setChatEntity(candidate.entity);
       setChatLog([
         {
           role: "assistant",
-          content: `${candidate.entity.name} is an AI, not a human. ${candidate.entity.description}`,
+          content: `${candidate.entity.name} is a labeled ${candidate.entity.type}, not a human. ${candidate.entity.description}`,
         },
       ]);
       setChatInput("");
+      return;
+    }
+    if (candidate.entity.type !== "human") {
+      flash(`${candidate.entity.name} is a ${candidate.entity.type} stub — no transaction ran.`);
       return;
     }
     const res = await fetch("/api/interest", {
@@ -269,6 +280,25 @@ export function DiscoverApp() {
               />
             ))}
           </div>
+
+          {others.length > 0 && (
+            <>
+              <h2 className="section-title">Also in the network</h2>
+              <p className="empty">Agents, services, and resources — same operator, not dating profiles.</p>
+              <div className="cards">
+                {others.map((c) => (
+                  <ResultCard
+                    key={c.entity.id}
+                    candidate={c}
+                    onWhoElse={() => recursiveWhoElse(c)}
+                    onMore={() => moreLikeThis(c)}
+                    onLess={() => void lessLikeThis(c)}
+                    onChat={() => void chatOrInterest(c)}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </>
       )}
 
@@ -340,7 +370,9 @@ function ResultCard({
             </p>
           </div>
         </div>
-        <span className={`badge ${e.type}`}>{e.type === "ai" ? "AI" : "Human"}</span>
+        <span className={`badge ${e.type === "human" || e.type === "ai" ? e.type : "ai"}`}>
+          {e.type === "ai" ? "AI" : e.type === "human" ? "Human" : e.type}
+        </span>
       </div>
       <p className="why">{candidate.explanation.why}</p>
       <div className="pills">
@@ -363,8 +395,8 @@ function ResultCard({
         <button className="btn btn-soft btn-sm" type="button" onClick={onLess}>
           Less like this
         </button>
-        <button className={`btn btn-sm ${e.type === "ai" ? "btn-ai" : "btn-ink"}`} type="button" onClick={onChat}>
-          {e.type === "ai" ? "Chat" : "Chat (interest)"}
+        <button className={`btn btn-sm ${e.type === "human" ? "btn-ink" : "btn-ai"}`} type="button" onClick={onChat}>
+          {e.type === "human" ? "Chat (interest)" : e.type === "ai" || e.type === "agent" ? "Chat" : "Open"}
         </button>
       </div>
     </article>

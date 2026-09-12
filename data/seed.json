@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "disclaimer": "All human profiles are synthetic demo data. No real dating sites were scraped. All AI profiles are explicitly labeled AI and never presented as human.",
+  "disclaimer": "Human profiles are synthetic demo data. AI and agent profiles are labeled and never presented as human. Resource/service rows are thin stubs to prove other verticals on the same primitive. No real sites were scraped.",
   "entities": [
     {
       "id": "human-maya-chen",
@@ -10,24 +10,68 @@
       "attributes": {
         "age": 34,
         "occupation": "Real estate developer",
-        "interests": ["multifamily housing", "urban redevelopment", "dinner walks", "architecture", "real estate projects"],
-        "skills": ["deal structuring", "JV partnerships", "DC zoning"],
-        "lookingFor": ["thought partner", "collaborator", "dinner date"],
+        "interests": [
+          "multifamily housing",
+          "urban redevelopment",
+          "dinner walks",
+          "architecture",
+          "real estate projects"
+        ],
+        "skills": [
+          "deal structuring",
+          "JV partnerships",
+          "DC zoning"
+        ],
+        "lookingFor": [
+          "thought partner",
+          "collaborator",
+          "dinner date"
+        ],
         "vibe": "low-key, ambitious, neighborhood-first",
         "funFact": "sketches stoops on Sunday mornings",
         "synthetic": true
       },
-      "capabilities": [],
+      "capabilities": [
+        "deal structuring",
+        "JV partnerships",
+        "DC zoning"
+      ],
       "preferences": {
-        "datingIntent": ["collaborator", "romance"],
+        "datingIntent": [
+          "collaborator",
+          "romance"
+        ],
         "pace": "plans over endless chat",
         "wantsMoreOf": "people building things in DC"
       },
       "availability": "weekday evenings",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "deal structuring",
+        "JV partnerships",
+        "DC zoning"
+      ],
+      "seeks": [
+        "thought partner",
+        "collaborator",
+        "dinner date",
+        "people building things in DC"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-sam-okonkwo",
@@ -37,23 +81,72 @@
       "attributes": {
         "age": 31,
         "occupation": "OSS voice systems engineer",
-        "interests": ["voice assistants", "voice routing", "open protocols", "federated agents", "late-night pairing"],
-        "skills": ["speech routing", "capability discovery", "Rust", "WebRTC"],
-        "lookingFor": ["protocol partner", "cofounder", "collaborator"],
+        "interests": [
+          "voice assistants",
+          "voice routing",
+          "open protocols",
+          "federated agents",
+          "late-night pairing"
+        ],
+        "skills": [
+          "speech routing",
+          "capability discovery",
+          "Rust",
+          "WebRTC"
+        ],
+        "lookingFor": [
+          "protocol partner",
+          "cofounder",
+          "collaborator"
+        ],
         "vibe": "intense, generous, systems-first",
         "funFact": "collects discarded conference mics",
         "synthetic": true
       },
-      "capabilities": ["voice protocol design"],
+      "capabilities": [
+        "voice protocol design",
+        "speech routing",
+        "capability discovery",
+        "Rust",
+        "WebRTC"
+      ],
       "preferences": {
-        "datingIntent": ["collaborator", "romance"],
+        "datingIntent": [
+          "collaborator",
+          "romance"
+        ],
         "wantsMoreOf": "people who want to build a network of voice assistants"
       },
       "availability": "nights and weekends",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "voice protocol design",
+        "speech routing",
+        "capability discovery",
+        "Rust",
+        "WebRTC"
+      ],
+      "seeks": [
+        "protocol partner",
+        "cofounder",
+        "collaborator",
+        "people who want to build a network of voice assistants"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-jordan-lee",
@@ -63,23 +156,66 @@
       "attributes": {
         "age": 29,
         "occupation": "Bike shop mechanic / trail advocate",
-        "interests": ["mountain biking", "trail riding", "group rides", "camping", "coffee after rides"],
-        "skills": ["bike repair", "route planning", "first aid"],
-        "lookingFor": ["ride buddy", "outdoor friend", "casual date"],
+        "interests": [
+          "mountain biking",
+          "trail riding",
+          "group rides",
+          "camping",
+          "coffee after rides"
+        ],
+        "skills": [
+          "bike repair",
+          "route planning",
+          "first aid"
+        ],
+        "lookingFor": [
+          "ride buddy",
+          "outdoor friend",
+          "casual date"
+        ],
         "vibe": "easygoing, outdoors, mornings",
         "funFact": "names every bike after a river",
         "synthetic": true
       },
-      "capabilities": [],
+      "capabilities": [
+        "bike repair",
+        "route planning",
+        "first aid"
+      ],
       "preferences": {
-        "datingIntent": ["friendship", "romance"],
+        "datingIntent": [
+          "friendship",
+          "romance"
+        ],
         "pace": "meet on the trail"
       },
       "availability": "Saturday mornings",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "bike repair",
+        "route planning",
+        "first aid"
+      ],
+      "seeks": [
+        "ride buddy",
+        "outdoor friend",
+        "casual date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-alex-rivera",
@@ -89,20 +225,64 @@
       "attributes": {
         "age": 38,
         "occupation": "Small multifamily operator",
-        "interests": ["real estate projects", "rehabs", "tacos", "job-site walks", "housing"],
-        "skills": ["construction management", "permitting", "underwriting"],
-        "lookingFor": ["JV partner", "local collaborator"],
+        "interests": [
+          "real estate projects",
+          "rehabs",
+          "tacos",
+          "job-site walks",
+          "housing"
+        ],
+        "skills": [
+          "construction management",
+          "permitting",
+          "underwriting"
+        ],
+        "lookingFor": [
+          "JV partner",
+          "local collaborator"
+        ],
         "vibe": "practical, warm, no-pitch dinners",
         "funFact": "keeps a paint-chip diary",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["collaborator"], "wantsMoreOf": "active DC housing people" },
+      "capabilities": [
+        "construction management",
+        "permitting",
+        "underwriting"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "collaborator"
+        ],
+        "wantsMoreOf": "active DC housing people"
+      },
       "availability": "afternoons",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "construction management",
+        "permitting",
+        "underwriting"
+      ],
+      "seeks": [
+        "JV partner",
+        "local collaborator",
+        "active DC housing people"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-riley-park",
@@ -112,20 +292,63 @@
       "attributes": {
         "age": 33,
         "occupation": "Archivist",
-        "interests": ["dinner walks", "letters", "neighborhood strolls", "one-pot cooking", "slow dates"],
-        "skills": ["research", "listening", "itinerary-making"],
-        "lookingFor": ["low-key dinner date", "walking companion"],
+        "interests": [
+          "dinner walks",
+          "letters",
+          "neighborhood strolls",
+          "one-pot cooking",
+          "slow dates"
+        ],
+        "skills": [
+          "research",
+          "listening",
+          "itinerary-making"
+        ],
+        "lookingFor": [
+          "low-key dinner date",
+          "walking companion"
+        ],
         "vibe": "quiet, wry, analog",
         "funFact": "owns three fountain pens and one flip phone",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance"], "pace": "plans over infinite chat" },
+      "capabilities": [
+        "research",
+        "listening",
+        "itinerary-making"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance"
+        ],
+        "pace": "plans over infinite chat"
+      },
       "availability": "evenings",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "research",
+        "listening",
+        "itinerary-making"
+      ],
+      "seeks": [
+        "low-key dinner date",
+        "walking companion"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-priya-nair",
@@ -135,20 +358,65 @@
       "attributes": {
         "age": 30,
         "occupation": "Machine learning researcher",
-        "interests": ["machine learning", "hiking", "interpretability", "tea", "long conversations"],
-        "skills": ["PyTorch", "evaluation", "paper writing"],
-        "lookingFor": ["hiking partner", "intellectual date"],
+        "interests": [
+          "machine learning",
+          "hiking",
+          "interpretability",
+          "tea",
+          "long conversations"
+        ],
+        "skills": [
+          "PyTorch",
+          "evaluation",
+          "paper writing"
+        ],
+        "lookingFor": [
+          "hiking partner",
+          "intellectual date"
+        ],
         "vibe": "curious, precise, outdoors",
         "funFact": "recites paper abstracts on climbs",
         "synthetic": true
       },
-      "capabilities": ["model evaluation"],
-      "preferences": { "datingIntent": ["romance", "friendship"] },
+      "capabilities": [
+        "model evaluation",
+        "PyTorch",
+        "evaluation",
+        "paper writing"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance",
+          "friendship"
+        ]
+      },
       "availability": "Sunday daylight",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "model evaluation",
+        "PyTorch",
+        "evaluation",
+        "paper writing"
+      ],
+      "seeks": [
+        "hiking partner",
+        "intellectual date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-devon-walsh",
@@ -158,20 +426,63 @@
       "attributes": {
         "age": 27,
         "occupation": "Indie hacker",
-        "interests": ["indie hacking", "coffee dates", "shipping", "tiny products", "builders"],
-        "skills": ["Next.js", "growth experiments", "design"],
-        "lookingFor": ["builder date", "accountability partner"],
+        "interests": [
+          "indie hacking",
+          "coffee dates",
+          "shipping",
+          "tiny products",
+          "builders"
+        ],
+        "skills": [
+          "Next.js",
+          "growth experiments",
+          "design"
+        ],
+        "lookingFor": [
+          "builder date",
+          "accountability partner"
+        ],
         "vibe": "caffeinated, kind, ship-or-die",
         "funFact": "names launches after metro stops",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["collaborator", "romance"] },
+      "capabilities": [
+        "Next.js",
+        "growth experiments",
+        "design"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "collaborator",
+          "romance"
+        ]
+      },
       "availability": "weekday mornings",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "Next.js",
+        "growth experiments",
+        "design"
+      ],
+      "seeks": [
+        "builder date",
+        "accountability partner"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-keisha-brooks",
@@ -181,20 +492,63 @@
       "attributes": {
         "age": 36,
         "occupation": "Civic tech product lead",
-        "interests": ["civic tech", "public interest software", "dance parties", "housing policy", "DC"],
-        "skills": ["product", "stakeholder wrangling", "service design"],
-        "lookingFor": ["civic collaborator", "weekend date"],
+        "interests": [
+          "civic tech",
+          "public interest software",
+          "dance parties",
+          "housing policy",
+          "DC"
+        ],
+        "skills": [
+          "product",
+          "stakeholder wrangling",
+          "service design"
+        ],
+        "lookingFor": [
+          "civic collaborator",
+          "weekend date"
+        ],
         "vibe": "grounded, funny, public-first",
         "funFact": "knows every ANC acronym",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["collaborator", "romance"] },
+      "capabilities": [
+        "product",
+        "stakeholder wrangling",
+        "service design"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "collaborator",
+          "romance"
+        ]
+      },
       "availability": "Thursday nights",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "product",
+        "stakeholder wrangling",
+        "service design"
+      ],
+      "seeks": [
+        "civic collaborator",
+        "weekend date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-leo-nakamura",
@@ -204,20 +558,64 @@
       "attributes": {
         "age": 35,
         "occupation": "Hardware engineer",
-        "interests": ["voice assistants", "IoT", "hardware", "microphones", "makerspaces"],
-        "skills": ["embedded C", "DSP", "rapid prototyping"],
-        "lookingFor": ["hardware collaborator", "studio hang"],
+        "interests": [
+          "voice assistants",
+          "IoT",
+          "hardware",
+          "microphones",
+          "makerspaces"
+        ],
+        "skills": [
+          "embedded C",
+          "DSP",
+          "rapid prototyping"
+        ],
+        "lookingFor": [
+          "hardware collaborator",
+          "studio hang"
+        ],
         "vibe": "tactile, patient, night-owl",
         "funFact": "sleeps next to a Faraday cage",
         "synthetic": true
       },
-      "capabilities": ["voice hardware"],
-      "preferences": { "datingIntent": ["collaborator"] },
+      "capabilities": [
+        "voice hardware",
+        "embedded C",
+        "DSP",
+        "rapid prototyping"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "collaborator"
+        ]
+      },
       "availability": "late nights",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "voice hardware",
+        "embedded C",
+        "DSP",
+        "rapid prototyping"
+      ],
+      "seeks": [
+        "hardware collaborator",
+        "studio hang"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-amara-solis",
@@ -227,20 +625,60 @@
       "attributes": {
         "age": 32,
         "occupation": "Climate policy advisor",
-        "interests": ["climate policy", "farmers markets", "heat islands", "biking to work", "public space"],
-        "skills": ["policy writing", "coalition building"],
-        "lookingFor": ["values-aligned date", "project partner"],
+        "interests": [
+          "climate policy",
+          "farmers markets",
+          "heat islands",
+          "biking to work",
+          "public space"
+        ],
+        "skills": [
+          "policy writing",
+          "coalition building"
+        ],
+        "lookingFor": [
+          "values-aligned date",
+          "project partner"
+        ],
         "vibe": "earnest, warm, outside",
         "funFact": "tracks tree canopy on weekend walks",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance", "friendship"] },
+      "capabilities": [
+        "policy writing",
+        "coalition building"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance",
+          "friendship"
+        ]
+      },
       "availability": "Saturday markets",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "policy writing",
+        "coalition building"
+      ],
+      "seeks": [
+        "values-aligned date",
+        "project partner"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-theo-grant",
@@ -250,20 +688,62 @@
       "attributes": {
         "age": 41,
         "occupation": "Software engineer / pianist",
-        "interests": ["jazz", "dinner walks", "tiny shows", "composition", "low-key dates"],
-        "skills": ["piano", "TypeScript", "arranging"],
-        "lookingFor": ["low-key dinner date", "music hang"],
+        "interests": [
+          "jazz",
+          "dinner walks",
+          "tiny shows",
+          "composition",
+          "low-key dates"
+        ],
+        "skills": [
+          "piano",
+          "TypeScript",
+          "arranging"
+        ],
+        "lookingFor": [
+          "low-key dinner date",
+          "music hang"
+        ],
         "vibe": "soft-spoken, rhythmic, analog-digital",
         "funFact": "practices scales on the metro in his head",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance"] },
+      "capabilities": [
+        "piano",
+        "TypeScript",
+        "arranging"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance"
+        ]
+      },
       "availability": "after 8pm",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "piano",
+        "TypeScript",
+        "arranging"
+      ],
+      "seeks": [
+        "low-key dinner date",
+        "music hang"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-nina-voss",
@@ -273,20 +753,63 @@
       "attributes": {
         "age": 28,
         "occupation": "Product designer",
-        "interests": ["museums", "civic interfaces", "typography", "first dates in galleries", "sketching"],
-        "skills": ["product design", "prototyping", "research"],
-        "lookingFor": ["museum date", "design collaborator"],
+        "interests": [
+          "museums",
+          "civic interfaces",
+          "typography",
+          "first dates in galleries",
+          "sketching"
+        ],
+        "skills": [
+          "product design",
+          "prototyping",
+          "research"
+        ],
+        "lookingFor": [
+          "museum date",
+          "design collaborator"
+        ],
         "vibe": "visual, generous, slow looking",
         "funFact": "has a punchcard for the National Gallery",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance", "collaborator"] },
+      "capabilities": [
+        "product design",
+        "prototyping",
+        "research"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance",
+          "collaborator"
+        ]
+      },
       "availability": "Sunday afternoons",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "product design",
+        "prototyping",
+        "research"
+      ],
+      "seeks": [
+        "museum date",
+        "design collaborator"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-omar-haddad",
@@ -296,20 +819,63 @@
       "attributes": {
         "age": 37,
         "occupation": "Security engineer",
-        "interests": ["rock climbing", "security", "threat models", "belaying", "board games"],
-        "skills": ["appsec", "lead climbing", "mentoring"],
-        "lookingFor": ["climb partner", "curious date"],
+        "interests": [
+          "rock climbing",
+          "security",
+          "threat models",
+          "belaying",
+          "board games"
+        ],
+        "skills": [
+          "appsec",
+          "lead climbing",
+          "mentoring"
+        ],
+        "lookingFor": [
+          "climb partner",
+          "curious date"
+        ],
         "vibe": "dry humor, careful, loyal",
         "funFact": "names vulnerabilities after spices",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["friendship", "romance"] },
+      "capabilities": [
+        "appsec",
+        "lead climbing",
+        "mentoring"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "friendship",
+          "romance"
+        ]
+      },
       "availability": "Tuesday nights",
-      "location": { "city": "Arlington", "region": "VA", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Arlington",
+        "region": "VA",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "appsec",
+        "lead climbing",
+        "mentoring"
+      ],
+      "seeks": [
+        "climb partner",
+        "curious date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-sasha-kim",
@@ -319,20 +885,63 @@
       "attributes": {
         "age": 39,
         "occupation": "Founder",
-        "interests": ["startups", "agent economy", "thought partners", "voice assistants", "fundraising walks"],
-        "skills": ["storytelling", "hiring", "zero-to-one"],
-        "lookingFor": ["thought partner", "cofounder-shaped date"],
+        "interests": [
+          "startups",
+          "agent economy",
+          "thought partners",
+          "voice assistants",
+          "fundraising walks"
+        ],
+        "skills": [
+          "storytelling",
+          "hiring",
+          "zero-to-one"
+        ],
+        "lookingFor": [
+          "thought partner",
+          "cofounder-shaped date"
+        ],
         "vibe": "direct, optimistic, high-agency",
         "funFact": "pitches only while walking the Mall",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["collaborator", "romance"] },
+      "capabilities": [
+        "storytelling",
+        "hiring",
+        "zero-to-one"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "collaborator",
+          "romance"
+        ]
+      },
       "availability": "walking meetings",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "storytelling",
+        "hiring",
+        "zero-to-one"
+      ],
+      "seeks": [
+        "thought partner",
+        "cofounder-shaped date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-ellis-crowe",
@@ -342,20 +951,63 @@
       "attributes": {
         "age": 44,
         "occupation": "Data journalist",
-        "interests": ["housing data", "transit", "footnotes", "investigations", "real estate projects"],
-        "skills": ["SQL", "narrative", "FOIA"],
-        "lookingFor": ["curious dinner date", "story collaborator"],
+        "interests": [
+          "housing data",
+          "transit",
+          "footnotes",
+          "investigations",
+          "real estate projects"
+        ],
+        "skills": [
+          "SQL",
+          "narrative",
+          "FOIA"
+        ],
+        "lookingFor": [
+          "curious dinner date",
+          "story collaborator"
+        ],
         "vibe": "skeptical, kind, late deadlines",
         "funFact": "keeps a shoebox of FOIA printouts",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance", "friendship"] },
+      "capabilities": [
+        "SQL",
+        "narrative",
+        "FOIA"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance",
+          "friendship"
+        ]
+      },
       "availability": "after deadline nights",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "SQL",
+        "narrative",
+        "FOIA"
+      ],
+      "seeks": [
+        "curious dinner date",
+        "story collaborator"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-carmen-diaz",
@@ -365,20 +1017,63 @@
       "attributes": {
         "age": 40,
         "occupation": "Urban planner",
-        "interests": ["mountain biking", "bike advocacy", "protected lanes", "urban planning", "group rides"],
-        "skills": ["planning", "community organizing", "GIS"],
-        "lookingFor": ["ride buddy", "policy dinner"],
+        "interests": [
+          "mountain biking",
+          "bike advocacy",
+          "protected lanes",
+          "urban planning",
+          "group rides"
+        ],
+        "skills": [
+          "planning",
+          "community organizing",
+          "GIS"
+        ],
+        "lookingFor": [
+          "ride buddy",
+          "policy dinner"
+        ],
         "vibe": "impatient for better streets, patient with people",
         "funFact": "has testified in bike shorts (once)",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["friendship", "romance"] },
+      "capabilities": [
+        "planning",
+        "community organizing",
+        "GIS"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "friendship",
+          "romance"
+        ]
+      },
       "availability": "Wednesday rides",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "planning",
+        "community organizing",
+        "GIS"
+      ],
+      "seeks": [
+        "ride buddy",
+        "policy dinner"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-jonah-hale",
@@ -388,20 +1083,60 @@
       "attributes": {
         "age": 26,
         "occupation": "Game designer",
-        "interests": ["tabletop", "game design", "Adams Morgan", "narrative systems", "snacks"],
-        "skills": ["systems design", "facilitation"],
-        "lookingFor": ["tabletop friend", "playful date"],
+        "interests": [
+          "tabletop",
+          "game design",
+          "Adams Morgan",
+          "narrative systems",
+          "snacks"
+        ],
+        "skills": [
+          "systems design",
+          "facilitation"
+        ],
+        "lookingFor": [
+          "tabletop friend",
+          "playful date"
+        ],
         "vibe": "chaotic good, snack-forward",
         "funFact": "owns 140 dice and one houseplant",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["friendship", "romance"] },
+      "capabilities": [
+        "systems design",
+        "facilitation"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "friendship",
+          "romance"
+        ]
+      },
       "availability": "Thursday nights",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "systems design",
+        "facilitation"
+      ],
+      "seeks": [
+        "tabletop friend",
+        "playful date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-fatima-rahman",
@@ -411,20 +1146,63 @@
       "attributes": {
         "age": 35,
         "occupation": "Health-tech PM",
-        "interests": ["health tech", "walking dates", "patient dignity", "clinician workflows", "tea"],
-        "skills": ["roadmaps", "clinical interviews", "prioritization"],
-        "lookingFor": ["values-aligned date", "product collaborator"],
+        "interests": [
+          "health tech",
+          "walking dates",
+          "patient dignity",
+          "clinician workflows",
+          "tea"
+        ],
+        "skills": [
+          "roadmaps",
+          "clinical interviews",
+          "prioritization"
+        ],
+        "lookingFor": [
+          "values-aligned date",
+          "product collaborator"
+        ],
         "vibe": "calm, exacting, humane",
         "funFact": "maps clinics the way others map coffee",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance", "collaborator"] },
+      "capabilities": [
+        "roadmaps",
+        "clinical interviews",
+        "prioritization"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance",
+          "collaborator"
+        ]
+      },
       "availability": "early evenings",
-      "location": { "city": "Bethesda", "region": "MD", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Bethesda",
+        "region": "MD",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "roadmaps",
+        "clinical interviews",
+        "prioritization"
+      ],
+      "seeks": [
+        "values-aligned date",
+        "product collaborator"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-wes-okada",
@@ -434,20 +1212,63 @@
       "attributes": {
         "age": 33,
         "occupation": "Robotics engineer",
-        "interests": ["robotics", "makerspaces", "mountain biking", "soldering", "trail days"],
-        "skills": ["ROS", "fabrication", "mentoring teens"],
-        "lookingFor": ["maker friend", "outdoor date"],
+        "interests": [
+          "robotics",
+          "makerspaces",
+          "mountain biking",
+          "soldering",
+          "trail days"
+        ],
+        "skills": [
+          "ROS",
+          "fabrication",
+          "mentoring teens"
+        ],
+        "lookingFor": [
+          "maker friend",
+          "outdoor date"
+        ],
         "vibe": "dusty, encouraging, hands-on",
         "funFact": "3D-printed a bike bottle cage that failed gloriously",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["friendship", "romance"] },
+      "capabilities": [
+        "ROS",
+        "fabrication",
+        "mentoring teens"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "friendship",
+          "romance"
+        ]
+      },
       "availability": "makerspace Fridays",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "ROS",
+        "fabrication",
+        "mentoring teens"
+      ],
+      "seeks": [
+        "maker friend",
+        "outdoor date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-harper-quinn",
@@ -457,20 +1278,62 @@
       "attributes": {
         "age": 45,
         "occupation": "Writer / AI ethicist",
-        "interests": ["AI ethics", "dinner walks", "essays", "low-key dates", "bookstores"],
-        "skills": ["essays", "facilitation", "close reading"],
-        "lookingFor": ["low-key dinner date", "debate partner"],
+        "interests": [
+          "AI ethics",
+          "dinner walks",
+          "essays",
+          "low-key dates",
+          "bookstores"
+        ],
+        "skills": [
+          "essays",
+          "facilitation",
+          "close reading"
+        ],
+        "lookingFor": [
+          "low-key dinner date",
+          "debate partner"
+        ],
         "vibe": "principled, humorous, unhurried",
         "funFact": "annotates menus",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance"] },
+      "capabilities": [
+        "essays",
+        "facilitation",
+        "close reading"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance"
+        ]
+      },
       "availability": "slow Sundays",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "essays",
+        "facilitation",
+        "close reading"
+      ],
+      "seeks": [
+        "low-key dinner date",
+        "debate partner"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-chris-adeyemi",
@@ -480,20 +1343,63 @@
       "attributes": {
         "age": 31,
         "occupation": "Fintech engineer",
-        "interests": ["salsa", "fintech", "social dancing", "side projects", "Afrobeats"],
-        "skills": ["payments", "lead dancing", "mentoring"],
-        "lookingFor": ["dance partner", "builder date"],
+        "interests": [
+          "salsa",
+          "fintech",
+          "social dancing",
+          "side projects",
+          "Afrobeats"
+        ],
+        "skills": [
+          "payments",
+          "lead dancing",
+          "mentoring"
+        ],
+        "lookingFor": [
+          "dance partner",
+          "builder date"
+        ],
         "vibe": "warm, rhythmic, ambitious",
         "funFact": "debugs better after a shine",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance", "friendship"] },
+      "capabilities": [
+        "payments",
+        "lead dancing",
+        "mentoring"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance",
+          "friendship"
+        ]
+      },
       "availability": "Wednesday socials",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "payments",
+        "lead dancing",
+        "mentoring"
+      ],
+      "seeks": [
+        "dance partner",
+        "builder date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-linh-tran",
@@ -503,20 +1409,63 @@
       "attributes": {
         "age": 29,
         "occupation": "Frontend engineer",
-        "interests": ["photography", "frontend", "alley murals", "gallery walks", "design systems"],
-        "skills": ["React", "CSS", "street photography"],
-        "lookingFor": ["gallery date", "design-engineer hang"],
+        "interests": [
+          "photography",
+          "frontend",
+          "alley murals",
+          "gallery walks",
+          "design systems"
+        ],
+        "skills": [
+          "React",
+          "CSS",
+          "street photography"
+        ],
+        "lookingFor": [
+          "gallery date",
+          "design-engineer hang"
+        ],
         "vibe": "observant, gentle, visual",
         "funFact": "shoots only in the 20 minutes after rain",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["romance", "collaborator"] },
+      "capabilities": [
+        "React",
+        "CSS",
+        "street photography"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance",
+          "collaborator"
+        ]
+      },
       "availability": "golden hour",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "React",
+        "CSS",
+        "street photography"
+      ],
+      "seeks": [
+        "gallery date",
+        "design-engineer hang"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "human-nia-park",
@@ -526,43 +1475,118 @@
       "attributes": {
         "age": 27,
         "occupation": "Community organizer / voice stack",
-        "interests": ["voice assistants", "personal agents", "meetups", "federation", "open protocols"],
-        "skills": ["community", "event design", "docs"],
-        "lookingFor": ["protocol partner", "curious date"],
+        "interests": [
+          "voice assistants",
+          "personal agents",
+          "meetups",
+          "federation",
+          "open protocols"
+        ],
+        "skills": [
+          "community",
+          "event design",
+          "docs"
+        ],
+        "lookingFor": [
+          "protocol partner",
+          "curious date"
+        ],
         "vibe": "inviting, fast, connective",
         "funFact": "prints zines about wake words",
         "synthetic": true
       },
-      "capabilities": [],
-      "preferences": { "datingIntent": ["collaborator", "friendship"] },
+      "capabilities": [
+        "community",
+        "event design",
+        "docs"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "collaborator",
+          "friendship"
+        ]
+      },
       "availability": "meetup nights",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "vertical": "dating", "demo": true, "demoLabel": "synthetic human" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
       "provenance": "synthetic",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "community",
+        "event design",
+        "docs"
+      ],
+      "seeks": [
+        "protocol partner",
+        "curious date"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
     },
     {
       "id": "ai-nova",
       "type": "ai",
       "name": "Nova",
-      "description": "A clearly labeled AI companion for curious builders. Helps you notice what you actually want more of — never pretends to be a person.",
+      "description": "A clearly labeled AI companion for curious builders. Helps you notice what you actually want more of \u2014 never pretends to be a person.",
       "attributes": {
         "persona": "curious generalist companion",
         "isAI": true,
         "label": "AI",
-        "interests": ["curiosity pairing", "late-night conversation", "builders", "intent clarification"]
+        "interests": [
+          "curiosity pairing",
+          "late-night conversation",
+          "builders",
+          "intent clarification"
+        ]
       },
-      "capabilities": ["brainstorming", "intent clarification", "late-night conversation", "curiosity pairing"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "brainstorming",
+        "intent clarification",
+        "late-night conversation",
+        "curiosity pairing"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
       "metadata": {
         "isAI": true,
         "aiDisclosure": "This is an AI. It is not a human.",
         "vertical": "dating"
       },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "brainstorming",
+        "intent clarification",
+        "late-night conversation",
+        "curiosity pairing"
+      ],
+      "seeks": [
+        "curiosity pairing",
+        "late-night conversation",
+        "builders",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-socrates",
@@ -573,14 +1597,43 @@
         "persona": "Socratic interlocutor",
         "isAI": true,
         "label": "AI",
-        "interests": ["dialogue", "questions", "philosophy", "long conversations"]
+        "interests": [
+          "dialogue",
+          "questions",
+          "philosophy",
+          "long conversations"
+        ]
       },
-      "capabilities": ["socratic questioning", "assumption-checking", "dialogue facilitation"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "socratic questioning",
+        "assumption-checking",
+        "dialogue facilitation"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "socratic questioning",
+        "assumption-checking",
+        "dialogue facilitation"
+      ],
+      "seeks": [
+        "dialogue",
+        "questions",
+        "philosophy",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-founderbot",
@@ -591,14 +1644,46 @@
         "persona": "startup sounding board",
         "isAI": true,
         "label": "AI",
-        "interests": ["startups", "thought partners", "agent economy", "voice assistants", "pitches"]
+        "interests": [
+          "startups",
+          "thought partners",
+          "agent economy",
+          "voice assistants",
+          "pitches"
+        ]
       },
-      "capabilities": ["pitch critique", "cofounder questions", "priority forcing", "idea expansion"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "pitch critique",
+        "cofounder questions",
+        "priority forcing",
+        "idea expansion"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "pitch critique",
+        "cofounder questions",
+        "priority forcing",
+        "idea expansion"
+      ],
+      "seeks": [
+        "startups",
+        "thought partners",
+        "agent economy",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-handoff-concierge",
@@ -609,33 +1694,95 @@
         "persona": "voice handoff router",
         "isAI": true,
         "label": "AI",
-        "interests": ["voice assistants", "voice routing", "handoffs", "capability discovery"]
+        "interests": [
+          "voice assistants",
+          "voice routing",
+          "handoffs",
+          "capability discovery"
+        ]
       },
-      "capabilities": ["multi-assistant routing", "intent handoff", "capability discovery"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "multi-assistant routing",
+        "intent handoff",
+        "capability discovery"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "multi-assistant routing",
+        "intent handoff",
+        "capability discovery"
+      ],
+      "seeks": [
+        "voice assistants",
+        "voice routing",
+        "handoffs",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-trail-conditions",
       "type": "ai",
       "name": "Trail Conditions Bot",
-      "description": "AI for local DMV trail status and ride matching. Not a human rider — a clearly labeled trail conditions agent.",
+      "description": "AI for local DMV trail status and ride matching. Not a human rider \u2014 a clearly labeled trail conditions agent.",
       "attributes": {
         "persona": "trail conditions + ride matching",
         "isAI": true,
         "label": "AI",
-        "interests": ["mountain biking", "trail riding", "group rides", "DMV trails"]
+        "interests": [
+          "mountain biking",
+          "trail riding",
+          "group rides",
+          "DMV trails"
+        ]
       },
-      "capabilities": ["trail status", "ride matching", "weather-aware routing"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "trail status",
+        "ride matching",
+        "weather-aware routing"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "trail status",
+        "ride matching",
+        "weather-aware routing"
+      ],
+      "seeks": [
+        "mountain biking",
+        "trail riding",
+        "group rides",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-permit-path",
@@ -646,15 +1793,48 @@
         "persona": "DC zoning & permit routing",
         "isAI": true,
         "label": "AI",
-        "interests": ["DC zoning", "permits", "real estate projects", "rehabs"]
+        "interests": [
+          "DC zoning",
+          "permits",
+          "real estate projects",
+          "rehabs"
+        ]
       },
-      "capabilities": ["permit routing", "zoning lookup", "checklist generation"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "permit routing",
+        "zoning lookup",
+        "checklist generation"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "permit routing",
+        "zoning lookup",
+        "checklist generation"
+      ],
+      "seeks": [
+        "DC zoning",
+        "permits",
+        "real estate projects",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-plan-a-date",
@@ -665,15 +1845,48 @@
         "persona": "itinerary planner",
         "isAI": true,
         "label": "AI",
-        "interests": ["low-key dinner", "dinner walks", "itineraries", "slow dates"]
+        "interests": [
+          "low-key dinner",
+          "dinner walks",
+          "itineraries",
+          "slow dates"
+        ]
       },
-      "capabilities": ["vibe-to-itinerary", "reservation suggestions", "walk routing"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "vibe-to-itinerary",
+        "reservation suggestions",
+        "walk routing"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "vibe-to-itinerary",
+        "reservation suggestions",
+        "walk routing"
+      ],
+      "seeks": [
+        "low-key dinner",
+        "dinner walks",
+        "itineraries",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-open-voice-router",
@@ -684,14 +1897,41 @@
         "persona": "capability discovery agent",
         "isAI": true,
         "label": "AI",
-        "interests": ["voice assistants", "open protocols", "capability discovery", "federation"]
+        "interests": [
+          "voice assistants",
+          "open protocols",
+          "capability discovery",
+          "federation"
+        ]
       },
-      "capabilities": ["multi-assistant capability discovery", "protocol translation"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "multi-assistant capability discovery",
+        "protocol translation"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "multi-assistant capability discovery",
+        "protocol translation"
+      ],
+      "seeks": [
+        "voice assistants",
+        "open protocols",
+        "capability discovery",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-deal-radar",
@@ -702,15 +1942,48 @@
         "persona": "listing scout",
         "isAI": true,
         "label": "AI",
-        "interests": ["real estate projects", "listings", "DC housing", "underwriting"]
+        "interests": [
+          "real estate projects",
+          "listings",
+          "DC housing",
+          "underwriting"
+        ]
       },
-      "capabilities": ["listing watch", "fit scoring", "alert summaries"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "listing watch",
+        "fit scoring",
+        "alert summaries"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "location": { "city": "Washington", "region": "DC", "country": "US" },
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "listing watch",
+        "fit scoring",
+        "alert summaries"
+      ],
+      "seeks": [
+        "real estate projects",
+        "listings",
+        "DC housing",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-muse",
@@ -721,32 +1994,90 @@
         "persona": "creative writing partner",
         "isAI": true,
         "label": "AI",
-        "interests": ["essays", "zines", "creative writing", "dating copy"]
+        "interests": [
+          "essays",
+          "zines",
+          "creative writing",
+          "dating copy"
+        ]
       },
-      "capabilities": ["drafting", "tone shifts", "image prompts"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "drafting",
+        "tone shifts",
+        "image prompts"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "drafting",
+        "tone shifts",
+        "image prompts"
+      ],
+      "seeks": [
+        "essays",
+        "zines",
+        "creative writing",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-atlas",
       "type": "ai",
       "name": "Atlas",
-      "description": "Research copilot AI for policy, housing, and climate briefs. Useful next to civic humans — not a substitute for them.",
+      "description": "Research copilot AI for policy, housing, and climate briefs. Useful next to civic humans \u2014 not a substitute for them.",
       "attributes": {
         "persona": "research copilot",
         "isAI": true,
         "label": "AI",
-        "interests": ["research", "housing policy", "climate policy", "briefs"]
+        "interests": [
+          "research",
+          "housing policy",
+          "climate policy",
+          "briefs"
+        ]
       },
-      "capabilities": ["literature sweep", "brief drafting", "citation hygiene"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "literature sweep",
+        "brief drafting",
+        "citation hygiene"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "literature sweep",
+        "brief drafting",
+        "citation hygiene"
+      ],
+      "seeks": [
+        "research",
+        "housing policy",
+        "climate policy",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
     },
     {
       "id": "ai-ember",
@@ -757,14 +2088,471 @@
         "persona": "emotional check-in",
         "isAI": true,
         "label": "AI",
-        "interests": ["check-ins", "rehearsal", "low-key dates", "pacing"]
+        "interests": [
+          "check-ins",
+          "rehearsal",
+          "low-key dates",
+          "pacing"
+        ]
       },
-      "capabilities": ["mood check-in", "conversation rehearsal", "boundary language"],
-      "preferences": { "disclosure": "always identify as AI" },
+      "capabilities": [
+        "mood check-in",
+        "conversation rehearsal",
+        "boundary language"
+      ],
+      "preferences": {
+        "disclosure": "always identify as AI"
+      },
       "availability": "always on",
-      "metadata": { "isAI": true, "aiDisclosure": "This is an AI. It is not a human." },
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an AI. It is not a human."
+      },
       "provenance": "ai_generated",
-      "created_at": "2026-09-01T00:00:00.000Z"
+      "created_at": "2026-09-01T00:00:00.000Z",
+      "offers": [
+        "mood check-in",
+        "conversation rehearsal",
+        "boundary language"
+      ],
+      "seeks": [
+        "check-ins",
+        "rehearsal",
+        "low-key dates",
+        "users who want this capability"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      }
+    },
+    {
+      "id": "agent-pdf-summarizer",
+      "type": "agent",
+      "name": "Summarizer",
+      "description": "Agent that summarizes PDFs and long documents. Discoverable worker, not a person.",
+      "offers": [
+        "pdf summarization",
+        "document summary",
+        "long-form digest",
+        "summarize this pdf"
+      ],
+      "seeks": [
+        "documents to summarize",
+        "delegation from other agents"
+      ],
+      "capabilities": [
+        "pdf summarization",
+        "document summary"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "tools": [
+          "pdf-parser"
+        ],
+        "latency": "seconds",
+        "pricing": "stub-cheap",
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "agent-web-browser",
+      "type": "agent",
+      "name": "Browsewright",
+      "description": "Agent that browses the web and returns cited snippets. Not a human researcher.",
+      "offers": [
+        "web browsing",
+        "browse the web",
+        "url fetch",
+        "search snippets"
+      ],
+      "seeks": [
+        "urls to open",
+        "research delegation"
+      ],
+      "capabilities": [
+        "web browsing",
+        "url fetch"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "tools": [
+          "http"
+        ],
+        "latency": "seconds",
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "agent-translator-de-en",
+      "type": "agent",
+      "name": "Bridge DE\u2192EN",
+      "description": "Agent that translates German to English. Capability worker, not a bilingual human.",
+      "offers": [
+        "german to english translation",
+        "translate german to english",
+        "de-en"
+      ],
+      "seeks": [
+        "german source text",
+        "translation jobs"
+      ],
+      "capabilities": [
+        "german to english translation"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "languages": [
+          "de",
+          "en"
+        ],
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "agent-verifier",
+      "type": "agent",
+      "name": "Checkmate",
+      "description": "Agent that verifies claims and other agent outputs. Second-opinion worker.",
+      "offers": [
+        "result verification",
+        "verify this result",
+        "claim checking",
+        "second opinion"
+      ],
+      "seeks": [
+        "outputs to verify",
+        "failover from primary agents"
+      ],
+      "capabilities": [
+        "result verification",
+        "claim checking"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "reliability": "stub",
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "agent-cheap-runner",
+      "type": "agent",
+      "name": "ThriftWorker",
+      "description": "Low-cost agent that runs routine tasks more cheaply. Not a human contractor.",
+      "offers": [
+        "cheap task execution",
+        "run this task more cheaply",
+        "budget inference"
+      ],
+      "seeks": [
+        "overflow work",
+        "cost-sensitive delegation"
+      ],
+      "capabilities": [
+        "cheap task execution"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "pricing": "stub-cheap",
+        "latency": "minutes",
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "agent-workflow",
+      "type": "agent",
+      "name": "Flowhand",
+      "description": "Agent that executes multi-step workflows and handoffs. Not a project manager.",
+      "offers": [
+        "workflow execution",
+        "execute this workflow",
+        "step orchestration"
+      ],
+      "seeks": [
+        "workflows to run",
+        "downstream workers"
+      ],
+      "capabilities": [
+        "workflow execution",
+        "step orchestration"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "tools": [
+          "router"
+        ],
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "agent-failover",
+      "type": "agent",
+      "name": "Understudy",
+      "description": "Failover agent that takes over if the primary agent fails.",
+      "offers": [
+        "failover takeover",
+        "take over if the primary agent fails",
+        "backup execution"
+      ],
+      "seeks": [
+        "primary agents to cover",
+        "health signals"
+      ],
+      "capabilities": [
+        "failover takeover",
+        "backup execution"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "reliability": "stub-backup",
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "agent-capability-index",
+      "type": "agent",
+      "name": "CapIndex",
+      "description": "Agent that exposes and resolves capabilities across the network. Meta-discovery worker.",
+      "offers": [
+        "capability index",
+        "exposes this capability",
+        "capability resolution"
+      ],
+      "seeks": [
+        "capabilities to catalog",
+        "who else exposes this capability"
+      ],
+      "capabilities": [
+        "capability index",
+        "capability resolution"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "agent-delegate",
+      "type": "agent",
+      "name": "Hand-off",
+      "description": "Agent that recommends who to delegate a task to. Matching helper, not an executor.",
+      "offers": [
+        "delegation advice",
+        "who else should I delegate to",
+        "routing suggestion"
+      ],
+      "seeks": [
+        "tasks to route",
+        "worker catalogs"
+      ],
+      "capabilities": [
+        "delegation advice",
+        "routing suggestion"
+      ],
+      "attributes": {
+        "owner": "synthetic-lab",
+        "isAI": true
+      },
+      "preferences": {},
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "aiDisclosure": "This is an agent, not a human.",
+        "vertical": "capability"
+      },
+      "trust": {
+        "status": "unscored",
+        "provenance": "ai_generated"
+      },
+      "provenance": "ai_generated",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "resource-apartment-adams",
+      "type": "resource",
+      "name": "Adams Morgan one-bedroom (stub)",
+      "description": "Thin stub listing: a one-bedroom apartment. Proves housing is another vertical on the same primitive \u2014 not a dating profile.",
+      "offers": [
+        "apartment",
+        "one-bedroom",
+        "housing listing"
+      ],
+      "seeks": [
+        "renter",
+        "roommate inquiry"
+      ],
+      "capabilities": [
+        "housing listing"
+      ],
+      "attributes": {
+        "bedrooms": 1,
+        "neighborhood": "Adams Morgan",
+        "stub": true
+      },
+      "preferences": {},
+      "availability": "listed",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "synthetic resource",
+        "vertical": "housing"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "not a real listing"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T00:00:00.000Z"
+    },
+    {
+      "id": "service-dc-ride",
+      "type": "service",
+      "name": "Mall-to-Trail Ride (stub)",
+      "description": "Thin stub: a ride-share style service. Proves 'who else can give me a ride?' is the same operator as dating.",
+      "offers": [
+        "ride",
+        "give me a ride",
+        "local transport"
+      ],
+      "seeks": [
+        "passengers",
+        "ride requests"
+      ],
+      "capabilities": [
+        "local transport"
+      ],
+      "attributes": {
+        "stub": true,
+        "vehicle": "demo"
+      },
+      "preferences": {},
+      "availability": "on request",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "synthetic service",
+        "vertical": "transport"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "not a real driver"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-12T00:00:00.000Z"
     }
   ]
 }

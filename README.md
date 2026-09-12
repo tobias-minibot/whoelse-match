@@ -1,16 +1,17 @@
 # who else? — match
 
-**A dating app for humans & AIs.**
+**Humans ask Who Else. Agents call WhoElse.**
 
-Match on intent — interests, projects, skills. Find a person or an AI that fits.
+Two surfaces, one network:
 
-> Fresh product line (v1.0). Not the Intent Namespace registry UI.
+1. **Human** — consumer “Who else?” (dating first). People never need to know MCP exists.
+2. **Machine** — MCP / HTTP. Agents discover other agents, services, humans, and thin resources.
+
+Same entity model. Same matching engine. Same discovery pool. Different interfaces.
+
+> Dating is the first ontology, not the type system. The core is a universal matching layer between entities, needs, capabilities, preferences, availability, and intent.
 >
-> The discovery engine is real now. Landing / brand / pitch stay as the story layer.
-
-`who else?` = given context + what you want more of, show me another match.
-
-Dating is the first vertical. The core is **generic exemplar-anchored discovery** — humans and AIs are both first-class entities. AIs are always labeled. They are never presented as people.
+> Landing / brand / pitch stay as the story layer. This repo ships the dating MVP — not a giant platform.
 
 ---
 
@@ -57,6 +58,9 @@ Documented so they can be undone without a rewrite:
 | Local similarity = TF-IDF + structured overlap | First 5 results feel good with no model download | Swap `TfidfIndex` for `@xenova/transformers` embeddings (entity.embedding is already on the schema) |
 | Optional `OPENAI_API_KEY` rerank / explain / chat | Offline demo must work | Engine returns local explanations if the key is missing or the call fails |
 | Dating fields in `attributes` / `preferences` | Core stays vertical-agnostic | New verticals add keys, not types |
+| `offers` + `seeks` on every entity | Both sides of matching (capability ↔ need) | Same primitive as later agent coordination |
+| `type` is an open string | Seed uses `human` \| `ai`; reserved: agent, service, company, product, dataset, resource | Add types in data, not a core fork |
+| `trust` is a stub | Provenance exists; no reputation graph | Fill later without renaming fields |
 | Default UI: **Humans then AIs** | Trust — type is never ambiguous | Mixed ranking is an open experiment (see below) |
 | Default mode for dating = `expand` | “Who else?” means more of this, not a replacement | Pass `mode: substitute \| peers` |
 | In-memory feedback | Honest about MVP scope | Persist later; the signal shape is stable |
@@ -68,10 +72,25 @@ WHOELSE(context, predicate?, constraints?, exclude?, mode?) -> candidates
 mode: substitute | expand | peers
 ```
 
-- **expand** (dating default): more entities that satisfy the same desire
+Intent is **not** dating-specific. The dating UI is a client of this operator.
+
+- **expand** (default; dating UI uses this): more entities that satisfy the same intent
 - **peers**: same type / role as an exemplar
-- **substitute**: fill the same slot as an exemplar (useful when someone is a miss)
+- **substitute**: fill the same slot as an exemplar
 - Mode is inferred from language when omitted (`instead of` → substitute, `peers/colleagues` → peers)
+
+Hypothesis under test (do not force if it breaks dating — it did not, on this seed):
+
+| Human dating | Agent coordination | Shared field |
+| --- | --- | --- |
+| profile | identity | `id`, `type`, `name`, `description`, `provenance` |
+| presence / personality | capability | `offers` (capabilities alias) |
+| intent / looking-for | request / need | `seeks` |
+| matching | matching | `WHOELSE` |
+| trust (later) | trust (later) | `trust` stub |
+| interaction (chat / interest stubs) | execution (not built) | client-specific |
+
+Not built now: negotiation, payments, reputation graph, multi-agent execution. Do not add required top-level fields like `lookingForRelationship`.
 
 ---
 
@@ -82,20 +101,26 @@ Generic. Not dating-hardcoded.
 ```ts
 {
   id: string
-  type: "human" | "ai"
+  type: string                          // seeded: human | ai
+                                        // reserved: agent | service | company | product | dataset | resource
   name: string
   description: string
-  attributes: Record<string, unknown>   // dating: age, occupation, interests, vibe, …
-  capabilities: string[]
-  preferences: Record<string, unknown>  // dating: datingIntent, pace, wantsMoreOf, …
+  offers: string[]                      // what I can provide
+  seeks: string[]                       // what I want / need / intend
+  capabilities: string[]                // mirror of offers (compat)
+  attributes: Record<string, unknown>   // dating-only keys live here (vibe, lookingFor, …)
+  preferences: Record<string, unknown>  // datingIntent, pace, wantsMoreOf, …
   availability?: string
   location?: { city?, region?, country? }
-  embedding?: number[]                  // reserved for a future embedding backend
-  metadata: Record<string, unknown>     // demo labels, AI disclosure
+  embedding?: number[]                  // reserved
+  metadata: Record<string, unknown>     // demo labels, AI/agent disclosure
+  trust?: { status, provenance, notes } // stub — not a reputation graph
   provenance: "synthetic" | "ai_generated" | "user"
   created_at: string
 }
 ```
+
+Dating humans **offer** skills / presence and **seek** compatible others. Labeled AIs **offer** conversation capabilities and **seek** users who want that. Capability agents **offer** tools (summarize, browse, translate…) and **seek** work / delegation. Thin `resource` / `service` stubs (apartment, ride) prove other verticals without a product expansion.
 
 **Seed rules**
 
@@ -111,7 +136,7 @@ Generic. Not dating-hardcoded.
 
 1. Parse the desire → tokens, optional type/city/mode
 2. Filter (`exclude`, optional type, soft geo — AIs stay in the pool when the query is local)
-3. Score = `0.50` TF-IDF cosine + `0.28` structured Jaccard (interests / skills / capabilities) + `0.14` location + `0.08` type affinity + feedback
+3. Score = TF-IDF cosine + structured overlap on labels + **same-side and complementary `offers`↔`seeks`** + location + type affinity + feedback
 4. Local explanation: why / commonalities / surprising difference
 5. If `OPENAI_API_KEY` is set, optionally rerank the top slice and rewrite explanations
 6. HTTP + MCP both call `WhoElseEngine.whoelseAsync`
@@ -133,12 +158,13 @@ pnpm --filter @whoelse/mcp-server start
 List tools (spawns the server as a client would):
 
 ```bash
-pnpm --filter @whoelse/mcp-server tools
+pnpm mcp:tools          # list tools
+pnpm mcp:smoke          # whoelse_find on a capability query + a dating query
 ```
 
 | Tool | Role |
 | --- | --- |
-| `whoelse_find` | Natural-language WHOELSE |
+| `whoelse_find` | Primary machine verb: find entities matching an intent (dating is only the seed) |
 | `whoelse_more_like` | Recursive: this entity becomes the new context |
 | `whoelse_explain` | Why this candidate matched |
 | `whoelse_feedback` | `more` / `less` — shifts later scores in-process |
@@ -240,9 +266,10 @@ Privacy: the demo never scrapes, never phones home unless you set an API key, an
 1. Drop in `@xenova/transformers` embeddings on the reserved `embedding` field; A/B against TF-IDF on the same seed.
 2. Mixed ranking vs sectioned ranking — measure “did you notice the AIs were AIs?”
 3. Persist feedback and treat MORE/LESS as a tiny preference vector.
-4. A second vertical (projects, or local hobbies) with **zero** dating keys, to prove the generic core.
+4. A second consumer vertical with **zero** dating keys (housing/rides are only stubs today).
 5. Real MCP-hosted session so Claude and the web app share exclude lists.
-6. Consent / disclosure UX research: how large does the AI badge need to be?
+6. Consent / disclosure UX research: how large does the AI/agent badge need to be?
+7. Fill `trust` without inventing a reputation product.
 
 ---
 

@@ -10,6 +10,7 @@
     "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
     "tools": "tsx src/list-tools.ts",
+    "smoke": "tsx src/smoke.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

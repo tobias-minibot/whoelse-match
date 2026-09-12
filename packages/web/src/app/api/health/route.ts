@@ -6,10 +6,13 @@ export const runtime = "nodejs";
 
 export async function GET() {
   const store = getEngine().store;
+  const byType: Record<string, number> = {};
+  for (const e of store.all()) byType[e.type] = (byType[e.type] ?? 0) + 1;
   return NextResponse.json({
     ok: true,
-    humans: store.all().filter((e) => e.type === "human").length,
-    ais: store.all().filter((e) => e.type === "ai").length,
+    humans: byType.human ?? 0,
+    ais: byType.ai ?? 0,
+    byType,
     openAi: hasOpenAi(),
   });
 }

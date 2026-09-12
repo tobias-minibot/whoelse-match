@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import type { Entity, FeedbackEvent, InterestRecord } from "./types.js";
+import { uniqueStrings } from "./text.js";
 
 export function findSeedPath(): string {
   if (process.env.WHOELSE_SEED_PATH) return process.env.WHOELSE_SEED_PATH;
@@ -15,6 +16,35 @@ export function findSeedPath(): string {
   throw new Error("Could not find data/seed.json. Set WHOELSE_SEED_PATH.");
 }
 
+export function offersOf(entity: Entity): string[] {
+  return unique([...(entity.offers ?? []), ...(entity.capabilities ?? [])]);
+}
+
+export function seeksOf(entity: Entity): string[] {
+  const looking = uniqueStrings(entity.attributes?.lookingFor);
+  const wants = entity.preferences?.wantsMoreOf;
+  const extra = typeof wants === "string" ? [wants] : uniqueStrings(wants);
+  return unique([...(entity.seeks ?? []), ...looking, ...extra]);
+}
+
+export function normalizeEntity(raw: Entity): Entity {
+  const offers = offersOf(raw);
+  const seeks = seeksOf(raw);
+  return {
+    ...raw,
+    offers,
+    seeks,
+    capabilities: offers,
+    attributes: raw.attributes ?? {},
+    preferences: raw.preferences ?? {},
+    metadata: raw.metadata ?? {},
+    trust: raw.trust ?? {
+      status: "unscored",
+      provenance: raw.provenance,
+    },
+  };
+}
+
 export class EntityStore {
   readonly entities: Entity[];
   readonly byId: Map<string, Entity>;
@@ -22,8 +52,8 @@ export class EntityStore {
   readonly interests: InterestRecord[] = [];
 
   constructor(entities: Entity[]) {
-    this.entities = entities;
-    this.byId = new Map(entities.map((e) => [e.id, e]));
+    this.entities = entities.map(normalizeEntity);
+    this.byId = new Map(this.entities.map((e) => [e.id, e]));
   }
 
   static fromSeed(seedPath = findSeedPath()): EntityStore {
@@ -80,10 +110,11 @@ export function entityText(entity: Entity): string {
   const chunks = [
     entity.name,
     entity.type,
-    entity.type === "ai" ? "AI artificial intelligence agent bot persona" : "human person people",
+    typeWords(entity.type),
     entity.description,
     JSON.stringify(entity.attributes),
-    entity.capabilities.join(" "),
+    offersOf(entity).join(" "),
+    seeksOf(entity).join(" "),
     JSON.stringify(entity.preferences),
     entity.availability ?? "",
     entity.location?.city ?? "",
@@ -103,6 +134,17 @@ export function stringList(entity: Entity, ...keys: string[]): string[] {
       else if (typeof value === "string") out.push(value);
     }
   }
-  out.push(...entity.capabilities);
-  return [...new Set(out.map((s) => s.trim()).filter(Boolean))];
+  out.push(...offersOf(entity), ...seeksOf(entity));
+  return unique(out);
+}
+
+function typeWords(type: string): string {
+  if (type === "ai") return "AI artificial intelligence agent bot persona";
+  if (type === "agent") return "agent bot service capability worker";
+  if (type === "human") return "human person people";
+  return type;
+}
+
+function unique(values: string[]): string[] {
+  return [...new Set(values.map((s) => s.trim()).filter(Boolean))];
 }

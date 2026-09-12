@@ -29,6 +29,17 @@ describe("seed integrity", () => {
       assert.ok(names.includes(need), `missing ${need}`);
     }
   });
+
+  it("gives every entity offers and seeks; type is open-ended", () => {
+    for (const e of engine.store.all()) {
+      assert.ok(e.offers.length > 0, `${e.id} missing offers`);
+      assert.ok(e.seeks.length > 0, `${e.id} missing seeks`);
+      assert.ok(e.trust?.status, `${e.id} missing trust stub`);
+    }
+    const types = new Set(engine.store.all().map((e) => e.type));
+    assert.ok(types.has("human") && types.has("ai") && types.has("agent"));
+    assert.ok(types.has("resource") && types.has("service"));
+  });
 });
 
 describe("WHOELSE", () => {
@@ -105,4 +116,34 @@ describe("WHOELSE", () => {
     const after = again.candidates.find((c) => c.entity.id === target)?.score ?? -1;
     assert.ok(after < before);
   });
+});
+
+describe("same primitive, other verticals", () => {
+  const cases: [string, RegExp][] = [
+    ["Who else can summarize this PDF?", /Summarizer|pdf/i],
+    ["Who else can browse the web?", /Browsewright|brows/i],
+    ["Who else can translate German to English?", /Bridge|translat/i],
+    ["Who else can verify this result?", /Checkmate|verif/i],
+    ["Who else can run this task more cheaply?", /ThriftWorker|cheap/i],
+    ["Who else can execute this workflow?", /Flowhand|workflow/i],
+    ["Who else can take over if the primary agent fails?", /Understudy|failover/i],
+    ["Who else exposes this capability?", /CapIndex|capability/i],
+    ["Who else should I delegate to?", /Hand-off|delegat/i],
+    ["Who else should I date?", /Riley|Harper|Theo|dinner/i],
+    ["Who else should I meet?", /Sam|Nia|Nova|Jordan/i],
+    ["Who else has an apartment?", /apartment|Adams/i],
+    ["Who else can give me a ride?", /Ride|transport/i],
+  ];
+
+  for (const [query, expect] of cases) {
+    it(`ranks a plausible entity for: ${query}`, () => {
+      const result = engine.whoelse({ context: query, limit: 5 });
+      assert.ok(result.candidates.length > 0);
+      const blob = result.candidates
+        .map((c) => `${c.entity.type} ${c.entity.name} ${c.entity.offers.join(" ")} ${c.entity.description}`)
+        .join(" ");
+      assert.match(blob, expect, blob);
+      assert.ok(result.byType);
+    });
+  }
 });
