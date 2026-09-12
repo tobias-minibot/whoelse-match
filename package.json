@@ -1,0 +1,20 @@
+{
+  "name": "whoelse",
+  "private": true,
+  "version": "0.1.0",
+  "description": "who else? — exemplar-anchored discovery for humans and AIs",
+  "packageManager": "pnpm@10.33.3",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @whoelse/web dev",
+    "build": "pnpm --filter @whoelse/core build && pnpm --filter @whoelse/web build",
+    "mcp": "pnpm --filter @whoelse/mcp-server start",
+    "mcp:dev": "pnpm --filter @whoelse/mcp-server dev",
+    "mcp:tools": "pnpm --filter @whoelse/mcp-server tools",
+    "mcp:smoke": "pnpm --filter @whoelse/mcp-server smoke",
+    "test": "pnpm --filter @whoelse/core test && pnpm --filter @whoelse/mcp-server test",
+    "typecheck": "pnpm -r typecheck"
+  }
+}
