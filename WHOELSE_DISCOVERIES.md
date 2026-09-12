@@ -80,6 +80,121 @@ Concrete things the code taught us. Reversible.
 21. **`next.action: invoke` is a new primitive, still a stub.** Agents now carry `apiEndpoint` / `mcpEndpoint` / `authRequirements`. Discover → `POST /api/agents/:id/invoke` → structured “I would do X.” That proves connect/delegate without a runtime, payments, or reputation. Schema break we accepted: machine `attributes` grew endpoint fields; `next.via` moved from `/api/chat` to the invoke path for `type=agent`.
 22. **Agent vs human discovery is vocabulary, not architecture.** “Summarize this PDF” never needed a capability registry — the seed offers the phrase. “Tobias meet AI startups” is still TF-IDF on human bios. Ranking across types stays one score; the UI still sections Humans / AIs / Also in the network so type stays louder than rank.
 
+## APARTMENT VERTICAL — second costume, same operator
+
+Dating asked: *Who else should I meet?*
+Apartment asks both: *Who else has the apartment I need?* and *Who else needs the apartment I have?*
+
+Built without a second architecture. Same `@whoelse/core`, same `whoelse.find`, same seed pool, a second UI costume. Listings are `type: resource` with domain keys in `attributes`. Seekers are `type: human` with `attributes.role = "seeker"` and a loud `metadata.demoLabel`. No scrapes.
+
+### Dating vs Apartment
+
+| | Dating | Apartment |
+| --- | --- | --- |
+| Human question | Who else should I meet? | Who else has this? **and** Who else needs this? |
+| Entity | profile | listing **or** seeker |
+| Offers | skills / presence | apartment, 1-bedroom, pets allowed… **or** tenant / references |
+| Seeks | collaborator / date | tenant **or** furnished 1-bedroom in Berlin |
+| Constraints that mattered | city, type, mode | city, neighborhood, **generic attribute filters** (rent, bedrooms, pets, furnished, dates), **side** |
+| Rank feel | TF-IDF cluster + type sectioning | same score, plus hard attribute gates so $3,100 Williamsburg cannot beat “under $2,500” |
+| MCP | `whoelse.find` | `whoelse.find` — no `apartment.find` |
+
+### 1. Universal fields
+
+These stayed enough:
+
+`id`, `type`, `name`, `description`, `offers`, `seeks`, `attributes`, `preferences`, `availability`, `location`, `metadata`, `provenance`, `trust`.
+
+Apartment did **not** add `ApartmentListing` or `lookingForRelationship`. It added keys inside `attributes`: `role`, `bedrooms`, `rent` / `budget`, `currency`, `furnished`, `pets`, `availableFrom` / `availableTo`, `neighborhood`, `listingKind`, `durationMonths`. Those keys are reusable (a ride can have `price` + `availableFrom`; a job can have `budget`).
+
+Schema additions that *were* required, all generic:
+
+- `WhoElseConstraints.side`: `"offer" | "seek"`
+- `WhoElseConstraints.attributes`: `{ key, op, value }[]` (`eq` / `lte` / `gte` / `includes` / `truthy`)
+- `WhoElseConstraints.neighborhood`
+- NL parser emits those from “under $2,500”, “1-bedroom”, “near Georgetown”, “who else needs…”
+- MCP `whoelse.find` gained optional `side` (still inferred from intent)
+- Machine match `attributes` now pass through the same marketplace keys so agents see rent/bedrooms/pets
+
+### 2. Entity data vs relations vs constraints
+
+Three layers, same as dating, louder here:
+
+- **Entity data** — the listing *is* a 1-bedroom in Georgetown for $2,450. Stored on the entity.
+- **Relations (offers ↔ seeks)** — the listing *offers* the apartment and *seeks* a tenant. The seeker is the complement. This is how reverse works without a join table.
+- **Constraints** — “under $2,500”, “pets”, “next month” are filters on attributes, not new operators. TF-IDF alone will happily rank a $3,100 loft as “1-bedroom apartment”. Hard `lte`/`eq` is what made the first-five honest.
+
+Dating mostly lived in the first two layers. Apartment forced the third. The third is still generic.
+
+### 3. Is offer/seek fundamental?
+
+**Yes.** This is the deeper marketplace primitive.
+
+Dating hid it: both sides are people, and “I offer presence / I seek a date” reads as personality. Apartment cannot hide it. A listing that only *offers* and a seeker that only *seeks* are different kinds of card, and the interesting question is the reverse one:
+
+> Who else needs what I have?
+
+That sentence is not housing-specific. It is the matching-network sentence:
+
+| Vertical | I have | Who else needs this? |
+| --- | --- | --- |
+| Apartment | a 1-bedroom in Georgetown | renters whose seeks overlap |
+| Rides | a seat to Moab Saturday | passengers |
+| Jobs | a role / a skill | applicants / hiring managers |
+| Products | a drill / a sofa | buyers |
+| Agents | PDF summarization | callers with that seek |
+| Compute | spare GPU hours | jobs that seek GPU |
+| Capital | a check | founders who seek funding |
+
+`side` on the query is the missing switch. When the human says “I have…”, the query is an **offer** and results must be **seekers**. When they say “Who else has…”, the query is a **seek** and results must be **offers**. Complementary Jaccard was already in the ranker; without `side` it could not decide which direction to prefer, and listings leaked into “who else needs”.
+
+`attributes.role = listing | seeker` is the data-side twin of `side`. Dating entities omit `role` and pass through both directions — so the dating costume does not break.
+
+### 4. Ranking differences
+
+What had to change in core (not an apartment endpoint):
+
+1. **Attribute gates.** Price / bedrooms / pets / furnished / availability / currency parse from NL into generic constraints and **hard-filter**. Soft TF-IDF is not enough once numbers exist.
+2. **`side` filter + weight.** `role=seeker` dropped on offer queries; `role=listing` dropped on seek queries. Complement weight goes up when `side` is set.
+3. **Neighborhood as a place, not a city.** “Near Georgetown” is not `city=Georgetown`. Places are derived from `attributes.neighborhood` + `location.city`.
+4. **Cheaper-than-exemplar.** “but cheaper” + an exemplar writes `rent lte exemplar.rent - 1`. Recursive WhoElse already had the exemplar; this is one more generic op.
+5. **Query-as-offer vs query-as-seek.** `emptyEntity` puts the sentence on `offers` when `side=seek` (I have X) and on `seeks` otherwise.
+
+What did **not** change: TF-IDF, modes (`expand` / `peers` / `substitute`), exclude, feedback, MCP tool name, HTTP paths.
+
+Dating first-five stayed a cluster test. Apartment listings do not mention voice assistants, so they do not flood “Who else wants to build a network of voice assistants?”
+
+### 5. One MCP schema for both?
+
+**Yes.** `whoelse.find({ intent })` is enough.
+
+```
+intent: "Who else has a furnished apartment in Berlin under €2000?"
+intent: "Who else is looking for a 2-bedroom in DC?"
+intent: "Who else might be a good tenant for this listing?" + entityId
+```
+
+Optional `side` is a hint, not a second tool. Structured `attributes` on the match (rent, bedrooms, pets, neighborhood…) are additive passthrough. Clients that ignored them still get `id / type / name / score / why / next`.
+
+A dedicated `apartment.find` would have proved the opposite of the thesis.
+
+### 6. What breaks?
+
+- **Synonyms still lose.** “flat” vs “apartment”, “allow cats” vs `pets: true`, unless the seed says both.
+- **Currency is not converted.** `$2500` will not include a €2400 Mitte listing. Honest for a demo; wrong for a product.
+- **Hard filters drop entities missing the key.** A dating human has no `bedrooms`, so they correctly vanish from “1-bedroom under $2500”. A listing that forgot `pets` vanishes from “accepts pets”. Sparse data is punished.
+- **“Near Georgetown” is soft-same-city.** Foggy Bottom can appear. That is a product choice, not a geo index.
+- **Availability is ISO string compare**, not a calendar. “Next month” means `availableFrom <= end-of-next-month` in UTC.
+- **Seekers are `type: human`.** The dating UI must keep them out of the Humans section (`metadata.vertical === "apartment"`) or they look like dates. Type stayed open; the costume has to stay honest.
+- **In-memory feedback** still dies on Vercel isolates.
+- **No booking, no identity, no scrape.** If someone treats DEMO cards as inventory, that is a disclosure failure, not a matcher failure.
+
+### Recommended third vertical (do not build)
+
+**Jobs / gigs** — “Who else is hiring for this?” and “Who else can do this work?” Humans on *both* sides, time windows, a budget/salary number, and the first place `trust` stops being a stub. Rides are already a one-row tease; jobs would stress offer/seek harder than housing because the “listing” is also a person. Compute/GPU is the agent-native version of the same sentence. Do not build it until this apartment reverse still feels obvious in production.
+
+---
+
 ### Open questions we would run next
 
 - Mixed rank vs sectioned rank: does anyone mis-read an AI as a human when the badge is present but the list is interleaved?

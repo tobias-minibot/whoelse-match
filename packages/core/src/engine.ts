@@ -1,14 +1,17 @@
 import { buildExplanation, labelsOf } from "./explain.js";
-import { inferConstraints, inferMode, queryText } from "./parse.js";
+import { inferConstraints, inferMode, queryText, wantsCheaper } from "./parse.js";
 import { maybeChat, maybeRerankAndExplain } from "./openai.js";
 import { entityText, EntityStore, offersOf, seeksOf, stringList } from "./store.js";
 import { jaccard } from "./text.js";
 import { TfidfIndex } from "./tfidf.js";
 import type {
+  AttributeConstraint,
   Candidate,
   ChatMessage,
   Entity,
+  MatchSide,
   ScoreBreakdown,
+  WhoElseConstraints,
   WhoElseMode,
   WhoElseRequest,
   WhoElseResult,
@@ -43,17 +46,21 @@ export class WhoElseEngine {
 
   whoelse(request: WhoElseRequest): WhoElseResult {
     const contextEntity = request.entityId ? this.store.get(request.entityId) : undefined;
+    const userText = [request.context, request.predicate ?? ""].filter(Boolean).join(" ");
     const rawQuery = queryText({
       context: request.context,
       predicate: request.predicate,
       entity: contextEntity,
     });
-    const inferredMode = inferMode(rawQuery, Boolean(contextEntity), request.mode);
+    const inferredMode = inferMode(userText, Boolean(contextEntity), request.mode);
     const inferredConstraints = inferConstraints(
-      rawQuery,
+      userText,
       this.store.cities(),
       request.constraints,
+      this.store.places(),
     );
+    inheritExemplarFilters(inferredConstraints, userText, contextEntity);
+    applyCheaperFromExemplar(inferredConstraints, userText, contextEntity);
     const exclude = new Set([
       ...(request.exclude ?? []),
       ...(request.knownEntities ?? []),
@@ -67,7 +74,7 @@ export class WhoElseEngine {
       ...(inferredConstraints.capabilities ?? []),
       ...(inferredConstraints.offers ?? []),
       ...(inferredConstraints.seeks ?? []),
-      ...labelsOf(contextEntity ?? emptyEntity(request.context)),
+      ...labelsOf(contextEntity ?? emptyEntity(request.context, inferredConstraints.side)),
     ];
 
     const scored: Candidate[] = [];
@@ -87,14 +94,32 @@ export class WhoElseEngine {
         const need = inferredConstraints.interests.map((s) => s.toLowerCase());
         if (!need.some((n) => have.some((h) => h.includes(n) || n.includes(h)))) continue;
       }
+      if (!passesSide(entity, inferredConstraints.side)) continue;
+      if (!passesAttributes(entity, inferredConstraints.attributes)) continue;
+      if (!passesNeighborhood(entity, inferredConstraints)) continue;
 
       const text = this.index.similarity(entity.id, qVec);
-      const structured = structuredScore(entity, contextEntity, queryLabels, inferredMode);
+      const structured = structuredScore(
+        entity,
+        contextEntity,
+        queryLabels,
+        inferredMode,
+        inferredConstraints.side,
+      );
       const location = locationScore(entity, inferredConstraints, contextEntity);
       const typeAffinity = typeScore(entity, inferredMode, contextEntity);
       const feedback = this.store.feedbackScore(entity.id, request.context);
       // Kill the 0.04 type-only floor that filled first-five with random humans.
-      if (!contextEntity && text < 0.03 && structured < 0.05 && location === 0 && feedback === 0) {
+      // Attribute hits are already relevant — "accepts pets" should not die on TF-IDF.
+      const constrained = Boolean(inferredConstraints.attributes?.length);
+      if (
+        !contextEntity &&
+        !constrained &&
+        text < 0.03 &&
+        structured < 0.05 &&
+        location === 0 &&
+        feedback === 0
+      ) {
         continue;
       }
       const textW = contextEntity ? EXEMPLAR_TEXT_W : TEXT_W;
@@ -217,6 +242,7 @@ function structuredScore(
   contextEntity: Entity | undefined,
   queryLabels: string[],
   mode: WhoElseMode,
+  side?: MatchSide,
 ): number {
   const self = labelsOf(entity);
   const target = contextEntity ? labelsOf(contextEntity) : queryLabels;
@@ -227,8 +253,15 @@ function structuredScore(
   const targetSeeks = contextEntity ? seeksOf(contextEntity) : queryLabels;
   const sameOffers = jaccard(selfOffers, targetOffers);
   const sameSeeks = jaccard(selfSeeks, targetSeeks);
-  const complement = Math.max(jaccard(selfOffers, targetSeeks), jaccard(selfSeeks, targetOffers));
+  const offerToNeed = jaccard(selfOffers, targetSeeks);
+  const needToOffer = jaccard(selfSeeks, targetOffers);
+  const complement = Math.max(offerToNeed, needToOffer);
   let score = 0.4 * overlap + 0.2 * sameSeeks + 0.15 * sameOffers + 0.25 * complement;
+  if (side === "offer") {
+    score = 0.28 * overlap + 0.08 * sameSeeks + 0.18 * sameOffers + 0.46 * Math.max(offerToNeed, sameOffers);
+  } else if (side === "seek") {
+    score = 0.28 * overlap + 0.18 * sameSeeks + 0.08 * sameOffers + 0.46 * Math.max(needToOffer, sameSeeks);
+  }
   if (mode === "peers" && contextEntity && entity.type === contextEntity.type) score += 0.08;
   if (mode === "substitute" && contextEntity) {
     const sameSlot = jaccard(
@@ -242,15 +275,121 @@ function structuredScore(
 
 function locationScore(
   entity: Entity,
-  constraints: { city?: string; region?: string },
+  constraints: { city?: string; region?: string; neighborhood?: string },
   contextEntity?: Entity,
 ): number {
   const city = constraints.city ?? contextEntity?.location?.city;
   const region = constraints.region ?? contextEntity?.location?.region;
-  if (!entity.location) return 0;
-  if (city && eq(entity.location.city, city)) return 1;
-  if (region && eq(entity.location.region, region)) return 0.55;
+  const neighborhood =
+    constraints.neighborhood ??
+    (typeof contextEntity?.attributes?.neighborhood === "string"
+      ? contextEntity.attributes.neighborhood
+      : undefined);
+  const entityHood =
+    typeof entity.attributes?.neighborhood === "string" ? entity.attributes.neighborhood : undefined;
+  if (neighborhood && entityHood && eq(neighborhood, entityHood)) return 1;
+  if (!entity.location) return neighborhood ? 0 : 0;
+  if (city && eq(entity.location.city, city)) return neighborhood ? 0.55 : 1;
+  if (region && eq(entity.location.region, region)) return 0.45;
   return 0;
+}
+
+function inheritExemplarFilters(
+  constraints: WhoElseConstraints,
+  userText: string,
+  entity?: Entity,
+) {
+  if (!entity) return;
+  if (!/\blike this\b|\bsomething like\b|\bthis (apartment|listing|place|one)\b/i.test(userText)) {
+    return;
+  }
+  const a = entity.attributes ?? {};
+  const attrs = (constraints.attributes ??= []);
+  const add = (key: string, op: AttributeConstraint["op"], value: unknown) => {
+    if (value == null || value === "") return;
+    if (attrs.some((x) => x.key === key)) return;
+    attrs.push({ key, op, value });
+  };
+  if (typeof a.bedrooms === "number") add("bedrooms", "eq", a.bedrooms);
+  if (a.furnished === true) add("furnished", "truthy", true);
+  if (a.furnished === false) add("furnished", "eq", false);
+  if (typeof a.currency === "string") add("currency", "eq", a.currency);
+  if (!constraints.city && entity.location?.city) constraints.city = entity.location.city;
+  if (!constraints.region && entity.location?.region) constraints.region = entity.location.region;
+}
+
+function applyCheaperFromExemplar(
+  constraints: WhoElseConstraints,
+  query: string,
+  contextEntity?: Entity,
+) {
+  if (!contextEntity || !wantsCheaper(query)) return;
+  const rent = asNumber(contextEntity.attributes?.rent ?? contextEntity.attributes?.price);
+  if (rent == null) return;
+  const attrs = (constraints.attributes ??= []);
+  if (!attrs.some((a) => a.key === "rent" && a.op === "lte")) {
+    attrs.push({ key: "rent", op: "lte", value: rent - 1 });
+  }
+}
+
+function passesSide(entity: Entity, side?: MatchSide): boolean {
+  if (!side) return true;
+  const role = typeof entity.attributes?.role === "string" ? entity.attributes.role : "";
+  if (side === "offer" && role === "seeker") return false;
+  if (side === "seek" && role === "listing") return false;
+  return true;
+}
+
+function passesNeighborhood(entity: Entity, constraints: WhoElseConstraints): boolean {
+  if (!constraints.neighborhood) return true;
+  const have =
+    typeof entity.attributes?.neighborhood === "string" ? entity.attributes.neighborhood : "";
+  if (!have) return Boolean(constraints.city && eq(entity.location?.city, constraints.city));
+  return eq(have, constraints.neighborhood) || Boolean(constraints.city && eq(entity.location?.city, constraints.city));
+}
+
+function passesAttributes(entity: Entity, attrs?: AttributeConstraint[]): boolean {
+  if (!attrs?.length) return true;
+  for (const constraint of attrs) {
+    const have = entity.attributes?.[constraint.key] ?? entity.preferences?.[constraint.key];
+    if (!matchAttribute(have, constraint)) return false;
+  }
+  return true;
+}
+
+function matchAttribute(have: unknown, constraint: AttributeConstraint): boolean {
+  if (constraint.op === "truthy") {
+    return have === true || have === "true" || have === "yes";
+  }
+  if (have == null || have === "") return false;
+  if (constraint.op === "eq") {
+    if (typeof constraint.value === "boolean") return Boolean(have) === constraint.value;
+    const n = asNumber(have);
+    const m = asNumber(constraint.value);
+    if (n != null && m != null) return n === m;
+    return String(have).toLowerCase() === String(constraint.value).toLowerCase();
+  }
+  if (constraint.op === "lte" || constraint.op === "gte") {
+    const n = asNumber(have) ?? (typeof have === "string" && /^\d{4}-\d{2}-\d{2}/.test(have) ? have : undefined);
+    const m =
+      asNumber(constraint.value) ??
+      (typeof constraint.value === "string" && /^\d{4}-\d{2}-\d{2}/.test(constraint.value)
+        ? constraint.value
+        : undefined);
+    if (n == null || m == null) return false;
+    return constraint.op === "lte" ? n <= m : n >= m;
+  }
+  if (constraint.op === "includes") {
+    const bag = Array.isArray(have) ? have.map(String) : [String(have)];
+    return bag.some((x) => x.toLowerCase().includes(String(constraint.value).toLowerCase()));
+  }
+  return true;
+}
+
+function asNumber(value: unknown): number | undefined {
+  if (typeof value === "number" && !Number.isNaN(value)) return value;
+  if (typeof value === "string" && value.trim() && !Number.isNaN(Number(value))) return Number(value);
+  return undefined;
 }
 
 function typeScore(entity: Entity, mode: WhoElseMode, contextEntity?: Entity): number {
@@ -312,16 +451,17 @@ function groupByType(candidates: Candidate[]): Record<string, Candidate[]> {
   return out;
 }
 
-function emptyEntity(context: string): Entity {
+function emptyEntity(context: string, side?: MatchSide): Entity {
+  const asOffer = side === "seek";
   return {
     id: "query",
     type: "human",
     name: "query",
     description: context,
     attributes: {},
-    offers: [],
-    seeks: [context],
-    capabilities: [],
+    offers: asOffer ? [context] : [],
+    seeks: asOffer ? [] : [context],
+    capabilities: asOffer ? [context] : [],
     preferences: {},
     metadata: {},
     provenance: "user",

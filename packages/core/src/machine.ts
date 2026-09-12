@@ -22,6 +22,20 @@ export interface MachineMatch {
     availability?: string;
     location?: Entity["location"];
     owner?: unknown;
+    role?: unknown;
+    bedrooms?: unknown;
+    rent?: unknown;
+    budget?: unknown;
+    price?: unknown;
+    currency?: unknown;
+    furnished?: unknown;
+    pets?: unknown;
+    availableFrom?: unknown;
+    availableTo?: unknown;
+    neighborhood?: unknown;
+    listingKind?: unknown;
+    amenities?: unknown;
+    durationMonths?: unknown;
     tools?: unknown;
     permissions?: unknown;
     pricing?: unknown;
@@ -66,6 +80,20 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       seeks: seeksOf(e),
       availability: e.availability,
       location: e.location,
+      role: attrs.role,
+      bedrooms: attrs.bedrooms,
+      rent: attrs.rent,
+      budget: attrs.budget,
+      price: attrs.price ?? attrs.rent,
+      currency: attrs.currency,
+      furnished: attrs.furnished,
+      pets: attrs.pets,
+      availableFrom: attrs.availableFrom,
+      availableTo: attrs.availableTo,
+      neighborhood: attrs.neighborhood,
+      listingKind: attrs.listingKind,
+      amenities: attrs.amenities,
+      durationMonths: attrs.durationMonths,
       owner: attrs.owner,
       tools: attrs.tools,
       permissions: attrs.permissions,

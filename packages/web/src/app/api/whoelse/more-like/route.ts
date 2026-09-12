@@ -13,6 +13,7 @@ export async function POST(req: Request) {
     entityId: body.entityId,
     exclude: body.exclude,
     mode: body.mode ?? "expand",
+    constraints: body.constraints,
     limit: body.limit ?? 8,
   });
   return NextResponse.json(result);

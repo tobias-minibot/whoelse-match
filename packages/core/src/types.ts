@@ -28,6 +28,16 @@ export type EntityType = string;
 
 export type Provenance = "synthetic" | "ai_generated" | "user";
 export type WhoElseMode = "substitute" | "expand" | "peers";
+/** Marketplace direction: who HAS the thing vs who NEEDS it. Not vertical-specific. */
+export type MatchSide = "offer" | "seek";
+export type AttributeOp = "eq" | "lte" | "gte" | "includes" | "truthy";
+
+/** Generic structured filter. Apartment rent/bedrooms/pets are just keys. */
+export interface AttributeConstraint {
+  key: string;
+  op: AttributeOp;
+  value?: unknown;
+}
 
 export interface GeoLocation {
   city?: string;
@@ -73,6 +83,7 @@ export interface WhoElseConstraints {
   city?: string;
   region?: string;
   country?: string;
+  neighborhood?: string;
   /** Client-side keyword filter; not dating-specific. */
   interests?: string[];
   offers?: string[];
@@ -80,6 +91,14 @@ export interface WhoElseConstraints {
   /** @deprecated Prefer `offers`. */
   capabilities?: string[];
   limit?: number;
+  /**
+   * Who HAS vs who NEEDS.
+   * offer = return entities that provide the thing (listings, rides, jobs…).
+   * seek = return entities that want the thing (renters, passengers, applicants…).
+   */
+  side?: MatchSide;
+  /** Generic attribute filters (price, bedrooms, pets, dates, …). */
+  attributes?: AttributeConstraint[];
 }
 
 export interface WhoElseRequest {
