@@ -17,6 +17,8 @@
     "mcp:http-dogfood": "pnpm --filter @whoelse/mcp-server http-dogfood",
     "test": "pnpm --filter @whoelse/core test && pnpm --filter @whoelse/mcp-server test",
     "dogfood": "pnpm --filter @whoelse/core exec tsx scripts/dogfood.ts",
+    "legacy:catalog": "python3 scripts/build-reconstructed-catalog.py",
+    "legacy:probe": "pnpm --filter @whoelse/mcp-server exec tsx ../../scripts/legacy-live-probe.ts",
     "typecheck": "pnpm -r typecheck"
   }
 }

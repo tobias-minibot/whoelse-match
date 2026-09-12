@@ -1,0 +1,322 @@
+[
+  {
+    "iso639_1": "en",
+    "language_name": "English",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Who else?",
+    "usage_explanation": "Common rhetorical fragment in jokes, blame, praise, and ads. Used to single out individuals or groups in casual speech, often with humorous or accusatory undertones.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "es",
+    "language_name": "Spanish",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "¿Quién más?",
+    "usage_explanation": "Extremely frequent across dialects; literal and rhetorical uses. Commonly heard in everyday conversation, classroom settings, and media.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "fr",
+    "language_name": "French",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Qui d'autre ?",
+    "usage_explanation": "Standard French expression used in both formal and informal contexts. Often appears in rhetorical questions and advertisements.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "de",
+    "language_name": "German",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Wer sonst?",
+    "usage_explanation": "Direct translation commonly used in colloquial speech. Can carry an emphatic or rhetorical tone depending on context.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "it",
+    "language_name": "Italian",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Chi altro?",
+    "usage_explanation": "Frequently used in conversation and media. Can be rhetorical or literal depending on intonation and context.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "pt",
+    "language_name": "Portuguese",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Quem mais?",
+    "usage_explanation": "Common in both European and Brazilian Portuguese. Used in casual conversation, classrooms, and advertising.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "ru",
+    "language_name": "Russian",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Кто ещё?",
+    "usage_explanation": "Standard expression in Russian. Used both literally when asking about additional participants and rhetorically for emphasis.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "zh",
+    "language_name": "Chinese",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "还有谁？",
+    "usage_explanation": "Mandarin Chinese expression. Very common in daily conversation, especially in group settings and when polling for participants.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "ja",
+    "language_name": "Japanese",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "他に誰？",
+    "usage_explanation": "Casual form used in everyday Japanese. More formal variants exist for polite speech contexts.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "ko",
+    "language_name": "Korean",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "또 누가?",
+    "usage_explanation": "Informal Korean expression. Honorific variants are used in formal contexts or when addressing elders.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "ar",
+    "language_name": "Arabic",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "من غيره؟",
+    "usage_explanation": "Modern Standard Arabic form. Dialectal variations exist across different Arabic-speaking regions.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "hi",
+    "language_name": "Hindi",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "और कौन?",
+    "usage_explanation": "Very common in Hindi-speaking regions. Used in casual speech, Bollywood films, and everyday interactions.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "bn",
+    "language_name": "Bengali",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "আর কে?",
+    "usage_explanation": "Common Bengali expression used in both Bangladesh and West Bengal. Appears in literature and daily conversation.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "nl",
+    "language_name": "Dutch",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Wie anders?",
+    "usage_explanation": "Standard Dutch expression. Used rhetorically in advertising and literally in everyday questions.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "pl",
+    "language_name": "Polish",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Kto jeszcze?",
+    "usage_explanation": "Common Polish phrase used in group settings, classrooms, and casual conversation.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "tr",
+    "language_name": "Turkish",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Başka kim?",
+    "usage_explanation": "Standard Turkish expression. Frequently used in conversational contexts and media.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "sv",
+    "language_name": "Swedish",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Vem annars?",
+    "usage_explanation": "Common Swedish expression used in both casual and formal contexts.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "el",
+    "language_name": "Greek",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Ποιος άλλος;",
+    "usage_explanation": "Modern Greek expression. Used in everyday conversation and has a long history in the language.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "he",
+    "language_name": "Hebrew",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "מי עוד?",
+    "usage_explanation": "Modern Hebrew expression. Common in Israeli daily speech and media.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "th",
+    "language_name": "Thai",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "ใครอีก?",
+    "usage_explanation": "Casual Thai expression. Polite particles may be added for formal contexts.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "vi",
+    "language_name": "Vietnamese",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Ai nữa?",
+    "usage_explanation": "Common Vietnamese phrase used in daily conversation and group settings.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "id",
+    "language_name": "Indonesian",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Siapa lagi?",
+    "usage_explanation": "Standard Indonesian expression. Also understood in Malaysian contexts with minor variations.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "ms",
+    "language_name": "Malay",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Siapa lagi?",
+    "usage_explanation": "Same form as Indonesian due to linguistic similarity. Common in Malaysia, Brunei, and Singapore.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "tl",
+    "language_name": "Tagalog",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Sino pa?",
+    "usage_explanation": "Very common Filipino expression. Used in casual conversation throughout the Philippines.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "sw",
+    "language_name": "Swahili",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Nani mwingine?",
+    "usage_explanation": "East African lingua franca expression. Used across Kenya, Tanzania, Uganda, and neighboring countries.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "uk",
+    "language_name": "Ukrainian",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Хто ще?",
+    "usage_explanation": "Standard Ukrainian expression. Used in daily conversation and media.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "cs",
+    "language_name": "Czech",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Kdo další?",
+    "usage_explanation": "Common Czech phrase used in various contexts from casual to formal.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "ro",
+    "language_name": "Romanian",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Cine altcineva?",
+    "usage_explanation": "Standard Romanian expression. Common in everyday speech and media.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "hu",
+    "language_name": "Hungarian",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Ki más?",
+    "usage_explanation": "Common Hungarian phrase. Used both literally and rhetorically.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "fi",
+    "language_name": "Finnish",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Kuka muu?",
+    "usage_explanation": "Standard Finnish expression. Used in casual and formal Finnish.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "arz",
+    "language_name": "Egyptian Arabic",
+    "scope_type": "Extended",
+    "who_else_expression": "مين تاني؟",
+    "usage_explanation": "Egyptian dialect form, different from MSA. Very common in Egyptian movies, TV, and daily speech in Egypt.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "yue",
+    "language_name": "Cantonese",
+    "scope_type": "Extended",
+    "who_else_expression": "仲有邊個？",
+    "usage_explanation": "Cantonese dialect expression used in Hong Kong, Macau, and Guangdong. Different from Mandarin equivalent.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "pt-BR",
+    "language_name": "Brazilian Portuguese",
+    "scope_type": "Extended",
+    "who_else_expression": "Quem mais?",
+    "usage_explanation": "Brazilian variant, same as standard Portuguese but with Brazilian pronunciation and usage patterns. Very common in Brazilian media.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "es-MX",
+    "language_name": "Mexican Spanish",
+    "scope_type": "Extended",
+    "who_else_expression": "¿Quién más?",
+    "usage_explanation": "Mexican Spanish uses the same expression but with distinct intonation. Extremely common in Mexican media and daily life.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "no",
+    "language_name": "Norwegian",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Hvem ellers?",
+    "usage_explanation": "Norwegian Bokmål expression. Also used in Nynorsk with slight variations.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "da",
+    "language_name": "Danish",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "Hvem ellers?",
+    "usage_explanation": "Danish expression, similar to Norwegian due to linguistic proximity.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "fa",
+    "language_name": "Persian",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "کی دیگه؟",
+    "usage_explanation": "Colloquial Persian (Farsi) expression. Used in Iran, Afghanistan (Dari), and Tajikistan (Tajik).",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "ur",
+    "language_name": "Urdu",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "اور کون؟",
+    "usage_explanation": "Common Urdu expression, mutually intelligible with Hindi equivalent. Used in Pakistan and among Urdu speakers in India.",
+    "frequency": "Several times per day"
+  },
+  {
+    "iso639_1": "ta",
+    "language_name": "Tamil",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "இன்னும் யார்?",
+    "usage_explanation": "Tamil expression used in Tamil Nadu, Sri Lanka, and Tamil diaspora communities worldwide.",
+    "frequency": "Several times per week"
+  },
+  {
+    "iso639_1": "te",
+    "language_name": "Telugu",
+    "scope_type": "ISO-639-1",
+    "who_else_expression": "ఇంకా ఎవరు?",
+    "usage_explanation": "Telugu expression common in Andhra Pradesh and Telangana. Used in daily speech and media.",
+    "frequency": "Several times per week"
+  }
+]

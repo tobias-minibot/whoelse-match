@@ -1,0 +1,84 @@
+# GitHub hunt (cloud agent VM, 2026-09-12)
+
+## Auth
+github.com
+  ✓ Logged in to github.com account cursor (/home/ubuntu/.config/gh/hosts.yml)
+  - Active account: true
+  - Git operations protocol: https
+  - Token: ghs_**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+## tobias-minibot public repos
+tobias-minibot/whoelse-match	who else? — a dating app for humans & AIs	public	2026-09-12T13:25:57Z
+tobias-minibot/quotecall	Human-approved supplier calls that return structured, auditable quote evidence	public	2026-09-09T16:08:47Z
+tobias-minibot/pricemcp	The neutral price layer for AI — MCP-first infrastructure for canonical entities, normalized quotes, trust, freshness, and provenance.	public	2026-09-09T04:43:45Z
+tobias-minibot/intelligent-artificialness-motion-reel	Placeholder landing page for Intelligent Artificialness built around a recovered motion reel	public	2026-08-16T05:24:17Z
+tobias-minibot/voice-relay-search		public	2026-07-09T06:29:07Z
+tobias-minibot/whoelse-meaning-app		public	2026-07-09T05:55:12Z
+tobias-minibot/news-from-now-on	News from Now On forecast engine static site	public, archived	2026-06-17T04:07:56Z
+tobias-minibot/WhoElseExpressions	Repository for https://replit.com/@superhost1/WhoElseExpressions	public	2026-04-16T02:42:26Z
+tobias-minibot/who-else-startups	8 startup pitch decks exploring the 'Who Else?' universal namespace concept	public	2026-04-15T03:38:33Z
+
+## Named archaeology repos (direct view)
+### tobias-minibot/whoelse
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse'. (repository)
+
+### tobias-minibot/who-else-engine
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/who-else-engine'. (repository)
+
+### tobias-minibot/who-else-index
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/who-else-index'. (repository)
+
+### tobias-minibot/who-else-analyzer
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/who-else-analyzer'. (repository)
+
+### tobias-minibot/whoelse-search
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-search'. (repository)
+
+### tobias-minibot/whoelse-collateral
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-collateral'. (repository)
+
+### tobias-minibot/whoelse-xprize
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-xprize'. (repository)
+
+### tobias-minibot/4mcp
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/4mcp'. (repository)
+
+### tobias-minibot/knowledge-compendium
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/knowledge-compendium'. (repository)
+
+### tobias-minibot/whoelse-live-search
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-live-search'. (repository)
+
+### tobias-minibot/whoelse-translator
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-translator'. (repository)
+
+### tobias-minibot/whoelse-autonomous-org
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-autonomous-org'. (repository)
+
+### tobias-minibot/intent-namespace
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/intent-namespace'. (repository)
+
+### tobias-minibot/mcp4mcp
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/mcp4mcp'. (repository)
+
+### tobias-minibot/MCP4MCP
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/MCP4MCP'. (repository)
+
+### tobias-minibot/whoelse-protocol
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-protocol'. (repository)
+
+### tobias-minibot/whoelse-engine
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-engine'. (repository)
+
+### tobias-minibot/who-else
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/who-else'. (repository)
+
+### tobias-minibot/whoelse-namespace
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/whoelse-namespace'. (repository)
+
+### tobias-minibot/universal-namespace
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/universal-namespace'. (repository)
+
+### tobias-minibot/intent-slots
+GraphQL: Could not resolve to a Repository with the name 'tobias-minibot/intent-slots'. (repository)
+

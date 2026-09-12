@@ -1,0 +1,8011 @@
+{
+  "provenance": "user-pasted surviving catalog 2026-09-12",
+  "warning": "Machine files intent-slots-506.csv and intent-protocol.json were NOT recovered from any reachable tobias-minibot GitHub repo on 2026-09-12. This snapshot reconstructs the surviving category spine (Body & Health through Shopping & Gifts) plus named IDs (DATE/DATING/APARTMENT/RIDESHARE/JOB/NOTARY/PLUMBER) and public whoelse.ai / DIN / meaning-app / landing evidence. Do NOT treat these IDs as the original SHA-stable 506.",
+  "recovered_machine_files": {
+    "intent-slots-506.csv": null,
+    "intent-protocol.json": null,
+    "july_18_2026_snapshot": null,
+    "august_15_2026_snapshot": null,
+    "mcp4mcp_import": null,
+    "whoelse_protocol_v2": null
+  },
+  "version_records": {
+    "public_2018_2022": {
+      "count_claimed": 200,
+      "source": "whoelse.ai home + idea pages (also 150 in Medium 2019)",
+      "note": "Early public claim. Not 506."
+    },
+    "july_18_2026": {
+      "count_claimed": 506,
+      "includes": "DATING as its own ID alongside DATE",
+      "machine_file": null,
+      "status": "claimed-not-recovered"
+    },
+    "august_15_2026": {
+      "count_claimed": 505,
+      "change": "DATING folded into DATE",
+      "machine_file": null,
+      "status": "claimed-not-recovered"
+    },
+    "protocol_v2": {
+      "canonical_concepts_claimed": 452,
+      "ids_claimed": 506,
+      "permanent_aliases_claimed": 54,
+      "global_slot_roles_claimed": 36,
+      "arithmetic": "452 + 54 aliases = 506 IDs",
+      "machine_file": null,
+      "status": "claimed-not-recovered",
+      "note": "Do not silently reconcile 506 vs 505 vs 452+54. They are different snapshots."
+    }
+  },
+  "reconstructed_slot_roles_36": [
+    {
+      "id": "LOCATION",
+      "kind": "constraint",
+      "examples": [
+        "near the office",
+        "DC",
+        "near me"
+      ]
+    },
+    {
+      "id": "DESTINATION",
+      "kind": "constraint",
+      "examples": [
+        "airport",
+        "trailhead"
+      ]
+    },
+    {
+      "id": "ORIGIN",
+      "kind": "constraint",
+      "examples": [
+        "home",
+        "Mall"
+      ]
+    },
+    {
+      "id": "RADIUS",
+      "kind": "constraint",
+      "examples": [
+        "2 miles",
+        "walking distance"
+      ]
+    },
+    {
+      "id": "TIME",
+      "kind": "constraint",
+      "examples": [
+        "after 5pm",
+        "this weekend"
+      ]
+    },
+    {
+      "id": "DATE",
+      "kind": "constraint",
+      "examples": [
+        "Thursday",
+        "Saturday"
+      ]
+    },
+    {
+      "id": "DURATION",
+      "kind": "constraint",
+      "examples": [
+        "1 hour",
+        "overnight"
+      ]
+    },
+    {
+      "id": "URGENCY",
+      "kind": "constraint",
+      "examples": [
+        "before the weekend",
+        "emergency"
+      ]
+    },
+    {
+      "id": "AVAILABILITY",
+      "kind": "constraint",
+      "examples": [
+        "weekday evenings",
+        "always on"
+      ]
+    },
+    {
+      "id": "PARTY_SIZE",
+      "kind": "constraint",
+      "examples": [
+        "four of us",
+        "just me"
+      ]
+    },
+    {
+      "id": "RECIPIENT",
+      "kind": "constraint",
+      "examples": [
+        "a friend",
+        "my parents"
+      ]
+    },
+    {
+      "id": "REQUESTER",
+      "kind": "actor",
+      "examples": [
+        "who is asking"
+      ]
+    },
+    {
+      "id": "PROVIDER_TYPE",
+      "kind": "constraint",
+      "examples": [
+        "human",
+        "AI",
+        "service"
+      ]
+    },
+    {
+      "id": "SKILL",
+      "kind": "predicate",
+      "examples": [
+        "summarize PDF",
+        "fix a leak"
+      ]
+    },
+    {
+      "id": "OBJECT",
+      "kind": "predicate",
+      "examples": [
+        "apartment",
+        "gift",
+        "PDF"
+      ]
+    },
+    {
+      "id": "ACTIVITY",
+      "kind": "predicate",
+      "examples": [
+        "dinner + walk",
+        "mountain biking"
+      ]
+    },
+    {
+      "id": "VIBE",
+      "kind": "preference",
+      "examples": [
+        "low-key",
+        "not an app marathon"
+      ]
+    },
+    {
+      "id": "QUALITY",
+      "kind": "preference",
+      "examples": [
+        "vetted",
+        "best available"
+      ]
+    },
+    {
+      "id": "EXPERIENCE",
+      "kind": "preference",
+      "examples": [
+        "intermediate",
+        "specialist"
+      ]
+    },
+    {
+      "id": "LANGUAGE",
+      "kind": "constraint",
+      "examples": [
+        "German to English",
+        "Hebrew"
+      ]
+    },
+    {
+      "id": "BUDGET",
+      "kind": "constraint",
+      "examples": [
+        "under $60",
+        "not too pricey"
+      ]
+    },
+    {
+      "id": "PRICE",
+      "kind": "constraint",
+      "examples": [
+        "cheap task execution"
+      ]
+    },
+    {
+      "id": "PAYMENT",
+      "kind": "constraint",
+      "examples": [
+        "insurance",
+        "invoice"
+      ]
+    },
+    {
+      "id": "INSURANCE",
+      "kind": "constraint",
+      "examples": [
+        "takes my insurance",
+        "your plan"
+      ]
+    },
+    {
+      "id": "CERTIFICATION",
+      "kind": "constraint",
+      "examples": [
+        "licensed",
+        "notary commission"
+      ]
+    },
+    {
+      "id": "CONSTRAINT",
+      "kind": "constraint",
+      "examples": [
+        "one of us is vegan"
+      ]
+    },
+    {
+      "id": "PREFERENCE",
+      "kind": "preference",
+      "examples": [
+        "pour-over coffee"
+      ]
+    },
+    {
+      "id": "QUANTITY",
+      "kind": "constraint",
+      "examples": [
+        "one-bedroom",
+        "fourth for tennis"
+      ]
+    },
+    {
+      "id": "CONDITION",
+      "kind": "constraint",
+      "examples": [
+        "deep-clean",
+        "needs a callback"
+      ]
+    },
+    {
+      "id": "BRAND",
+      "kind": "constraint",
+      "examples": [
+        "Alexa",
+        "MyTaxi"
+      ]
+    },
+    {
+      "id": "METHOD",
+      "kind": "constraint",
+      "examples": [
+        "API",
+        "phone call",
+        "in person"
+      ]
+    },
+    {
+      "id": "CONTACT",
+      "kind": "constraint",
+      "examples": [
+        "callback",
+        "confirmation"
+      ]
+    },
+    {
+      "id": "SOURCE",
+      "kind": "constraint",
+      "examples": [
+        "independent witness"
+      ]
+    },
+    {
+      "id": "CONFIDENCE",
+      "kind": "meta",
+      "examples": [
+        "DIN Confidence object"
+      ]
+    },
+    {
+      "id": "LOCALE",
+      "kind": "meta",
+      "examples": [
+        "en",
+        "de"
+      ]
+    },
+    {
+      "id": "EXEMPLAR",
+      "kind": "anchor",
+      "examples": [
+        "like Nova",
+        "instead of X"
+      ]
+    }
+  ],
+  "operation_families": [
+    {
+      "id": "FIND",
+      "name": "Find additional entities satisfying an intent",
+      "live": "whoelse.find / WHOELSE(context, predicate?, constraints?, exclude?, mode?)",
+      "note": "The live primitive. Almost every legacy INTENT who else? is this."
+    },
+    {
+      "id": "ANCHOR",
+      "name": "Find relative to an exemplar",
+      "live": "whoelse.find({ entityId, mode: expand|peers|substitute })",
+      "note": "Recursive Who else? / more-like / instead-of. Same operator, mode + exemplar."
+    },
+    {
+      "id": "FULFILL",
+      "name": "Act on a chosen entity",
+      "live": "NOT whoelse.find \u2014 invoke/chat/interest stubs",
+      "note": "Legacy catalog implied book/call/pay. Live engine correctly stops at find."
+    }
+  ],
+  "intent_count": 250,
+  "intents": [
+    {
+      "id": "DENTIST",
+      "name": "Dentist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Dentist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a dentist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "meaning-app dentist+insurance+after 5pm example",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "ORTHODONTIST",
+      "name": "Orthodontist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Orthodontist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a orthodontist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "DENTAL_HYGIENIST",
+      "name": "Dental hygienist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Dental hygienist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a dental hygienist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "DOCTOR",
+      "name": "Doctor",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Doctor who else?",
+      "whoelse_find": {
+        "intent": "Who else is a doctor near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "DIN-era 'best AI available' for medical lookup",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "GP",
+      "name": "General practitioner",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "General practitioner who else?",
+      "whoelse_find": {
+        "intent": "Who else is a general practitioner near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "PEDIATRICIAN",
+      "name": "Pediatrician",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Pediatrician who else?",
+      "whoelse_find": {
+        "intent": "Who else is a pediatrician near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "DERMATOLOGIST",
+      "name": "Dermatologist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Dermatologist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a dermatologist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "CARDIOLOGIST",
+      "name": "Cardiologist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Cardiologist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a cardiologist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "GYNECOLOGIST",
+      "name": "Gynecologist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Gynecologist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a gynecologist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "ENT",
+      "name": "ENT",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "ENT who else?",
+      "whoelse_find": {
+        "intent": "Who else is a ent near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "OPHTHALMOLOGIST",
+      "name": "Ophthalmologist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Ophthalmologist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a ophthalmologist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "OPTICIAN",
+      "name": "Optician",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Optician who else?",
+      "whoelse_find": {
+        "intent": "Who else is a optician near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "PSYCHIATRIST",
+      "name": "Psychiatrist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Psychiatrist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a psychiatrist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "PSYCHOLOGIST",
+      "name": "Psychologist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Psychologist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a psychologist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "THERAPIST",
+      "name": "Therapist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Therapist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a therapist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "COUNSELOR",
+      "name": "Counselor",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Counselor who else?",
+      "whoelse_find": {
+        "intent": "Who else is a counselor near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "PHYSIOTHERAPIST",
+      "name": "Physiotherapist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Physiotherapist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a physiotherapist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "CHIROPRACTOR",
+      "name": "Chiropractor",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Chiropractor who else?",
+      "whoelse_find": {
+        "intent": "Who else is a chiropractor near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "ACUPUNCTURIST",
+      "name": "Acupuncturist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Acupuncturist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a acupuncturist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "MASSAGE",
+      "name": "Massage",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Massage who else?",
+      "whoelse_find": {
+        "intent": "Who else is a massage near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "PHARMACY",
+      "name": "Pharmacy",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Pharmacy who else?",
+      "whoelse_find": {
+        "intent": "Who else is a pharmacy near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "URGENT_CARE",
+      "name": "Urgent care",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Urgent care who else?",
+      "whoelse_find": {
+        "intent": "Who else is a urgent care near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "ER",
+      "name": "Emergency room",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Emergency room who else?",
+      "whoelse_find": {
+        "intent": "Who else is a emergency room near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "HOSPITAL",
+      "name": "Hospital",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Hospital who else?",
+      "whoelse_find": {
+        "intent": "Who else is a hospital near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "LAB_TEST",
+      "name": "Lab test",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Lab test who else?",
+      "whoelse_find": {
+        "intent": "Who else is a lab test near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "VACCINATION",
+      "name": "Vaccination",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Vaccination who else?",
+      "whoelse_find": {
+        "intent": "Who else is a vaccination near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "RADIOLOGIST",
+      "name": "Radiologist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Radiologist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a radiologist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "NUTRITIONIST",
+      "name": "Nutritionist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Nutritionist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a nutritionist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "MIDWIFE",
+      "name": "Midwife",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Midwife who else?",
+      "whoelse_find": {
+        "intent": "Who else is a midwife near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "DOULA",
+      "name": "Doula",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Doula who else?",
+      "whoelse_find": {
+        "intent": "Who else is a doula near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "PODIATRIST",
+      "name": "Podiatrist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Podiatrist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a podiatrist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "ALLERGIST",
+      "name": "Allergist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Allergist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a allergist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "SLEEP",
+      "name": "Sleep clinic",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Sleep clinic who else?",
+      "whoelse_find": {
+        "intent": "Who else is a sleep clinic near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "ADDICTION",
+      "name": "Addiction support",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Addiction support who else?",
+      "whoelse_find": {
+        "intent": "Who else is a addiction support near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "SPEECH_THERAPY",
+      "name": "Speech therapy",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Speech therapy who else?",
+      "whoelse_find": {
+        "intent": "Who else is a speech therapy near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "AUDIOLOGIST",
+      "name": "Audiologist",
+      "category": "Body & Health",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "INSURANCE",
+        "AVAILABILITY",
+        "URGENCY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Audiologist who else?",
+      "whoelse_find": {
+        "intent": "Who else is a audiologist near me who is available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "APARTMENT",
+      "name": "Apartment",
+      "category": "Home & Housing",
+      "aliases": [
+        "FLAT",
+        "RENTAL"
+      ],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "QUANTITY",
+        "DATE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Apartment who else?",
+      "whoelse_find": {
+        "intent": "Who else has an apartment?",
+        "type": "resource",
+        "mode": "expand"
+      },
+      "notes": "Named in brief. whoelse.ai example. Live seed has resource-apartment-adams.",
+      "evidence": "named",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "resource",
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "HOUSE",
+      "name": "House",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "House who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with house?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "ROOM",
+      "name": "Room",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Room who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with room?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "STUDIO",
+      "name": "Studio",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Studio who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with studio?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "SUBLET",
+      "name": "Sublet",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Sublet who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with sublet?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "ROOMMATE",
+      "name": "Roommate",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Roommate who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with roommate?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "LANDLORD",
+      "name": "Landlord",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Landlord who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with landlord?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "REAL_ESTATE",
+      "name": "Real estate",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Real estate who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with real estate?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "REALTOR",
+      "name": "Realtor",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Realtor who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with realtor?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "PROPERTY_MANAGER",
+      "name": "Property manager",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Property manager who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with property manager?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "LEASE",
+      "name": "Lease",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Lease who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with lease?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "HOME_INSPECTOR",
+      "name": "Home inspector",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Home inspector who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with home inspector?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "MOVER",
+      "name": "Mover",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Mover who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with mover?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "STORAGE",
+      "name": "Storage",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Storage who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with storage?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "CLEANER",
+      "name": "Cleaner",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Cleaner who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with cleaner?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "HOUSEKEEPER",
+      "name": "Housekeeper",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Housekeeper who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with housekeeper?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "HANDYMAN",
+      "name": "Handyman",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Handyman who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with handyman?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "LOCKSMITH",
+      "name": "Locksmith",
+      "category": "Home & Housing",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Locksmith who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with locksmith?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "resource"
+      ]
+    },
+    {
+      "id": "PLUMBER",
+      "name": "Plumber",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Plumber who else?",
+      "whoelse_find": {
+        "intent": "Who else can fix a leak under my sink before the weekend, not too pricey?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "Named in brief. meaning-app leak-under-sink example.",
+      "evidence": "named",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "ELECTRICIAN",
+      "name": "Electrician",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Electrician who else?",
+      "whoelse_find": {
+        "intent": "Who else is a electrician near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "HVAC",
+      "name": "HVAC",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "HVAC who else?",
+      "whoelse_find": {
+        "intent": "Who else is a hvac near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "CARPENTER",
+      "name": "Carpenter",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Carpenter who else?",
+      "whoelse_find": {
+        "intent": "Who else is a carpenter near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PAINTER",
+      "name": "Painter",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Painter who else?",
+      "whoelse_find": {
+        "intent": "Who else is a painter near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "ROOFER",
+      "name": "Roofer",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Roofer who else?",
+      "whoelse_find": {
+        "intent": "Who else is a roofer near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "FLOORING",
+      "name": "Flooring",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Flooring who else?",
+      "whoelse_find": {
+        "intent": "Who else is a flooring near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "TILE",
+      "name": "Tiler",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tiler who else?",
+      "whoelse_find": {
+        "intent": "Who else is a tiler near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "DRYWALL",
+      "name": "Drywall",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Drywall who else?",
+      "whoelse_find": {
+        "intent": "Who else is a drywall near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "MASON",
+      "name": "Mason",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Mason who else?",
+      "whoelse_find": {
+        "intent": "Who else is a mason near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "GLAZIER",
+      "name": "Glazier",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Glazier who else?",
+      "whoelse_find": {
+        "intent": "Who else is a glazier near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "LANDSCAPER",
+      "name": "Landscaper",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Landscaper who else?",
+      "whoelse_find": {
+        "intent": "Who else is a landscaper near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "GARDENER",
+      "name": "Gardener",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Gardener who else?",
+      "whoelse_find": {
+        "intent": "Who else is a gardener near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "TREE_SERVICE",
+      "name": "Tree service",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tree service who else?",
+      "whoelse_find": {
+        "intent": "Who else is a tree service near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PEST_CONTROL",
+      "name": "Pest control",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Pest control who else?",
+      "whoelse_find": {
+        "intent": "Who else is a pest control near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "APPLIANCE_REPAIR",
+      "name": "Appliance repair",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Appliance repair who else?",
+      "whoelse_find": {
+        "intent": "Who else is a appliance repair near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "BOILER",
+      "name": "Boiler",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Boiler who else?",
+      "whoelse_find": {
+        "intent": "Who else is a boiler near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "WATER_HEATER",
+      "name": "Water heater",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Water heater who else?",
+      "whoelse_find": {
+        "intent": "Who else is a water heater near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "GUTTER",
+      "name": "Gutter",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Gutter who else?",
+      "whoelse_find": {
+        "intent": "Who else is a gutter near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "SOLAR",
+      "name": "Solar installer",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Solar installer who else?",
+      "whoelse_find": {
+        "intent": "Who else is a solar installer near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "INSULATION",
+      "name": "Insulation",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Insulation who else?",
+      "whoelse_find": {
+        "intent": "Who else is a insulation near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "DECK",
+      "name": "Deck builder",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Deck builder who else?",
+      "whoelse_find": {
+        "intent": "Who else is a deck builder near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "POOL",
+      "name": "Pool service",
+      "category": "Home Repair & Trades",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "URGENCY",
+        "BUDGET",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Pool service who else?",
+      "whoelse_find": {
+        "intent": "Who else is a pool service near me available this week?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "DELIVERY",
+      "name": "Delivery",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Delivery who else?",
+      "whoelse_find": {
+        "intent": "Who else can deliver food near me tonight?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "whoelse.ai verbatim example.",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "RESTAURANT",
+      "name": "Restaurant",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "PARTY_SIZE",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Restaurant who else?",
+      "whoelse_find": {
+        "intent": "Who else can get the four of us to dinner Friday somewhere central, one of us is vegan?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "DIN press uses Restaurant as the example intent word. meaning-app dinner example.",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "CAFE",
+      "name": "Cafe",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Cafe who else?",
+      "whoelse_find": {
+        "intent": "Who else for cafe near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "BAR",
+      "name": "Bar",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Bar who else?",
+      "whoelse_find": {
+        "intent": "Who else for bar near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "TAKEOUT",
+      "name": "Takeout",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Takeout who else?",
+      "whoelse_find": {
+        "intent": "Who else for takeout near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "CATERING",
+      "name": "Catering",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Catering who else?",
+      "whoelse_find": {
+        "intent": "Who else for catering near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "CHEF",
+      "name": "Chef",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Chef who else?",
+      "whoelse_find": {
+        "intent": "Who else for chef near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "BAKER",
+      "name": "Baker",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Baker who else?",
+      "whoelse_find": {
+        "intent": "Who else for baker near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "GROCER",
+      "name": "Grocer",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Grocer who else?",
+      "whoelse_find": {
+        "intent": "Who else for grocer near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "FARMERS_MARKET",
+      "name": "Farmers market",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Farmers market who else?",
+      "whoelse_find": {
+        "intent": "Who else for farmers market near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "FOOD_TRUCK",
+      "name": "Food truck",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Food truck who else?",
+      "whoelse_find": {
+        "intent": "Who else for food truck near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "RESERVATION",
+      "name": "Reservation",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Reservation who else?",
+      "whoelse_find": {
+        "intent": "Who else for reservation near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "BRUNCH",
+      "name": "Brunch",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Brunch who else?",
+      "whoelse_find": {
+        "intent": "Who else for brunch near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "COFFEE",
+      "name": "Coffee",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Coffee who else?",
+      "whoelse_find": {
+        "intent": "Who else for coffee near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "WINE",
+      "name": "Wine",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Wine who else?",
+      "whoelse_find": {
+        "intent": "Who else for wine near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "BREWERY",
+      "name": "Brewery",
+      "category": "Food & Dining",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CONSTRAINT",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Brewery who else?",
+      "whoelse_find": {
+        "intent": "Who else for brewery near me?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "RIDESHARE",
+      "name": "Rideshare",
+      "category": "Transport & Travel",
+      "aliases": [
+        "RIDE",
+        "RIDESHARE_RIDE"
+      ],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET",
+        "PARTY_SIZE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Rideshare who else?",
+      "whoelse_find": {
+        "intent": "Who else can give me a ride?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "Named in brief. whoelse.ai 'find me a ride-share'. Live seed has service-dc-ride.",
+      "evidence": "named",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "TAXI",
+      "name": "Taxi",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Taxi who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with taxi?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "BUS",
+      "name": "Bus",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Bus who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with bus?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "TRAIN",
+      "name": "Train",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Train who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with train?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "FLIGHT",
+      "name": "Flight",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Flight who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with flight?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "AIRPORT",
+      "name": "Airport transfer",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Airport transfer who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with airport transfer?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "RENTAL_CAR",
+      "name": "Rental car",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Rental car who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with rental car?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "CARSHARE",
+      "name": "Car share",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Car share who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with car share?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "BIKE_SHARE",
+      "name": "Bike share",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Bike share who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with bike share?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "SCOOTER",
+      "name": "Scooter",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Scooter who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with scooter?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "EV_CHARGING",
+      "name": "EV charging",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "EV charging who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with ev charging?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "PARKING",
+      "name": "Parking",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Parking who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with parking?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "TOW",
+      "name": "Tow",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tow who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with tow?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "MECHANIC",
+      "name": "Mechanic",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Mechanic who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with mechanic?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "TIRE",
+      "name": "Tire shop",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tire shop who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with tire shop?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "COURIER",
+      "name": "Courier",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Courier who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with courier?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "SHIPPING",
+      "name": "Shipping",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Shipping who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with shipping?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "HOTEL",
+      "name": "Hotel",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Hotel who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with hotel?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "HOSTEL",
+      "name": "Hostel",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Hostel who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with hostel?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "SHORT_STAY",
+      "name": "Short stay",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Short stay who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with short stay?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "TRAVEL_AGENT",
+      "name": "Travel agent",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Travel agent who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with travel agent?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "TOUR_GUIDE",
+      "name": "Tour guide",
+      "category": "Transport & Travel",
+      "aliases": [],
+      "slots": [
+        "ORIGIN",
+        "DESTINATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tour guide who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with tour guide?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human"
+      ]
+    },
+    {
+      "id": "JOB",
+      "name": "Job",
+      "category": "Work & Career",
+      "aliases": [
+        "EMPLOYMENT",
+        "HIRING"
+      ],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "BUDGET",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Job who else?",
+      "whoelse_find": {
+        "intent": "Who else is hiring for this kind of work?",
+        "type": "company",
+        "mode": "expand"
+      },
+      "notes": "Named in brief.",
+      "evidence": "named",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "human",
+        "company",
+        "service"
+      ]
+    },
+    {
+      "id": "INTERNSHIP",
+      "name": "Internship",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Internship who else?",
+      "whoelse_find": {
+        "intent": "Who else for internship?",
+        "type": "company",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "FREELANCE",
+      "name": "Freelance",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Freelance who else?",
+      "whoelse_find": {
+        "intent": "Who else for freelance?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "CONTRACT",
+      "name": "Contract work",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Contract work who else?",
+      "whoelse_find": {
+        "intent": "Who else for contract work?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "RECRUITER",
+      "name": "Recruiter",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Recruiter who else?",
+      "whoelse_find": {
+        "intent": "Who else for recruiter?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "RESUME",
+      "name": "Resume help",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Resume help who else?",
+      "whoelse_find": {
+        "intent": "Who else for resume help?",
+        "type": "ai",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "INTERVIEW",
+      "name": "Interview prep",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Interview prep who else?",
+      "whoelse_find": {
+        "intent": "Who else for interview prep?",
+        "type": "ai",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "COWORKING",
+      "name": "Coworking",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Coworking who else?",
+      "whoelse_find": {
+        "intent": "Who else for coworking?",
+        "type": "resource",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "MENTOR",
+      "name": "Mentor",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Mentor who else?",
+      "whoelse_find": {
+        "intent": "Who else for mentor?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "COFOUNDER",
+      "name": "Cofounder",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Cofounder who else?",
+      "whoelse_find": {
+        "intent": "Who else for cofounder?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "COLLABORATOR",
+      "name": "Collaborator",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Collaborator who else?",
+      "whoelse_find": {
+        "intent": "Who else for collaborator?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "CONSULTANT",
+      "name": "Consultant",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Consultant who else?",
+      "whoelse_find": {
+        "intent": "Who else for consultant?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "ACCOUNTANT",
+      "name": "Accountant",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Accountant who else?",
+      "whoelse_find": {
+        "intent": "Who else for accountant?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "BOOKKEEPER",
+      "name": "Bookkeeper",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Bookkeeper who else?",
+      "whoelse_find": {
+        "intent": "Who else for bookkeeper?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "HR",
+      "name": "HR",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "HR who else?",
+      "whoelse_find": {
+        "intent": "Who else for hr?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "CAREER_COACH",
+      "name": "Career coach",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Career coach who else?",
+      "whoelse_find": {
+        "intent": "Who else for career coach?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "TEMP",
+      "name": "Temp work",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Temp work who else?",
+      "whoelse_find": {
+        "intent": "Who else for temp work?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "GIG",
+      "name": "Gig",
+      "category": "Work & Career",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "AVAILABILITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Gig who else?",
+      "whoelse_find": {
+        "intent": "Who else for gig?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service",
+        "company"
+      ]
+    },
+    {
+      "id": "NOTARY",
+      "name": "Notary",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CERTIFICATION",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Notary who else?",
+      "whoelse_find": {
+        "intent": "Who else is a notary near me available today?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "Named in brief.",
+      "evidence": "named",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "LAWYER",
+      "name": "Lawyer",
+      "category": "Legal & Admin",
+      "aliases": [
+        "ATTORNEY",
+        "DIGITAL_LAWYER"
+      ],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Lawyer who else?",
+      "whoelse_find": {
+        "intent": "Who else is a lawyer who can review this?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "whoelse.ai Digital Lawyer example. startups pitch: European patent law agent.",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "PARALEGAL",
+      "name": "Paralegal",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Paralegal who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with paralegal?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "IMMIGRATION",
+      "name": "Immigration help",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Immigration help who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with immigration help?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "DIVORCE",
+      "name": "Divorce",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Divorce who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with divorce?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "WILLS",
+      "name": "Wills",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Wills who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with wills?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "ESTATE",
+      "name": "Estate",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Estate who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with estate?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "CONTRACT_REVIEW",
+      "name": "Contract review",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Contract review who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with contract review?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "PATENT",
+      "name": "Patent",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Patent who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with patent?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "TRADEMARK",
+      "name": "Trademark",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Trademark who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with trademark?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "SMALL_CLAIMS",
+      "name": "Small claims",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Small claims who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with small claims?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "MEDIATION",
+      "name": "Mediation",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Mediation who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with mediation?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "APOSTILLE",
+      "name": "Apostille",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Apostille who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with apostille?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "INCORPORATION",
+      "name": "Incorporation",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Incorporation who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with incorporation?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "TAX_PREP",
+      "name": "Tax prep",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tax prep who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with tax prep?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "TAX_FILING",
+      "name": "Tax filing",
+      "category": "Legal & Admin",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tax filing who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with tax filing?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "BANK",
+      "name": "Bank",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Bank who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with bank?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "CREDIT_UNION",
+      "name": "Credit union",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Credit union who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with credit union?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "LOAN",
+      "name": "Loan",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Loan who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with loan?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "MORTGAGE",
+      "name": "Mortgage",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Mortgage who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with mortgage?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "FINANCIAL_ADVISOR",
+      "name": "Financial advisor",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Financial advisor who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with financial advisor?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "INSURANCE",
+      "name": "Insurance",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Insurance who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with insurance?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "HEALTH_INSURANCE",
+      "name": "Health insurance",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Health insurance who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with health insurance?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "CAR_INSURANCE",
+      "name": "Car insurance",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Car insurance who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with car insurance?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "INVESTMENT",
+      "name": "Investment",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Investment who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with investment?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "DEBT",
+      "name": "Debt help",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Debt help who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with debt help?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "INVOICE",
+      "name": "Invoice",
+      "category": "Money & Finance",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "BUDGET",
+        "LANGUAGE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Invoice who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with invoice?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "TUTOR",
+      "name": "Tutor",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tutor who else?",
+      "whoelse_find": {
+        "intent": "Who else for tutor?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "TEACHER",
+      "name": "Teacher",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Teacher who else?",
+      "whoelse_find": {
+        "intent": "Who else for teacher?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "SCHOOL",
+      "name": "School",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "School who else?",
+      "whoelse_find": {
+        "intent": "Who else for school?",
+        "type": "company",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "COURSE",
+      "name": "Course",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Course who else?",
+      "whoelse_find": {
+        "intent": "Who else for course?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "BOOTCAMP",
+      "name": "Bootcamp",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Bootcamp who else?",
+      "whoelse_find": {
+        "intent": "Who else for bootcamp?",
+        "type": "company",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "LANGUAGE_LESSON",
+      "name": "Language lesson",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Language lesson who else?",
+      "whoelse_find": {
+        "intent": "Who else for language lesson?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "MUSIC_LESSON",
+      "name": "Music lesson",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Music lesson who else?",
+      "whoelse_find": {
+        "intent": "Who else for music lesson?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "TEST_PREP",
+      "name": "Test prep",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Test prep who else?",
+      "whoelse_find": {
+        "intent": "Who else for test prep?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "COLLEGE_COUNSELOR",
+      "name": "College counselor",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "College counselor who else?",
+      "whoelse_find": {
+        "intent": "Who else for college counselor?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "LIBRARY",
+      "name": "Library",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Library who else?",
+      "whoelse_find": {
+        "intent": "Who else for library?",
+        "type": "resource",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "WORKSHOP",
+      "name": "Workshop",
+      "category": "Education",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "SKILL",
+        "LANGUAGE",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Workshop who else?",
+      "whoelse_find": {
+        "intent": "Who else for workshop?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai",
+        "service"
+      ]
+    },
+    {
+      "id": "DATE",
+      "name": "Date",
+      "category": "Dating & Relationships",
+      "aliases": [
+        "DATING"
+      ],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "VIBE",
+        "ACTIVITY",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Date who else?",
+      "whoelse_find": {
+        "intent": "Who else wants a low-key dinner and a walk, not an app marathon?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "Named in brief. whoelse.ai + landing encoding DATE who else?. July 18 2026: DATE and DATING both present (506). August 15 2026: DATING folded into DATE (505).",
+      "evidence": "named",
+      "versions": {
+        "july_18_2026_506": "canonical",
+        "august_15_2026_505": "canonical",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "DATING",
+      "name": "Dating",
+      "category": "Dating & Relationships",
+      "aliases": [
+        "DATE"
+      ],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "VIBE",
+        "ACTIVITY",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Dating who else?",
+      "whoelse_find": {
+        "intent": "Who else should I date?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "Separate ID on July 18 2026 snapshot (contributes to 506). Folded into DATE on August 15 2026 (505). Do not silently merge versions \u2014 this row is the July-only ID.",
+      "evidence": "named",
+      "versions": {
+        "july_18_2026_506": "canonical",
+        "august_15_2026_505": "folded-into:DATE",
+        "protocol_v2_452": "alias-or-absent"
+      },
+      "network_matrix": [
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "FRIEND",
+      "name": "Friend",
+      "category": "Dating & Relationships",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "VIBE",
+        "ACTIVITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Friend who else?",
+      "whoelse_find": {
+        "intent": "Who else for friend?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "HANGOUT",
+      "name": "Hangout",
+      "category": "Dating & Relationships",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "VIBE",
+        "ACTIVITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Hangout who else?",
+      "whoelse_find": {
+        "intent": "Who else for hangout?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "ACTIVITY_PARTNER",
+      "name": "Activity partner",
+      "category": "Dating & Relationships",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "VIBE",
+        "ACTIVITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Activity partner who else?",
+      "whoelse_find": {
+        "intent": "Who else for activity partner?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "MATCHMAKER",
+      "name": "Matchmaker",
+      "category": "Dating & Relationships",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "VIBE",
+        "ACTIVITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Matchmaker who else?",
+      "whoelse_find": {
+        "intent": "Who else for matchmaker?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "RELATIONSHIP",
+      "name": "Relationship",
+      "category": "Dating & Relationships",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "VIBE",
+        "ACTIVITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Relationship who else?",
+      "whoelse_find": {
+        "intent": "Who else for relationship?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "BABYSITTER",
+      "name": "Babysitter",
+      "category": "Family & Childcare",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CERTIFICATION",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Babysitter who else?",
+      "whoelse_find": {
+        "intent": "Who else is a babysitter near me?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "NANNY",
+      "name": "Nanny",
+      "category": "Family & Childcare",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CERTIFICATION",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Nanny who else?",
+      "whoelse_find": {
+        "intent": "Who else is a nanny near me?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "DAYCARE",
+      "name": "Daycare",
+      "category": "Family & Childcare",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CERTIFICATION",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Daycare who else?",
+      "whoelse_find": {
+        "intent": "Who else is a daycare near me?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "ELDERCARE",
+      "name": "Eldercare",
+      "category": "Family & Childcare",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CERTIFICATION",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Eldercare who else?",
+      "whoelse_find": {
+        "intent": "Who else is a eldercare near me?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "CAREGIVER",
+      "name": "Caregiver",
+      "category": "Family & Childcare",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CERTIFICATION",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Caregiver who else?",
+      "whoelse_find": {
+        "intent": "Who else is a caregiver near me?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PLAYDATE",
+      "name": "Playdate",
+      "category": "Family & Childcare",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "CERTIFICATION",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Playdate who else?",
+      "whoelse_find": {
+        "intent": "Who else is a playdate near me?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "VET",
+      "name": "Vet",
+      "category": "Pets",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Vet who else?",
+      "whoelse_find": {
+        "intent": "Who else for vet?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PET_SITTER",
+      "name": "Pet sitter",
+      "category": "Pets",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Pet sitter who else?",
+      "whoelse_find": {
+        "intent": "Who else for pet sitter?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "DOG_WALKER",
+      "name": "Dog walker",
+      "category": "Pets",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Dog walker who else?",
+      "whoelse_find": {
+        "intent": "Who else for dog walker?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "GROOMER",
+      "name": "Groomer",
+      "category": "Pets",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Groomer who else?",
+      "whoelse_find": {
+        "intent": "Who else for groomer?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PET_TRAINER",
+      "name": "Pet trainer",
+      "category": "Pets",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Pet trainer who else?",
+      "whoelse_find": {
+        "intent": "Who else for pet trainer?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PET_BOARDING",
+      "name": "Pet boarding",
+      "category": "Pets",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Pet boarding who else?",
+      "whoelse_find": {
+        "intent": "Who else for pet boarding?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PET_ADOPTION",
+      "name": "Pet adoption",
+      "category": "Pets",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Pet adoption who else?",
+      "whoelse_find": {
+        "intent": "Who else for pet adoption?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "CYCLING",
+      "name": "Cycling",
+      "category": "Sports & Fitness",
+      "aliases": [
+        "MOUNTAIN_BIKING",
+        "MTB"
+      ],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE",
+        "ACTIVITY"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Mountain biking who else?",
+      "whoelse_find": {
+        "intent": "Who else near me is into mountain biking?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "Landing encoding MOUNTAIN BIKING who else?. Live seed clusters this.",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "human",
+        "ai"
+      ]
+    },
+    {
+      "id": "GYM",
+      "name": "Gym",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Gym who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do gym?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PERSONAL_TRAINER",
+      "name": "Personal trainer",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Personal trainer who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do personal trainer?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "YOGA",
+      "name": "Yoga",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Yoga who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do yoga?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "CLIMBING",
+      "name": "Climbing",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Climbing who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do climbing?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "RUNNING",
+      "name": "Running",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Running who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do running?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "SWIMMING",
+      "name": "Swimming",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Swimming who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do swimming?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "TEAM_SPORT",
+      "name": "Team sport",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Team sport who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do team sport?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "COACH",
+      "name": "Coach",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Coach who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do coach?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "TENNIS",
+      "name": "Tennis",
+      "category": "Sports & Fitness",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "EXPERIENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Tennis who else?",
+      "whoelse_find": {
+        "intent": "Who else wants to do tennis?",
+        "type": "human",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "CONCERT",
+      "name": "Concert",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Concert who else?",
+      "whoelse_find": {
+        "intent": "Who else for concert?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "MOVIE",
+      "name": "Movie",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Movie who else?",
+      "whoelse_find": {
+        "intent": "Who else for movie?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "THEATER",
+      "name": "Theater",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Theater who else?",
+      "whoelse_find": {
+        "intent": "Who else for theater?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "MUSEUM",
+      "name": "Museum",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Museum who else?",
+      "whoelse_find": {
+        "intent": "Who else for museum?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "EVENT",
+      "name": "Event",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Event who else?",
+      "whoelse_find": {
+        "intent": "Who else for event?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "TICKET",
+      "name": "Ticket",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Ticket who else?",
+      "whoelse_find": {
+        "intent": "Who else for ticket?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "DJ",
+      "name": "DJ",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "DJ who else?",
+      "whoelse_find": {
+        "intent": "Who else for dj?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "PHOTOGRAPHER",
+      "name": "Photographer",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Photographer who else?",
+      "whoelse_find": {
+        "intent": "Who else for photographer?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "VIDEOGRAPHER",
+      "name": "Videographer",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Videographer who else?",
+      "whoelse_find": {
+        "intent": "Who else for videographer?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "BAND",
+      "name": "Band",
+      "category": "Entertainment & Events",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "BUDGET",
+        "VIBE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Band who else?",
+      "whoelse_find": {
+        "intent": "Who else for band?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "human",
+        "service"
+      ]
+    },
+    {
+      "id": "GIFT",
+      "name": "Gift",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "RECIPIENT",
+        "PREFERENCE",
+        "TIME"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Gift who else?",
+      "whoelse_find": {
+        "intent": "Who else has a gift under $60 for a friend who just got into pour-over coffee?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "meaning-app commerce example.",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "likely-canonical"
+      },
+      "network_matrix": [
+        "product",
+        "service",
+        "ai"
+      ]
+    },
+    {
+      "id": "FLOWERS",
+      "name": "Flowers",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "LOCATION",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Flowers who else?",
+      "whoelse_find": {
+        "intent": "Who else can help me buy flowers?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "product",
+        "service"
+      ]
+    },
+    {
+      "id": "JEWELRY",
+      "name": "Jewelry",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "LOCATION",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Jewelry who else?",
+      "whoelse_find": {
+        "intent": "Who else can help me buy jewelry?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "product",
+        "service"
+      ]
+    },
+    {
+      "id": "CLOTHING",
+      "name": "Clothing",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "LOCATION",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Clothing who else?",
+      "whoelse_find": {
+        "intent": "Who else can help me buy clothing?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "product",
+        "service"
+      ]
+    },
+    {
+      "id": "ELECTRONICS",
+      "name": "Electronics",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "LOCATION",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Electronics who else?",
+      "whoelse_find": {
+        "intent": "Who else can help me buy electronics?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "product",
+        "service"
+      ]
+    },
+    {
+      "id": "FURNITURE",
+      "name": "Furniture",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "LOCATION",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Furniture who else?",
+      "whoelse_find": {
+        "intent": "Who else can help me buy furniture?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "product",
+        "service"
+      ]
+    },
+    {
+      "id": "GROCERIES",
+      "name": "Groceries",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "LOCATION",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Groceries who else?",
+      "whoelse_find": {
+        "intent": "Who else can help me buy groceries?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "product",
+        "service"
+      ]
+    },
+    {
+      "id": "THRIFT",
+      "name": "Thrift",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "LOCATION",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Thrift who else?",
+      "whoelse_find": {
+        "intent": "Who else can help me buy thrift?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "product",
+        "service"
+      ]
+    },
+    {
+      "id": "CUSTOM_MADE",
+      "name": "Custom made",
+      "category": "Shopping & Gifts",
+      "aliases": [],
+      "slots": [
+        "BUDGET",
+        "LOCATION",
+        "PREFERENCE"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Custom made who else?",
+      "whoelse_find": {
+        "intent": "Who else can help me buy custom made?",
+        "type": "product",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "product",
+        "service"
+      ]
+    },
+    {
+      "id": "AIR_CONDITION",
+      "name": "Air condition",
+      "category": "Civic & Places",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Air condition who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with air condition?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "ai",
+        "human"
+      ]
+    },
+    {
+      "id": "ROOM_BOOKING",
+      "name": "Room booking",
+      "category": "Civic & Places",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Room booking who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with room booking?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "ai",
+        "human"
+      ]
+    },
+    {
+      "id": "REGISTER_GUEST",
+      "name": "Register guest",
+      "category": "Civic & Places",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Register guest who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with register guest?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "ai",
+        "human"
+      ]
+    },
+    {
+      "id": "PERMIT",
+      "name": "Permit",
+      "category": "Civic & Places",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Permit who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with permit?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "ai",
+        "human"
+      ]
+    },
+    {
+      "id": "ZONING",
+      "name": "Zoning",
+      "category": "Civic & Places",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Zoning who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with zoning?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "public",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "ai",
+        "human"
+      ]
+    },
+    {
+      "id": "PASSPORT",
+      "name": "Passport",
+      "category": "Civic & Places",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Passport who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with passport?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "ai",
+        "human"
+      ]
+    },
+    {
+      "id": "VISA",
+      "name": "Visa",
+      "category": "Civic & Places",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Visa who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with visa?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "ai",
+        "human"
+      ]
+    },
+    {
+      "id": "DMV",
+      "name": "DMV",
+      "category": "Civic & Places",
+      "aliases": [],
+      "slots": [
+        "LOCATION",
+        "TIME",
+        "OBJECT"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "DMV who else?",
+      "whoelse_find": {
+        "intent": "Who else can help with dmv?",
+        "type": "service",
+        "mode": "expand"
+      },
+      "notes": "",
+      "evidence": "reconstructed",
+      "versions": {
+        "july_18_2026_506": "present",
+        "august_15_2026_505": "present",
+        "protocol_v2_452": "unknown"
+      },
+      "network_matrix": [
+        "service",
+        "ai",
+        "human"
+      ]
+    },
+    {
+      "id": "PDF_SUMMARIZER",
+      "name": "PDF summarizer",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "PDF summarizer who else?",
+      "whoelse_find": {
+        "intent": "Who else can summarize this PDF?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed agent-pdf-summarizer",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "WEB_BROWSER",
+      "name": "Web browser agent",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Web browser agent who else?",
+      "whoelse_find": {
+        "intent": "Who else can browse the web?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "TRANSLATOR",
+      "name": "Translator",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Translator who else?",
+      "whoelse_find": {
+        "intent": "Who else can translate German to English?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed + Deepgram meeting translator",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "VERIFIER",
+      "name": "Verifier",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Verifier who else?",
+      "whoelse_find": {
+        "intent": "Who else can verify this result?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed + witness thesis",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "FAILOVER",
+      "name": "Failover agent",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Failover agent who else?",
+      "whoelse_find": {
+        "intent": "Who else can take over if the primary agent fails?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "DELEGATE",
+      "name": "Delegate",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Delegate who else?",
+      "whoelse_find": {
+        "intent": "Who else should I delegate this to?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "CHEAP_RUNNER",
+      "name": "Cheap runner",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Cheap runner who else?",
+      "whoelse_find": {
+        "intent": "Who else can run this task more cheaply?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "WORKFLOW",
+      "name": "Workflow agent",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Workflow agent who else?",
+      "whoelse_find": {
+        "intent": "Who else can run this workflow?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "CAPABILITY_INDEX",
+      "name": "Capability index",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Capability index who else?",
+      "whoelse_find": {
+        "intent": "Who else knows who can do this?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "live seed CapIndex",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "VOICE_ROUTER",
+      "name": "Voice router",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Voice router who else?",
+      "whoelse_find": {
+        "intent": "Who else can route this intent across assistants?",
+        "type": "ai",
+        "mode": "expand"
+      },
+      "notes": "landing Open Voice Router",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "PERMIT_PATH",
+      "name": "Permit path",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Permit path who else?",
+      "whoelse_find": {
+        "intent": "Who else can route a DC permit?",
+        "type": "ai",
+        "mode": "expand"
+      },
+      "notes": "landing / seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "PLAN_A_DATE",
+      "name": "Plan-a-date",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Plan-a-date who else?",
+      "whoelse_find": {
+        "intent": "Who else can turn a vibe into a date itinerary?",
+        "type": "ai",
+        "mode": "expand"
+      },
+      "notes": "seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "TRAIL_CONDITIONS",
+      "name": "Trail conditions",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Trail conditions who else?",
+      "whoelse_find": {
+        "intent": "Who else knows if the trail is rideable?",
+        "type": "ai",
+        "mode": "expand"
+      },
+      "notes": "seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "HANDOFF",
+      "name": "Handoff concierge",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Handoff concierge who else?",
+      "whoelse_find": {
+        "intent": "Who else can hand this to another assistant?",
+        "type": "ai",
+        "mode": "expand"
+      },
+      "notes": "seed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "RESEARCHER",
+      "name": "Researcher",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Researcher who else?",
+      "whoelse_find": {
+        "intent": "Who else can research this claim?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "missed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "EVALUATOR",
+      "name": "Evaluator",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Evaluator who else?",
+      "whoelse_find": {
+        "intent": "Who else can evaluate this output?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "missed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "MODERATOR",
+      "name": "Moderator",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Moderator who else?",
+      "whoelse_find": {
+        "intent": "Who else can moderate this thread?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "missed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "SCHEDULER",
+      "name": "Scheduler",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Scheduler who else?",
+      "whoelse_find": {
+        "intent": "Who else can schedule this across calendars?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "missed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "EMBEDDING_INDEX",
+      "name": "Embedding index",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Embedding index who else?",
+      "whoelse_find": {
+        "intent": "Who else can retrieve similar documents?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "missed",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "MCP_SERVER",
+      "name": "MCP server",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "MCP server who else?",
+      "whoelse_find": {
+        "intent": "Who else exposes this tool over MCP?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "missed \u2014 2026 machine surface",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "PRICE_QUOTE",
+      "name": "Price quote",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Price quote who else?",
+      "whoelse_find": {
+        "intent": "Who else can quote this entity?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "adjacent PriceMCP/QuoteCall",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    },
+    {
+      "id": "WITNESS",
+      "name": "Witness",
+      "category": "AI & Agent classes (506+x)",
+      "aliases": [],
+      "slots": [
+        "SKILL",
+        "OBJECT",
+        "LANGUAGE",
+        "PRICE",
+        "EXEMPLAR"
+      ],
+      "operation_family": "FIND",
+      "human_phrase": "Witness who else?",
+      "whoelse_find": {
+        "intent": "Who else has seen this / disagrees?",
+        "type": "agent",
+        "mode": "expand"
+      },
+      "notes": "startups protocol pitch",
+      "evidence": "missed",
+      "versions": {
+        "july_18_2026_506": "absent-or-unstated",
+        "august_15_2026_505": "absent-or-unstated",
+        "protocol_v2_452": "absent-or-unstated"
+      },
+      "network_matrix": [
+        "ai",
+        "agent",
+        "service"
+      ]
+    }
+  ]
+}
