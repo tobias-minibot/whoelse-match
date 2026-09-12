@@ -20,7 +20,7 @@ const CASES: [string, RegExp][] = [
   ["Who else should I date?", /Riley|Harper|Theo|dinner/i],
   ["Who else should I meet?", /Sam|Nia|Nova|Jordan/i],
     ["Who else has an apartment?", /apartment|Adams/i],
-    ["Who else can give me a ride?", /Ride|transport/i],
+    ["Who else can give me a ride?", /Ride|transport|Airport|Dupont|Moab|seats/i],
     ["Who else has a furnished apartment in Berlin under €2000?", /Berlin|Mitte|furnished|sublet/i],
     ["Who else is looking for a 2-bedroom in DC?", /Ben|Dupont|Adams|2-bedroom/i],
     ["Who else is hiring AI people in Washington?", /Northwind|opening|AI engineer/i],

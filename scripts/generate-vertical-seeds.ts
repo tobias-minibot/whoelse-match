@@ -867,21 +867,21 @@ function ride(
 }
 
 const rides = [
-  ride("ride-georgetown-dupont", "Georgetown → Dupont seats", "driver", "Georgetown", "Dupont", {
+  ride("ride-georgetown-dupont", "Ride Georgetown → Dupont", "driver", "Georgetown", "Dupont", {
     desc: "DEMO synthetic ride. 3 seats Saturday Georgetown to Dupont. Not a real driver.",
     seats: 3,
     state: "open",
     price: 12,
     when: "Saturday",
   }),
-  ride("ride-dupont-airport", "Dupont → DCA", "driver", "Dupont", "Airport", {
+  ride("ride-dupont-airport", "Ride Dupont → Airport", "driver", "Dupont", "Airport", {
     desc: "DEMO synthetic ride to the airport from Dupont. Not a real driver.",
     seats: 2,
     state: "open",
     price: 28,
     when: "weekday morning",
   }),
-  ride("ride-dc-moab", "DC → Moab Saturday", "driver", "Washington", "Moab", {
+  ride("ride-dc-moab", "Ride DC → Moab Saturday", "driver", "Washington", "Moab", {
     desc: "DEMO synthetic long ride DC to Moab Saturday. Not a real driver.",
     seats: 2,
     state: "open",

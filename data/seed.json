@@ -8802,7 +8802,7 @@
     {
       "id": "ride-georgetown-dupont",
       "type": "service",
-      "name": "Georgetown → Dupont seats",
+      "name": "Ride Georgetown → Dupont",
       "description": "DEMO synthetic ride. 3 seats Saturday Georgetown to Dupont. Not a real driver.",
       "offers": [
         "ride",
@@ -8857,7 +8857,7 @@
     {
       "id": "ride-dupont-airport",
       "type": "service",
-      "name": "Dupont → DCA",
+      "name": "Ride Dupont → Airport",
       "description": "DEMO synthetic ride to the airport from Dupont. Not a real driver.",
       "offers": [
         "ride",
@@ -8912,7 +8912,7 @@
     {
       "id": "ride-dc-moab",
       "type": "service",
-      "name": "DC → Moab Saturday",
+      "name": "Ride DC → Moab Saturday",
       "description": "DEMO synthetic long ride DC to Moab Saturday. Not a real driver.",
       "offers": [
         "ride",
