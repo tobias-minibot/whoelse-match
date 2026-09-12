@@ -7,3 +7,5 @@
 Romance is one vertical. The platform is universal matching under intent.
 
 Not the old registry UI — this is a new consumer product line (v1.0).
+
+The discovery engine lives in `packages/` — landing stays the story; `pnpm dev` is the product.

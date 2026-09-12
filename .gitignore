@@ -2,3 +2,9 @@ node_modules/
 .DS_Store
 pitch/node_modules/
 .vercel/
+.next/
+dist/
+*.tsbuildinfo
+.env
+.env.local
+packages/web/.next/
