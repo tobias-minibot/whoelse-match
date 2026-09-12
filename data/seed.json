@@ -425,7 +425,7 @@
       "id": "human-devon-walsh",
       "type": "human",
       "name": "Devon Walsh",
-      "description": "Indie hacker shipping a tiny product every month. Obsessed with AI tools, likes building things, and would rather discuss a crazy idea over coffee than attend a networking event.",
+      "description": "Indie hacker shipping a tiny AI startup product every month. Obsessed with AI tools, likes building things, and would rather discuss a crazy idea over coffee than attend a networking event.",
       "attributes": {
         "age": 27,
         "occupation": "Indie hacker",
@@ -889,7 +889,7 @@
       "id": "human-sasha-kim",
       "type": "human",
       "name": "Sasha Kim",
-      "description": "Second-time founder obsessed with AI, building things in the agent economy. Prefers a crazy idea over coffee to any networking event.",
+      "description": "Second-time founder of an AI startup, obsessed with AI, building things in the agent economy. Prefers a crazy idea over coffee to any networking event.",
       "attributes": {
         "age": 39,
         "occupation": "Founder",

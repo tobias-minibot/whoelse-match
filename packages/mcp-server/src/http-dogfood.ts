@@ -36,15 +36,15 @@ async function find(client: Client, intent: string, extra: Record<string, unknow
   return parseMatches(result as { content: { type: string; text?: string }[] });
 }
 
-const queries: [string, string][] = [
-  ["Who else can summarize this PDF?", "agent"],
-  ["Who else can browse the web?", "agent"],
-  ["Who else can verify this result?", "agent"],
-  ["Who else can take over if the primary agent fails?", "agent"],
-  ["Who else like Nova?", "ai"],
-  ["Who else should Tobias meet who is building an AI startup?", "human"],
-  ["Who else has an apartment?", "resource"],
-  ["Who else can give me a ride?", "service"],
+const queries: { intent: string; extra?: Record<string, unknown> }[] = [
+  { intent: "Who else can summarize this PDF?" },
+  { intent: "Who else can browse the web?" },
+  { intent: "Who else can verify this result?" },
+  { intent: "Who else can take over if the primary agent fails?" },
+  { intent: "Who else like Nova?", extra: { entityId: "ai-nova" } },
+  { intent: "Who else should Tobias meet who is building an AI startup?", extra: { type: "human" } },
+  { intent: "Who else has an apartment?" },
+  { intent: "Who else can give me a ride?" },
 ];
 
 const client = new Client({ name: "whoelse-http-dogfood", version: "0.2.0" });
@@ -54,8 +54,8 @@ console.log(`HTTP MCP ${MCP_URL}`);
 const { tools } = await client.listTools();
 console.log(`tools: ${tools.map((t) => t.name).join(", ")}`);
 
-for (const [intent] of queries) {
-  const matches = await find(client, intent);
+for (const { intent, extra } of queries) {
+  const matches = await find(client, intent, extra);
   const top = matches.slice(0, 3).map((m) => `${m.name} (${m.type} ${m.score})`).join(" · ");
   console.log(`\n${intent}\n  ${top || "(empty)"}`);
 }
