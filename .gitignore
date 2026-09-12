@@ -8,3 +8,6 @@ dist/
 .env
 .env.local
 packages/web/.next/
+packages/web/public/brand
+packages/web/public/landing
+packages/web/public/pitch

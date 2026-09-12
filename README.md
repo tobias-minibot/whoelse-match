@@ -267,7 +267,7 @@ Import: [vercel.com/new](https://vercel.com/new) → **Import Git Repository** �
 | **Framework Preset** | Next.js |
 | **Root Directory** | `packages/web` |
 | **Install Command** | `cd ../.. && pnpm install` |
-| **Build Command** | `pnpm run build` (runs `prebuild` → copies `data/seed.json` into the web package, then `next build`) |
+| **Build Command** | `pnpm run build` (runs `prebuild` → copies seed + brand/landing/pitch into the web package as real files, then `next build`) |
 | **Output Directory** | leave default (`.next`) |
 | **Node.js** | 20.x or newer |
 
