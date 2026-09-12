@@ -1,0 +1,2331 @@
+{
+  "provenance": "live production probe 2026-09-12",
+  "origin": "https://whoelse-dating.vercel.app",
+  "http": "https://whoelse-dating.vercel.app/api/whoelse",
+  "mcp": "https://whoelse-dating.vercel.app/api/mcp",
+  "mapping_intents_total": 250,
+  "probed": 78,
+  "schema_expressible_pass_rate": 1,
+  "seed_relevant_pass_rate": 0.2948717948717949,
+  "verdict_counts": {
+    "EXPRESSIBLE_UNSEEDED": 14,
+    "SEEDED_HIT": 23,
+    "EMPTY": 41
+  },
+  "note": "Schema pass = HTTP 2xx with a well-formed whoelse.find call (legacy noun is not an endpoint). Seed pass = at least one returned entity whose text overlaps the intent. Unseeded is expected for dentist/plumber/notary on a dating-first seed. That is evidence, not a schema failure.",
+  "mcp_sample": {
+    "status": 200,
+    "body": {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"query\": \"Who else should I date?\",\n  \"mode\": \"expand\",\n  \"usedOpenAiRerank\": false,\n  \"matches\": [\n    {\n      \"id\": \"human-fatima-rahman\",\n      \"type\": \"human\",\n      \"name\": \"Fatima Rahman\",\n      \"description\": \"Health-tech PM who wants a walking date and someone building tools that respect patients.\",\n      \"score\": 0.071,\n      \"why\": \"Fatima Rahman Health-tech PM\",\n      \"commonalities\": [\n        \"date\"\n      ],\n      \"attributes\": {\n        \"offers\": [\n          \"roadmaps\",\n          \"clinical interviews\",\n          \"prioritization\"\n        ],\n        \"seeks\": [\n          \"values-aligned date\",\n          \"product collaborator\",\n          \"people to meet\"\n        ],\n        \"availability\": \"early evenings\",\n        \"location\": {\n          \"city\": \"Bethesda\",\n          \"region\": \"MD\",\n          \"country\": \"US\"\n        }\n      },\n      \"trust\": {\n        \"status\": \"unscored\",\n        \"provenance\": \"synthetic\"\n      },\n      \"next\": {\n        \"action\": \"record_interest\",\n        \"via\": \"POST /api/interest\",\n        \"note\": \"Human surface stub — no message is sent.\"\n      }\n    },\n    {\n      \"id\": \"ai-plan-a-date\",\n      \"type\": \"ai\",\n      \"name\": \"Plan-a-Date Bot\",\n      \"description\": \"AI that turns a vibe into a simple itinerary: low-key dinner and a walk, museum hour, trail sunrise. Not a stand-in human date.\",\n      \"score\": 0.0702,\n      \"why\": \"Plan-a-Date Bot offers: vibe-to-itinerary, reservation suggestions\",\n      \"commonalities\": [\n        \"date\"\n      ],\n      \"attributes\": {\n        \"offers\": [\n          \"vibe-to-itinerary\",\n          \"reservation suggestions\",\n          \"walk routing\"\n        ],\n        \"seeks\": [\n          \"low-key dinner\",\n          \"dinner walks\",\n          \"itineraries\",\n          \"users who want this capability\"\n        ],\n        \"availability\": \"always on\",\n        \"location\": {\n          \"city\": \"Washington\",\n          \"region\": \"DC\",\n          \"country\": \"US\"\n        }\n      },\n      \"trust\": {\n        \"status\": \"unscored\",\n        \"provenance\": \"ai_generated\"\n      },\n      \"next\": {\n        \"action\": \"chat\",\n        \"via\": \"POST /api/chat\",\n        \"capability\": \"vibe-to-itinerary\",\n        \"note\": \"Labeled AI chat stub. Never treat as a human.\"\n      }\n    },\n    {\n      \"id\": \"human-jonah-hale\",\n      \"type\": \"human\",\n      \"name\": \"Jonah Hale\",\n      \"description\": \"Game designer running a Thursday tabletop night in Adams Morgan. Wants players and maybe a date who can lose gracefully.\",\n      \"score\": 0.0702,\n      \"why\": \"Jonah Hale Game designer\",\n      \"commonalities\": [\n        \"date\"\n      ],\n      \"attributes\": {\n        \"offers\": [\n          \"systems design\",\n          \"facilitation\"\n        ],\n        \"seeks\": [\n          \"tabletop friend\",\n          \"playful date\",\n          \"people to meet\"\n        ],\n        \"availability\": \"Thursday nights\",\n        \"location\": {\n          \"city\": \"Washington\",\n          \"region\": \"DC\",\n          \"country\": \"US\"\n        }\n      },\n      \"trust\": {\n        \"status\": \"unscored\",\n        \"provenance\": \"synthetic\"\n      },\n      \"next\": {\n        \"action\": \"record_interest\",\n        \"via\": \"POST /api/interest\",\n        \"note\": \"Human surface stub — no message is sent.\"\n      }\n    },\n    {\n      \"id\": \"human-theo-grant\",\n      \"type\": \"human\",\n      \"name\": \"Theo Grant\",\n      \"description\": \"Jazz pianist and software engineer who wants a dinner-and-walk date that might end at a tiny show, not a crowded bar.\",\n      \"score\": 0.0691,\n      \"why\": \"Theo Grant Software engineer / pianist\",\n      \"commonalities\": [\n        \"date\"\n      ],\n      \"attributes\": {\n        \"offers\": [\n          \"piano\",\n          \"TypeScript\",\n          \"arranging\"\n        ],\n        \"seeks\": [\n          \"low-key dinner date\",\n          \"music hang\",\n          \"people to meet\"\n        ],\n        \"availability\": \"after 8pm\",\n        \"location\": {\n          \"city\": \"Washington\",\n          \"region\": \"DC\",\n          \"country\": \"US\"\n        }\n      },\n      \"trust\": {\n        \"status\": \"unscored\",\n        \"provenance\": \"synthetic\"\n      },\n      \"next\": {\n        \"action\": \"record_interest\",\n        \"via\": \"POST /api/interest\",\n        \"note\": \"Human surface stub — no message is sent.\"\n      }\n    },\n    {\n      \"id\": \"human-chris-adeyemi\",\n      \"type\": \"human\",\n      \"name\": \"Chris Adeyemi\",\n      \"description\": \"Fintech engineer who salsa dances midweek and wants a partner for both socials and side projects.\",\n      \"score\": 0.0684,\n      \"why\": \"Chris Adeyemi Fintech engineer\",\n      \"commonalities\": [\n        \"date\"\n      ],\n      \"attributes\": {\n        \"offers\": [\n          \"payments\",\n          \"lead dancing\",\n          \"mentoring\"\n        ],\n        \"seeks\": [\n          \"dance partner\",\n          \"builder date\"\n        ],\n        \"availability\": \"Wednesday socials\",\n        \"location\": {\n          \"city\": \"Washington\",\n          \"region\": \"DC\",\n          \"country\": \"US\"\n        }\n      },\n      \"trust\": {\n        \"status\": \"unscored\",\n        \"provenance\": \"synthetic\"\n      },\n      \"next\": {\n        \"action\": \"record_interest\",\n        \"via\": \"POST /api/interest\",\n        \"note\": \"Human surface stub — no message is sent.\"\n      }\n    }\n  ]\n}"
+          }
+        ]
+      },
+      "jsonrpc": "2.0",
+      "id": 1
+    }
+  },
+  "probes": [
+    {
+      "id": "DENTIST",
+      "category": "Body & Health",
+      "evidence": "public",
+      "human_phrase": "Dentist who else?",
+      "request": {
+        "context": "Who else is a dentist near me who is available this week?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 154,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "APARTMENT",
+      "category": "Home & Housing",
+      "evidence": "named",
+      "human_phrase": "Apartment who else?",
+      "request": {
+        "context": "Who else has an apartment?",
+        "constraints": {
+          "type": "resource"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 51,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "resource-apartment-adams",
+          "type": "resource",
+          "name": "Adams Morgan one-bedroom (stub)",
+          "score": 0.12043360493161367
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Adams Morgan one-bedroom (stub)"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "REAL_ESTATE",
+      "category": "Home & Housing",
+      "evidence": "public",
+      "human_phrase": "Real estate who else?",
+      "request": {
+        "context": "Who else can help with real estate?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 57,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "PLUMBER",
+      "category": "Home Repair & Trades",
+      "evidence": "named",
+      "human_phrase": "Plumber who else?",
+      "request": {
+        "context": "Who else can fix a leak under my sink before the weekend, not too pricey?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 48,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "DELIVERY",
+      "category": "Food & Dining",
+      "evidence": "public",
+      "human_phrase": "Delivery who else?",
+      "request": {
+        "context": "Who else can deliver food near me tonight?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 48,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "RESTAURANT",
+      "category": "Food & Dining",
+      "evidence": "public",
+      "human_phrase": "Restaurant who else?",
+      "request": {
+        "context": "Who else can get the four of us to dinner Friday somewhere central, one of us is vegan?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 45,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "RIDESHARE",
+      "category": "Transport & Travel",
+      "evidence": "named",
+      "human_phrase": "Rideshare who else?",
+      "request": {
+        "context": "Who else can give me a ride?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 47,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.1394946065024494
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Mall-to-Trail Ride (stub)"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "RENTAL_CAR",
+      "category": "Transport & Travel",
+      "evidence": "public",
+      "human_phrase": "Rental car who else?",
+      "request": {
+        "context": "Who else can help with rental car?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 40,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "HOTEL",
+      "category": "Transport & Travel",
+      "evidence": "public",
+      "human_phrase": "Hotel who else?",
+      "request": {
+        "context": "Who else can help with hotel?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 43,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "JOB",
+      "category": "Work & Career",
+      "evidence": "named",
+      "human_phrase": "Job who else?",
+      "request": {
+        "context": "Who else is hiring for this kind of work?",
+        "constraints": {
+          "type": "company"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 35,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "COFOUNDER",
+      "category": "Work & Career",
+      "evidence": "public",
+      "human_phrase": "Cofounder who else?",
+      "request": {
+        "context": "Who else for cofounder?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 51,
+      "inferred_mode": "expand",
+      "match_count": 2,
+      "top": [
+        {
+          "id": "human-sasha-kim",
+          "type": "human",
+          "name": "Sasha Kim",
+          "score": 0.0894619210812912
+        },
+        {
+          "id": "human-sam-okonkwo",
+          "type": "human",
+          "name": "Sam Okonkwo",
+          "score": 0.0844106502994324
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Sasha Kim",
+        "Sam Okonkwo"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "COLLABORATOR",
+      "category": "Work & Career",
+      "evidence": "public",
+      "human_phrase": "Collaborator who else?",
+      "request": {
+        "context": "Who else for collaborator?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 41,
+      "inferred_mode": "expand",
+      "match_count": 5,
+      "top": [
+        {
+          "id": "human-nina-voss",
+          "type": "human",
+          "name": "Nina Voss",
+          "score": 0.08140278968826692
+        },
+        {
+          "id": "human-fatima-rahman",
+          "type": "human",
+          "name": "Fatima Rahman",
+          "score": 0.07895366510812304
+        },
+        {
+          "id": "human-alex-rivera",
+          "type": "human",
+          "name": "Alex Rivera",
+          "score": 0.07598177980817006
+        },
+        {
+          "id": "human-keisha-brooks",
+          "type": "human",
+          "name": "Keisha Brooks",
+          "score": 0.07584737693410112
+        },
+        {
+          "id": "human-leo-nakamura",
+          "type": "human",
+          "name": "Leo Nakamura",
+          "score": 0.0753390263165014
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Nina Voss",
+        "Fatima Rahman",
+        "Alex Rivera",
+        "Keisha Brooks",
+        "Leo Nakamura"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "NOTARY",
+      "category": "Legal & Admin",
+      "evidence": "named",
+      "human_phrase": "Notary who else?",
+      "request": {
+        "context": "Who else is a notary near me available today?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 42,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "LAWYER",
+      "category": "Legal & Admin",
+      "evidence": "public",
+      "human_phrase": "Lawyer who else?",
+      "request": {
+        "context": "Who else is a lawyer who can review this?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 53,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "TAX_FILING",
+      "category": "Legal & Admin",
+      "evidence": "public",
+      "human_phrase": "Tax filing who else?",
+      "request": {
+        "context": "Who else can help with tax filing?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 42,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "DATE",
+      "category": "Dating & Relationships",
+      "evidence": "named",
+      "human_phrase": "Date who else?",
+      "request": {
+        "context": "Who else wants a low-key dinner and a walk, not an app marathon?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 41,
+      "inferred_mode": "expand",
+      "match_count": 4,
+      "top": [
+        {
+          "id": "human-riley-park",
+          "type": "human",
+          "name": "Riley Park",
+          "score": 0.15951254547458868
+        },
+        {
+          "id": "human-harper-quinn",
+          "type": "human",
+          "name": "Harper Quinn",
+          "score": 0.12467149805462238
+        },
+        {
+          "id": "human-theo-grant",
+          "type": "human",
+          "name": "Theo Grant",
+          "score": 0.11546402330208919
+        },
+        {
+          "id": "human-maya-chen",
+          "type": "human",
+          "name": "Maya Chen",
+          "score": 0.08317307288188895
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Riley Park",
+        "Harper Quinn",
+        "Theo Grant",
+        "Maya Chen"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "DATING",
+      "category": "Dating & Relationships",
+      "evidence": "named",
+      "human_phrase": "Dating who else?",
+      "request": {
+        "context": "Who else should I date?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 43,
+      "inferred_mode": "expand",
+      "match_count": 5,
+      "top": [
+        {
+          "id": "human-fatima-rahman",
+          "type": "human",
+          "name": "Fatima Rahman",
+          "score": 0.07099086170459665
+        },
+        {
+          "id": "human-jonah-hale",
+          "type": "human",
+          "name": "Jonah Hale",
+          "score": 0.07019064115436094
+        },
+        {
+          "id": "human-theo-grant",
+          "type": "human",
+          "name": "Theo Grant",
+          "score": 0.06906087633519753
+        },
+        {
+          "id": "human-chris-adeyemi",
+          "type": "human",
+          "name": "Chris Adeyemi",
+          "score": 0.068356037201654
+        },
+        {
+          "id": "human-nina-voss",
+          "type": "human",
+          "name": "Nina Voss",
+          "score": 0.06823372242422032
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Fatima Rahman",
+        "Jonah Hale",
+        "Theo Grant",
+        "Nina Voss"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "CYCLING",
+      "category": "Sports & Fitness",
+      "evidence": "public",
+      "human_phrase": "Mountain biking who else?",
+      "request": {
+        "context": "Who else near me is into mountain biking?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 51,
+      "inferred_mode": "expand",
+      "match_count": 5,
+      "top": [
+        {
+          "id": "human-carmen-diaz",
+          "type": "human",
+          "name": "Carmen Diaz",
+          "score": 0.2604394287387113
+        },
+        {
+          "id": "human-wes-okada",
+          "type": "human",
+          "name": "Wes Okada",
+          "score": 0.24466199572368735
+        },
+        {
+          "id": "human-jordan-lee",
+          "type": "human",
+          "name": "Jordan Lee",
+          "score": 0.244063639942863
+        },
+        {
+          "id": "human-amara-solis",
+          "type": "human",
+          "name": "Amara Solis",
+          "score": 0.2007050522263675
+        },
+        {
+          "id": "human-maya-chen",
+          "type": "human",
+          "name": "Maya Chen",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Carmen Diaz",
+        "Wes Okada",
+        "Jordan Lee"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "GIFT",
+      "category": "Shopping & Gifts",
+      "evidence": "public",
+      "human_phrase": "Gift who else?",
+      "request": {
+        "context": "Who else has a gift under $60 for a friend who just got into pour-over coffee?",
+        "constraints": {
+          "type": "product"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 37,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "AIR_CONDITION",
+      "category": "Civic & Places",
+      "evidence": "public",
+      "human_phrase": "Air condition who else?",
+      "request": {
+        "context": "Who else can help with air condition?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 52,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "ROOM_BOOKING",
+      "category": "Civic & Places",
+      "evidence": "public",
+      "human_phrase": "Room booking who else?",
+      "request": {
+        "context": "Who else can help with room booking?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 298,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "REGISTER_GUEST",
+      "category": "Civic & Places",
+      "evidence": "public",
+      "human_phrase": "Register guest who else?",
+      "request": {
+        "context": "Who else can help with register guest?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 40,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "PERMIT",
+      "category": "Civic & Places",
+      "evidence": "public",
+      "human_phrase": "Permit who else?",
+      "request": {
+        "context": "Who else can help with permit?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 38,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "ZONING",
+      "category": "Civic & Places",
+      "evidence": "public",
+      "human_phrase": "Zoning who else?",
+      "request": {
+        "context": "Who else can help with zoning?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 40,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "PDF_SUMMARIZER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "PDF summarizer who else?",
+      "request": {
+        "context": "Who else can summarize this PDF?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 47,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "agent-pdf-summarizer",
+          "type": "agent",
+          "name": "Summarizer",
+          "score": 0.15608665627464433
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Summarizer"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "WEB_BROWSER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Web browser agent who else?",
+      "request": {
+        "context": "Who else can browse the web?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 50,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "agent-web-browser",
+          "type": "agent",
+          "name": "Browsewright",
+          "score": 0.15543216769997
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Browsewright"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "TRANSLATOR",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Translator who else?",
+      "request": {
+        "context": "Who else can translate German to English?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 44,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "agent-translator-de-en",
+          "type": "agent",
+          "name": "Bridge DE→EN",
+          "score": 0.20569413448792886
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Bridge DE→EN"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "VERIFIER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Verifier who else?",
+      "request": {
+        "context": "Who else can verify this result?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "agent-verifier",
+          "type": "agent",
+          "name": "Checkmate",
+          "score": 0.16165605127908161
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Checkmate"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "FAILOVER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Failover agent who else?",
+      "request": {
+        "context": "Who else can take over if the primary agent fails?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 42,
+      "inferred_mode": "expand",
+      "match_count": 2,
+      "top": [
+        {
+          "id": "agent-failover",
+          "type": "agent",
+          "name": "Understudy",
+          "score": 0.20853590069143418
+        },
+        {
+          "id": "agent-verifier",
+          "type": "agent",
+          "name": "Checkmate",
+          "score": 0.06470047491928477
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Understudy",
+        "Checkmate"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "DELEGATE",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Delegate who else?",
+      "request": {
+        "context": "Who else should I delegate this to?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "agent-delegate",
+          "type": "agent",
+          "name": "Hand-off",
+          "score": 0.11439609783107219
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Hand-off"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "CHEAP_RUNNER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Cheap runner who else?",
+      "request": {
+        "context": "Who else can run this task more cheaply?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 35,
+      "inferred_mode": "expand",
+      "match_count": 3,
+      "top": [
+        {
+          "id": "agent-cheap-runner",
+          "type": "agent",
+          "name": "ThriftWorker",
+          "score": 0.17917495267308828
+        },
+        {
+          "id": "agent-delegate",
+          "type": "agent",
+          "name": "Hand-off",
+          "score": 0.06816244389299371
+        },
+        {
+          "id": "agent-workflow",
+          "type": "agent",
+          "name": "Flowhand",
+          "score": 0.06140510970982892
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "ThriftWorker"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "WORKFLOW",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Workflow agent who else?",
+      "request": {
+        "context": "Who else can run this workflow?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 38,
+      "inferred_mode": "expand",
+      "match_count": 2,
+      "top": [
+        {
+          "id": "agent-workflow",
+          "type": "agent",
+          "name": "Flowhand",
+          "score": 0.11343808551808604
+        },
+        {
+          "id": "agent-cheap-runner",
+          "type": "agent",
+          "name": "ThriftWorker",
+          "score": 0.06734517899000388
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Flowhand",
+        "ThriftWorker"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "CAPABILITY_INDEX",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Capability index who else?",
+      "request": {
+        "context": "Who else knows who can do this?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 38,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "VOICE_ROUTER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Voice router who else?",
+      "request": {
+        "context": "Who else can route this intent across assistants?",
+        "constraints": {
+          "type": "ai"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 37,
+      "inferred_mode": "expand",
+      "match_count": 3,
+      "top": [
+        {
+          "id": "ai-handoff-concierge",
+          "type": "ai",
+          "name": "Handoff Concierge Bot",
+          "score": 0.08922118169016484
+        },
+        {
+          "id": "ai-nova",
+          "type": "ai",
+          "name": "Nova",
+          "score": 0.062121615111381354
+        },
+        {
+          "id": "ai-open-voice-router",
+          "type": "ai",
+          "name": "Open Voice Router",
+          "score": 0.055317155959138366
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Handoff Concierge Bot",
+        "Open Voice Router"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "PERMIT_PATH",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Permit path who else?",
+      "request": {
+        "context": "Who else can route a DC permit?",
+        "constraints": {
+          "type": "ai"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 41,
+      "inferred_mode": "expand",
+      "match_count": 5,
+      "top": [
+        {
+          "id": "ai-permit-path",
+          "type": "ai",
+          "name": "Permit Path Bot",
+          "score": 0.23030919777214012
+        },
+        {
+          "id": "ai-deal-radar",
+          "type": "ai",
+          "name": "Deal Radar",
+          "score": 0.18569549975149138
+        },
+        {
+          "id": "ai-trail-conditions",
+          "type": "ai",
+          "name": "Trail Conditions Bot",
+          "score": 0.18366416566293925
+        },
+        {
+          "id": "ai-plan-a-date",
+          "type": "ai",
+          "name": "Plan-a-Date Bot",
+          "score": 0.1836052550634625
+        },
+        {
+          "id": "ai-nova",
+          "type": "ai",
+          "name": "Nova",
+          "score": 0.18359039917771752
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Permit Path Bot"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "PLAN_A_DATE",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Plan-a-date who else?",
+      "request": {
+        "context": "Who else can turn a vibe into a date itinerary?",
+        "constraints": {
+          "type": "ai"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 37,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "ai-plan-a-date",
+          "type": "ai",
+          "name": "Plan-a-Date Bot",
+          "score": 0.07514009934227259
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Plan-a-Date Bot"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "TRAIL_CONDITIONS",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Trail conditions who else?",
+      "request": {
+        "context": "Who else knows if the trail is rideable?",
+        "constraints": {
+          "type": "ai"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 42,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "ai-trail-conditions",
+          "type": "ai",
+          "name": "Trail Conditions Bot",
+          "score": 0.06250449298683457
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Trail Conditions Bot"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "HANDOFF",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Handoff concierge who else?",
+      "request": {
+        "context": "Who else can hand this to another assistant?",
+        "constraints": {
+          "type": "ai"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 47,
+      "inferred_mode": "expand",
+      "match_count": 2,
+      "top": [
+        {
+          "id": "ai-open-voice-router",
+          "type": "ai",
+          "name": "Open Voice Router",
+          "score": 0.06149458449013731
+        },
+        {
+          "id": "ai-handoff-concierge",
+          "type": "ai",
+          "name": "Handoff Concierge Bot",
+          "score": 0.05659695078854336
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Handoff Concierge Bot"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "RESEARCHER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Researcher who else?",
+      "request": {
+        "context": "Who else can research this claim?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 37,
+      "inferred_mode": "expand",
+      "match_count": 2,
+      "top": [
+        {
+          "id": "agent-verifier",
+          "type": "agent",
+          "name": "Checkmate",
+          "score": 0.07623374636996431
+        },
+        {
+          "id": "agent-web-browser",
+          "type": "agent",
+          "name": "Browsewright",
+          "score": 0.059232194404087044
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Browsewright"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "EVALUATOR",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Evaluator who else?",
+      "request": {
+        "context": "Who else can evaluate this output?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 36,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "MODERATOR",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Moderator who else?",
+      "request": {
+        "context": "Who else can moderate this thread?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 45,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "SCHEDULER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Scheduler who else?",
+      "request": {
+        "context": "Who else can schedule this across calendars?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 42,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "agent-capability-index",
+          "type": "agent",
+          "name": "CapIndex",
+          "score": 0.05640352061966935
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "EMBEDDING_INDEX",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Embedding index who else?",
+      "request": {
+        "context": "Who else can retrieve similar documents?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 37,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "agent-pdf-summarizer",
+          "type": "agent",
+          "name": "Summarizer",
+          "score": 0.06410441821337634
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "MCP_SERVER",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "MCP server who else?",
+      "request": {
+        "context": "Who else exposes this tool over MCP?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "agent-capability-index",
+          "type": "agent",
+          "name": "CapIndex",
+          "score": 0.08129573102109211
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "PRICE_QUOTE",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Price quote who else?",
+      "request": {
+        "context": "Who else can quote this entity?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 234,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "WITNESS",
+      "category": "AI & Agent classes (506+x)",
+      "evidence": "missed",
+      "human_phrase": "Witness who else?",
+      "request": {
+        "context": "Who else has seen this / disagrees?",
+        "constraints": {
+          "type": "agent"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 40,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "ORTHODONTIST",
+      "category": "Body & Health",
+      "evidence": "reconstructed",
+      "human_phrase": "Orthodontist who else?",
+      "request": {
+        "context": "Who else is a orthodontist near me who is available this week?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 43,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "DENTAL_HYGIENIST",
+      "category": "Body & Health",
+      "evidence": "reconstructed",
+      "human_phrase": "Dental hygienist who else?",
+      "request": {
+        "context": "Who else is a dental hygienist near me who is available this week?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 38,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "HOUSE",
+      "category": "Home & Housing",
+      "evidence": "reconstructed",
+      "human_phrase": "House who else?",
+      "request": {
+        "context": "Who else can help with house?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 41,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "ROOM",
+      "category": "Home & Housing",
+      "evidence": "reconstructed",
+      "human_phrase": "Room who else?",
+      "request": {
+        "context": "Who else can help with room?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 52,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "ELECTRICIAN",
+      "category": "Home Repair & Trades",
+      "evidence": "reconstructed",
+      "human_phrase": "Electrician who else?",
+      "request": {
+        "context": "Who else is a electrician near me available this week?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 44,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "HVAC",
+      "category": "Home Repair & Trades",
+      "evidence": "reconstructed",
+      "human_phrase": "HVAC who else?",
+      "request": {
+        "context": "Who else is a hvac near me available this week?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 45,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "CAFE",
+      "category": "Food & Dining",
+      "evidence": "reconstructed",
+      "human_phrase": "Cafe who else?",
+      "request": {
+        "context": "Who else for cafe near me?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 42,
+      "inferred_mode": "expand",
+      "match_count": 1,
+      "top": [
+        {
+          "id": "service-dc-ride",
+          "type": "service",
+          "name": "Mall-to-Trail Ride (stub)",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "TAXI",
+      "category": "Transport & Travel",
+      "evidence": "reconstructed",
+      "human_phrase": "Taxi who else?",
+      "request": {
+        "context": "Who else can help with taxi?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "BUS",
+      "category": "Transport & Travel",
+      "evidence": "reconstructed",
+      "human_phrase": "Bus who else?",
+      "request": {
+        "context": "Who else can help with bus?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 42,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "INTERNSHIP",
+      "category": "Work & Career",
+      "evidence": "reconstructed",
+      "human_phrase": "Internship who else?",
+      "request": {
+        "context": "Who else for internship?",
+        "constraints": {
+          "type": "company"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 70,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "FREELANCE",
+      "category": "Work & Career",
+      "evidence": "reconstructed",
+      "human_phrase": "Freelance who else?",
+      "request": {
+        "context": "Who else for freelance?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 41,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "PARALEGAL",
+      "category": "Legal & Admin",
+      "evidence": "reconstructed",
+      "human_phrase": "Paralegal who else?",
+      "request": {
+        "context": "Who else can help with paralegal?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 68,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "BANK",
+      "category": "Money & Finance",
+      "evidence": "reconstructed",
+      "human_phrase": "Bank who else?",
+      "request": {
+        "context": "Who else can help with bank?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 45,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "CREDIT_UNION",
+      "category": "Money & Finance",
+      "evidence": "reconstructed",
+      "human_phrase": "Credit union who else?",
+      "request": {
+        "context": "Who else can help with credit union?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 43,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "LOAN",
+      "category": "Money & Finance",
+      "evidence": "reconstructed",
+      "human_phrase": "Loan who else?",
+      "request": {
+        "context": "Who else can help with loan?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 36,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "TUTOR",
+      "category": "Education",
+      "evidence": "reconstructed",
+      "human_phrase": "Tutor who else?",
+      "request": {
+        "context": "Who else for tutor?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 36,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "TEACHER",
+      "category": "Education",
+      "evidence": "reconstructed",
+      "human_phrase": "Teacher who else?",
+      "request": {
+        "context": "Who else for teacher?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "SCHOOL",
+      "category": "Education",
+      "evidence": "reconstructed",
+      "human_phrase": "School who else?",
+      "request": {
+        "context": "Who else for school?",
+        "constraints": {
+          "type": "company"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 34,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "FRIEND",
+      "category": "Dating & Relationships",
+      "evidence": "reconstructed",
+      "human_phrase": "Friend who else?",
+      "request": {
+        "context": "Who else for friend?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 47,
+      "inferred_mode": "expand",
+      "match_count": 3,
+      "top": [
+        {
+          "id": "human-jonah-hale",
+          "type": "human",
+          "name": "Jonah Hale",
+          "score": 0.09095575373942547
+        },
+        {
+          "id": "human-wes-okada",
+          "type": "human",
+          "name": "Wes Okada",
+          "score": 0.09081372649659324
+        },
+        {
+          "id": "human-jordan-lee",
+          "type": "human",
+          "name": "Jordan Lee",
+          "score": 0.08520228889165887
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Jonah Hale",
+        "Wes Okada",
+        "Jordan Lee"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "BABYSITTER",
+      "category": "Family & Childcare",
+      "evidence": "reconstructed",
+      "human_phrase": "Babysitter who else?",
+      "request": {
+        "context": "Who else is a babysitter near me?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 51,
+      "inferred_mode": "expand",
+      "match_count": 5,
+      "top": [
+        {
+          "id": "human-maya-chen",
+          "type": "human",
+          "name": "Maya Chen",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-sam-okonkwo",
+          "type": "human",
+          "name": "Sam Okonkwo",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-jordan-lee",
+          "type": "human",
+          "name": "Jordan Lee",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-alex-rivera",
+          "type": "human",
+          "name": "Alex Rivera",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-riley-park",
+          "type": "human",
+          "name": "Riley Park",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "NANNY",
+      "category": "Family & Childcare",
+      "evidence": "reconstructed",
+      "human_phrase": "Nanny who else?",
+      "request": {
+        "context": "Who else is a nanny near me?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 48,
+      "inferred_mode": "expand",
+      "match_count": 5,
+      "top": [
+        {
+          "id": "human-maya-chen",
+          "type": "human",
+          "name": "Maya Chen",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-sam-okonkwo",
+          "type": "human",
+          "name": "Sam Okonkwo",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-jordan-lee",
+          "type": "human",
+          "name": "Jordan Lee",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-alex-rivera",
+          "type": "human",
+          "name": "Alex Rivera",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-riley-park",
+          "type": "human",
+          "name": "Riley Park",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "DAYCARE",
+      "category": "Family & Childcare",
+      "evidence": "reconstructed",
+      "human_phrase": "Daycare who else?",
+      "request": {
+        "context": "Who else is a daycare near me?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 41,
+      "inferred_mode": "expand",
+      "match_count": 5,
+      "top": [
+        {
+          "id": "human-maya-chen",
+          "type": "human",
+          "name": "Maya Chen",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-sam-okonkwo",
+          "type": "human",
+          "name": "Sam Okonkwo",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-jordan-lee",
+          "type": "human",
+          "name": "Jordan Lee",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-alex-rivera",
+          "type": "human",
+          "name": "Alex Rivera",
+          "score": 0.18000000000000002
+        },
+        {
+          "id": "human-riley-park",
+          "type": "human",
+          "name": "Riley Park",
+          "score": 0.18000000000000002
+        }
+      ],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EXPRESSIBLE_UNSEEDED"
+    },
+    {
+      "id": "VET",
+      "category": "Pets",
+      "evidence": "reconstructed",
+      "human_phrase": "Vet who else?",
+      "request": {
+        "context": "Who else for vet?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "PET_SITTER",
+      "category": "Pets",
+      "evidence": "reconstructed",
+      "human_phrase": "Pet sitter who else?",
+      "request": {
+        "context": "Who else for pet sitter?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 37,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "DOG_WALKER",
+      "category": "Pets",
+      "evidence": "reconstructed",
+      "human_phrase": "Dog walker who else?",
+      "request": {
+        "context": "Who else for dog walker?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 37,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "GYM",
+      "category": "Sports & Fitness",
+      "evidence": "reconstructed",
+      "human_phrase": "Gym who else?",
+      "request": {
+        "context": "Who else wants to do gym?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 36,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "PERSONAL_TRAINER",
+      "category": "Sports & Fitness",
+      "evidence": "reconstructed",
+      "human_phrase": "Personal trainer who else?",
+      "request": {
+        "context": "Who else wants to do personal trainer?",
+        "constraints": {
+          "type": "human"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 2,
+      "top": [
+        {
+          "id": "human-nia-park",
+          "type": "human",
+          "name": "Nia Park",
+          "score": 0.0606405397482319
+        },
+        {
+          "id": "human-sam-okonkwo",
+          "type": "human",
+          "name": "Sam Okonkwo",
+          "score": 0.055614760772741925
+        }
+      ],
+      "seed_relevant": true,
+      "relevance_hits": [
+        "Nia Park",
+        "Sam Okonkwo"
+      ],
+      "lab_verdict": "SEEDED_HIT"
+    },
+    {
+      "id": "CONCERT",
+      "category": "Entertainment & Events",
+      "evidence": "reconstructed",
+      "human_phrase": "Concert who else?",
+      "request": {
+        "context": "Who else for concert?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 37,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "MOVIE",
+      "category": "Entertainment & Events",
+      "evidence": "reconstructed",
+      "human_phrase": "Movie who else?",
+      "request": {
+        "context": "Who else for movie?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 38,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "THEATER",
+      "category": "Entertainment & Events",
+      "evidence": "reconstructed",
+      "human_phrase": "Theater who else?",
+      "request": {
+        "context": "Who else for theater?",
+        "constraints": {
+          "type": "service"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "FLOWERS",
+      "category": "Shopping & Gifts",
+      "evidence": "reconstructed",
+      "human_phrase": "Flowers who else?",
+      "request": {
+        "context": "Who else can help me buy flowers?",
+        "constraints": {
+          "type": "product"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 39,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    },
+    {
+      "id": "JEWELRY",
+      "category": "Shopping & Gifts",
+      "evidence": "reconstructed",
+      "human_phrase": "Jewelry who else?",
+      "request": {
+        "context": "Who else can help me buy jewelry?",
+        "constraints": {
+          "type": "product"
+        },
+        "mode": "expand",
+        "limit": 5
+      },
+      "http_status": 200,
+      "latency_ms": 45,
+      "inferred_mode": "expand",
+      "match_count": 0,
+      "top": [],
+      "seed_relevant": false,
+      "relevance_hits": [],
+      "lab_verdict": "EMPTY"
+    }
+  ]
+}
