@@ -27,11 +27,18 @@ export class WhoElseEngine {
     private readonly index: TfidfIndex,
   ) {}
 
-  static fromSeed(seedPath?: string): WhoElseEngine {
-    const store = EntityStore.fromSeed(seedPath);
+  static fromEntities(entities: Entity[]): WhoElseEngine {
+    return WhoElseEngine.fromStore(new EntityStore(entities));
+  }
+
+  static fromStore(store: EntityStore): WhoElseEngine {
     const index = new TfidfIndex();
     for (const entity of store.all()) index.add(entity.id, entityText(entity));
     return new WhoElseEngine(store, index);
+  }
+
+  static fromSeed(seedPath?: string): WhoElseEngine {
+    return WhoElseEngine.fromStore(EntityStore.fromSeed(seedPath));
   }
 
   whoelse(request: WhoElseRequest): WhoElseResult {

@@ -1,10 +1,23 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { Entity, FeedbackEvent, InterestRecord } from "./types.js";
 import { uniqueStrings } from "./text.js";
 
 export function findSeedPath(): string {
   if (process.env.WHOELSE_SEED_PATH) return process.env.WHOELSE_SEED_PATH;
+
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  const nearby = [
+    path.join(here, "../../../data/seed.json"),
+    path.join(here, "../../data/seed.json"),
+    path.join(here, "../data/seed.json"),
+    path.join(process.cwd(), "data/seed.json"),
+  ];
+  for (const candidate of nearby) {
+    if (existsSync(candidate)) return candidate;
+  }
+
   let dir = process.cwd();
   for (let i = 0; i < 10; i++) {
     const candidate = path.join(dir, "data", "seed.json");
