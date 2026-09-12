@@ -1,8 +1,8 @@
 # who else? — match
 
-**Humans ask Who Else. Agents call WhoElse.**
+**Humans ask Who Else. Agents call WhoElse. Same network.**
 
-Two surfaces, one network:
+Two surfaces, one engine, one seed:
 
 1. **Human** — consumer “Who else?” (dating first). People never need to know MCP exists.
 2. **Machine** — MCP / HTTP. Agents discover other agents, services, humans, and thin resources.
@@ -17,6 +17,8 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Live / existing collateral
 
+- **Human web (live):** https://whoelse-dating.vercel.app
+- **For AIs / remote MCP:** https://whoelse-dating.vercel.app/ais — endpoint `https://whoelse-dating.vercel.app/api/mcp`
 - **Landing:** deploy `landing/` to Vercel, or open it from the app at `/landing/index.html`
 - **Pitch deck:** `pitch/whoelse-match-pitch.pptx`
 - **Brand clip (10s):** `brand/brand-clip-10s.mp4`
@@ -27,8 +29,8 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 ## Product (this repo)
 
 - **Human surface:** Next.js App Router — primary interaction is **Who else?**, not swipe. Humans never see MCP.
-- **AI surface:** MCP server, primary tool **`whoelse.find`**. Same `@whoelse/core` engine as the web app.
-- **Thin HTTP API** — the dating UI’s adapter; not a second matcher.
+- **AI surface:** Streamable HTTP MCP at `/api/mcp` (same Vercel app) plus stdio `pnpm mcp`. Primary tool **`whoelse.find`**. Same `@whoelse/core` engine and `data/seed.json` as the web app.
+- **Thin HTTP API** — the dating UI’s adapter; not a second matcher. Agents invoke via `POST /api/agents/:id/invoke` (demo stub).
 
 ```
 whoelse-match/
@@ -38,8 +40,8 @@ whoelse-match/
   docs/                    # notes (kept)
   data/seed.json           # synthetic humans + labeled AIs
   packages/core/           # types, store, TF-IDF, WHOELSE engine
-  packages/mcp-server/     # stdio MCP
-  packages/web/            # Who else? client + HTTP API
+  packages/mcp-server/     # MCP tools (stdio + factory for HTTP)
+  packages/web/            # Who else? client, /ais, /api/mcp, invoke stubs
   README.md
   WHOELSE_DISCOVERIES.md
 ```
@@ -149,8 +151,8 @@ First-five quality is a seed-design problem as much as a ranker problem: voice, 
 
 | Surface | How | What you get |
 | --- | --- | --- |
-| **Human** | `pnpm dev` → http://localhost:3000 | Type a desire, press **Who else?**, see ranked cards with why / badges / actions |
-| **AI** | `pnpm mcp` then a client calls **`whoelse.find`** | Structured matches: id, type, name, description, score, why, attributes, trust, next step |
+| **Human** | https://whoelse-dating.vercel.app or `pnpm dev` | Type a desire, press **Who else?**, see ranked cards with why / badges / actions |
+| **AI** | `POST https://whoelse-dating.vercel.app/api/mcp` or `pnpm mcp` | Structured matches: id, type, name, description, score, why, attributes, trust, next (invoke) |
 
 ```
 Human:  "Who else should I meet?"
@@ -162,16 +164,20 @@ Agent:  whoelse.find({ intent: "Who else can summarize this PDF?" })
 
 Primary primitive: **`whoelse.find`**. more_like / explain collapsed into it (`entityId` + per-match `why`). Optional `whoelse.feedback` for in-process MORE/LESS. Underscore alias `whoelse_find` exists for picky clients.
 
-Start (stdio):
+**Production MCP (Streamable HTTP, stateless JSON):**
 
-```bash
-pnpm mcp
+```
+https://whoelse-dating.vercel.app/api/mcp
 ```
 
+Set `WHOELSE_MCP_URL` to that URL (or `http://localhost:3000/api/mcp` while `pnpm dev` is running).
+
 ```bash
+pnpm mcp                # stdio (local / Cursor desktop)
 pnpm mcp:tools          # must list whoelse.find
 pnpm mcp:smoke          # capability + dating via whoelse.find
-pnpm test               # core + MCP client tests (all required queries)
+pnpm mcp:http-dogfood   # real HTTP SDK client (needs WHOELSE_MCP_URL or local :3000)
+pnpm test               # core + MCP stdio + Streamable HTTP client tests
 pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfood queries
 ```
 
@@ -179,7 +185,19 @@ pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfo
 
 **Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, next }] }`
 
-Cursor / Claude example (`~/.cursor/mcp.json` fragment):
+Cursor / Claude — remote (preferred):
+
+```json
+{
+  "mcpServers": {
+    "whoelse": {
+      "url": "https://whoelse-dating.vercel.app/api/mcp"
+    }
+  }
+}
+```
+
+stdio fallback:
 
 ```json
 {
@@ -209,11 +227,15 @@ Same engine. Used by the web app.
 | POST | `/api/interest` | Human interest recorded (stub — no message sent) |
 | GET | `/api/entities/:id` | One entity |
 | GET | `/api/health` | Seed counts + whether OpenAI is configured |
+| POST | `/api/mcp` | Streamable HTTP MCP (stateless). Same `whoelse.find` as stdio. |
+| POST | `/api/agents/:id/invoke` | Demo invoke stub (“I would do X”) for seeded agents |
 
 ---
 
 ## UI
 
+- Doctrine on home + `/ais`: **Humans ask Who Else. Agents call WhoElse. Same network.**
+- `/ais` — MCP URL, Cursor config, tools, example call/result
 - Big **Who are you looking for?** + primary **Who else?** button
 - Cards: HUMAN / AI badge, why, commonalities, surprising difference
 - Actions: **Who else?** (recursive exemplar) · **More like this** (peers mode) · **Less like this** · **Chat**

@@ -44,9 +44,15 @@ importers:
 
   packages/web:
     dependencies:
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.12.1
+        version: 1.30.0(zod@3.25.76)
       '@whoelse/core':
         specifier: workspace:*
         version: link:../core
+      '@whoelse/mcp-server':
+        specifier: workspace:*
+        version: link:../mcp-server
       next:
         specifier: ^15.2.4
         version: 15.5.25(@types/node@22.20.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)

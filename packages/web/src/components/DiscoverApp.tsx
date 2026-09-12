@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { SiteNav } from "@/components/SiteNav";
 import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
 
 const EXAMPLES = [
@@ -163,23 +164,16 @@ export function DiscoverApp() {
 
   return (
     <div className="app">
-      <nav className="nav">
-        <div className="logo">
-          who <em>else?</em>
-        </div>
-        <div className="nav-links">
-          <a className="ghost" href="/landing/index.html">
-            Landing
-          </a>
-          <a className="ghost" href="/landing/index.html#story">
-            Story
-          </a>
-        </div>
-      </nav>
+      <SiteNav current="home" />
+
+      <p className="doctrine">
+        <strong>Humans ask Who Else. Agents call WhoElse. Same network.</strong>{" "}
+        <a href="/ais">Connect an agent →</a>
+      </p>
 
       <div className="banner">
         Demo pool only. Every human is <strong>synthetic</strong>. Every AI is labeled AI — never a stand-in person.
-        No real dating sites were used.
+        No real dating sites were used. WhoElse is for humans and machines.
       </div>
 
       <section className="search-panel">

@@ -14,7 +14,7 @@ The bet that dating is the right *costume* for a generic operator, not a categor
 - **The Intent Namespace story is downstream.** You do not need a shared encoding on day one to feel the operator. You need a seed that clusters, a recursive action, and honest labels. The encoding (`VOICE NETWORK who else?`) can stay a landing-page metaphor until a second vertical forces it.
 - **MCP is the second client, not a garnish.** If Claude can call `whoelse_find` and get the same JSON the web app renders, the product is a layer. If the web app has a private matcher, it is another silo.
 
-**Doctrine:** Humans ask Who Else. Agents call WhoElse.
+**Doctrine:** Humans ask Who Else. Agents call WhoElse. Same network.
 
 Two surfaces, one network — already true in this repo:
 
@@ -75,9 +75,14 @@ Concrete things the code taught us. Reversible.
 16. **Agents are entities, not just API clients.** If WhoElse is only a tool agents *call*, it is a gateway. If agents are also *in the pool* (identity, offers, seeks, availability, stub pricing/latency), one agent can ask “who else can do this?” and get other agents. We seeded that shape. We did not seed a reputation market.
 17. **`whoelse.find` is the machine verb.** more_like and explain were extra names for the same engine call. Folding them (`entityId` + per-match `why` / `next`) made the MCP surface match the doctrine: one find, optional feedback. Underscore alias kept for clients that reject dots.
 18. **First-five dogfood after merge:** a 0.04 type-only floor filled generic queries with Maya/Sam. Query-shaped offers (`who else should I delegate to`) and unstopped `should`/`can`/`likes` leaked Hand-off into dating and Maya into cycling. Fix was stopwords + drop near-zero scores + add `cycling` to the bike cluster + write Devon/Sasha as the coffee-over-networking builders. Human type-bag `person` plus “not a person” AI copy made more-like-Nova share `person` with every human — dropped `person` from the type bag and rewrote those lines. `meet` only hit Nia/Jordan until a few dating-forward humans sought `people to meet`. Political disagreement stays empty — we will not invent politics to fake MAGIC.
+19. **Remote MCP is a transport, not a second matcher.** Stdio and `POST /api/mcp` both call `createWhoElseMcpServer(engine)` on the same `WhoElseEngine.fromEntities(seed)`. If ranking lived in the route handler, HTTP and stdio would drift in a day. Stateless Streamable HTTP + `enableJsonResponse` is what Vercel can run; long-lived SSE was the fragile option we skipped.
+20. **Universal predicates still hold over HTTP.** The same `whoelse.find` intent string returns Summarizer / Browsewright / Checkmate / Understudy / Nova-cluster / Tobias-meet-startup humans / apartment / ride. Type is an open string; the ranker does not fork for “agent discovery” vs “dating.”
+21. **`next.action: invoke` is a new primitive, still a stub.** Agents now carry `apiEndpoint` / `mcpEndpoint` / `authRequirements`. Discover → `POST /api/agents/:id/invoke` → structured “I would do X.” That proves connect/delegate without a runtime, payments, or reputation. Schema break we accepted: machine `attributes` grew endpoint fields; `next.via` moved from `/api/chat` to the invoke path for `type=agent`.
+22. **Agent vs human discovery is vocabulary, not architecture.** “Summarize this PDF” never needed a capability registry — the seed offers the phrase. “Tobias meet AI startups” is still TF-IDF on human bios. Ranking across types stays one score; the UI still sections Humans / AIs / Also in the network so type stays louder than rank.
 
 ### Open questions we would run next
 
 - Mixed rank vs sectioned rank: does anyone mis-read an AI as a human when the badge is present but the list is interleaved?
 - Embeddings vs TF-IDF on the *same* 34 entities — where do synonyms break?
-- Should `whoelse_find` + `whoelse_more_like` collapse into one tool with an optional `entityId`? (They share an engine method. Two tools were clearer for MCP clients.)
+- Persist MCP feedback across Vercel isolates (today each request is a new process-local store).
+- Separate Node host (Fly/Railway) only if Streamable HTTP on Vercel starts dropping sessions; stateless JSON is the current bet.
