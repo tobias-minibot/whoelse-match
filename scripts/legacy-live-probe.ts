@@ -106,12 +106,51 @@ function pickRepresentatives(all: MappingIntent[]): MappingIntent[] {
   return picked;
 }
 
+const STOP = new Set([
+  "else",
+  "help",
+  "with",
+  "week",
+  "this",
+  "that",
+  "who",
+  "near",
+  "available",
+  "someone",
+  "other",
+  "from",
+  "have",
+  "what",
+  "when",
+  "want",
+  "wants",
+  "like",
+  "just",
+  "your",
+  "their",
+  "they",
+  "them",
+  "into",
+  "more",
+  "than",
+  "should",
+  "would",
+  "could",
+  "about",
+  "which",
+  "today",
+  "tonight",
+  "kind",
+  "work",
+  "food",
+]);
+
 function tokensFor(row: MappingIntent): string[] {
-  const raw = `${row.id} ${row.name} ${row.whoelse_find.intent}`
+  const raw = `${row.id.replace(/_/g, " ")} ${row.name}`
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, " ")
     .split(/\s+/)
-    .filter((w) => w.length > 3);
+    .filter((w) => w.length > 3 && !STOP.has(w));
   const extra: Record<string, string[]> = {
     DATE: ["date", "dinner", "walk", "riley", "plan-a-date", "meet"],
     DATING: ["date", "dating", "meet", "riley"],
@@ -295,4 +334,7 @@ async function main() {
   );
 }
 
-await main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

@@ -83,8 +83,19 @@ Same for `DATE`, `PLUMBER`, `PDF_SUMMARIZER`. The legacy ID is a **noun in a sen
 | DENTIST / PLUMBER / NOTARY / LAWYER / GIFT / JOB | expressible | **EXPRESSIBLE_UNSEEDED** — HTTP 200, off-topic or weakly lexical matches |
 | Book / pay / call the dentist | not find | Adjacent `FULFILL` (invoke/chat stubs). Not WhoElse |
 
-Live numbers: [`legacy/live-probe-results.json`](legacy/live-probe-results.json) (filled by `scripts/legacy-live-probe.ts`).  
-**Pass rate to report = schema expressibility** (the question asked). Seed hit-rate is a laboratory measurement of the *entity catalog*, not of the operator.
+Live numbers (2026-09-12, `https://whoelse-dating.vercel.app/api/whoelse` + one MCP `whoelse.find`):
+
+| Metric | Result |
+| --- | --- |
+| Probed | **78** (every named + public + missed, plus 3 per category) |
+| Schema expressible (HTTP 2xx, well-formed find) | **78 / 78 = 100%** |
+| Seed-relevant hit | **23 / 78 = 29%** |
+| Returned a row but off-noun (e.g. ride stub under `type: service`) | **14** |
+| Empty (score floor / no entity of that type) | **41** |
+| HTTP errors | **0** |
+| MCP sample `Who else should I date?` | 200 — Fatima, Plan-a-Date, Jonah, Theo, Chris |
+
+**Pass rate to report for the operator claim = 100% schema.** Seed 29% is a laboratory measurement of the *entity catalog*, not of the operator. Dentist/notary returning the Mall-to-Trail Ride stub under `type: service` is the thin-catalog problem in one screenshot.
 
 ---
 
@@ -273,13 +284,25 @@ Method:
 3. Score **schema pass** (HTTP 2xx, call well-formed) vs **seed pass** (lexical overlap with a returned entity).
 4. One MCP `whoelse.find` sample on the same host.
 
-Scale: `legacy-intent-mapping.json` marks **250/250** as `EXPRESSIBLE_AS_FIND` at schema level. The probe does not need 250 HTTP calls to establish that; it needs a representative lab slice plus the mapping for the rest.
+Scale: `legacy-intent-mapping.json` marks **250/250** as `EXPRESSIBLE_AS_FIND` at schema level. The 78 live calls are the laboratory slice; the mapping covers the rest without inventing per-noun endpoints.
 
 Interpretation rules:
 
 - Empty or off-topic dentist results **do not** mean “cannot express dentist.”
 - They mean “no dentist entity is in the pool.”
-- That is the same lesson as first-five dogfood: quality is seed, not a new operator.
+- `type: service` on a seed with one ride stub makes the ride the only candidate — that is evidence for **C+D**, not for `findDentist`.
+- Same lesson as first-five dogfood: quality is seed, not a new operator.
+
+Named-intent lab (tight noun match):
+
+| ID | Lab |
+| --- | --- |
+| DATE / DATING | SEEDED_HIT (humans + Plan-a-Date). MCP agrees. |
+| APARTMENT | SEEDED_HIT (`resource-apartment-adams`) |
+| RIDESHARE | SEEDED_HIT (`service-dc-ride`) |
+| JOB | EMPTY (no hiring entity) |
+| NOTARY / PLUMBER / DENTIST | UNSEEDED or EMPTY (no such service; ride stub if `type: service`) |
+| PDF / browse / translate / verify / failover / delegate | SEEDED_HIT on agents |
 
 ---
 
@@ -383,4 +406,4 @@ Two readings, ranked:
 | Recommended architecture | **Hybrid C + D** (one operator now; taxonomy as test suite). E is the reading, not a rewrite. |
 | Operation families | **1** live (`FIND`) + modes. **3** if you name fulfiller / peer / resource as costumes. **Not 506.** |
 | Schema expressibility | **250 / 250** reconstructed intents |
-| Live probe | see `legacy/live-probe-results.json` after `npx tsx scripts/legacy-live-probe.ts` |
+| Live probe | **78/78 schema (100%)**; **23/78 seed-relevant (29%)**. MCP date query 200. |
