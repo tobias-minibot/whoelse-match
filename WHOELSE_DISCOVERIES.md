@@ -73,6 +73,7 @@ Concrete things the code taught us. Reversible.
 14. **`offers` / `seeks` made complementary match cheap.** A dinner-walk human *seeks* a date; Plan-a-Date Bot *offers* an itinerary. A founder *seeks* a thought partner; FounderBot *offers* pitch critique. Same score term will later match “I need a PDF summary” to an agent that *offers* summarization. Dating did not need a `lookingForRelationship` top-level field.
 15. **Open `type` plus a reserved list is enough.** Seeded `human` \| `ai`. Reserved `agent` \| `service` \| `company` \| `product` \| `dataset` \| `resource`. Capability queries (`summarize this PDF`, `translate German`) hit `type: agent` rows. Housing/ride queries hit thin `resource` / `service` stubs. The dating UI still sections Humans then AIs and only shows “Also in the network” when another type appears — so the consumer surface stays a dating app.
 16. **Agents are entities, not just API clients.** If WhoElse is only a tool agents *call*, it is a gateway. If agents are also *in the pool* (identity, offers, seeks, availability, stub pricing/latency), one agent can ask “who else can do this?” and get other agents. We seeded that shape. We did not seed a reputation market.
+17. **`whoelse.find` is the machine verb.** more_like and explain were extra names for the same engine call. Folding them (`entityId` + per-match `why` / `next`) made the MCP surface match the doctrine: one find, optional feedback. Underscore alias kept for clients that reject dots.
 
 ### Open questions we would run next
 

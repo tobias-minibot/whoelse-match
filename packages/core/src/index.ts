@@ -4,3 +4,5 @@ export * from "./engine.js";
 export * from "./parse.js";
 export * from "./tfidf.js";
 export { hasOpenAi } from "./openai.js";
+export { toMachineFindResult, toMachineMatch } from "./machine.js";
+export type { MachineFindResult, MachineMatch, MachineNextStep } from "./machine.js";

@@ -47,7 +47,11 @@ export class WhoElseEngine {
       this.store.cities(),
       request.constraints,
     );
-    const exclude = new Set(request.exclude ?? []);
+    const exclude = new Set([
+      ...(request.exclude ?? []),
+      ...(request.knownEntities ?? []),
+      ...(request.requester ? [request.requester] : []),
+    ]);
     if (contextEntity) exclude.add(contextEntity.id);
 
     const qVec = this.index.query(rawQuery);
@@ -64,6 +68,13 @@ export class WhoElseEngine {
       if (exclude.has(entity.id)) continue;
       if (inferredConstraints.type && entity.type !== inferredConstraints.type) continue;
       if (!passesGeo(entity, inferredConstraints)) continue;
+      if (request.availability && entity.availability && !softAvail(entity.availability, request.availability)) {
+        continue;
+      }
+      if (request.minTrust && request.minTrust !== "any") {
+        const status = entity.trust?.status ?? "unscored";
+        if (status !== request.minTrust) continue;
+      }
       if (inferredConstraints.interests?.length) {
         const have = labelsOf(entity).map((s) => s.toLowerCase());
         const need = inferredConstraints.interests.map((s) => s.toLowerCase());
@@ -239,6 +250,10 @@ function typeScore(entity: Entity, mode: WhoElseMode, contextEntity?: Entity): n
 
 function isMachineType(type: string): boolean {
   return type === "ai" || type === "agent" || type === "service";
+}
+
+function softAvail(have: string, want: string): boolean {
+  return have.toLowerCase().includes(want.toLowerCase()) || want.toLowerCase().includes(have.toLowerCase());
 }
 
 function passesGeo(

@@ -11,6 +11,7 @@
     "dev": "tsx watch src/index.ts",
     "tools": "tsx src/list-tools.ts",
     "smoke": "tsx src/smoke.ts",
+    "test": "tsx --test src/mcp.test.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "disclaimer": "Human profiles are synthetic demo data. AI and agent profiles are labeled and never presented as human. Resource/service rows are thin stubs to prove other verticals on the same primitive. No real sites were scraped.",
+  "disclaimer": "Human profiles are synthetic demo data. AI and agent profiles are labeled and never presented as human. Resource/service rows are thin stubs to prove other verticals on the same primitive. No real sites were scraped. Agents are discoverable entities in this pool, not only API clients.",
   "entities": [
     {
       "id": "human-maya-chen",
@@ -2152,7 +2152,14 @@
         ],
         "latency": "seconds",
         "pricing": "stub-cheap",
-        "isAI": true
+        "isAI": true,
+        "permissions": [
+          "discover"
+        ],
+        "reliability": "unscored-stub",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",
@@ -2193,7 +2200,15 @@
           "http"
         ],
         "latency": "seconds",
-        "isAI": true
+        "isAI": true,
+        "permissions": [
+          "discover"
+        ],
+        "pricing": "stub",
+        "reliability": "unscored-stub",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",
@@ -2232,7 +2247,17 @@
           "de",
           "en"
         ],
-        "isAI": true
+        "isAI": true,
+        "tools": [],
+        "permissions": [
+          "discover"
+        ],
+        "pricing": "stub",
+        "latency": "seconds",
+        "reliability": "unscored-stub",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",
@@ -2270,7 +2295,16 @@
       "attributes": {
         "owner": "synthetic-lab",
         "reliability": "stub",
-        "isAI": true
+        "isAI": true,
+        "tools": [],
+        "permissions": [
+          "discover"
+        ],
+        "pricing": "stub",
+        "latency": "seconds",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",
@@ -2307,7 +2341,15 @@
         "owner": "synthetic-lab",
         "pricing": "stub-cheap",
         "latency": "minutes",
-        "isAI": true
+        "isAI": true,
+        "tools": [],
+        "permissions": [
+          "discover"
+        ],
+        "reliability": "unscored-stub",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",
@@ -2346,7 +2388,16 @@
         "tools": [
           "router"
         ],
-        "isAI": true
+        "isAI": true,
+        "permissions": [
+          "discover"
+        ],
+        "pricing": "stub",
+        "latency": "seconds",
+        "reliability": "unscored-stub",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",
@@ -2383,7 +2434,16 @@
       "attributes": {
         "owner": "synthetic-lab",
         "reliability": "stub-backup",
-        "isAI": true
+        "isAI": true,
+        "tools": [],
+        "permissions": [
+          "discover"
+        ],
+        "pricing": "stub",
+        "latency": "seconds",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",
@@ -2419,7 +2479,17 @@
       ],
       "attributes": {
         "owner": "synthetic-lab",
-        "isAI": true
+        "isAI": true,
+        "tools": [],
+        "permissions": [
+          "discover"
+        ],
+        "pricing": "stub",
+        "latency": "seconds",
+        "reliability": "unscored-stub",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",
@@ -2455,7 +2525,17 @@
       ],
       "attributes": {
         "owner": "synthetic-lab",
-        "isAI": true
+        "isAI": true,
+        "tools": [],
+        "permissions": [
+          "discover"
+        ],
+        "pricing": "stub",
+        "latency": "seconds",
+        "reliability": "unscored-stub",
+        "reputation": "unscored-stub",
+        "contextAccess": "declared-offers-only",
+        "geoLegal": "synthetic-demo"
       },
       "preferences": {},
       "availability": "always on",

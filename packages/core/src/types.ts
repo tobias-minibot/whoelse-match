@@ -9,7 +9,7 @@
  */
 
 /** Seeded now. Open string so later types do not require a core fork. */
-export const SEEDED_ENTITY_TYPES = ["human", "ai"] as const;
+export const SEEDED_ENTITY_TYPES = ["human", "ai", "agent"] as const;
 
 /** Reserved — do not emit in the dating MVP; the matcher already accepts them. */
 export const RESERVED_ENTITY_TYPES = [
@@ -85,14 +85,23 @@ export interface WhoElseConstraints {
 export interface WhoElseRequest {
   /** Natural-language intent, or free text plus an optional exemplar. Not dating-specific. */
   context: string;
-  /** Extra predicate on the intent (role, vibe, capability, …). */
+  /** Extra predicate / relation on the intent (role, capability, …). */
   predicate?: string;
   constraints?: WhoElseConstraints;
   exclude?: string[];
+  /** Already-known ids — merged into exclude (pagination / “not these”). */
+  knownEntities?: string[];
   mode?: WhoElseMode;
+  /** Who is asking. Excluded from results; optional exemplar-adjacent context. */
+  requester?: string;
   /** When set, treat this entity as the exemplar (recursive WhoElse). */
   entityId?: string;
   limit?: number;
+  /** Soft availability phrase, e.g. "always on". */
+  availability?: string;
+  ranking?: "score" | "sectioned";
+  /** Stub only — entities without a score still pass unless this is set to a future real grade. */
+  minTrust?: "any" | "unscored" | "stub";
 }
 
 export interface ScoreBreakdown {

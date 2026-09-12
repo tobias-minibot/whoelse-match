@@ -26,9 +26,9 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Product (this repo)
 
-- **Web demo:** Next.js App Router — primary interaction is **Who else?**, not swipe
-- **MCP server:** `whoelse_find`, `whoelse_more_like`, `whoelse_explain`, `whoelse_feedback`
-- **Thin HTTP API** wrapping the same `@whoelse/core` engine the MCP tools use
+- **Human surface:** Next.js App Router — primary interaction is **Who else?**, not swipe. Humans never see MCP.
+- **AI surface:** MCP server, primary tool **`whoelse.find`**. Same `@whoelse/core` engine as the web app.
+- **Thin HTTP API** — the dating UI’s adapter; not a second matcher.
 
 ```
 whoelse-match/
@@ -145,29 +145,38 @@ First-five quality is a seed-design problem as much as a ranker problem: voice, 
 
 ---
 
+## Dual-surface definition of done
+
+| Surface | How | What you get |
+| --- | --- | --- |
+| **Human** | `pnpm dev` → http://localhost:3000 | Type a desire, press **Who else?**, see ranked cards with why / badges / actions |
+| **AI** | `pnpm mcp` then a client calls **`whoelse.find`** | Structured matches: id, type, name, description, score, why, attributes, trust, next step |
+
+```
+Human:  "Who else should I meet?"
+Agent:  whoelse.find({ intent: "Who else can summarize this PDF?" })
+        → same WhoElseEngine, same seed, same scores
+```
+
 ## MCP tools
+
+Primary primitive: **`whoelse.find`**. more_like / explain collapsed into it (`entityId` + per-match `why`). Optional `whoelse.feedback` for in-process MORE/LESS. Underscore alias `whoelse_find` exists for picky clients.
 
 Start (stdio):
 
 ```bash
 pnpm mcp
-# or
-pnpm --filter @whoelse/mcp-server start
 ```
-
-List tools (spawns the server as a client would):
 
 ```bash
-pnpm mcp:tools          # list tools
-pnpm mcp:smoke          # whoelse_find on a capability query + a dating query
+pnpm mcp:tools          # must list whoelse.find
+pnpm mcp:smoke          # capability + dating via whoelse.find
+pnpm test               # core + MCP client tests (all required queries)
 ```
 
-| Tool | Role |
-| --- | --- |
-| `whoelse_find` | Primary machine verb: find entities matching an intent (dating is only the seed) |
-| `whoelse_more_like` | Recursive: this entity becomes the new context |
-| `whoelse_explain` | Why this candidate matched |
-| `whoelse_feedback` | `more` / `less` — shifts later scores in-process |
+**Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `exclude`, `knownEntities`, `entityId`, `limit`, `mode`, `ranking`, `minTrust`.
+
+**Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, next }] }`
 
 Cursor / Claude example (`~/.cursor/mcp.json` fragment):
 
