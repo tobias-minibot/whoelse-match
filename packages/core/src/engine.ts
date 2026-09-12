@@ -18,6 +18,8 @@ const TEXT_W = 0.5;
 const STRUCT_W = 0.28;
 const LOC_W = 0.14;
 const TYPE_W = 0.08;
+const EXEMPLAR_STRUCT_W = 0.4;
+const EXEMPLAR_TEXT_W = 0.38;
 
 export class WhoElseEngine {
   constructor(
@@ -71,9 +73,11 @@ export class WhoElseEngine {
       const location = locationScore(entity, inferredConstraints, contextEntity);
       const typeAffinity = typeScore(entity, inferredMode, contextEntity);
       const feedback = this.store.feedbackScore(entity.id, request.context);
+      const textW = contextEntity ? EXEMPLAR_TEXT_W : TEXT_W;
+      const structW = contextEntity ? EXEMPLAR_STRUCT_W : STRUCT_W;
       const total =
-        TEXT_W * text +
-        STRUCT_W * structured +
+        textW * text +
+        structW * structured +
         LOC_W * location +
         TYPE_W * typeAffinity +
         feedback;

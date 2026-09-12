@@ -50,7 +50,9 @@ export function DiscoverApp() {
         body: JSON.stringify({
           context,
           entityId: extras.entityId,
-          exclude: extras.exclude ?? seen,
+          // Recursion is a new exemplar — only exclude who we were told to.
+          // Repeating the same free-text WhoElse? can skip already-shown ids.
+          exclude: extras.exclude ?? (extras.entityId ? [extras.entityId] : seen),
           mode: extras.mode,
           limit: 8,
         }),
@@ -79,9 +81,9 @@ export function DiscoverApp() {
     setActiveChip(-1);
     setTrail((t) => [
       ...t,
-      { label: `like ${candidate.entity.name}`, context, entityId: candidate.entity.id, exclude: seen },
+      { label: `like ${candidate.entity.name}`, context, entityId: candidate.entity.id, exclude: [candidate.entity.id] },
     ]);
-    void runFind(context, { entityId: candidate.entity.id, exclude: [...seen, candidate.entity.id] });
+    void runFind(context, { entityId: candidate.entity.id, exclude: [candidate.entity.id] });
   }
 
   function moreLikeThis(candidate: Candidate) {
@@ -89,11 +91,16 @@ export function DiscoverApp() {
     setQuery(context);
     setTrail((t) => [
       ...t,
-      { label: `more like ${candidate.entity.name}`, context, entityId: candidate.entity.id, exclude: seen },
+      {
+        label: `more like ${candidate.entity.name}`,
+        context,
+        entityId: candidate.entity.id,
+        exclude: [candidate.entity.id],
+      },
     ]);
     void runFind(context, {
       entityId: candidate.entity.id,
-      exclude: [...seen, candidate.entity.id],
+      exclude: [candidate.entity.id],
       mode: "peers",
     });
   }

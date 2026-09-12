@@ -68,8 +68,25 @@ describe("WHOELSE", () => {
     assert.ok(sam);
     const result = engine.moreLike(sam.id, { limit: 5 });
     assert.ok(result.candidates.every((c) => c.entity.id !== sam.id));
-    const blob = result.candidates.map((c) => c.entity.description).join(" ").toLowerCase();
-    assert.ok(/voice|assistant|protocol|founder|hardware|iot/.test(blob));
+    assert.notEqual(result.inferredConstraints.type, "ai");
+    const names = result.candidates.map((c) => c.entity.name);
+    assert.ok(
+      names.some((n) => /Nia|Leo|Handoff|Open Voice|Founder|Sasha/i.test(n)),
+      `unexpected more-like set: ${names.join(", ")}`,
+    );
+    assert.ok(result.candidates.some((c) => c.entity.type === "human"));
+    assert.ok(
+      names.filter((n) => /Jonah|Riley|Chris Adeyemi/i.test(n)).length === 0,
+      `off-cluster leaked into more-like: ${names.join(", ")}`,
+    );
+  });
+
+  it("honors an explicit AI-only request without treating 'agents' as a type lock", () => {
+    const onlyAi = engine.whoelse({ context: "Who else is an AI that can help with voice assistants?", limit: 5 });
+    assert.equal(onlyAi.inferredConstraints.type, "ai");
+    assert.ok(onlyAi.candidates.every((c) => c.entity.type === "ai"));
+    const mixed = engine.whoelse({ context: "Who else works on federated agents and voice assistants?", limit: 5 });
+    assert.notEqual(mixed.inferredConstraints.type, "ai");
   });
 
   it("records less-like feedback and ranks that entity lower", () => {

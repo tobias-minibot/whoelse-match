@@ -1,7 +1,7 @@
 import type { Entity, WhoElseConstraints, WhoElseMode } from "./types.js";
 
 const TYPE_HUMAN = /\b(humans?|people|person|someone)\b/i;
-const TYPE_AI = /\b(ais?|bots?|agents?|llms?|artificial)\b/i;
+const TYPE_AI = /\b(an ai|ais\b|bots?\b|llms?\b|artificial intelligence)\b/i;
 const SUBSTITUTE = /\b(instead of|replace|substitute|alternative to|other than)\b/i;
 const PEERS = /\b(peers?|colleagues?|same role|others like them|fellow)\b/i;
 const NEAR_ME = /\bnear me\b|\bnearby\b|\blocally\b|\bin town\b/i;
@@ -50,12 +50,21 @@ export function queryText(input: {
     parts.push(
       input.entity.name,
       input.entity.description,
-      JSON.stringify(input.entity.attributes),
+      fieldText(input.entity, "interests"),
+      fieldText(input.entity, "skills"),
+      fieldText(input.entity, "occupation"),
+      fieldText(input.entity, "persona"),
       input.entity.capabilities.join(" "),
-      JSON.stringify(input.entity.preferences),
     );
   }
   return parts.filter(Boolean).join(" ");
+}
+
+function fieldText(entity: Entity, key: string): string {
+  const value = entity.attributes[key] ?? entity.preferences[key];
+  if (Array.isArray(value)) return value.join(" ");
+  if (typeof value === "string") return value;
+  return "";
 }
 
 function escapeReg(value: string): string {
