@@ -15,6 +15,7 @@
     "mcp:tools": "pnpm --filter @whoelse/mcp-server tools",
     "mcp:smoke": "pnpm --filter @whoelse/mcp-server smoke",
     "test": "pnpm --filter @whoelse/core test && pnpm --filter @whoelse/mcp-server test",
+    "dogfood": "pnpm --filter @whoelse/core exec tsx scripts/dogfood.ts",
     "typecheck": "pnpm -r typecheck"
   }
 }

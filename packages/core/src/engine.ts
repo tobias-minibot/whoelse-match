@@ -86,6 +86,10 @@ export class WhoElseEngine {
       const location = locationScore(entity, inferredConstraints, contextEntity);
       const typeAffinity = typeScore(entity, inferredMode, contextEntity);
       const feedback = this.store.feedbackScore(entity.id, request.context);
+      // Kill the 0.04 type-only floor that filled first-five with random humans.
+      if (!contextEntity && text < 0.03 && structured < 0.05 && location === 0 && feedback === 0) {
+        continue;
+      }
       const textW = contextEntity ? EXEMPLAR_TEXT_W : TEXT_W;
       const structW = contextEntity ? EXEMPLAR_STRUCT_W : STRUCT_W;
       const total =

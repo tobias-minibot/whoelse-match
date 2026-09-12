@@ -172,6 +172,7 @@ pnpm mcp
 pnpm mcp:tools          # must list whoelse.find
 pnpm mcp:smoke          # capability + dating via whoelse.find
 pnpm test               # core + MCP client tests (all required queries)
+pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfood queries
 ```
 
 **Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `exclude`, `knownEntities`, `entityId`, `limit`, `mode`, `ranking`, `minTrust`.

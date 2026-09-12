@@ -152,12 +152,13 @@
       "id": "human-jordan-lee",
       "type": "human",
       "name": "Jordan Lee",
-      "description": "Weekend mountain biker organizing intermediate group rides around the DMV. Wants ride buddies, not another messaging app.",
+      "description": "Weekend mountain biker and cyclist organizing intermediate group rides around the DMV. Wants ride buddies, not another messaging app.",
       "attributes": {
         "age": 29,
         "occupation": "Bike shop mechanic / trail advocate",
         "interests": [
           "mountain biking",
+          "cycling",
           "trail riding",
           "group rides",
           "camping",
@@ -189,7 +190,7 @@
         ],
         "pace": "meet on the trail"
       },
-      "availability": "Saturday mornings",
+      "availability": "Saturday mornings and weekends",
       "location": {
         "city": "Washington",
         "region": "DC",
@@ -422,7 +423,7 @@
       "id": "human-devon-walsh",
       "type": "human",
       "name": "Devon Walsh",
-      "description": "Indie hacker shipping a tiny product every month. Wants coffee dates with other builders and the occasional cofounder spark.",
+      "description": "Indie hacker shipping a tiny product every month. Obsessed with AI tools, likes building things, and would rather discuss a crazy idea over coffee than attend a networking event.",
       "attributes": {
         "age": 27,
         "occupation": "Indie hacker",
@@ -431,7 +432,9 @@
           "coffee dates",
           "shipping",
           "tiny products",
-          "builders"
+          "builders",
+          "AI tools",
+          "crazy ideas"
         ],
         "skills": [
           "Next.js",
@@ -630,6 +633,7 @@
           "farmers markets",
           "heat islands",
           "biking to work",
+          "cycling",
           "public space"
         ],
         "skills": [
@@ -881,13 +885,16 @@
       "id": "human-sasha-kim",
       "type": "human",
       "name": "Sasha Kim",
-      "description": "Second-time founder looking for thought partners, not employees. Building in the agent economy and dating like a collaborator search.",
+      "description": "Second-time founder obsessed with AI, building things in the agent economy. Prefers a crazy idea over coffee to any networking event.",
       "attributes": {
         "age": 39,
         "occupation": "Founder",
         "interests": [
           "startups",
           "agent economy",
+          "AI",
+          "building things",
+          "coffee over networking",
           "thought partners",
           "voice assistants",
           "fundraising walks"
@@ -1019,6 +1026,7 @@
         "occupation": "Urban planner",
         "interests": [
           "mountain biking",
+          "cycling",
           "bike advocacy",
           "protected lanes",
           "urban planning",
@@ -1216,6 +1224,7 @@
           "robotics",
           "makerspaces",
           "mountain biking",
+          "cycling",
           "soldering",
           "trail days"
         ],
@@ -1283,6 +1292,7 @@
           "dinner walks",
           "essays",
           "low-key dates",
+          "dating",
           "bookstores"
         ],
         "skills": [
@@ -1489,7 +1499,8 @@
         ],
         "lookingFor": [
           "protocol partner",
-          "curious date"
+          "curious date",
+          "people to meet"
         ],
         "vibe": "inviting, fast, connective",
         "funFact": "prints zines about wake words",
@@ -1743,6 +1754,7 @@
         "label": "AI",
         "interests": [
           "mountain biking",
+          "cycling",
           "trail riding",
           "group rides",
           "DMV trails"
@@ -1849,7 +1861,8 @@
           "low-key dinner",
           "dinner walks",
           "itineraries",
-          "slow dates"
+          "slow dates",
+          "dating"
         ]
       },
       "capabilities": [
@@ -2512,7 +2525,7 @@
       "description": "Agent that recommends who to delegate a task to. Matching helper, not an executor.",
       "offers": [
         "delegation advice",
-        "who else should I delegate to",
+        "task routing",
         "routing suggestion"
       ],
       "seeks": [
