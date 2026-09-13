@@ -149,7 +149,8 @@ describe("agent register + A→B delegate", () => {
     const types = new Set(result.candidates.map((c) => c.entity.type));
     assert.ok(result.candidates.length > 0);
     assert.ok(types.has("human"), `types=${[...types]}`);
-    assert.ok(types.has("agent") || types.has("company"), `types=${[...types]}`);
+    assert.ok(types.has("company"), `types=${[...types]}`);
+    assert.ok(types.has("agent"), `types=${[...types]}`);
     const blob = result.candidates.map((c) => `${c.entity.name} ${c.entity.offers.join(" ")}`).join(" ");
     assert.match(blob, /website|redesign|Pia|Fleet|BudgetCoder|Cleo/i);
     for (const c of result.candidates) {

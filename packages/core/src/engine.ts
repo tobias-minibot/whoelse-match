@@ -637,6 +637,8 @@ function readAttr(entity: Entity, key: string): unknown {
 }
 
 function matchAttribute(have: unknown, constraint: AttributeConstraint): boolean {
+  // Query currency is a unit, not a required field. Missing ≠ mismatch.
+  if (constraint.key === "currency" && (have == null || have === "")) return true;
   if (constraint.op === "neq") {
     if (have == null || have === "") return true;
     return String(have).toLowerCase() !== String(constraint.value).toLowerCase();

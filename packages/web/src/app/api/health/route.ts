@@ -24,6 +24,13 @@ export async function GET() {
     byType,
     byVertical,
     openAi: hasOpenAi(),
-    mcpTools: ["whoelse.find", "whoelse_find", "whoelse.feedback"],
+    mcpTools: [
+      "whoelse.find",
+      "whoelse_find",
+      "whoelse.register",
+      "whoelse.invoke",
+      "whoelse.delegate",
+      "whoelse.feedback",
+    ],
   });
 }

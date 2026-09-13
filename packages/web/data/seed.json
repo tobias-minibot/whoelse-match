@@ -6423,7 +6423,9 @@
         "can do this work",
         "can do this work for under $5,000",
         "two-week coding project",
-        "contract team"
+        "contract team",
+        "website redesign",
+        "redesign my website"
       ],
       "seeks": [
         "scoped outcomes",
@@ -6439,7 +6441,7 @@
         "synthetic": true,
         "role": "worker",
         "roleTitle": "contracting team",
-        "rate": 4800,
+        "rate": 1800,
         "durationWeeks": 2,
         "start": "immediate",
         "currency": "USD"
@@ -6460,7 +6462,9 @@
         "can do this work",
         "can do this work for under $5,000",
         "two-week coding project",
-        "contract team"
+        "contract team",
+        "website redesign",
+        "redesign my website"
       ],
       "preferences": {},
       "created_at": "2026-09-12T12:00:00.000Z"
@@ -7158,7 +7162,9 @@
       "offers": [
         "product design",
         "can do this work for under $5,000",
-        "landing pages"
+        "landing pages",
+        "website redesign",
+        "redesign my website"
       ],
       "seeks": [
         "design gig under $5000"
@@ -7191,7 +7197,9 @@
       "capabilities": [
         "product design",
         "can do this work for under $5,000",
-        "landing pages"
+        "landing pages",
+        "website redesign",
+        "redesign my website"
       ],
       "preferences": {},
       "created_at": "2026-09-12T12:00:00.000Z"
@@ -7786,7 +7794,9 @@
       "offers": [
         "weekend gig",
         "can do this work",
-        "local task"
+        "local task",
+        "website redesign",
+        "redesign my website"
       ],
       "seeks": [
         "weekend work"
@@ -7819,7 +7829,9 @@
       "capabilities": [
         "weekend gig",
         "can do this work",
-        "local task"
+        "local task",
+        "website redesign",
+        "redesign my website"
       ],
       "preferences": {},
       "created_at": "2026-09-12T12:00:00.000Z"
@@ -8602,7 +8614,9 @@
         "can do this work",
         "can do this work for under $5,000",
         "cheap coding",
-        "project under $5000"
+        "project under $5000",
+        "website redesign",
+        "redesign my website"
       ],
       "seeks": [
         "budget tasks"
@@ -8658,7 +8672,9 @@
         "can do this work",
         "can do this work for under $5,000",
         "cheap coding",
-        "project under $5000"
+        "project under $5000",
+        "website redesign",
+        "redesign my website"
       ],
       "preferences": {},
       "created_at": "2026-09-12T12:00:00.000Z"
