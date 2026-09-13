@@ -1,17 +1,14 @@
-import { NextResponse } from "next/server";
-import { getEngine } from "@/lib/engine";
+import { gatewayInvoke } from "@whoelse/core";
+import { resolveCaller } from "@/lib/auth";
+import { getNetwork } from "@/lib/engine";
+import { gatewayResponse } from "@/lib/respond";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const entity = getEngine().store.get(id);
-  if (!entity) {
-    return NextResponse.json({ error: "unknown entity" }, { status: 404 });
-  }
-  if (entity.type !== "agent") {
-    return NextResponse.json({ error: "invoke is only stubbed for type=agent" }, { status: 400 });
-  }
+  const network = await getNetwork();
+  const caller = await resolveCaller(req, network);
   const body = await req.json().catch(() => ({}));
-  return NextResponse.json(getEngine().invoke(id, body));
+  return gatewayResponse(await gatewayInvoke(network, id, body, caller));
 }

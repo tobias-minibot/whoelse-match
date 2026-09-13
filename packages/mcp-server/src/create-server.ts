@@ -1,8 +1,18 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import {
+  AuthzError,
+  IdentityLedger,
   RESERVED_ENTITY_TYPES,
   SEEDED_ENTITY_TYPES,
+  WhoElseNetwork,
+  gatewayDelegate,
+  gatewayFeedback,
+  gatewayInvoke,
+  gatewayPublish,
+  gatewayRegister,
+  requireCaller,
   toMachineFindResult,
+  type Caller,
   type WhoElseEngine,
   type WhoElseMode,
 } from "@whoelse/core";
@@ -93,17 +103,44 @@ function json(data: unknown) {
   };
 }
 
-/** Same tools on stdio and Streamable HTTP. Caller supplies the shared engine. */
-export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
+function asNetwork(source: WhoElseEngine | WhoElseNetwork): WhoElseNetwork {
+  if (source instanceof WhoElseNetwork) return source;
+  return WhoElseNetwork.memory(
+    source,
+    IdentityLedger.forSyntheticSeed(source.store.all().map((e) => e.id)),
+  );
+}
+
+function authJson(err: unknown) {
+  if (err instanceof AuthzError) return json({ error: err.message, status: err.status });
+  return json({ error: err instanceof Error ? err.message : String(err), status: 400 });
+}
+
+/** Same tools on stdio and Streamable HTTP. Writes require a Clerk/agent caller. */
+export function createWhoElseMcpServer(
+  source: WhoElseEngine | WhoElseNetwork,
+  options: { caller?: Caller | null } = {},
+): McpServer {
+  const network = asNetwork(source);
+  const engine = network.engine;
+  const caller = options.caller ?? null;
   const server = new McpServer({
     name: "whoelse",
-    version: "0.2.0",
+    version: "0.3.0",
   });
 
   async function find(args: FindArgs) {
     const context = (args.intent ?? args.context ?? "").trim();
     if (!context && !args.entityId) {
       return json({ error: "intent or entityId required" });
+    }
+    if (args.requester) {
+      try {
+        requireCaller(caller);
+        network.identity.assertOwns(caller, args.requester);
+      } catch (err) {
+        return authJson(err);
+      }
     }
     const result = await engine.whoelseAsync({
       context: context || "Who else like this?",
@@ -139,8 +176,8 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
       query: z.string().optional(),
     },
     async ({ entityId, signal, query }) => {
-      const event = engine.feedback(entityId, signal, query);
-      return json({ ok: true, event });
+      const result = await gatewayFeedback(network, { entityId, signal, query }, caller);
+      return json(result.body);
     },
   );
 
@@ -173,35 +210,29 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
     },
     async (spec) => {
       if (!spec.offers?.length && !spec.seeks?.length) {
-        return json({ error: "register requires at least one offer or seek" });
+        return json({ error: "register requires at least one offer or seek", status: 400 });
       }
-      try {
-        const entity = engine.register({
+      const result = await gatewayRegister(
+        network,
+        {
           ...spec,
           endpoint: spec.endpoint
             ? { protocol: spec.endpoint.protocol ?? "http", url: spec.endpoint.url, auth: spec.endpoint.auth }
             : undefined,
-        });
-        return json({
-          ok: true,
-          entity: {
-            id: entity.id,
-            type: entity.type,
-            name: entity.name,
-            offers: entity.offers,
-            seeks: entity.seeks,
-            publications: entity.publications?.map((p) => ({
-              id: p.id,
-              kind: p.kind,
-              capability: p.capability,
-              status: p.status,
-            })),
-          },
-          next: { find: "whoelse.find", invoke: `POST /api/agents/${entity.id}/invoke`, publish: "whoelse.publish" },
-        });
-      } catch (err) {
-        return json({ error: err instanceof Error ? err.message : String(err) });
-      }
+        },
+        caller,
+      );
+      if (!result.ok) return json(result.body);
+      return json({
+        ok: true,
+        entity: result.body.entity,
+        agentKey: result.body.agentKey,
+        next: {
+          find: "whoelse.find",
+          invoke: `POST /api/agents/${result.body.entity.id}/invoke`,
+          publish: "whoelse.publish",
+        },
+      });
     },
   );
 
@@ -219,25 +250,13 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
         .min(1),
     },
     async ({ entityId, publications }) => {
-      try {
-        const entity = engine.publish(entityId, publications);
-        return json({
-          ok: true,
-          entity: {
-            id: entity.id,
-            name: entity.name,
-            publications: entity.publications?.map((p) => ({
-              id: p.id,
-              kind: p.kind,
-              capability: p.capability,
-              status: p.status,
-            })),
-          },
-          next: { find: "whoelse.find" },
-        });
-      } catch (err) {
-        return json({ error: err instanceof Error ? err.message : String(err) });
-      }
+      const result = await gatewayPublish(network, entityId, publications, caller);
+      if (!result.ok) return json(result.body);
+      return json({
+        ok: true,
+        entity: result.body.entity,
+        next: { find: "whoelse.find" },
+      });
     },
   );
 
@@ -249,12 +268,8 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
       task: z.string(),
     },
     async ({ entityId, task }) => {
-      try {
-        const invoked = engine.invoke(entityId, { task });
-        return json(invoked);
-      } catch (err) {
-        return json({ error: err instanceof Error ? err.message : String(err) });
-      }
+      const result = await gatewayInvoke(network, entityId, { task }, caller);
+      return json(result.body);
     },
   );
 
@@ -269,20 +284,22 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
       limit: z.number().int().min(1).max(20).optional(),
     },
     async ({ task, intent, from, select, limit }) => {
-      const result = engine.delegate({ task, intent, from, select, limit });
+      const result = await gatewayDelegate(network, { task, intent, from, select, limit }, caller);
+      if (!result.ok) return json(result.body);
+      const delegated = result.body;
       return json({
-        ok: result.ok,
-        task: result.task,
-        intent: result.intent,
-        from: result.from,
-        selected: result.selected
-          ? { id: result.selected.entity.id, name: result.selected.entity.name, score: result.selected.score }
+        ok: delegated.ok,
+        task: delegated.task,
+        intent: delegated.intent,
+        from: delegated.from,
+        selected: delegated.selected
+          ? { id: delegated.selected.entity.id, name: delegated.selected.entity.name, score: delegated.selected.score }
           : undefined,
-        invoked: result.invoked,
-        receipt: result.receipt,
-        match: result.match,
-        found: result.found.slice(0, 5).map((c) => ({ id: c.entity.id, name: c.entity.name, type: c.entity.type })),
-        reason: result.reason,
+        invoked: delegated.invoked,
+        receipt: delegated.receipt,
+        match: delegated.match,
+        found: delegated.found.slice(0, 5).map((c) => ({ id: c.entity.id, name: c.entity.name, type: c.entity.type })),
+        reason: delegated.reason,
       });
     },
   );

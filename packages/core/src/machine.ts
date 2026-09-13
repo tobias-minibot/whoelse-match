@@ -1,4 +1,5 @@
 import { publicationsOf } from "./publications.js";
+import { toPublicEntity } from "./public-dto.js";
 import { offersOf, seeksOf } from "./store.js";
 import type { Candidate, Entity, PublicationPair, WhoElseResult } from "./types.js";
 
@@ -72,7 +73,6 @@ export interface MachineMatch {
     endpoint?: unknown;
     apiEndpoint?: unknown;
     mcpEndpoint?: unknown;
-    authRequirements?: unknown;
   };
   trust: {
     status: string;
@@ -95,7 +95,7 @@ export interface MachineFindResult {
 }
 
 export function toMachineMatch(candidate: Candidate): MachineMatch {
-  const e = candidate.entity;
+  const e = toPublicEntity(candidate.entity);
   const attrs = e.attributes ?? {};
   return {
     id: e.id,
@@ -106,8 +106,8 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
     why: candidate.explanation.why,
     commonalities: candidate.explanation.commonalities,
     attributes: {
-      offers: offersOf(e),
-      seeks: seeksOf(e),
+      offers: e.offers,
+      seeks: e.seeks,
       availability: e.availability,
       location: e.location,
       role: attrs.role,
@@ -151,7 +151,6 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       endpoint: attrs.endpoint,
       apiEndpoint: attrs.apiEndpoint,
       mcpEndpoint: attrs.mcpEndpoint,
-      authRequirements: attrs.authRequirements,
     },
     trust: {
       status: e.trust?.status ?? "unscored",
@@ -159,7 +158,7 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       notes: e.trust?.notes,
       ...(e.trust?.evidence ? { evidence: e.trust.evidence } : {}),
     },
-    publications: publicationsOf(e).map((p) => ({
+    publications: publicationsOf(candidate.entity).map((p) => ({
       id: p.id,
       kind: p.kind,
       capability: p.capability,
@@ -172,7 +171,7 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
             capability: candidate.matched.offer?.capability ?? candidate.matched.seek?.capability,
           }
         : undefined,
-    next: nextStep(e),
+    next: nextStep(candidate.entity),
   };
 }
 

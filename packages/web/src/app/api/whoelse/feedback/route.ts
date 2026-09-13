@@ -1,10 +1,15 @@
-import { NextResponse } from "next/server";
-import { getEngine } from "@/lib/engine";
+import { gatewayFeedback } from "@whoelse/core";
+import { resolveCaller } from "@/lib/auth";
+import { getNetwork } from "@/lib/engine";
+import { gatewayResponse } from "@/lib/respond";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
+  const network = await getNetwork();
+  const caller = await resolveCaller(req, network);
   const body = await req.json();
-  const event = getEngine().feedback(body.entityId, body.signal, body.query);
-  return NextResponse.json({ ok: true, event });
+  return gatewayResponse(
+    await gatewayFeedback(network, { entityId: body.entityId, signal: body.signal, query: body.query }, caller),
+  );
 }

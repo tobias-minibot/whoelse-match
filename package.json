@@ -16,6 +16,8 @@
     "mcp:smoke": "pnpm --filter @whoelse/mcp-server smoke",
     "mcp:http-dogfood": "pnpm --filter @whoelse/mcp-server http-dogfood",
     "test": "pnpm --filter @whoelse/core test && pnpm --filter @whoelse/mcp-server test",
+    "db:migrate": "pnpm --filter @whoelse/core migrate",
+    "db:seed": "pnpm --filter @whoelse/core seed",
     "dogfood": "pnpm --filter @whoelse/core exec tsx scripts/dogfood.ts",
     "legacy:catalog": "python3 scripts/build-reconstructed-catalog.py",
     "legacy:probe": "node --experimental-strip-types --no-warnings scripts/legacy-live-probe.ts",

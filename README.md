@@ -69,6 +69,9 @@ Documented so they can be undone without a rewrite:
 | Default UI: **Humans then AIs** on dating | Trust — type is never ambiguous | Jobs uses mixed rank; dating stays sectioned |
 | Default mode for dating = `expand` | “Who else?” means more of this, not a replacement | Pass `mode: substitute \| peers` |
 | In-memory feedback | Honest about MVP scope | Persist later; the signal shape is stable |
+| Durable owned writes in Neon | Launch identity + publications | Ranker stays in-memory TF-IDF; swap the Neon driver, keep the schema |
+| Clerk humans + hashed agent keys | Two caller kinds, one ownership table | Swap Clerk; keep `principals` / `accounts` |
+| Find does not persist MatchRecords | Threshold scores are not receipts | Durable matches/receipts are a follow-up |
 
 ### Core operation
 
@@ -266,11 +269,14 @@ Same engine. Used by the web app.
 | GET | `/api/entities/:id` | One entity |
 | GET | `/api/health` | Seed counts + whether OpenAI is configured |
 | POST | `/api/mcp` | Streamable HTTP MCP (stateless). `whoelse.find` + register/publish/invoke/delegate. |
-| POST | `/api/register` | Publish an entity + at least one OFFER and/or SEEK. Idempotent on `id`. |
-| POST | `/api/publish` | Attach/update OFFER/SEEK records on an existing entity. |
-| POST | `/api/delegate` | A→B: find, select, invoke, receipt. |
-| POST | `/api/reciprocal` | SEEK↔OFFER flip for an entity id. |
-| POST | `/api/agents/:id/invoke` | Demo invoke stub (“I would do X”) for seeded agents |
+| POST | `/api/register` | Auth required. Create an entity you own. Cannot overwrite an existing id. Agent type (human caller) issues a one-time API key. |
+| POST | `/api/publish` | Auth required. Attach/update/withdraw OFFER/SEEK records on an entity you own. Idempotent on `(entityId, kind, capability)`. |
+| POST | `/api/delegate` | Auth required. `from` must be an entity you own. |
+| POST | `/api/reciprocal` | SEEK↔OFFER flip for an entity id (read). |
+| POST | `/api/agents/:id/invoke` | Auth required. Demo invoke stub (“I would do X”). |
+| POST | `/api/agents/keys` | Clerk human session. Mint an agent principal + one-time key. |
+| POST | `/api/agents/keys/rotate` | Auth required. Revoke current key, issue a new one (shown once). |
+| POST | `/api/agents/keys/revoke` | Auth required. Revoked keys fail on the next request. |
 
 ---
 
@@ -316,9 +322,71 @@ Optional:
 ```bash
 export OPENAI_API_KEY=sk-...   # rerank, nicer explanations, richer AI chat
 export WHOELSE_SEED_PATH=/abs/path/to/data/seed.json
+export WHOELSE_SEED=demo       # load labeled synthetic fixtures (default locally)
+export WHOELSE_AGENT_KEY=wek_… # stdio MCP writes
 ```
 
-Privacy: the demo never scrapes, never phones home unless you set an API key, and keeps feedback in memory.
+Privacy: public find/read strip private preferences, credentials, and ownership internals. Writes require a Clerk session or a hashed agent API key.
+
+---
+
+## Auth, migrations, backup
+
+Backends are already provisioned on Vercel project **`whoelse-dating`**: Neon resource `whoelse` and Clerk resource `whoelse`. Do not re-provision. Pull names from `.env.example` and values with:
+
+```bash
+cd packages/web
+npx vercel link --yes --project whoelse-dating
+npx vercel env pull .env.local --yes
+```
+
+### Humans (Clerk)
+
+- `@clerk/nextjs` middleware populates the session. It does **not** lock public find.
+- Sign in / sign up: `/sign-in`, `/sign-up`. Sign out is the Clerk user button.
+- First authenticated write upserts a `principals` row (`kind=human`) linked by `accounts.clerk_user_id`.
+- Clerk owns session TTL and logout. A missing/expired cookie is a 401 on write routes.
+
+### Agents (API keys)
+
+1. A signed-in human registers an `type=agent` entity **or** `POST /api/agents/keys`.
+2. The plaintext key (`wek_<keyId>_<secret>`) is shown **once**. WhoElse stores only `sha256(token)`.
+3. Later MCP/HTTP writes send `Authorization: Bearer wek_…`.
+4. Rotate / revoke: `POST /api/agents/keys/rotate` and `/revoke`. Revoked keys fail.
+5. Stdio MCP: `WHOELSE_AGENT_KEY`. Demo seed installs a labeled synthetic owner key (see `DEMO_OWNER_KEY` in `@whoelse/core`) — never present on production-empty.
+
+### Authorization
+
+| Caller | Find / read public active records | register / publish / withdraw / invoke / delegate / feedback |
+| --- | --- | --- |
+| Anonymous | yes (`requester` forbidden) | 401 |
+| Human or agent | yes; `requester` only if they own that entity | own entities only → 403 cross-owner |
+
+Callers cannot overwrite an existing entity id (409) or spoof `human` / `ai` type (403). `ai` stays seed/synthetic.
+
+### Schema + migrations
+
+Drizzle schema: `packages/core/src/persist/schema.ts`. SQL: `packages/core/drizzle/0000_init.sql`.
+
+Tables: `principals`, `accounts`, `agent_credentials`, `entities` (`owner_principal_id`), `ownership`, `publications` (OFFER/SEEK + lifecycle), `write_audit`.
+
+```bash
+# from repo root after vercel env pull / sourcing .env.local
+pnpm db:migrate          # idempotent CREATE IF NOT EXISTS
+WHOELSE_SEED=demo pnpm db:seed   # explicit labeled fixtures only
+```
+
+Boot also applies migrations when `DATABASE_URL` is set. Production (`VERCEL_ENV=production`) starts **empty** unless `WHOELSE_SEED=demo`.
+
+### Backup / restore (Neon)
+
+1. Neon console → project `whoelse` → **Branches** / backup, or
+2. `pg_dump "$DATABASE_URL_UNPOOLED" > whoelse.dump` and `psql "$DATABASE_URL_UNPOOLED" < whoelse.dump`, or
+3. Create a Neon branch from the current head, point a preview `DATABASE_URL` at it, run `pnpm db:migrate` (no-op if current).
+
+Restore path: new empty DB → `pnpm db:migrate` → restore dump **or** `WHOELSE_SEED=demo pnpm db:seed` for fixtures only.
+
+Durable **matches / receipts** are not written because a find score crossed a threshold. That persistence is a follow-up.
 
 ---
 
@@ -343,9 +411,9 @@ Import: [vercel.com/new](https://vercel.com/new) → **Import Git Repository** �
 
 Production branch: `main` (merge this follow-up first if you want the first-five ranker + this config).
 
-Optional env: `OPENAI_API_KEY` (rerank / richer AI chat). Seed is bundled — do not set `WHOELSE_SEED_PATH` on Vercel.
+Required env (already on the Vercel project): `DATABASE_URL` (+ Neon aliases), `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`. Optional: `OPENAI_API_KEY`, `WHOELSE_SEED=demo` on preview only. Production must stay empty unless you explicitly seed.
 
-After deploy, check `GET /api/health` for seed counts (`humans`, `ais`, `byType`).
+After deploy, check `GET /api/health` for `persistence`, `seedMode`, and seed counts (`humans`, `ais`, `byType`).
 
 ### GitHub import blockers
 
@@ -359,13 +427,13 @@ After deploy, check `GET /api/health` for seed counts (`humans`, `ais`, `byType`
 - “Near me” means Washington, DC in this seed.
 - Romance, collaboration, hobbies, and projects are the same operator with different predicates.
 - AIs may be geo-tagged for local skills (trails, permits) but are not filtered out of a city query the way a remote-incompatible human would be.
-- Synthetic humans are the entire people pool. There is no production identity layer.
-- MCP and the web app share a process-local store — feedback does **not** sync across them.
+- Production identity is Clerk (humans) + hashed agent keys. The dating pool is empty until someone registers or you set `WHOELSE_SEED=demo`.
+- MCP and the web app share Neon when `DATABASE_URL` is set. Find still ranks from the in-process TF-IDF index loaded at boot.
 
 ## Weaknesses
 
 - TF-IDF cannot see synonymy (“MTB” vs “mountain biking”) unless the seed text overlaps.
-- Feedback is per-process and disappears on restart.
+- Feedback is authenticated and still process-local (not a preference graph). Entity/publication writes survive restart in Neon.
 - OpenAI rerank is a best-effort overlay; the local ranker is the source of truth.
 - Chat / interest are stubs. There is no messaging, safety stack, or consent protocol.
 - Sectioned Humans→AIs can hide a stronger AI below a weaker human (the mixed-rank experiment).

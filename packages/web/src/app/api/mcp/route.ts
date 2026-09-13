@@ -1,6 +1,7 @@
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { createWhoElseMcpServer } from "@whoelse/mcp-server/server";
-import { getEngine } from "@/lib/engine";
+import { resolveCaller } from "@/lib/auth";
+import { getNetwork } from "@/lib/engine";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,7 +11,7 @@ const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
   "Access-Control-Allow-Headers":
-    "Content-Type, Accept, MCP-Session-Id, MCP-Protocol-Version, Last-Event-ID",
+    "Authorization, Content-Type, Accept, MCP-Session-Id, MCP-Protocol-Version, Last-Event-ID",
 };
 
 function withCors(res: Response): Response {
@@ -25,7 +26,9 @@ export async function OPTIONS() {
 
 /** Stateless Streamable HTTP — one transport per request. Same engine as the dating UI. */
 export async function POST(req: Request) {
-  const server = createWhoElseMcpServer(getEngine());
+  const network = await getNetwork();
+  const caller = await resolveCaller(req, network);
+  const server = createWhoElseMcpServer(network, { caller });
   const transport = new WebStandardStreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
     enableJsonResponse: true,

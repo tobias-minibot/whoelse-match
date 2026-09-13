@@ -1,18 +1,13 @@
-import { NextResponse } from "next/server";
-import { getEngine } from "@/lib/engine";
+import { gatewayInterest } from "@whoelse/core";
+import { resolveCaller } from "@/lib/auth";
+import { getNetwork } from "@/lib/engine";
+import { gatewayResponse } from "@/lib/respond";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
+  const network = await getNetwork();
+  const caller = await resolveCaller(req, network);
   const body = await req.json();
-  try {
-    const record = getEngine().recordHumanInterest(body.entityId, body.note);
-    return NextResponse.json({
-      ok: true,
-      record,
-      message: "Interest recorded (stub). No message was sent — this is a demo.",
-    });
-  } catch (err) {
-    return NextResponse.json({ error: (err as Error).message }, { status: 400 });
-  }
+  return gatewayResponse(await gatewayInterest(network, { entityId: body.entityId, note: body.note }, caller));
 }
