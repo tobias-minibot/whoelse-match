@@ -394,7 +394,26 @@ export class WhoElseEngine {
     const entity = this.store.get(entityId);
     if (!entity) throw new Error(`Unknown entity ${entityId}`);
     if (entity.type !== "agent") throw new Error("invoke is only stubbed for type=agent");
-    return invokeAgent(entity, body);
+    const invoked = invokeAgent(entity, body);
+    const ev = (invoked.result.evidence as {
+      verified?: boolean;
+      verifiedBy?: string;
+      outcomes?: { label: string; result?: string }[];
+      receipts?: string[];
+    } | undefined) ?? entity.trust?.evidence;
+    const receipt = this.store.recordReceipt({
+      toAgentId: entity.id,
+      task: body.task ?? body.input ?? body.context ?? "this task",
+      would: invoked.would,
+      result: invoked.result,
+      evidence: {
+        verified: Boolean(ev?.verified),
+        verifiedBy: ev?.verifiedBy ?? entity.name,
+        outcomes: ev?.outcomes,
+        receipts: ev?.receipts,
+      },
+    });
+    return { ...invoked, receipt };
   }
 
   delegate(opts: {

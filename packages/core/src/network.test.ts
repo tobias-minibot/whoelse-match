@@ -90,6 +90,15 @@ describe("OFFER / SEEK as first-class network objects", () => {
     );
   });
 
+  it("invoke writes a receipt the same way delegate does", () => {
+    const isolated = WhoElseEngine.fromSeed();
+    const invoked = isolated.invoke("agent-holdwright", { task: "place a Tuesday hold" });
+    assert.equal(invoked.ok, true);
+    assert.ok(invoked.receipt?.id);
+    assert.equal(invoked.receipt?.toAgentId, "agent-holdwright");
+    assert.ok(isolated.store.receipts.some((r) => r.id === invoked.receipt.id));
+  });
+
   it("delegate from InboxClerk to Holdwright still writes a receipt", () => {
     const isolated = WhoElseEngine.fromSeed();
     const delegated = isolated.delegate({
