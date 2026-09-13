@@ -11,7 +11,7 @@ import type {
 
 const TYPE_HUMAN = /\b(humans?|(?<!ai )people|person|someone)\b/i;
 const TYPE_AI = /\b(an ai|ais\b|bots?\b|llms?\b|artificial intelligence)\b/i;
-const SUBSTITUTE = /\b(instead of|replace|substitute|alternative to|other than)\b/i;
+const SUBSTITUTE = /\b(instead of|replace|substitute|alternative to|other than|equivalent)\b/i;
 const PEERS = /\b(peers?|colleagues?|same role|others like them|fellow)\b/i;
 const NEAR_ME = /\bnear me\b|\bnearby\b|\blocally\b|\bin town\b/i;
 
@@ -42,6 +42,30 @@ const CAPABILITY_LANG =
   /\bsummarize\b|\btranslate\b|\bbrowse the web\b|\bdelegate\b|\bfailover\b|\bverify this (result|web|claim)\b|\bweb verification\b|\bpdf\b/i;
 const DATING_LANG =
   /\bdate\b|\bmeet\b|\bvoice assistants?\b|\bdinner\b|\bmountain bik|\bthought partner\b|\blow-key\b/i;
+const PRODUCT_LANG =
+  /\bin stock\b|\bequivalent\b|\bsku\b|\bmerchant\b|\bwho else sells\b|\bcheaper than this (product|drill|item)\b|\bsubstitution\b|\bthis drill\b|\bthis product\b/i;
+const EXPERT_LANG =
+  /\bexpert\b|\bknows about\b|\bwho else knows\b|\bask (an? )?(expert|about)\b|\bdisagrees?\b|\bauthority\b|\bnotary\b|\bknowledge\b/i;
+const CAPITAL_LANG =
+  /\binvests?\b|\bticket size\b|\bseed round\b|\b\$?\s?\d+k\s+check\b|\bwrites? (a )?checks?\b|\bintroduction to (an? )?investor\b|\bwho else (has )?capital\b|\braising\b|\bfounder seeking\b/i;
+const TRAVEL_LANG =
+  /\bstay in\b|\bhotel\b|\bhostel\b|\bgoing to berlin\b|\bgoing to\b|\broom tonight\b|\btonight in\b|\baccommodation\b|\broom (in|tonight)\b/i;
+const EVENT_LANG =
+  /\battending\b|\bspeaking at\b|\bconference\b|\bmeetup\b|\bwho else is (going|speaking|attending)\b|\bfrom my city\b/i;
+const CHILDCARE_LANG =
+  /\bbabysit\b|\bchildcare\b|\bnanny\b|\bbabysitter\b|\bneeds childcare\b|\bwatch (the|my) kids?\b/i;
+const COLLAB_LANG =
+  /\bcomplementary\b|\bjoin (this |the |our )?project\b|\bdesign partner\b|\bwrite together\b|\bcreative collab\b|\bwho else (designs|writes) (and|to)\b/i;
+const COMPUTE_LANG =
+  /\bgpus?\b|\bcheaper (compute|gpu)\b|\bhost (a )?gpu\b|\binference (capacity|host)\b|\blatency\b.{0,20}\b(gpu|compute|host)|\bcompute (host|capacity|cheaper)\b/i;
+const DATA_LANG =
+  /\bdataset\b|\boriginal source\b|\bverify this claim\b|\bdata provenance\b|\bwho else has (the )?(data|dataset)\b/i;
+const LOCAL_LANG =
+  /\bsells nearby\b|\bopen now\b|\bdeliver today\b|\bshop nearby\b|\blocal (shop|store|commerce)\b/i;
+const CAPITAL_OFFER_LANG =
+  /\binvests?\b|\bwrites? (a )?checks?\b|\bticket size\b|\bwho else has capital\b|\bwho else invests\b/i;
+const CAPITAL_SEEK_LANG =
+  /\braising\b|\bneed(s)? (a |an )?(check|introduction|intro)\b|\blooking for (an? )?(investor|check|intro)/i;
 
 export const DEFAULT_CITY = "Washington";
 export const DEFAULT_REGION = "DC";
@@ -65,6 +89,23 @@ export function inferSide(text: string, explicit?: MatchSide): MatchSide | undef
   }
   if (SOMEONE_WHO_CAN.test(text) || HIRE_LANG.test(text) || LABOR_LANG.test(text)) return "offer";
   if (JOB_SEEK_LANG.test(text)) return "seek";
+  if (CAPITAL_SEEK_LANG.test(text)) return "seek";
+  if (CAPITAL_OFFER_LANG.test(text)) return "offer";
+  if (PRODUCT_LANG.test(text) && /\bbe? cheaper\b|\bequivalent\b|\bin stock\b|\bwho else sells\b/i.test(text)) {
+    return "offer";
+  }
+  if (LOCAL_LANG.test(text) && /\bneed|looking|who else (sells|is open|delivers)/i.test(text)) return "offer";
+  if (TRAVEL_LANG.test(text) && WANT_SEEKERS.test(text)) return "seek";
+  if (TRAVEL_LANG.test(text)) return "offer";
+  if (CHILDCARE_LANG.test(text) && WANT_SEEKERS.test(text)) return "seek";
+  if (CHILDCARE_LANG.test(text)) return "offer";
+  if (EXPERT_LANG.test(text) && /\bask\b|\bwho else knows\b|\bdisagrees\b/i.test(text)) return "offer";
+  if (COMPUTE_LANG.test(text) && WANT_SEEKERS.test(text)) return "seek";
+  if (COMPUTE_LANG.test(text)) return "offer";
+  if (DATA_LANG.test(text) && WANT_SEEKERS.test(text)) return "seek";
+  if (DATA_LANG.test(text)) return "offer";
+  if (EVENT_LANG.test(text) && /\battending|from my city|who else is going/i.test(text)) return "seek";
+  if (EVENT_LANG.test(text)) return "offer";
   return undefined;
 }
 
@@ -80,22 +121,67 @@ export function inferRoles(text: string, explicit?: string[]): string[] | undefi
   }
   if (SERVICE_LANG.test(text) && WANT_SEEKERS.test(text)) return ["client"];
   if (SERVICE_LANG.test(text)) return ["provider"];
+  if (CHILDCARE_LANG.test(text) && WANT_SEEKERS.test(text)) return ["parent"];
+  if (CHILDCARE_LANG.test(text)) return ["caregiver"];
+  if (TRAVEL_LANG.test(text) && WANT_SEEKERS.test(text)) return ["seeker"];
+  if (TRAVEL_LANG.test(text)) return ["listing"];
+  if (CAPITAL_SEEK_LANG.test(text)) return ["founder"];
+  if (CAPITAL_OFFER_LANG.test(text)) return ["investor"];
+  if (EXPERT_LANG.test(text) && /\bask\b|\bwho else knows\b/i.test(text)) return ["expert"];
+  if (EXPERT_LANG.test(text) && WANT_SEEKERS.test(text)) return ["asker"];
+  if (EXPERT_LANG.test(text)) return ["expert"];
+  if (PRODUCT_LANG.test(text) && WANT_SEEKERS.test(text)) return ["buyer"];
+  if (PRODUCT_LANG.test(text)) return ["seller"];
+  if (LOCAL_LANG.test(text) && WANT_SEEKERS.test(text)) return ["buyer"];
+  if (LOCAL_LANG.test(text)) return ["seller"];
+  if (EVENT_LANG.test(text) && /\battending|from my city|who else is going/i.test(text)) {
+    return ["attendee"];
+  }
+  if (EVENT_LANG.test(text) && /\bspeaking/i.test(text)) return ["speaker"];
+  if (EVENT_LANG.test(text)) return ["event", "speaker"];
+  if (COMPUTE_LANG.test(text) && WANT_SEEKERS.test(text)) return ["workload"];
+  if (COMPUTE_LANG.test(text)) return ["compute"];
+  if (DATA_LANG.test(text) && WANT_SEEKERS.test(text)) return ["researcher"];
+  if (DATA_LANG.test(text)) return ["publisher"];
+  if (COLLAB_LANG.test(text)) return undefined;
   return undefined;
 }
 
 export function inferVertical(text: string): InferredVertical | undefined {
   const hits: InferredVertical[] = [];
-  if (APARTMENT_LANG.test(text)) hits.push("apartment");
+  if (APARTMENT_LANG.test(text) && !TRAVEL_LANG.test(text)) hits.push("apartment");
+  if (TRAVEL_LANG.test(text) && !APARTMENT_LANG.test(text)) hits.push("travel");
+  if (TRAVEL_LANG.test(text) && APARTMENT_LANG.test(text)) hits.push("apartment");
   if (HIRE_LANG.test(text) || LABOR_LANG.test(text) || JOB_SEEK_LANG.test(text) || SOMEONE_WHO_CAN.test(text)) {
-    hits.push("jobs");
+    if (!COLLAB_LANG.test(text) && !COMPUTE_LANG.test(text)) hits.push("jobs");
   }
   if (RIDE_LANG.test(text)) hits.push("rides");
-  if (SERVICE_LANG.test(text) && !APARTMENT_LANG.test(text)) hits.push("services");
-  if (CAPABILITY_LANG.test(text) && !LABOR_LANG.test(text)) hits.push("capability");
+  if (SERVICE_LANG.test(text) && !APARTMENT_LANG.test(text) && !CHILDCARE_LANG.test(text)) {
+    hits.push("services");
+  }
+  if (CAPABILITY_LANG.test(text) && !LABOR_LANG.test(text) && !DATA_LANG.test(text) && !COMPUTE_LANG.test(text)) {
+    hits.push("capability");
+  }
+  if (PRODUCT_LANG.test(text) && !LOCAL_LANG.test(text)) hits.push("products");
+  if (LOCAL_LANG.test(text)) hits.push("local");
+  if (EXPERT_LANG.test(text) && !CHILDCARE_LANG.test(text)) hits.push("experts");
+  if (CAPITAL_LANG.test(text)) hits.push("capital");
+  if (EVENT_LANG.test(text) && !DATING_LANG.test(text.replace(/\bmeet\b/gi, ""))) hits.push("events");
+  if (CHILDCARE_LANG.test(text)) hits.push("childcare");
+  if (COLLAB_LANG.test(text) && !HIRE_LANG.test(text) && !LABOR_LANG.test(text)) hits.push("collab");
+  if (COMPUTE_LANG.test(text)) hits.push("compute");
+  if (DATA_LANG.test(text)) hits.push("data");
   if (DATING_LANG.test(text) && hits.length === 0) hits.push("dating");
   if (hits.length === 1) return hits[0];
   if (hits.length > 1) {
     if (hits.includes("apartment") && APARTMENT_LANG.test(text)) return "apartment";
+    if (hits.includes("travel") && TRAVEL_LANG.test(text) && !APARTMENT_LANG.test(text)) return "travel";
+    if (hits.includes("childcare")) return "childcare";
+    if (hits.includes("local") && LOCAL_LANG.test(text)) return "local";
+    if (hits.includes("products") && PRODUCT_LANG.test(text)) return "products";
+    if (hits.includes("capital")) return "capital";
+    if (hits.includes("compute")) return "compute";
+    if (hits.includes("data")) return "data";
     if (hits.includes("jobs")) return "jobs";
     return hits[0];
   }
@@ -233,6 +319,28 @@ export function parseAttributeConstraints(text: string, side?: MatchSide): Attri
     out.push({ key: "state", op: "neq", value: "completed" });
   }
 
+  if (/\bin stock\b/.test(lower)) {
+    out.push({ key: "inStock", op: "truthy", value: true });
+  }
+  if (/\bopen now\b/.test(lower)) {
+    out.push({ key: "openNow", op: "truthy", value: true });
+  }
+  if (/\bdeliver today\b/.test(lower)) {
+    out.push({ key: "deliverToday", op: "truthy", value: true });
+  }
+  if (/\bgpus?\b/.test(lower) && COMPUTE_LANG.test(text)) {
+    out.push({ key: "gpu", op: "truthy", value: true });
+  }
+  if (/\btonight\b/.test(lower) && (TRAVEL_LANG.test(text) || /\broom tonight\b/.test(lower))) {
+    out.push({ key: "availableFrom", op: "lte", value: iso(new Date()) });
+  }
+  if (/\btonight\b/.test(lower) && CHILDCARE_LANG.test(text)) {
+    out.push({ key: "when", op: "eq", value: "tonight" });
+  }
+  if (/\bequivalent\b/.test(lower) && /\bdrill\b/.test(lower)) {
+    out.push({ key: "kind", op: "eq", value: "drill" });
+  }
+
   const price = parsePrice(text);
   if (price) {
     if (price.currency) out.push({ key: "currency", op: "eq", value: price.currency });
@@ -252,6 +360,15 @@ export function priceKey(lower: string, side?: MatchSide): string {
   if (/apartment|bedroom|rent|sublet|furnished|studio|tenant/.test(lower)) {
     return side === "seek" ? "budget" : "rent";
   }
+  if (/\bstay|\bhotel|\bhostel|\broom tonight|\baccommodation|\bgoing to/.test(lower)) {
+    return side === "seek" ? "budget" : "rent";
+  }
+  if (/\binvest|ticket|check|capital|seed round/.test(lower)) return "ticketSize";
+  if (/\bdrill|\bin stock|\bequivalent|\bsku|\bmerchant|\bsells?\b|\bproduct/.test(lower)) {
+    return "price";
+  }
+  if (/\bopen now|\bdeliver today|\bsells nearby|\blocal (shop|store)/.test(lower)) return "price";
+  if (/\bgpu|\bcompute|\blatency/.test(lower)) return "price";
   if (/\bride|\bseat|\bpassenger|\bairport|\bmoab/.test(lower)) return "price";
   if (
     /hir(e|ing)|recruit|job|gig|freelancer|project|work|plumber|handyman|repair|rate|salary|coding|website|redesign|who can/.test(
@@ -395,6 +512,10 @@ function parseBedrooms(lower: string): number | undefined {
 
 function parsePrice(text: string): { amount: number; currency?: string; under: boolean } | undefined {
   const under = /\b(under|less than|below|up to|max(?:imum)?)\b/i.test(text);
+  const dollarK = text.match(/\$\s*([0-9]+(?:\.[0-9]+)?)\s*k\b/i);
+  if (dollarK) {
+    return { amount: Number(dollarK[1]) * 1000, currency: "USD", under };
+  }
   const dollar = text.match(/\$\s*([0-9][0-9,]*(?:\.[0-9]+)?)/);
   const euro = text.match(/€\s*([0-9][0-9,]*(?:\.[0-9]+)?)|\b([0-9][0-9,]*)\s*euros?\b/i);
   if (dollar) {

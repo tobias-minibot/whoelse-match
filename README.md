@@ -4,8 +4,8 @@
 
 Two surfaces, one engine, one seed:
 
-1. **Human** — consumer “Who else?” (dating, apartment, jobs, plus experimental rides/services). People never need to know MCP exists.
-2. **Machine** — MCP / HTTP. Agents discover other agents, services, humans, listings, openings, and seekers.
+1. **Human** — consumer “Who else?” (dating, apartment, jobs, plus experimental factory lenses). People never need to know MCP exists.
+2. **Machine** — MCP / HTTP. Agents discover other agents, services, humans, listings, products, datasets, and seekers.
 
 Same entity model. Same matching engine. Same discovery pool. Different interfaces.
 
@@ -30,7 +30,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Product (this repo)
 
-- **Human surface:** Next.js App Router — costume tabs on `/` (Dating | Apartment | Jobs | Rides | Services) plus a **one-box** at `/universal` with no required category. Primary interaction is **Who else?** Dating stays sectioned. Jobs / one-box mix types.
+- **Human surface:** Next.js App Router — 15 experimental lenses on `/` (Dating … Local) plus a **one-box** at `/universal` with no required category. Primary interaction is **Who else?** Dating stays sectioned. Jobs / factory / one-box mix types. Tabs are costumes, not matchers.
 - **AI surface:** Streamable HTTP MCP at `/api/mcp` (same Vercel app) plus stdio `pnpm mcp`. Primary tool **`whoelse.find`**. Same `@whoelse/core` engine and `data/seed.json` as the web app.
 - **Thin HTTP API** — the dating UI’s adapter; not a second matcher. Agents invoke via `POST /api/agents/:id/invoke` (demo stub).
 
@@ -254,7 +254,7 @@ Same engine. Used by the web app.
 
 - Doctrine on home + `/ais`: **Humans ask Who Else. Agents call WhoElse. Same network.**
 - `/ais` — MCP URL, Cursor config, tools, example call/result
-- Tabs: **Dating** (default), **Apartment**, **Jobs**, **Rides**, **Services**. Dating home is unchanged. Non-dating tabs have SEEK / I HAVE. Jobs does **not** force `side` — NL infers it.
+- Tabs: **15 lenses** (Dating, Apt, Jobs, Rides, Services, Products, Experts, Capital, Travel, Events, Childcare, Collab, Compute, Data, Local). Dating home is unchanged. Tabs are costumes; `/universal` is the no-category box. Jobs + factory mixed lenses do **not** force `side` — NL infers it. Travel reuses apartment listing/seeker.
 - Apartment SEEK: **What are you looking for?** + **Who else?**
 - Apartment I HAVE: **I have…** + **Who else needs this?**
 - Apartment results stay cards-with-why, plus reverse **Who else needs this?** / **Who else has this?**
@@ -354,7 +354,7 @@ After deploy, check `GET /api/health` for seed counts (`humans`, `ais`, `byType`
 3. Persist feedback (web + MCP isolates) and treat MORE/LESS as a tiny preference vector.
 4. Real MCP-hosted session so Claude and the web app share exclude lists.
 5. Consent / disclosure UX research: how large does the AI/agent badge need to be on a mixed jobs list?
-6. Products / Experts UI — eval stubs exist; do not build the costume until jobs reverse still feels obvious in production.
+6. Embeddings vs TF-IDF now that the factory pool is ~250 entities — synonyms still lose.
 
 ---
 

@@ -29,7 +29,17 @@ export const DERIVED_PRIMITIVES = ["RELATION", "STATE", "VIEW"] as const;
 export type UniversalPrimitive = (typeof UNIVERSAL_PRIMITIVES)[number];
 
 /** Seeded now. Open string so later types do not require a core fork. */
-export const SEEDED_ENTITY_TYPES = ["human", "ai", "agent", "company", "service", "resource"] as const;
+export const SEEDED_ENTITY_TYPES = [
+  "human",
+  "ai",
+  "agent",
+  "company",
+  "service",
+  "resource",
+  "product",
+  "dataset",
+  "community",
+] as const;
 
 /** Reserved — later types do not require a core fork. */
 export const RESERVED_ENTITY_TYPES = [
@@ -39,15 +49,44 @@ export const RESERVED_ENTITY_TYPES = [
   "product",
   "dataset",
   "resource",
+  "community",
+  "report",
 ] as const;
 
 /**
  * Marketplace role on an entity — not a new type.
- * Offer-side: listing / opening / employer / worker / driver / provider
- * Seek-side: seeker / applicant / passenger / client
+ * New verticals add role *strings* (seller/investor/expert…) — not new primitives.
+ * Travel reuses listing/seeker on purpose (apartment overlap is the experiment).
  */
-export const OFFER_ROLES = ["listing", "opening", "employer", "worker", "driver", "provider"] as const;
-export const SEEK_ROLES = ["seeker", "applicant", "passenger", "client"] as const;
+export const OFFER_ROLES = [
+  "listing",
+  "opening",
+  "employer",
+  "worker",
+  "driver",
+  "provider",
+  "seller",
+  "investor",
+  "expert",
+  "speaker",
+  "event",
+  "caregiver",
+  "compute",
+  "publisher",
+] as const;
+export const SEEK_ROLES = [
+  "seeker",
+  "applicant",
+  "passenger",
+  "client",
+  "buyer",
+  "founder",
+  "asker",
+  "attendee",
+  "parent",
+  "workload",
+  "researcher",
+] as const;
 
 export type OfferRole = (typeof OFFER_ROLES)[number];
 export type SeekRole = (typeof SEEK_ROLES)[number];
@@ -64,7 +103,23 @@ export type WhoElseMode = "substitute" | "expand" | "peers";
 export type MatchSide = "offer" | "seek";
 export type AttributeOp = "eq" | "lte" | "gte" | "includes" | "truthy" | "neq";
 /** Costume hint from language — never a second matcher. A view over the same network. */
-export type InferredVertical = "dating" | "apartment" | "jobs" | "rides" | "services" | "capability";
+export type InferredVertical =
+  | "dating"
+  | "apartment"
+  | "jobs"
+  | "rides"
+  | "services"
+  | "capability"
+  | "products"
+  | "experts"
+  | "capital"
+  | "travel"
+  | "events"
+  | "childcare"
+  | "collab"
+  | "compute"
+  | "data"
+  | "local";
 export type InferredView = InferredVertical;
 export type TrustStatus = "unscored" | "stub" | "evidence";
 export type MatchStatus = "proposed" | "accepted" | "invoked" | "verified" | "declined" | "expired";

@@ -6,6 +6,7 @@ import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
 
 const EXAMPLES = [
   "I need someone who can redesign my website next week for under $2,000.",
+  "I need help understanding this market.",
   "Who else wants to build a network of voice assistants?",
   "Who else has a 1-bedroom in DC under $2,500?",
   "Who else can give me a ride from Georgetown to Dupont?",
@@ -61,7 +62,7 @@ export function UniversalBox() {
         <a href="/">Costume tabs for comparison →</a>
       </p>
       <div className="banner banner-demo">
-        <strong>DEMO.</strong> Same <code>whoelse.find</code> as Dating / Apartment / Jobs. No new vertical.
+        <strong>DEMO.</strong> Same <code>whoelse.find</code>. No category required. “I need help understanding this market.” should return mixed types.
       </div>
       <section className="search-panel">
         <div className="eyebrow">Universal Who else?</div>

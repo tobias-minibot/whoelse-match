@@ -40,6 +40,17 @@ const queries: { q: string; entityId?: string }[] = [
   { q: "Who else needs a ride to the airport?" },
   { q: "Who else can fix a leak under my sink before the weekend?" },
   { q: "Who else needs a licensed plumber?" },
+  { q: "Who else has a cheaper equivalent 18V drill in stock?" },
+  { q: "Who else knows about this market?" },
+  { q: "Who else invests and writes $250k checks?" },
+  { q: "Who else has a room tonight in Berlin?" },
+  { q: "Who else is attending a meetup from my city?" },
+  { q: "Who else can babysit tonight nearby?" },
+  { q: "Who else has complementary design and wants to join this project?" },
+  { q: "Who else can host a GPU cheaper?" },
+  { q: "Who else has a dataset that is the original source?" },
+  { q: "Who else sells nearby and is open now?" },
+  { q: "I need help understanding this market." },
 ];
 
 queries.forEach((item, i) => {

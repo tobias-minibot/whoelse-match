@@ -116,6 +116,24 @@ describe("generic constraint parsing", () => {
     assert.equal(dating.side, undefined);
   });
 
+  it("parses factory views as costumes, not new cores", () => {
+    assert.equal(inferVertical("Who else has a cheaper equivalent 18V drill in stock?"), "products");
+    assert.equal(inferVertical("Who else knows about this market?"), "experts");
+    assert.equal(inferVertical("Who else invests and writes $250k checks?"), "capital");
+    assert.equal(inferVertical("Who else has a room tonight in Berlin?"), "travel");
+    assert.equal(inferVertical("Who else is attending a meetup from my city?"), "events");
+    assert.equal(inferVertical("Who else can babysit tonight nearby?"), "childcare");
+    assert.equal(inferVertical("Who else has complementary design and wants to join this project?"), "collab");
+    assert.equal(inferVertical("Who else can host a GPU cheaper?"), "compute");
+    assert.equal(inferVertical("Who else has a dataset that is the original source?"), "data");
+    assert.equal(inferVertical("Who else sells nearby and is open now?"), "local");
+    assert.equal(inferVertical("I need help understanding this market."), undefined);
+    const capital = parseUniversal("Who else invests and writes $250k checks?");
+    assert.ok(capital.hard.some((a) => a.key === "ticketSize" && a.value === 250000));
+    const local = parseUniversal("Who else sells nearby and is open now?");
+    assert.ok(local.hard.some((a) => a.key === "openNow"));
+  });
+
   it("parses ride origin/destination and service license", () => {
     const ride = parseAttributeConstraints("Who else has a ride from Georgetown to Dupont?", "offer");
     assert.ok(ride.some((a) => a.key === "origin" && String(a.value).includes("Georgetown")));
