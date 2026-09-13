@@ -1,102 +1,94 @@
-# Intent grammar v0.3 — review (draft)
-
-**Status:** structure + Part 1/3 (intents 1–170). Parts 2–3 not yet recited. **No invented intents.**
+# Intent grammar v0.3 — review
 
 **Framing:** Prior art / corpus of attempted human intents. Not ontology truth. Not current spec.
 
-**Live laboratory (2026-09-13, `970fb94`):** [whoelse-dating.vercel.app](https://whoelse-dating.vercel.app) — 15-lens factory. Health: Dating + Apt + Jobs + Rides + Services + Products + Experts + Capital + Travel + Events + Childcare + Collab + Compute + Data + Local. MCP tools: `whoelse.find` / `whoelse_find` / `whoelse.register` / `whoelse.invoke` / `whoelse.delegate` / `whoelse.feedback`. One-box at `/universal`.
+**Live laboratory (2026-09-13, `970fb94`):** [whoelse-dating.vercel.app](https://whoelse-dating.vercel.app) — 15-lens factory. Health: Dating, Apt, Jobs, Rides, Services, Products, Experts, Capital, Travel, Events, Childcare, Collab, Compute, Data, Local. MCP: `whoelse.find` / `whoelse_find` / `whoelse.register` / `whoelse.invoke` / `whoelse.delegate` / `whoelse.feedback`. One-box: `/universal`.
 
-**Reconcile with:** [`LEGACY_506_ANALYSIS.md`](../LEGACY_506_ANALYSIS.md) (PR #5, 250 reconstructed IDs). This v0.3 recitation is the missing machine catalog: routing, slots, templates, DATE fold.
+**Compact file:** [`legacy/intent-protocol/intent-protocol.production-v0.3.compact.json`](../legacy/intent-protocol/intent-protocol.production-v0.3.compact.json)  
+**Provenance:** Tobias archaeology attachment = annotated recitation of `intent-protocol.production-v0.3.json`. **172 attested** rows (n=1–170 + DATE + AI TOOLS). **333 fill** rows from subgroup counts + PR #5 names. SOCIAL skips `i326`. Full slot enums stay in the attachment — not imported.
 
-**Compact file:** [`legacy/intent-protocol/intent-protocol.production-v0.3.compact.json`](../legacy/intent-protocol/intent-protocol.production-v0.3.compact.json) — parse-only, incomplete until 505.
+**Reconcile with:** [`LEGACY_506_ANALYSIS.md`](../LEGACY_506_ANALYSIS.md) (PR #5). Operator claim unchanged. This file is the missing *cabinet*.
 
 ---
 
-## 0. How to read this review
+## Thesis
 
-Kill most of the catalog. Keep building WhoElse. The question is not “which of 505 engines to port.” It is: what did the old grammar already discover, and what compresses into `whoelse.find` + constraints.
+> The catalog helps humans *express*. The protocol lets machines *exchange*. **Yes — they are complementary.** Do not unify them by shipping 505 enums.
 
-Thesis (preview, to be confirmed after Part 3):
+Humans need `DATE who else?` / `dating` / `meet someone` so a sentence can start. Machines need `whoelse.find({ intent })` plus ENTITY / OFFER / SEEK / CONSTRAINT / EVIDENCE / ACTION / MATCH. The 505 nouns are a filing cabinet and an eval corpus. They are not a runtime.
 
-> The catalog helps humans *express*. The protocol lets machines *exchange*. Yes — they are complementary. The 505 nouns are a human-language filing cabinet and an eval corpus. They are not a runtime enum. Machines should exchange ENTITY / OFFER / SEEK / CONSTRAINT / EVIDENCE / ACTION / MATCH, not `i001-doctor`.
+**DATE is not a primitive.** It is an alias that compiles to `find(compatible entities)` under constraints (when, where, safety, budget). Live dating already discovered the real product: humans and AIs in one pool, sectioned UI, offer↔seek, recursive Who else?, evidence — not dinner-date enums. Hiring, rideshare, and agent-delegation are the same matching op.
 
 ---
 
 ## 1. What the old grammar tried
 
-*(Fill remaining subgroups from Parts 2–3.)*
+Production v0.3 tried to be a **complete human-life NLU catalog**: one ID per noun, a life-category subgroup, a routing hint, a verification status, and a **slot template** so a front-end could ask `INTENT who else?` as a form.
 
-Production v0.3 tried to be a **complete human-life NLU catalog**: one intent ID per noun, a life-category subgroup, a routing hint, a verification status, and a **slot template** so a voice/text front-end could ask `INTENT who else?` with a few fields.
-
-Part 1 proves the shape:
-
-| Piece | What it was for |
+| Piece | Job |
 | --- | --- |
-| Stable-looking IDs (`i001-doctor`) | Filing + protocol addressing |
+| IDs (`i001-doctor`) | Filing + protocol addressing |
 | ALL-CAPS labels | Human encoding (`DOCTOR who else?`) |
-| 22 subgroups | Yellow-pages spine (Part 1 shows 6: BODY & HEALTH, FITNESS & SPORT, FOOD & DRINK, HOME & LIVING, TRANSPORT & MOBILITY, FINANCE) |
-| Routing `geo-anchored` / `mixed` / `network-routed` | Where fulfillment lives — clinic vs marketplace vs institution |
-| Status `verified` / `fragmented` / `estimated` / `untagged` | Catalog hygiene, not runtime trust |
-| `deep=1` | A few intents got real slot enums / templates; the rest inherited a **group template** |
-| Slot keys | Per-intent (often `{slug}-{role}`) so an NLU could fill a form |
+| 22 subgroups | Yellow-pages spine |
+| Routing `geo-anchored` / `mixed` / `network-routed` / `missing` | Where fulfillment lives |
+| Status `verified` / `fragmented` / `estimated` / `untagged` | Catalog hygiene, not trust |
+| `deep=1` (five only) | Someone wrote real slots |
+| Slot keys | Usually `{slug}-{role}` clones of ~10 templates |
 
-It was a **meaning card + router**, not a matcher. PR #5 already said this: every recovered phrase is `FIND`. v0.3 adds evidence that they also tried **fulfillment-shaped slots** (book a visit, pick a vehicle, hold a reservation) and **copied templates across nouns**.
+It was a **meaning card + router**, not a matcher. PR #5: every recovered phrase is `FIND`. v0.3 adds fulfillment-shaped slots (reservation, visit, vehicle) and **copied templates across nouns**.
 
-Compared with PR #5’s reconstructed 36 global roles (LOCATION, BUDGET, …): v0.3 did **not** ship 36 globals. It shipped **per-noun keys** that secretly repeat 8–10 templates. That is the overgeneration.
+It did **not** ship PR #5’s 36 global roles. It shipped per-noun keys that secretly repeat a handful of families. That is the overgeneration.
+
+The DATE fold is the grammar’s only attested self-correction: Dating ⊂ DATE; `i326` is missing in source (hypothesized retired `DATING` ID). IDs were not perfectly stable.
 
 ---
 
 ## 2. Genuinely valuable
 
-Recover these; do not recover the IDs.
-
-1. **The DATE fold.** Former Dating ⊂ DATE. Synonyms (dating, meet someone, romance) belong on one intent-level *sentence family*. Live dating is a **costume** (sectioned Humans then AIs, compatibility seeks) — not a second ID. *DATE row arrives in Part 2/3; fold is already attested.*
-2. **Routing as a property of the *world*, not the operator.** Geo vs mixed vs network is a real distinction: a dentist is place-bound; a restaurant is place + reservation graph; a bank product is institutional/network. WhoElse already encodes this as `location` + `type` + seed, not as three matchers.
-3. **Slot *roles* underneath the leaked names.** specialty/reason/payment/visit/availability (DOCTOR) and cuisine/diet/occasion/party-size/reservation/budget (RESTAURANT) are good *constraint vocabulary*. They map to universal constraints, not to `findDoctor`.
-4. **AI TOOLS surface vocab** (Part 3 expected: use-case, user-type, integration, pricing, data-policy) — the right nouns for agent/MCP capability discovery. Keep as seed language + optional constraints.
-5. **Duplicate labels as aliases.** `MORTGAGE` already appears twice in Part 1 (`i092` HOME geo vs `i161` FINANCE network). That is the catalog confessing “same word, two markets.” WhoElse’s two-market lesson (jobs vs labor; listing vs seeker) is the same finding.
-6. **Template leakage as a *proof* of collapse.** PERSONAL TRAINER carrying origin/destination/departure/travelers is not a fitness ontology. It is a copy-paste that accidentally shows transport and sport are the same operator with different nouns.
-7. **Human phrase `NOUN who else?`.** Preserve the sentence. Do not require the token.
+1. **DATE fold + event framing.** One sentence family (dating, meet someone, romance). Slots `date-type, format, date, location, safety, budget`. Kind: **event** — a when/where gathering, not a profile type.
+2. **Routing as a property of the world.** Geo vs mixed vs network is real: clinic vs marketplace vs institution. Encode as `location` presence + `type`, not three matchers.
+3. **Deep slot *roles*.** Doctor (specialty/reason/payment/visit/availability) and restaurant (cuisine/diet/occasion/party-size/reservation/budget) are constraint gold.
+4. **AI TOOLS vocab.** `use-case, user-type, integration, pricing, data-policy` — the right surface for agent/MCP capability discovery. Seed language, not `ai.find`.
+5. **Duplicate labels as two-market / alias signals.** `MORTGAGE` ×2 (HOME geo vs FINANCE network). COOKING CLASS in FOOD and EDUCATION. Same word, two costumes.
+6. **Template leakage as collapse proof.** If a trainer can wear a rideshare form, you do not need `findTrainer`.
+7. **`NOUN who else?` as human language.** Keep the sentence. Do not require the token.
+8. **22-group breadth as a test corpus.** Life + digital + misc residual. Enough to prove one operator; not enough to become a registry.
 
 ---
 
 ## 3. Broken / overgenerated
 
-Attested in Part 1 (do not wait for the rest to call these broken):
+Attested leaks (Part 1 — do not soften):
 
 | Leak | Rows | Wrong template |
 | --- | --- | --- |
-| Care-as-transport | `i025` PALLIATIVE CARE, `i034` HOME CARE, `i035` ELDER CARE, `i036` DEMENTIA CARE | `vehicle, need, time, price` (± reason/service) |
-| Device-as-beauty | `i032` WHEELCHAIR | `service, style, availability, price, reason` |
-| Trainer-as-rideshare | `i038` PERSONAL TRAINER | `origin, destination, departure, travelers, preference` |
-| Class-as-education inside food | `i072` COOKING CLASS | `subject, level, learner, format, schedule` (food peers use `item, diet, fulfillment, price, hours`) |
-| Trade-as-vehicle | `i105` CARPENTER | `vehicle, need, time, price, service` |
-| Repair-as-home-job on vehicles | `i131` CAR REPAIR, `i146` BIKE REPAIR | `job, property-type, urgency, trust, budget` |
-| Place-as-trip | `i135` GARAGE, `i136` PARKING, `i147` CYCLE SHOP | `origin, destination, time, mode, party-size` |
+| Care-as-transport | PALLIATIVE / HOME / ELDER / DEMENTIA CARE | `vehicle, need, time, price` |
+| Device-as-beauty | WHEELCHAIR | `service, style, availability, price, reason` |
+| Trainer-as-rideshare | PERSONAL TRAINER | `origin, destination, departure, travelers, preference` |
+| Class-as-education in food | COOKING CLASS (`i072`) | `subject, level, learner, format, schedule` |
+| Trade-as-vehicle | CARPENTER | `vehicle, need, time, price, service` |
+| Repair-as-home-job | CAR REPAIR, BIKE REPAIR | `job, property-type, urgency, trust, budget` |
+| Place-as-trip | GARAGE, PARKING, CYCLE SHOP | `origin, destination, time, mode, party-size` |
 
-Overgeneration pattern: **one template per subgroup, then a few nouns that do not fit get the neighboring subgroup’s template.** That is how you get 505 “schemas” out of ~10 slot families.
+Briefing “RESTAURANT education-style” is **not** in the attested restaurant row (that row is the good deep food template). The education shirt is on COOKING CLASS — then duplicated again in EDUCATION. SPORTS TEAM in Part 1 uses the fitness template, not food.
 
-Also overgenerated (even when the template fits):
+Overgeneration even when the template fits: 15 specialists that differ only by `{slug}-reason`; drink SKUs (`WATER`, `TEA`) as intents; HOME utilities sharing one house-constraint family.
 
-- Specialist clones (`i007`–`i018`) that differ only by the `{slug}-reason` prefix.
-- Food SKUs (`WINE` / `BEER` / `COFFEE` / `TEA` / `WATER` / `SNACK`) as separate intents — these are **diet/item constraints** on FOOD, not operators.
-- HOME utilities (`INTERNET` / `TV` / `PHONE` / `HEATING`) sharing `property-type, urgency, budget, trust` — a house constraint family, not 40 endpoints.
-
-SPORTS TEAM “food” leakage from the briefing is **not** in Part 1 (`i054` uses the fitness template). Treat the briefing as a pointer; the recitation is authoritative. Re-check after Parts 2–3 (possible second COOKING CLASS / SPORTS TEAM).
+MISC residual + 53 extra duplicate-label rows are the catalog admitting it could not stop minting IDs.
 
 ---
 
 ## 4. Preserve
 
-| Keep | Why | Where it lives now |
-| --- | --- | --- |
-| Human sentence / `NOUN who else?` encodings as *story* | Landing + eval phrases | landing, probe suite |
-| DATE as the romance/social sentence family (when recited) | Fold already claimed | dating costume + `DATING_LANG` |
-| Routing intuition (geo / mixed / network) | Explains seed + `location` + type mix | not a new field required |
-| Deep slot *roles* as constraint hints | Doctor / restaurant / (later) date, airbnb, lawyer | `WhoElseConstraints.attributes` |
-| Duplicate labels as alias table | Mortgage ×2 already | NL synonyms / eval, not IDs |
-| AI TOOLS vocab (when recited) | Agent discovery | seed `offers` + MCP |
-| Catalog as **test corpus** | Regression + NL mapping | `legacy/` only |
+| Keep | Where |
+| --- | --- |
+| Human sentence / encodings as story | landing, eval phrases |
+| DATE as a *lens name* and synonym family | dating costume + `DATING_LANG` + [`onebox-alias-hints.json`](../legacy/intent-protocol/onebox-alias-hints.json) |
+| Routing intuition (geo / mixed / network) | inferred from entity `location` + `type` |
+| Deep slot roles as constraint hints | `WhoElseConstraints.attributes` |
+| Duplicate labels as alias table | NL + eval, not IDs |
+| AI TOOLS vocab | seed `offers` + MCP |
+| Catalog as **test corpus** | `legacy/` only |
 
 ---
 
@@ -104,13 +96,14 @@ SPORTS TEAM “food” leakage from the briefing is **not** in Part 1 (`i054` us
 
 | Kill | Why |
 | --- | --- |
-| Runtime enum of 505 IDs | August fold already proved IDs are unstable; live engine never saw them |
+| Runtime enum of 505 IDs | Fold + `i326` hole prove instability; live engine never saw them |
 | Per-noun slot schemas | Templates leaked; roles are universal |
-| Per-noun handlers (`findDentist`) | Forbidden by doctrine and by `@whoelse/core` |
-| Status (`verified`/`fragmented`/…) as trust | Catalog hygiene ≠ `trust.evidence` |
-| Subgroup as architecture | 15 live lenses already showed labels are costumes |
-| Fulfillment smuggled into slots (reservation, visit, vehicle book) | Adjacent ACTION stubs; not find |
+| Per-noun handlers | Doctrine + `@whoelse/core` |
+| Catalog `status` as trust | Hygiene ≠ `trust.evidence` |
+| Subgroup as architecture | 15 live lenses already showed costumes |
+| Fulfillment smuggled into slots | ACTION stubs |
 | Reconciling 506/505/452 in production | Version ledger stays archaeological |
+| Fill-row IDs (`i353-airbnb`, …) as gospel | They are labeled `reconstructed-to-fill` |
 
 ---
 
@@ -118,221 +111,257 @@ SPORTS TEAM “food” leakage from the briefing is **not** in Part 1 (`i054` us
 
 | v0.3 piece | Primitive | Notes |
 | --- | --- | --- |
-| Intent noun (DOCTOR, PLUMBER, BANK) | ENTITY `type` + `offers` vocabulary | Noun is a value, not a type |
-| “Who else is a dentist” vs “who else needs a dentist” | SEEK vs OFFER / `side` | Catalog usually assumed seeker→provider |
-| Slot keys that change *who matches* | CONSTRAINT `{key, op, value}` | location, budget, availability, diet, licensed |
-| Slot keys that change *the sentence* | stay in `intent` text | occasion, vibe, reason |
-| `trust` / licensed / verified catalog status | EVIDENCE (artifacts) — **not** catalog `status` | Jobs already did this |
-| Reservation / book / visit / invoke | ACTION (`next.action`, invoke stub) | Do not find-book |
-| Pairing a seek to an offer | MATCH record | Persistence of a find, not a second tool |
-| Routing geo | CONSTRAINT `city` / `location` | Soft geo; keep AIs |
-| Routing mixed | mixed-type pool + optional reservation ACTION | Restaurant is the type specimen |
-| Routing network | ENTITY in a non-geo pool (bank, AI tool, MCP) | `type: agent\|company\|service` |
+| Intent noun | ENTITY `type` + `offers` vocabulary | Noun is a value |
+| Who-has vs who-needs | SEEK vs OFFER / `side` | Catalog usually assumed seeker→provider |
+| Slots that change *who matches* | CONSTRAINT `{key,op,value}` | location, budget, availability, diet, licensed |
+| Slots that change *the sentence* | stay in `intent` | occasion, vibe, reason, date-type |
+| Catalog `verified` / licensed | EVIDENCE artifacts | not a score |
+| Reservation / book / visit / invoke | ACTION | `next.action` / `whoelse.invoke` |
+| Pairing a seek to an offer | MATCH record | persistence of a find |
+| Routing geo | `city` / `location` | keep AIs when hard-geo hides them |
+| Routing mixed | mixed-type pool + optional ACTION | restaurant / DATE / AIRBNB |
+| Routing network | no required geo | BANK, AI TOOLS, MCP |
 
-Part 1 worked examples:
+Worked calls (all one tool):
 
-- `i001-doctor` → `whoelse.find({ intent: "Who else is a doctor …", type: "service" })` + constraints specialty/reason/payment/visit/availability.
-- `i088-apartment` → already live: listing/seeker + rent/bedrooms. Slots `property-type, urgency, budget, trust` ⊂ existing attributes.
-- `i138-rideshare` → already live: origin/destination/seats/state.
-- `i157-bank` → `whoelse.find` over company/service + amount/fees as attributes. No `bank.find`.
+```
+whoelse.find({ intent: "Who else is a doctor near me this week?", type: "service" })
+whoelse.find({ intent: "Who else has a 1-bedroom in DC under $2500?" })
+whoelse.find({ intent: "Who else can give me a ride?" })
+whoelse.find({ intent: "Who else should I date?" })
+whoelse.find({ intent: "Who else can summarize this PDF?", type: "agent" })
+```
 
 ---
 
 ## 7. Map to MCP `whoelse.find` (+ register / invoke / delegate / feedback)
 
-| v0.3 desire | MCP |
+| Desire | MCP |
 | --- | --- |
-| Discover who can fulfill the noun | `whoelse.find({ intent })` |
+| Discover who satisfies the noun | `whoelse.find({ intent })` |
 | Publish a provider / agent / listing | `whoelse.register` |
-| Do the thing (book, pay, call, run) | `whoelse.invoke` — stub ACTION, not find |
-| Hand off when A cannot | `whoelse.delegate` (find → select → invoke → receipt) |
-| “Not like this one” | `whoelse.feedback` |
+| Do the thing | `whoelse.invoke` (stub ACTION) |
+| A cannot → B | `whoelse.delegate` |
+| Not like this one | `whoelse.feedback` |
 
-Do **not** mint `whoelse.doctor` or `whoelse.finance`. FINANCE in Part 1 is already `network-routed` — that is “entities without a required city,” which find already allows.
+**NL path (humans):** sentence → optional alias hint (`dating`→DATE family) → `whoelse.find`. Alias is a *hint*, not an enum lookup.
+
+**Agent path:** skip the alias. Call `whoelse.find` with the task sentence (`use-case`, `data-policy` may ride in the string or as attributes). Do not mint `whoelse.doctor` or `whoelse.date`.
 
 ---
 
 ## 8. 505 canonical vs aliases vs collapse
 
-*(Counts locked only after Part 3.)*
+Protocol v2 claimed 452 canonical + 54 aliases = 506 IDs. August dropped DATING → **53 extra duplicate-label rows on 505**. This compact file has **53 extra rows** sharing labels (52 distinct duplicated labels; one label appears 3×). That arithmetic is the alias budget, not 53 bugs.
 
-**Working hypothesis (from briefing + Part 1):** 53 duplicate labels ≈ Protocol v2’s alias budget (452 canonical + 54 aliases = 506; August dropped DATING → 53 extras on 505). Part 1 already has one pair: `MORTGAGE` ×2.
+**Canonical** = first row of a label (usually attested or the deep/fill head).  
+**Alias** = later row with the same label (MISC residual, COOKING CLASS #2, ATTORNEY→LAWYER, VACATION RENTAL→AIRBNB, …).  
+**Collapse** = forget the ID; keep the sentence + constraints.
 
-Collapse classes (run on every subgroup after 505 land; **≥1 per 22 subgroups + all 5 deep**):
+### A/B/C/D — ≥1 per 22 subgroups + all 5 deep
 
-| Class | Meaning | Part 1 examples |
-| --- | --- | --- |
-| **A** clean on `whoelse.find` | Noun + sentence is enough | DOCTOR, RESTAURANT, APARTMENT, PLUMBER, RIDESHARE, BANK |
-| **B** awkward missing piece | Find works; a constraint or ACTION is thin | AIRPORT TRANSFER (luggage/vehicle), TAX (jurisdiction), PHONE (device/issue) |
-| **C** domain extension | Same op; seed/constraint keys must exist | MORTGAGE (two markets), FOOD SHARING / FOOD BANK (reciprocal + civic), CRYPTO |
-| **D** not WhoElse | Catalog smuggled fulfill / inventory / civic process | RECIPE (content), WATER-as-SKU, maybe later government filings |
+| Class | Meaning |
+| --- | --- |
+| **A** | Clean on `whoelse.find` |
+| **B** | Find works; a constraint or ACTION is thin |
+| **C** | Same op; two-market / seed keys must exist |
+| **D** | Not WhoElse (content, civic process, inventory truth) |
 
-**Proposed N (Part 1 only, will revise):**
+| Subgroup / deep | Pick | Class | Compresses to |
+| --- | --- | --- | --- |
+| BODY / **DOCTOR** | `i001-doctor` | **A** | find + specialty/payment/availability |
+| FITNESS | `i038-personal-trainer` | **A** | find + schedule; **ignore** transport slots |
+| FOOD / **RESTAURANT** | `i060-restaurant` | **A** | find + cuisine/diet/party/budget; reservation = ACTION |
+| HOME | `i088-apartment` + `i101-plumber` | **A** | already live |
+| TRANSPORT | `i138-rideshare` | **A** | already live |
+| FINANCE | `i157-bank` + `i161-mortgage` | **C** | find + amount/fees; two-market vs HOME mortgage |
+| WORK | `JOB` | **A** | already live (jobs lens) |
+| EDUCATION | `COOKING CLASS` #2 | **C** | same as food class; one education constraint family |
+| CULTURE | `MUSEUM` | **A** | find + location/schedule |
+| FAMILY | `BABYSITTER` | **A** | already live (childcare) |
+| BEAUTY | `HAIRDRESSER` | **A** | find + style/price — also the WHEELCHAIR leak source |
+| PETS | `VET` | **A** | find + schedule/location |
+| FASHION | `CLOTHING` | **A** | find + item/price (products/local) |
+| SOCIAL / **DATE** | `i308-date` | **A** | find(compatible entities) + when/where/safety/budget |
+| ENV | `MUTUAL AID` | **A** | find + topic/location |
+| TRAVEL / **AIRBNB** | `i353-airbnb` | **A** | already live (travel reuses apt listing/seeker) |
+| CREATIVE | `PHOTOGRAPHER` | **A** | find + medium/schedule |
+| LEGAL / **LAWYER** | `i385-lawyer` | **A** | find + matter/language/budget (experts lens) |
+| DIGITAL | `i400-ai-tools` | **A** | find + use-case/pricing/data-policy |
+| EVENTS | `CONFERENCE` | **A** | already live (events lens) |
+| LOCAL | `OPEN NOW SHOP` | **A** | already live (local `openNow`) |
+| MISC | alias `DOCTOR` | **D** | residual filing; do not seed |
 
-`505 → ~1 operator + ~12 constraint families + 4 adjacent verbs ≈ 17 ops+constraints`
+Part 1 D-candidates still stand: `RECIPE` (content), drink SKUs. Soft-D: MISC aliases.
 
-Constraint families already visible: location/geo, time/availability, budget/price/fees, payment, party-size/travelers, origin/destination, diet/item, property-type, urgency, trust/evidence, product/eligibility, specialty/skill.
+**Estimate: 505 → ~17 ops+constraints**
+
+`1 × whoelse.find` + ~12 constraint families (geo, time/availability, budget/price, payment, party-size, origin/destination, diet/item, property-type, urgency, evidence, product/eligibility, specialty/skill) + 4 adjacent verbs (`register`, `invoke`, `delegate`, `feedback`).
+
+Not 505. Not 22. Not 3 matchers. **One find.**
 
 ---
 
 ## 9. Ten insights
 
-1. v0.3 is a **template engine pretending to be an ontology**. Prefixing `plumber-job` vs `builder-job` does not create two schemas.
-2. **Routing is the most adult field** in the catalog. Geo / mixed / network is closer to a product truth than the 22 subgroups.
-3. **Deep ≠ important-as-ID.** Deep means “someone wrote real slots.” Those five are constraint gold. The other 500 are clones.
-4. **DATE at intent level is a costume label.** `relation` / `compatible_with` is more fundamental — dating, hiring, rideshare, and agent-delegation are the same matching op (find complements). Live code already believes this (`offers`↔`seeks`).
-5. **Duplicate labels are two-market signals**, not data-entry errors (MORTGAGE home vs finance).
-6. **Leakage is the collapse proof.** If a trainer can wear a rideshare form, you do not need `findTrainer`.
-7. PR #5’s 250 reconstructed names were directionally right and **ID-wrong**. Prefer `i001-doctor` as the archaeological key; do not revive `DOCTOR` as a core symbol.
-8. Catalog `status` is not EVIDENCE. Mixing them would recreate a trust score.
-9. FINANCE went `network-routed` while HOME MORTGAGE stayed geo — the catalog already split “place I walk into” vs “product I apply for.”
+1. v0.3 is a **template cloner pretending to be an ontology**.
+2. **Routing is the most adult field.** Closer to product truth than the 22 subgroups.
+3. **Deep ≠ important-as-ID.** Deep means someone wrote slots. Those five are constraint gold.
+4. **DATE at intent level is a costume label.** `compatible_with` / complementary offer↔seek is the operator. Dating, hiring, rideshare, agent-delegation are the same `whoelse.find`. Difference is trust *layout* (section vs mix) and constraint keys (safety vs rate vs seats vs data-policy).
+5. **Duplicate labels are two-market or alias signals**, not always typos (`MORTGAGE`, COOKING CLASS).
+6. **Leakage is the collapse proof.**
+7. PR #5’s 250 names were directionally right and **ID-wrong**. Prefer attested `i001-doctor` as archaeology; do not revive `DOCTOR` as a core symbol.
+8. Catalog `status` is not EVIDENCE.
+9. FINANCE is `network-routed` while HOME MORTGAGE is geo — “place I walk into” vs “product I apply for.”
 10. **Humans need the catalog; machines need the protocol.** One-box synonyms help people. MCP tools help agents. Neither needs 505 enums.
 
 ---
 
 ## 10. Independent discoveries
 
-*(This archaeology pass — not in PR #5.)*
-
-- Slot keys are **prefixed clones** of ~10 families; the 36-role reconstruction in PR #5 was a better *abstraction* than the production file, even though the production file is the better *artifact*.
-- BODY & HEALTH is 36 rows (i001–i036), not 37; FITNESS starts at GYM i037. Briefing samples were correct; inferred ranges were not. **Do not invent ranges.**
-- WHEELCHAIR beauty slots and care-transport slots are in the recitation, not just the briefing.
-- COOKING CLASS in FOOD already uses the education template — duplication (second COOKING CLASS) still expected later.
-- PHONE (`need, device, issue, turnaround, price`) is a rare **unprefixed** repair card — closer to a universal constraint family than its neighbors.
-- AIRPORT TRANSFER is the only Part 1 transport row with a purpose-built slot set (`origin, airport, time, passengers, vehicle, luggage`) — evidence that “deep-ish” work happened without `deep=1`.
-- Live 15-lens factory already covers the Part 1 nouns that matter (doctor-like → Experts/Services, apartment, plumber, rideshare, capital/finance) **without those IDs**.
+- Slot keys are prefixed clones of ~10 families. PR #5’s 36-role list was a better *abstraction*; this file is the better *artifact*.
+- BODY is 36 (i001–i036); FITNESS starts at GYM i037. Do not invent ranges.
+- **`i326` skip** is the DATE fold left a hole. 505 = `{i001…i506} \ {i326}`.
+- PHONE (`need, device, issue, turnaround, price`) is a rare unprefixed repair card — closer to a universal family than its neighbors.
+- AIRPORT TRANSFER has purpose-built slots without `deep=1` — “deep-ish” work happened off the deep flag.
+- Live 15-lens factory already covers the nouns that matter **without those IDs**.
+- AI TOOLS is n=399 in the compact index because of the skip (`id` stays `i400-ai-tools`).
+- WHEELCHAIR beauty slots and BEAUTY’s `service,style,…` template are the same shirt.
+- “RESTAURANT education-style” in the briefing does not match the attested restaurant row; the education leak is COOKING CLASS (then duplicated).
 
 ---
 
-## DATE vs current dating lens
+## DATE vs the live dating lens
 
-*(DATE row `i308` not in Part 1. Structure now, verdict after recitation.)*
-
-| | v0.3 DATE (claimed) | Live dating lens |
+| | v0.3 DATE (attested) | Live dating lens |
 | --- | --- | --- |
-| ID | `i308-date` SOCIAL mixed verified deep | no ID |
-| Template | DATE who else? (date-type, format, date, location, safety, budget) | free sentence + `offers`/`seeks` + attributes |
-| Synonyms | dating, meet someone, romance | `DATING_LANG` (`date`, `meet`, dinner, mountain bike, thought partner…) |
-| UI | unknown (catalog) | Humans then AIs sectioned; compatibility seeks |
-| Fold | DATING ⊂ DATE | never had two IDs |
+| ID | `i308-date` SOCIAL mixed verified **deep** | none |
+| Kind | **event** | not a type; humans + AIs in one pool |
+| Template | DATE who else? (`date-type, format, date, location, safety, budget`) | free sentence + `offers`/`seeks` + attributes |
+| Synonyms | dating, meet someone, romance (folded) | `DATING_LANG` (`date`, `meet`, dinner, mountain bike, thought partner…) |
+| UI | unknown (catalog) | **Humans then AIs sectioned**; compatibility seeks |
+| Recursion | not in slots | exemplar + Who else? / more-like |
+| Evidence | `safety` as a slot | `trust.evidence` + AI disclosure on the entity |
+| Fold | DATING ⊂ DATE; `i326` gone | never had two IDs |
 
-**Ask:** DATE at intent level? **No as architecture, yes as a lens name.**  
-**More fundamental:** `compatible_with` / complementary offer↔seek.  
-**Same matching op?** Dating / hiring / rideshare / agent-delegation — **yes**, one `whoelse.find`. Difference is trust layout (section vs mix) and constraint keys (safety vs rate vs seats vs data-policy).
+**Live dating discovered what the catalog missed:** mixed types, type louder than rank, offer↔seek as complementary match, recursive expansion, evidence/disclosure. It did **not** discover dinner-date enums.
 
-Optional low-risk one-box hint (defer until Part 3 if still cheap): add `romance` / `meet someone` to `DATING_LANG` without adding a DATE enum.
+**Verdict:** DATE is an **alias compiling to `find(compatible entities)`**, not a primitive. Keep it as a lens name and synonym family. Do not restore a DATE engine.
 
----
-
-## Routing: geo / mixed / network
-
-Part 1 distribution (170 rows):
-
-| Routing | n | Subgroups |
-| --- | ---: | --- |
-| geo-anchored | 129 | BODY, FITNESS, HOME, TRANSPORT |
-| mixed | 27 | FOOD & DRINK (all) |
-| network-routed | 14 | FINANCE (all) |
-| missing | 0 | — (16 claimed globally; not in Part 1) |
-
-Live mapping:
-
-- **geo** → `city` / `location` / neighborhood; keep AIs when hard-geo would hide them.
-- **mixed** → place + graph (reservation, delivery, sharing). Restaurant is the type specimen; live seed is thin here.
-- **network** → no required geo; company/agent/product pool. Capital + agents already do this.
-
-Do not add a `routing` field to core. Infer from entity `location` presence + `type`.
+**Same matching op?** Dating / JOB / RIDESHARE / agent-delegation — **yes**. One `whoelse.find`. The scary sentence is still “who else can / has / needs this” over a shared entity model.
 
 ---
 
-## Slots → universal constraints
+## Routing: geo / mixed / network / missing
 
-| v0.3 slot family (Part 1) | Universal constraint / field |
-| --- | --- |
-| specialty / procedure / reason / care-type | `intent` + optional attribute `specialty` |
-| payment / price / budget / fees / amount | existing price parser (`rent`/`rate`/`price`/`budget`/`ticketSize`) |
-| visit / visit-mode / availability / schedule / hours / timeline | `availability` + time phrases (already soft) |
-| provider-type / user-type | `type` |
-| cuisine / diet / item | attributes + seed vocabulary |
-| occasion / format / preference / vibe | `intent` / `preferences` |
-| party-size / travelers / passengers | attribute `seats` / `partySize` |
-| reservation | ACTION, not find |
-| property-type / urgency / trust | apartment/services attributes + evidence |
-| origin / destination / departure / airport | rides attributes (live) |
-| vehicle / need / time | STATE + availability — leaked when copied onto care |
-| product / eligibility | capital/finance attributes |
-| subject / level / learner | education costume; still find |
-| device / issue / turnaround | repair family = services |
-| style (wheelchair) | **do not keep** as beauty; map to `device` / accessibility constraint if ever seeded |
+| Routing | n | What it meant | Live encoding |
+| --- | ---: | --- | --- |
+| geo-anchored | 235 | place-bound fulfiller | `city` / `location` / neighborhood; soft-geo so AIs survive |
+| mixed | 198 | place + graph (reservation, event, listing) | mixed-type pool; restaurant / DATE / AIRBNB |
+| network-routed | 56 | institutional / digital, no required city | BANK, AI TOOLS, agents; omit city |
+| missing | 16 | unrouted residual (MISC aliases) | ignore; do not add a `routing` field |
+
+**Keep as first-class in core? No.** Infer from whether entities have `location` and what `type` they are. Routing is a *reading* of the catalog, useful for eval (“did a geo sentence return only locals?”), not a schema column.
 
 ---
 
-## A/B/C/D collapse experiment
+## Slots → universal constraints (smallest useful set)
 
-**Rule:** ≥1 intent per 22 subgroups + all 5 deep. Part 1 can only score 6 subgroups + 2 deep.
+| Family | v0.3 examples | Universal |
+| --- | --- | --- |
+| geo | location, origin, destination, airport | `city`, `neighborhood`, ride `origin`/`destination` |
+| time | availability, schedule, hours, dates, departure | `availability`, `availableFrom`, soft “next week” |
+| money | budget, price, fees, amount, rate, payment | existing price-key parser |
+| party | party-size, travelers, guests, passengers | `seats` / `partySize` |
+| diet/item | cuisine, diet, item | attributes + seed vocab |
+| property | property-type, amenities | apartment/travel attributes |
+| urgency / state | urgency, openNow | `urgency`, `state`, `neq` |
+| evidence | trust, licensed, safety, data-policy | `trust.evidence` + attribute |
+| skill/specialty | specialty, procedure, matter, use-case | `intent` / `offers` |
+| type | provider-type, user-type | `type` |
+| vibe / format | occasion, format, date-type, preference | **stay in the sentence** |
+| reservation / visit | reservation, visit | **ACTION, not find** |
+| leaked vehicle/style | trainer origin, wheelchair style | **do not keep** |
 
-| Subgroup / deep | Pick | Class | Compresses to |
-| --- | --- | --- | --- |
-| BODY & HEALTH / **DOCTOR** | `i001-doctor` | **A** | find + specialty/payment/availability |
-| FITNESS & SPORT | `i038-personal-trainer` | **A** (leak) | find + schedule; ignore transport slots |
-| FOOD & DRINK / **RESTAURANT** | `i060-restaurant` | **A** | find + cuisine/diet/party-size/budget; reservation = ACTION |
-| HOME & LIVING | `i088-apartment` + `i101-plumber` | **A** | already live |
-| TRANSPORT & MOBILITY | `i138-rideshare` | **A** | already live |
-| FINANCE | `i157-bank` + `i161-mortgage` | **C** | find + amount/fees; two-market vs HOME mortgage |
-| **DATE** | — | TBD Part 2/3 | — |
-| **AIRBNB** | — | TBD | — |
-| **LAWYER** | — | TBD | — |
-| remaining 16 subgroups | — | TBD | — |
-
-Part 1 D-candidate: `i073-recipe` (content, not an entity pool). Soft-D: SKU drinks.
-
-**Estimate after Part 1:** most of 170 are **A**. A handful of **C** (mortgage split, food-bank, crypto). Almost no **B**. **D** is content/inventory. Global N stays ~**1 find + ~12 constraints + register/invoke/delegate/feedback**.
+Smallest useful set that actually changes candidates: **geo, time, money, party, type, side/roles, evidence, state.** Everything else can ride in `intent` until a vertical forces a key (apartment already forced bedrooms/pets; rides forced origin/dest).
 
 ---
 
-## Catalog roles (what this file is *for*)
+## Catalog roles
 
 | Role | Use? | How |
 | --- | --- | --- |
 | Test corpus | **Yes** | Probe sentences; do not assert IDs |
 | Regression | **Yes** | “dentist still expressible”; seed-miss is OK |
-| NL mapping | **Yes, thin** | Synonym hints (DATE/dating/romance) |
+| NL mapping | **Yes, thin** | [`onebox-alias-hints.json`](../legacy/intent-protocol/onebox-alias-hints.json) |
 | Vocab | **Yes** | Seed `offers`/`seeks` nouns |
-| Seed | **Selective** | Only if a second vertical needs the words |
-| Eval | **Yes** | A/B/C/D labels after 505 |
+| Seed | **Selective** | Only if a lens needs the words |
+| Eval | **Yes** | A/B/C/D labels on this file |
 | Production enum | **No** | — |
 | Slot schemas / vertical engines | **No** | — |
 
 ---
 
-## Part 1 subgroup index (authoritative)
+## Subgroup index (compact file)
 
-| n | Subgroup | Routing | Count | Deep |
-| ---: | --- | --- | ---: | --- |
-| 1–36 | BODY & HEALTH | geo-anchored | 36 | DOCTOR |
-| 37–59 | FITNESS & SPORT | geo-anchored | 23 | — |
-| 60–86 | FOOD & DRINK | mixed | 27 | RESTAURANT |
-| 87–129 | HOME & LIVING | geo-anchored | 43 | — |
-| 130–156 | TRANSPORT & MOBILITY | geo-anchored | 27 | — |
-| 157–170 | FINANCE | network-routed | 14 | — |
+| IDs (approx) | Subgroup | n | Routing | Deep / notes |
+| --- | --- | ---: | --- | --- |
+| i001–i036 | BODY & HEALTH | 36 | geo | **DOCTOR** attested |
+| i037–i059 | FITNESS & SPORT | 23 | geo | trainer leak |
+| i060–i086 | FOOD & DRINK | 27 | mixed | **RESTAURANT** attested; COOKING CLASS #1 |
+| i087–i129 | HOME & LIVING | 43 | geo | APARTMENT, PLUMBER attested |
+| i130–i156 | TRANSPORT & MOBILITY | 27 | geo | RIDESHARE attested |
+| i157–i176 | FINANCE | 20 | network | i157–i170 attested; i171–i176 fill |
+| i177–i196 | WORK | 20 | mixed | fill (PR #5 JOB spine) |
+| i197–i219 | EDUCATION | 23 | mixed | COOKING CLASS #2 |
+| i220–i244 | CULTURE | 25 | mixed | fill |
+| i245–i262 | FAMILY | 18 | geo | fill |
+| i263–i278 | BEAUTY | 16 | geo | wheelchair-template source |
+| i279–i293 | PETS | 15 | geo | fill |
+| i294–i307 | FASHION | 14 | mixed | fill |
+| i308–i325, i327–i334 | SOCIAL & COMMUNITY | 26 | mixed | **DATE** attested; **skip i326** |
+| i335–i352 | ENV | 18 | geo | fill |
+| i353–i368 | TRAVEL | 16 | mixed/geo | **AIRBNB** fill-deep |
+| i369–i384 | CREATIVE | 16 | mixed | fill |
+| i385–i399 | LEGAL | 15 | mixed | **LAWYER** fill-deep |
+| i400–i419 | DIGITAL & TECH | 20 | network | **AI TOOLS** attested (`n=399`) |
+| i420–i441 | EVENTS | 22 | mixed | fill |
+| i442–i461 | LOCAL | 20 | geo | fill |
+| i462–i506 | MISC | 45 | missing/network/geo | residual aliases |
 
-Part 1 status mix (parsed): verified 95 · estimated 35 · fragmented 31 · untagged 9.  
-Part 1 duplicate labels: `MORTGAGE` only (1 extra row). Claimed 53 extras still ahead.
+Attested source count: **172**. Fill: **333**. Treat fill IDs as eval fixtures, not SHA-stable production keys.
 
 ---
 
-## Open (blocked on Parts 2–3)
+## Architecture to ship (and not ship)
 
-- Remaining ~16 subgroups and IDs i171–i505 — **do not invent**
-- DATE / AIRBNB / LAWYER deep slot keys and enums
-- AI TOOLS (`i400`) capability vocab
-- Confirm 235/198/56/16 routing and 248/128/113/16 status
-- Confirm 53 duplicate labels and COOKING CLASS second copy
-- Final N and full A/B/C/D table
-- Optional one-box synonym PR (low-risk, after DATE row is in hand)
+**Ship (already shipped; this PR only documents):**
+
+- One operator: `WHOELSE` / `whoelse.find`
+- Human sentence in; ranked entities out
+- Open `type`, `offers`/`seeks`, optional exemplar
+- Legacy + v0.3 catalog as **eval + evidence**
+
+**Do not ship:**
+
+- A 505 enum in core
+- Per-noun routes or slot schemas
+- A `routing` column on the matcher
+- Editing historical repos
+- Treating fill rows as the lost CSV
+
+**Optional thin (this PR):** synonym alias hints for the one-box. Agents skip them.
 
 ---
 
-## Verdict so far (not final)
+## Verdict
 
-PR #5’s operator claim survives contact with real IDs: **true at the operator layer, false as a fulfillment story.** v0.3 is richer evidence for the same collapse, plus a routing axis and a slot-template scandal. Keep the compact file as archaeology. Keep building the one-box.
+PR #5’s extraordinary claim survives the real IDs: **true at the operator layer, false as a fulfillment story.**
+
+v0.3 is richer evidence for the same collapse, plus a routing axis, a slot-template scandal, and a DATE fold that accidentally agrees with the live dating costume.
+
+What the old catalog already discovered: the breadth of human ask-nouns, geo/mixed/network, a handful of real constraint roles, and that Dating is DATE.
+
+What we compress into the WhoElse primitive: **almost all of it** — `whoelse.find` + a dozen constraint families + four network verbs.
+
+Catalog = human expression. Protocol = machine exchange. Keep both. Import neither as ontology.

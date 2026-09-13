@@ -541,26 +541,30 @@ Breadth is the test and it held. Keep merging when green. Do not polish these in
 
 ---
 
-## INTENT PROTOCOL v0.3 — archaeology (in progress)
+## INTENT PROTOCOL v0.3 — archaeology
 
-Production catalog recitation (505 claimed). Compact file: `legacy/intent-protocol/`. Review: `docs/INTENT_GRAMMAR_V03_REVIEW.md`. **Not imported into core.** Parts 2–3 still incoming; Part 1 = i001–i170 only.
+Production catalog (505). Compact file: `legacy/intent-protocol/`. Review: `docs/INTENT_GRAMMAR_V03_REVIEW.md`. **Not imported into core.** 172 attested recitation rows + 333 fill rows (subgroup counts + PR #5 names). SOCIAL skips `i326`.
 
 ### PREVIOUS WHOELSE WORK
 
-PR #5 already collapsed the reconstructed 250 to one `whoelse.find`. That operator claim is unchanged. What v0.3 adds is the *real* filing cabinet: `i001-doctor` IDs, 22 subgroups, geo/mixed/network routing, and per-noun slot keys. The 15 live lenses (health 2026-09-13) already cover the Part 1 nouns that matter (services, apt, rides, capital) without those IDs.
+PR #5 already collapsed the reconstructed 250 to one `whoelse.find`. That operator claim is unchanged. v0.3 is the *cabinet*: `i001-doctor` IDs, 22 subgroups, geo/mixed/network, slot-key templates, DATE fold. The 15 live lenses already cover the nouns that matter (services, apt, rides, jobs, travel, events, capital, agents) without those IDs.
 
 ### GROK DERIVATION
 
-From Part 1 alone: the catalog is a **template cloner**. `{slug}-reason,care-type,payment,visit-mode,availability` mints 15 specialists. Food is `item,diet,fulfillment,price,hours` except COOKING CLASS, which wears the education shirt. PERSONAL TRAINER wears rideshare. Palliative/home/elder/dementia wear `vehicle`. That leakage is the collapse proof — not a reason to build `findTrainer`.
+The catalog is a **template cloner**. `{slug}-reason,care-type,payment,visit-mode,availability` mints specialists. COOKING CLASS wears the education shirt in FOOD and is duplicated in EDUCATION. PERSONAL TRAINER wears rideshare. Care nouns wear `vehicle`. WHEELCHAIR wears beauty `style`. Leakage is the collapse proof.
 
-Routing is the adult field. BODY/FITNESS/HOME/TRANSPORT are geo. FOOD is mixed. FINANCE is network. That is “does this entity need a city?” — already a property of the seed, not a second matcher.
+Routing is the adult field: geo = needs a city; mixed = place + graph; network = BANK / AI TOOLS / agents. Infer from seed, do not add a `routing` column.
 
-`MORTGAGE` ×2 (HOME geo `i092` vs FINANCE network `i161`) is the two-market lesson jobs already taught.
+`MORTGAGE` ×2 (HOME geo vs FINANCE network) is the two-market lesson. `i326` missing after DATE is the fold left a hole — IDs were never a stable API.
+
+**DATE is an alias, not a primitive.** Catalog: event framing, safety/budget/format, Dating ⊂ DATE. Live dating: humans+AIs, sectioned UI, offer↔seek, recursive Who else?, evidence. Dinner-date enums lost. Dating / hiring / rideshare / agent-delegation are one `whoelse.find(compatible entities)`.
+
+**N ≈ 17:** one find + ~12 constraint families + register/invoke/delegate/feedback.
 
 ### DISCOVERED THROUGH IMPLEMENTATION
 
-Live factory did not need these IDs. Apartment slots (`property-type, urgency, budget, trust`) and rideshare (`origin, destination, departure, travelers`) are already attributes. Doctor/restaurant deep keys are constraint *hints*. Catalog `status` (verified/fragmented/estimated/untagged) is hygiene, not `trust.evidence`.
+Live factory did not need these IDs. Apartment and rideshare slots are already attributes. Doctor/restaurant/DATE/AIRBNB/LAWYER deep keys are constraint *hints*. Catalog `status` is hygiene, not `trust.evidence`. AI TOOLS vocab (`use-case, integration, pricing, data-policy`) is seed language for MCP capability discovery — agents should skip the alias table and call `whoelse.find` with the task sentence.
 
 ### SHARED DERIVATION
 
-Catalog helps humans express (`DOCTOR who else?`, DATE synonyms). Protocol lets machines exchange (`whoelse.find` + register/invoke/delegate/feedback). Complementary. Do not unify them by shipping 505 enums. Final N and DATE/AIRBNB/LAWYER/AI TOOLS wait for Parts 2–3.
+Catalog helps humans express (`DATE who else?`, dating/romance synonyms). Protocol lets machines exchange (`whoelse.find` + register/invoke/delegate/feedback). Complementary. Do not unify them by shipping 505 enums. Thin one-box hints live in `legacy/intent-protocol/onebox-alias-hints.json` only.

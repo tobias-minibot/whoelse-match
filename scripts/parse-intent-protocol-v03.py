@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Parse Tobias's annotated production v0.3 oneline dump into compact JSON.
+"""Parse attested oneline dumps only (Part 1).
 
-Do not invent intents. Only rows present in legacy/intent-protocol/raw/.
+The complete 505-row compact file is built by build-intent-protocol-v03.py
+(attested recitation + reconstructed-to-fill). This script stays as a
+raw-part checker.
 """
 
 from __future__ import annotations
