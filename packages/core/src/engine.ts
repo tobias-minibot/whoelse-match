@@ -21,6 +21,7 @@ import type {
   Entity,
   MatchRecord,
   MatchSide,
+  PublicationPair,
   PublicationSpec,
   RegistrationSpec,
   ScoreBreakdown,
@@ -61,6 +62,8 @@ export class WhoElseEngine {
 
   whoelse(request: WhoElseRequest): WhoElseResult {
     const contextEntity = request.entityId ? this.store.get(request.entityId) : undefined;
+    const requesterEntity = request.requester ? this.store.get(request.requester) : undefined;
+    const counterparts = [contextEntity, requesterEntity].filter((e): e is Entity => Boolean(e));
     const userText = [request.context, request.predicate ?? ""].filter(Boolean).join(" ");
     const rawQuery = queryText({
       context: request.context,
@@ -138,7 +141,7 @@ export class WhoElseEngine {
         entity,
         rawQuery,
         inferredConstraints.side,
-        contextEntity,
+        counterparts,
       );
       // Only fold a publication hit when it is a real capability match.
       // Weak token overlap must not reshuffle dating first-five.
@@ -192,7 +195,7 @@ export class WhoElseEngine {
         explanation: { ...narrative, scoreBreakdown: breakdown },
         matched:
           pubMatch.score >= 0.2
-            ? { offer: pubMatch.offer, seek: pubMatch.seek }
+            ? { offer: pubMatch.offer, seek: pubMatch.seek, score: pubMatch.score }
             : undefined,
       });
     }
@@ -202,6 +205,8 @@ export class WhoElseEngine {
     const top = scored.slice(0, Math.max(limit, 8));
     const sliced = top.slice(0, limit);
     if (sliced.length === 0) this.store.recordMissing(request.context, universal.view);
+    const pairs = collectPairs(sliced);
+    this.persistHighConfidencePairs(request.context, inferredConstraints.side, pairs);
     return finish(
       request.context,
       inferredMode,
@@ -210,6 +215,7 @@ export class WhoElseEngine {
       false,
       sliced,
       universal,
+      pairs,
     );
   }
 
@@ -217,15 +223,34 @@ export class WhoElseEngine {
     const local = this.whoelse({ ...request, limit: Math.max(request.limit ?? 8, 12) });
     const reranked = await maybeRerankAndExplain(request.context, local.candidates);
     const limit = request.limit ?? request.constraints?.limit ?? 8;
+    const candidates = reranked.candidates.slice(0, limit);
     return finish(
       request.context,
       local.inferredMode,
       local.inferredConstraints,
       local.inferredVertical,
       reranked.used,
-      reranked.candidates.slice(0, limit),
+      candidates,
       local.universal,
+      collectPairs(candidates),
     );
+  }
+
+  private persistHighConfidencePairs(query: string, side: MatchSide | undefined, pairs: PublicationPair[]) {
+    for (const pair of pairs) {
+      if (pair.offer.entityId === "query" || pair.seek.entityId === "query") continue;
+      if (this.store.hasPublicationPair(pair.offer.id, pair.seek.id)) continue;
+      this.store.recordMatch({
+        query,
+        offerEntityId: pair.offerEntityId,
+        seekEntityId: pair.seekEntityId,
+        offerPublicationId: pair.offer.id,
+        seekPublicationId: pair.seek.id,
+        side,
+        status: "proposed",
+        evidence: {},
+      });
+    }
   }
 
   parse(text: string): UniversalQuery {
@@ -355,7 +380,19 @@ export class WhoElseEngine {
       constraints: { side },
       limit: opts.limit ?? 5,
     });
-    if (result.candidates[0]) {
+    const pair = result.pairs[0];
+    if (pair) {
+      this.store.recordMatch({
+        query: context,
+        seekEntityId: pair.seekEntityId === "query" ? undefined : pair.seekEntityId,
+        offerEntityId: pair.offerEntityId === "query" ? undefined : pair.offerEntityId,
+        offerPublicationId: pair.offer.entityId === "query" ? undefined : pair.offer.id,
+        seekPublicationId: pair.seek.entityId === "query" ? undefined : pair.seek.id,
+        side,
+        status: "proposed",
+        evidence: result.candidates[0]?.entity.trust?.evidence ?? {},
+      });
+    } else if (result.candidates[0]) {
       this.store.recordMatch({
         query: context,
         seekEntityId: offering ? result.candidates[0].entity.id : entityId,
@@ -372,12 +409,16 @@ export class WhoElseEngine {
     query: string;
     offerEntityId?: string;
     seekEntityId?: string;
+    offerPublicationId?: string;
+    seekPublicationId?: string;
     side?: MatchSide;
   }): MatchRecord {
     return this.store.recordMatch({
       query: opts.query,
       offerEntityId: opts.offerEntityId,
       seekEntityId: opts.seekEntityId,
+      offerPublicationId: opts.offerPublicationId,
+      seekPublicationId: opts.seekPublicationId,
       side: opts.side,
       status: "proposed",
       evidence: {},
@@ -456,10 +497,14 @@ export class WhoElseEngine {
         receipts: ev?.receipts,
       },
     });
+    const pair =
+      found.pairs.find((p) => p.offerEntityId === selected.entity.id) ?? found.pairs[0];
     const match = this.store.recordMatch({
       query: intent,
       seekEntityId: opts.from,
       offerEntityId: selected.entity.id,
+      offerPublicationId: pair?.offer.entityId === "query" ? undefined : pair?.offer.id,
+      seekPublicationId: pair?.seek.entityId === "query" ? undefined : pair?.seek.id,
       side: "offer",
       status: invoked.result.kind === "verify" ? "verified" : "invoked",
       evidence: receipt.evidence,
@@ -802,6 +847,30 @@ function evidenceScore(entity: Entity, query: string): number {
   return Math.min(0.16, score);
 }
 
+const PAIR_SCORE_MIN = 0.85;
+
+function collectPairs(candidates: Candidate[]): PublicationPair[] {
+  const pairs: PublicationPair[] = [];
+  const seen = new Set<string>();
+  for (const c of candidates) {
+    const offer = c.matched?.offer;
+    const seek = c.matched?.seek;
+    const score = c.matched?.score ?? 0;
+    if (!offer || !seek || score < PAIR_SCORE_MIN) continue;
+    const key = `${offer.id}::${seek.id}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    pairs.push({
+      offer,
+      seek,
+      score,
+      offerEntityId: offer.entityId,
+      seekEntityId: seek.entityId,
+    });
+  }
+  return pairs;
+}
+
 function finish(
   query: string,
   inferredMode: WhoElseMode,
@@ -810,6 +879,7 @@ function finish(
   usedOpenAiRerank: boolean,
   candidates: Candidate[],
   universal?: UniversalQuery,
+  pairs: PublicationPair[] = [],
 ): WhoElseResult {
   return {
     query,
@@ -820,6 +890,7 @@ function finish(
     universal,
     usedOpenAiRerank,
     candidates,
+    pairs,
     humans: candidates.filter((c) => c.entity.type === "human"),
     ais: candidates.filter((c) => c.entity.type === "ai"),
     byType: groupByType(candidates),

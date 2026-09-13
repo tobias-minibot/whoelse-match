@@ -144,4 +144,30 @@ describe("MCP whoelse.find", () => {
       assert.match(blob, expect, blob);
     });
   }
+
+  it("find with InboxClerk requester returns the Holdwright pair", async () => {
+    const result = await client.callTool({
+      name: "whoelse.find",
+      arguments: {
+        intent: "Who else can do calendar hold resolution?",
+        requester: "agent-inbox-clerk",
+        limit: 8,
+      },
+    });
+    const text = (result.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const body = JSON.parse(text) as {
+      matches: { id: string; name: string }[];
+      pairs: { offerId: string; seekId: string; offerEntityId: string; seekEntityId: string }[];
+    };
+    assert.ok(body.matches.some((m) => m.id === "agent-holdwright"));
+    assert.ok(
+      body.pairs.some(
+        (p) => p.offerEntityId === "agent-holdwright" && p.seekEntityId === "agent-inbox-clerk",
+      ),
+      JSON.stringify(body.pairs),
+    );
+  });
 });

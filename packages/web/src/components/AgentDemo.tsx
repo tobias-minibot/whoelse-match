@@ -23,6 +23,7 @@ export function AgentDemo() {
   const [step, setStep] = useState<"idle" | "draft" | "found" | "done" | "error">("idle");
   const [draft, setDraft] = useState<string>("");
   const [found, setFound] = useState<{ id: string; name: string; type: string; score: number }[]>([]);
+  const [pairs, setPairs] = useState<{ seek: string; offer: string }[]>([]);
   const [delegated, setDelegated] = useState<DelegatePayload | null>(null);
   const [registered, setRegistered] = useState<string>("");
   const [busy, setBusy] = useState(false);
@@ -31,6 +32,7 @@ export function AgentDemo() {
   async function runHeadline() {
     setBusy(true);
     setErr("");
+    setPairs([]);
     try {
       const a = await fetch(`/api/agents/${FROM}/invoke`, {
         method: "POST",
@@ -55,6 +57,12 @@ export function AgentDemo() {
           score: c.score,
         })),
       );
+      setPairs(
+        (foundBody.pairs ?? []).map((p: { seek: { capability: string }; offer: { capability: string } }) => ({
+          seek: p.seek.capability,
+          offer: p.offer.capability,
+        })),
+      );
       setStep("found");
 
       const del = await fetch("/api/delegate", {
@@ -76,6 +84,7 @@ export function AgentDemo() {
   async function runOfferSeek() {
     setBusy(true);
     setErr("");
+    setPairs([]);
     try {
       const find = await fetch("/api/whoelse", {
         method: "POST",
@@ -93,6 +102,12 @@ export function AgentDemo() {
           name: c.entity.name,
           type: c.entity.type,
           score: c.score,
+        })),
+      );
+      setPairs(
+        (foundBody.pairs ?? []).map((p: { seek: { capability: string }; offer: { capability: string } }) => ({
+          seek: p.seek.capability,
+          offer: p.offer.capability,
         })),
       );
       setStep("found");
@@ -177,6 +192,11 @@ export function AgentDemo() {
               </li>
             ))}
           </ul>
+          {pairs.length > 0 && (
+            <p className="facts">
+              Pairs: {pairs.map((p) => `SEEK ${p.seek} ↔ OFFER ${p.offer}`).join(" · ")}
+            </p>
+          )}
         </div>
       )}
       {delegated?.ok && selected && (

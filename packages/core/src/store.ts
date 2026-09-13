@@ -178,6 +178,8 @@ export class EntityStore {
       query: partial.query,
       seekEntityId: partial.seekEntityId,
       offerEntityId: partial.offerEntityId,
+      offerPublicationId: partial.offerPublicationId,
+      seekPublicationId: partial.seekPublicationId,
       side: partial.side,
       evidence: partial.evidence ?? {},
       status: partial.status,
@@ -187,6 +189,12 @@ export class EntityStore {
     };
     this.matches.push(full);
     return full;
+  }
+
+  hasPublicationPair(offerPublicationId: string, seekPublicationId: string): boolean {
+    return this.matches.some(
+      (m) => m.offerPublicationId === offerPublicationId && m.seekPublicationId === seekPublicationId,
+    );
   }
 
   updateMatch(id: string, patch: Partial<Pick<MatchRecord, "status" | "evidence" | "receiptId">>): MatchRecord | undefined {

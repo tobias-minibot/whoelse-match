@@ -1,6 +1,15 @@
 import { publicationsOf } from "./publications.js";
 import { offersOf, seeksOf } from "./store.js";
-import type { Candidate, Entity, WhoElseResult } from "./types.js";
+import type { Candidate, Entity, PublicationPair, WhoElseResult } from "./types.js";
+
+export interface MachinePublicationPair {
+  offerId: string;
+  seekId: string;
+  offerEntityId: string;
+  seekEntityId: string;
+  capability: string;
+  score: number;
+}
 
 export interface MachineNextStep {
   action: "chat" | "record_interest" | "invoke" | "open";
@@ -81,6 +90,8 @@ export interface MachineFindResult {
   mode: string;
   usedOpenAiRerank: boolean;
   matches: MachineMatch[];
+  /** High-confidence OFFER↔SEEK pairs. Entity matches stay in `matches`. */
+  pairs: MachinePublicationPair[];
 }
 
 export function toMachineMatch(candidate: Candidate): MachineMatch {
@@ -165,12 +176,24 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
   };
 }
 
+export function toMachinePair(pair: PublicationPair): MachinePublicationPair {
+  return {
+    offerId: pair.offer.id,
+    seekId: pair.seek.id,
+    offerEntityId: pair.offerEntityId,
+    seekEntityId: pair.seekEntityId,
+    capability: pair.offer.capability,
+    score: Number(pair.score.toFixed(4)),
+  };
+}
+
 export function toMachineFindResult(result: WhoElseResult): MachineFindResult {
   return {
     query: result.query,
     mode: result.inferredMode,
     usedOpenAiRerank: result.usedOpenAiRerank,
     matches: result.candidates.map(toMachineMatch),
+    pairs: (result.pairs ?? []).map(toMachinePair),
   };
 }
 

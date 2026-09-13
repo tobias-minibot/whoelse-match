@@ -19,6 +19,7 @@ export function UniversalBox() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<WhoElsePayload | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [asClerk, setAsClerk] = useState(false);
 
   async function ask() {
     setLoading(true);
@@ -27,7 +28,11 @@ export function UniversalBox() {
       const res = await fetch("/api/whoelse", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ context: query, limit: 8 }),
+        body: JSON.stringify({
+          context: query,
+          limit: 8,
+          requester: asClerk ? "agent-inbox-clerk" : undefined,
+        }),
       });
       if (!res.ok) throw new Error(`whoelse ${res.status}`);
       setResult((await res.json()) as WhoElsePayload);
@@ -92,6 +97,14 @@ export function UniversalBox() {
               {ex.length > 56 ? `${ex.slice(0, 54)}…` : ex}
             </button>
           ))}
+          <button
+            type="button"
+            className={asClerk ? "active" : ""}
+            onClick={() => setAsClerk((v) => !v)}
+            aria-pressed={asClerk}
+          >
+            {asClerk ? "Requester: InboxClerk" : "No requester"}
+          </button>
         </div>
         {error && <p className="empty">{error}</p>}
         {result?.universal && (
@@ -118,6 +131,20 @@ export function UniversalBox() {
         )}
       </section>
 
+      {result && result.pairs && result.pairs.length > 0 && (
+        <>
+          <h2 className="section-title">OFFER ↔ SEEK pairs</h2>
+          <ul className="empty">
+            {result.pairs.map((p) => (
+              <li key={`${p.offer.id}-${p.seek.id}`}>
+                {p.seek.entityId === "query" ? "this query" : p.seek.entityId} SEEK{" "}
+                <strong>{p.seek.capability}</strong> ↔ {p.offer.entityId} OFFER{" "}
+                <strong>{p.offer.capability}</strong>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
       {result && dating && (
         <>
           <h2 className="section-title">Humans</h2>

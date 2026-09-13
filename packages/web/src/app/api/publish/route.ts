@@ -21,6 +21,7 @@ export async function POST(req: Request) {
           id: p.id,
           kind: p.kind,
           capability: p.capability,
+          status: p.status,
         })),
       },
     });

@@ -12,6 +12,7 @@ const pubObject = z.object({
   id: z.string().optional(),
   capability: z.string(),
   phrases: z.array(z.string()).optional(),
+  status: z.enum(["active", "withdrawn", "expired"]).optional(),
   constraints: z
     .array(
       z.object({
@@ -37,7 +38,10 @@ export const findInput = {
     .optional()
     .describe("Natural-language intent. Alias of context. e.g. 'Who else can summarize this PDF?'"),
   context: z.string().optional().describe("Same as intent (human-surface wording)"),
-  requester: z.string().optional().describe("Entity id of the caller — excluded from results"),
+  requester: z
+    .string()
+    .optional()
+    .describe("Entity id of the caller — excluded from results; their SEEKs/OFFERs pair against candidates"),
   predicate: z.string().optional().describe("Optional relation / extra clause"),
   type: typeSchema,
   city: z.string().optional(),
@@ -61,7 +65,7 @@ export const findInput = {
 };
 
 export const FIND_DESCRIPTION =
-  "Primary discovery tool (whoelse.find). Find entities matching an intent — humans, labeled AIs, agents, companies, services, resources, products, datasets, communities. Same engine as the consumer Who else? UI. Dating, apartment, jobs, and the factory lenses are costumes, not tools. Never call products.find or jobs.find — they do not exist.";
+  "Primary discovery tool (whoelse.find). Returns entity candidates plus high-confidence OFFER↔SEEK pairs. Same engine as the consumer Who else? UI. Dating, apartment, jobs, and the factory lenses are costumes, not tools. Never call products.find or jobs.find — they do not exist.";
 
 type FindArgs = {
   intent?: string;
@@ -190,6 +194,7 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
               id: p.id,
               kind: p.kind,
               capability: p.capability,
+              status: p.status,
             })),
           },
           next: { find: "whoelse.find", invoke: `POST /api/agents/${entity.id}/invoke`, publish: "whoelse.publish" },
@@ -225,6 +230,7 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
               id: p.id,
               kind: p.kind,
               capability: p.capability,
+              status: p.status,
             })),
           },
           next: { find: "whoelse.find" },

@@ -126,6 +126,8 @@ export type MatchStatus = "proposed" | "accepted" | "invoked" | "verified" | "de
 export type EvidenceKind = "verified" | "portfolio" | "outcome" | "license" | "reference" | "receipt" | "disclosure";
 /** First-class network object kind. String bags on ENTITY are derived views. */
 export type PublicationKind = "offer" | "seek";
+/** Record lifecycle. Query-level `MatchSide` stays on WhoElseConstraints — not this field. */
+export type PublicationStatus = "active" | "withdrawn" | "expired";
 export type RelationKind = "owner" | "fallback" | "complement" | "delegate";
 export type EndpointProtocol = "http" | "mcp" | "stub";
 
@@ -208,6 +210,7 @@ export interface GeoLocation {
 /**
  * First-class OFFER or SEEK on the shared find layer.
  * Catalog intent IDs (505) are aliases/eval — not this runtime enum.
+ * `kind` is the record side (offer vs seek). Query `side` is HAS vs NEEDS.
  */
 export interface Publication {
   id: string;
@@ -219,6 +222,8 @@ export interface Publication {
   phrases?: string[];
   constraints?: AttributeConstraint[];
   evidence?: TrustEvidence;
+  /** Default active. Withdrawn / expired records are skipped by find pairing. */
+  status?: PublicationStatus;
   created_at: string;
   updated_at: string;
 }
@@ -234,6 +239,7 @@ export interface PublicationSpec {
   phrases?: string[];
   constraints?: AttributeConstraint[];
   evidence?: TrustEvidence;
+  status?: PublicationStatus;
   created_at?: string;
 }
 
@@ -310,7 +316,7 @@ export interface WhoElseRequest {
   /** Already-known ids — merged into exclude (pagination / “not these”). */
   knownEntities?: string[];
   mode?: WhoElseMode;
-  /** Who is asking. Excluded from results; optional exemplar-adjacent context. */
+  /** Who is asking. Excluded from results; their live OFFER/SEEK records pair against candidates. */
   requester?: string;
   /** When set, treat this entity as the exemplar (recursive WhoElse). */
   entityId?: string;
@@ -346,7 +352,17 @@ export interface Candidate {
   matched?: {
     offer?: Publication;
     seek?: Publication;
+    score?: number;
   };
+}
+
+/** High-confidence complementary pair of durable (or query-synthetic) records. */
+export interface PublicationPair {
+  offer: Publication;
+  seek: Publication;
+  score: number;
+  offerEntityId: string;
+  seekEntityId: string;
 }
 
 export interface WhoElseResult {
@@ -359,6 +375,8 @@ export interface WhoElseResult {
   universal?: UniversalQuery;
   usedOpenAiRerank: boolean;
   candidates: Candidate[];
+  /** High-confidence OFFER↔SEEK pairs (score ≥ 0.85). Alongside entity candidates. */
+  pairs: PublicationPair[];
   /** Convenience views for the dating client. Prefer `byType` for new surfaces. */
   humans: Candidate[];
   ais: Candidate[];
@@ -393,6 +411,9 @@ export interface MatchRecord {
   query: string;
   seekEntityId?: string;
   offerEntityId?: string;
+  /** First-class publication ids when the match is an OFFER↔SEEK pair. */
+  offerPublicationId?: string;
+  seekPublicationId?: string;
   side?: MatchSide;
   evidence: TrustEvidence;
   status: MatchStatus;

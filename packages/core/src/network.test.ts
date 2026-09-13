@@ -47,6 +47,44 @@ describe("OFFER / SEEK as first-class network objects", () => {
     );
     const hit = found.candidates.find((c) => c.entity.id === hold.id);
     assert.ok(hit?.matched?.offer?.capability === "calendar hold resolution");
+
+    const clerkSeek = publicationsOf(clerk).find(
+      (p) => p.kind === "seek" && p.capability === "calendar hold resolution",
+    );
+    const holdOffer = publicationsOf(hold).find(
+      (p) => p.kind === "offer" && p.capability === "calendar hold resolution",
+    );
+    assert.ok(clerkSeek && holdOffer);
+    const pair = found.pairs.find((p) => p.offer.id === holdOffer.id && p.seek.id === clerkSeek.id);
+    assert.ok(pair, `pairs: ${found.pairs.map((p) => `${p.seek.id}↔${p.offer.id}`).join(", ")}`);
+    assert.ok(pair.score >= 0.85);
+    assert.ok(
+      engine.store.hasPublicationPair(holdOffer.id, clerkSeek.id),
+      "high-confidence durable pair should persist as a proposed MatchRecord",
+    );
+  });
+
+  it("withdrawn publications drop out of pairing", () => {
+    const isolated = WhoElseEngine.fromSeed();
+    const clerk = isolated.store.get("agent-inbox-clerk");
+    const hold = isolated.store.get("agent-holdwright");
+    assert.ok(clerk && hold);
+    isolated.publish(hold.id, [
+      { kind: "offer", capability: "calendar hold resolution", status: "withdrawn" },
+    ]);
+    const updated = isolated.store.get(hold.id);
+    assert.equal(
+      publicationsOf(updated!).find((p) => p.capability === "calendar hold resolution")?.status,
+      "withdrawn",
+    );
+    const found = isolated.whoelse({
+      context: "Who else can do calendar hold resolution?",
+      requester: clerk.id,
+      limit: 8,
+    });
+    assert.ok(!found.pairs.some((p) => p.offer.entityId === hold.id));
+    const hit = found.candidates.find((c) => c.entity.id === hold.id);
+    assert.ok(hit?.matched?.offer?.capability !== "calendar hold resolution");
   });
 
   it("register + publish is idempotent and findable without a vertical", () => {
@@ -112,6 +150,8 @@ describe("OFFER / SEEK as first-class network objects", () => {
     assert.ok(delegated.receipt?.id);
     assert.equal(delegated.receipt?.toAgentId, "agent-holdwright");
     assert.ok(delegated.match?.status === "invoked" || delegated.match?.status === "verified");
+    assert.ok(delegated.match?.offerPublicationId);
+    assert.ok(delegated.match?.seekPublicationId);
   });
 
   it("existing lenses still return in-cluster first-five", () => {
@@ -121,6 +161,7 @@ describe("OFFER / SEEK as first-class network objects", () => {
       assert.ok(result.candidates.length > 0, query);
       const blob = result.candidates.map((c) => `${c.entity.name} ${c.entity.offers.join(" ")}`).join(" ");
       assert.match(blob, expect, `${query} → ${blob}`);
+      assert.ok(result.pairs.every((p) => p.score >= 0.85));
     }
   });
 });

@@ -5,8 +5,15 @@ import type {
   PublicationInput,
   PublicationKind,
   PublicationSpec,
+  PublicationStatus,
 } from "./types.js";
 import { jaccard, tokenize } from "./text.js";
+
+export const LIVE_PUBLICATION_STATUS: PublicationStatus = "active";
+
+export function isLivePublication(p: Publication): boolean {
+  return !p.status || p.status === LIVE_PUBLICATION_STATUS;
+}
 
 export function slugCapability(capability: string): string {
   return capability.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "capability";
@@ -35,6 +42,7 @@ export function normalizePublication(
     phrases: unique([capability, ...(partial.phrases ?? [])]),
     constraints: partial.constraints ?? [],
     evidence: partial.evidence,
+    status: partial.status ?? LIVE_PUBLICATION_STATUS,
     created_at: partial.created_at ?? now,
     updated_at: now,
   };
@@ -44,12 +52,16 @@ export function publicationsOf(entity: Entity): Publication[] {
   return entity.publications ?? [];
 }
 
+export function activePublicationsOf(entity: Entity): Publication[] {
+  return publicationsOf(entity).filter(isLivePublication);
+}
+
 export function offerRecordsOf(entity: Entity): Publication[] {
-  return publicationsOf(entity).filter((p) => p.kind === "offer");
+  return activePublicationsOf(entity).filter((p) => p.kind === "offer");
 }
 
 export function seekRecordsOf(entity: Entity): Publication[] {
-  return publicationsOf(entity).filter((p) => p.kind === "seek");
+  return activePublicationsOf(entity).filter((p) => p.kind === "seek");
 }
 
 export function phrasesOf(pubs: Publication[]): string[] {
@@ -57,9 +69,10 @@ export function phrasesOf(pubs: Publication[]): string[] {
 }
 
 export function bagsFromPublications(pubs: Publication[]): { offers: string[]; seeks: string[] } {
+  const live = pubs.filter(isLivePublication);
   return {
-    offers: phrasesOf(pubs.filter((p) => p.kind === "offer")),
-    seeks: phrasesOf(pubs.filter((p) => p.kind === "seek")),
+    offers: phrasesOf(live.filter((p) => p.kind === "offer")),
+    seeks: phrasesOf(live.filter((p) => p.kind === "seek")),
   };
 }
 
@@ -77,6 +90,7 @@ export function upsertPublications(existing: Publication[], incoming: Publicatio
         phrases: unique([...(prior.phrases ?? []), ...(next.phrases ?? [])]),
         constraints: next.constraints?.length ? next.constraints : prior.constraints,
         evidence: next.evidence ?? prior.evidence,
+        status: next.status ?? prior.status ?? LIVE_PUBLICATION_STATUS,
         created_at: prior.created_at,
         updated_at: next.updated_at,
       };
@@ -156,18 +170,45 @@ export function capabilityOverlap(a: Publication, b: Publication | string): numb
   return jaccard(ta, tb);
 }
 
+function isQueryPublication(p?: Publication): boolean {
+  return p?.entityId === "query";
+}
+
+function preferDurable(
+  current: { score: number; offer?: Publication; seek?: Publication },
+  next: { score: number; offer?: Publication; seek?: Publication },
+): boolean {
+  if (next.score > current.score) return true;
+  if (next.score < current.score || next.score <= 0) return false;
+  const currentQuery = isQueryPublication(current.offer) || isQueryPublication(current.seek);
+  const nextQuery = isQueryPublication(next.offer) || isQueryPublication(next.seek);
+  return currentQuery && !nextQuery;
+}
+
+/** Query-as-publication plus live records from requester / exemplar entities. */
+export function counterpartPublications(
+  queryText: string,
+  side?: MatchSide,
+  counterparts?: Entity[],
+): Publication[] {
+  const fromEntities = (counterparts ?? []).flatMap((e) => activePublicationsOf(e));
+  return [...fromEntities, ...queryAsPublications(queryText, side)];
+}
+
 export function bestPublicationMatch(
   entity: Entity,
   queryText: string,
   side?: MatchSide,
-  contextEntity?: Entity,
+  counterparts?: Entity | Entity[],
 ): { score: number; offer?: Publication; seek?: Publication } {
-  const pubs = publicationsOf(entity);
-  const queryPubs = contextEntity ? publicationsOf(contextEntity) : queryAsPublications(queryText, side);
+  const pubs = activePublicationsOf(entity);
+  const other = Array.isArray(counterparts) ? counterparts : counterparts ? [counterparts] : [];
+  const queryPubs = counterpartPublications(queryText, side, other);
   let best: { score: number; offer?: Publication; seek?: Publication } = { score: 0 };
 
   const consider = (offer: Publication | undefined, seek: Publication | undefined, score: number) => {
-    if (score > best.score) best = { score, offer, seek };
+    const next = { score, offer, seek };
+    if (preferDurable(best, next)) best = next;
   };
 
   const entityOffers = pubs.filter((p) => p.kind === "offer");

@@ -581,16 +581,19 @@ Doctrine after catalog lock: WhoElse is a shared find layer. Entities publish OF
 49. **Register was the right verb — once it accepted a SEEK-only agent.** Requiring `offers.min(1)` hid InboxClerk. The contract is now “identity + at least one OFFER and/or SEEK.” Idempotent on `id` (same capability upserts phrases). `whoelse.publish` is the focused attach/update for an entity that already exists.
 50. **A find with no lens is the proof.** `Who else can do calendar hold resolution?` infers no view and no roles. Holdwright ranks because its OFFER record capability is in the sentence — not because a `calendar` tab exists. Dating / apt / jobs first-five stayed in-cluster; the new pair does not mention voice assistants.
 51. **Catalog IDs must not become `Publication.kind`.** Kind is only `offer` \| `seek`. `DATE` / `i308-date` / `AI TOOLS` stay in `legacy/intent-protocol/` as aliases for humans to start a sentence. Agents skip the alias table and call `whoelse.find({ intent })`.
+52. **Find was still an entity ranker.** `matched` pointers were not a pair list. `WhoElseResult.pairs` (and machine `pairs`) is the complementary object: high-confidence OFFER↔SEEK only (score ≥ 0.85). Dating first-five stays entity candidates; it does not mint a pair per dinner-date human.
+53. **Requester is the other side of the pair.** `requester` was exclude-only. InboxClerk as requester now supplies its SEEK record, so the pair is clerk SEEK id ↔ Holdwright OFFER id — not `pub-query-seek`. Durable pairs persist as `MatchRecord` with publication ids. Query-synthetic sides are returned but not stored.
+54. **Lifecycle is status, not a second graph.** `active` / `withdrawn` / `expired` on the publication. Withdrawn Holdwright OFFER drops out of pairing. Record field is `kind`; query HAS-vs-NEEDS stays `side`.
 
 ### SHARED DERIVATION
 
 The leftover network object is:
 
 ```
-ENTITY  →  publications: [{ id, entityId, kind: offer|seek, capability, constraints?, evidence?, created_at }]
-whoelse.find  →  OFFER↔SEEK (and same-kind reciprocal) across any entity type
+ENTITY  →  publications: [{ id, entityId, kind: offer|seek, capability, status, constraints?, evidence?, created_at }]
+whoelse.find  →  candidates[] + pairs[] (OFFER↔SEEK, including requester records)
 whoelse.register / whoelse.publish  →  write those records
-whoelse.delegate  →  still find + invoke + receipt
+whoelse.invoke / whoelse.delegate  →  find + invoke + receipt
 ```
 
 String bags remain a derived view so TF-IDF and old clients do not fork. Lenses remain chips. One-box `/universal` is the same `POST /api/whoelse` path.

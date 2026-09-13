@@ -112,7 +112,9 @@ Generic. Not dating-hardcoded.
   description: string
   publications?: {                      // first-class OFFER / SEEK records
     id, entityId, kind: "offer"|"seek",
-    capability, phrases?, constraints?, evidence?, created_at, updated_at
+    capability, phrases?, constraints?, evidence?,
+    status?: "active"|"withdrawn"|"expired",
+    created_at, updated_at
   }[]
   offers: string[]                      // derived view of offer records (compat)
   seeks: string[]                       // derived view of seek records (compat)
@@ -137,13 +139,13 @@ Dating humans **offer** skills / presence and **seek** compatible others. Labele
 
 | Piece | What it is | What it is not |
 | --- | --- | --- |
-| **OFFER / SEEK record** | `{ id, entityId, kind, capability, constraints?, evidence?, timestamps }` | A vertical listing type, a 505 intent ID |
+| **OFFER / SEEK record** | `{ id, entityId, kind, capability, constraints?, evidence?, status, timestamps }` | A vertical listing type, a 505 intent ID |
 | **String bags** | Derived view (`offers[]` / `seeks[]`) for TF-IDF + old clients | A second matcher |
 | **whoelse.register** | Identity + at least one OFFER and/or SEEK. Idempotent on `id` | `jobs.register` |
 | **whoelse.publish** | Attach/update records on an existing entity | A new find verb |
-| **whoelse.find** | Matches OFFER↔SEEK (and reciprocal) across entity kinds. No lens required | `calendar.find` |
+| **whoelse.find** | Entity candidates **and** high-confidence OFFER↔SEEK `pairs` (score ≥ 0.85). Requester SEEKs pair against candidate OFFERs. No lens required | `calendar.find` |
 
-Dogfood: InboxClerk **SEEKs** `calendar hold resolution`; Holdwright **OFFERs** it. `whoelse.find({ intent: "Who else can do calendar hold resolution?" })` with no type/side/roles returns Holdwright. `whoelse.delegate` still writes a receipt. One-box `/universal` is the same path.
+Dogfood: InboxClerk **SEEKs** `calendar hold resolution`; Holdwright **OFFERs** it. `whoelse.find({ intent: "Who else can do calendar hold resolution?", requester: "agent-inbox-clerk" })` returns Holdwright **and** the pair (clerk SEEK id ↔ Holdwright OFFER id). `whoelse.invoke` and `whoelse.delegate` both write a receipt. One-box `/universal` is the same path.
 
 Catalog intents (`DATE`, `RIDESHARE`, `AI TOOLS`, …) are **aliases for humans to start a sentence**. They are not imported into `@whoelse/core`. Thin hints live in `legacy/intent-protocol/onebox-alias-hints.json` only.
 
@@ -219,7 +221,7 @@ pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfo
 
 **Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `side`, `roles`, `exclude`, `knownEntities`, `entityId`, `limit`, `mode`, `ranking`, `minTrust`.
 
-**Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, publications, matched, next }] }`
+**Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, publications, matched, next }], pairs: [{ offerId, seekId, offerEntityId, seekEntityId, capability, score }] }`
 
 Cursor / Claude — remote (preferred):
 
