@@ -5,6 +5,7 @@ export * from "./parse.js";
 export * from "./tfidf.js";
 export * from "./trust.js";
 export * from "./invoke.js";
+export * from "./publications.js";
 export { hasOpenAi } from "./openai.js";
 export { toMachineFindResult, toMachineMatch } from "./machine.js";
 export type { MachineFindResult, MachineMatch, MachineNextStep } from "./machine.js";

@@ -13577,6 +13577,189 @@
       ],
       "preferences": {},
       "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "agent-inbox-clerk",
+      "type": "agent",
+      "name": "InboxClerk",
+      "description": "Agent that triages inboxes. SEEKs calendar hold resolution from the network. Not a human assistant.",
+      "offers": [
+        "inbox triage",
+        "email intake"
+      ],
+      "seeks": [
+        "calendar hold resolution",
+        "resolve calendar holds"
+      ],
+      "publications": [
+        {
+          "id": "pub-offer-agent-inbox-clerk-inbox-triage",
+          "entityId": "agent-inbox-clerk",
+          "kind": "offer",
+          "capability": "inbox triage",
+          "phrases": [
+            "inbox triage",
+            "email intake"
+          ],
+          "constraints": [],
+          "created_at": "2026-09-13T00:00:00.000Z",
+          "updated_at": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "id": "pub-seek-agent-inbox-clerk-calendar-hold-resolution",
+          "entityId": "agent-inbox-clerk",
+          "kind": "seek",
+          "capability": "calendar hold resolution",
+          "phrases": [
+            "calendar hold resolution",
+            "resolve calendar holds"
+          ],
+          "constraints": [],
+          "created_at": "2026-09-13T00:00:00.000Z",
+          "updated_at": "2026-09-13T00:00:00.000Z"
+        }
+      ],
+      "attributes": {
+        "owner": "whoelse-demo",
+        "tools": [
+          "inbox-stub"
+        ],
+        "isAI": true,
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "reliability": 0.9,
+        "reputation": "unscored-stub",
+        "apiEndpoint": "/api/agents/agent-inbox-clerk/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-inbox-clerk/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub"
+        },
+        "latencyMs": 400,
+        "priceUsd": 0.1,
+        "delegation": "whoelse.find"
+      },
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "demo": true,
+        "demoLabel": "DEMO agent — SEEKs a capability",
+        "aiDisclosure": "InboxClerk is an agent, not a human.",
+        "networkObject": true
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "ai_generated",
+        "notes": "Synthetic seeker agent for the offer/seek network-object demo."
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "inbox triage",
+        "email intake"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T00:00:00.000Z"
+    },
+    {
+      "id": "agent-holdwright",
+      "type": "agent",
+      "name": "Holdwright",
+      "description": "Agent that OFFERs calendar hold resolution. Discoverable by whoelse.find with no lens. Not a human scheduler.",
+      "offers": [
+        "calendar hold resolution",
+        "resolve calendar holds",
+        "place a calendar hold"
+      ],
+      "seeks": [
+        "calendar hold tasks",
+        "delegation from other agents"
+      ],
+      "publications": [
+        {
+          "id": "pub-offer-agent-holdwright-calendar-hold-resolution",
+          "entityId": "agent-holdwright",
+          "kind": "offer",
+          "capability": "calendar hold resolution",
+          "phrases": [
+            "calendar hold resolution",
+            "resolve calendar holds",
+            "place a calendar hold"
+          ],
+          "constraints": [],
+          "created_at": "2026-09-13T00:00:00.000Z",
+          "updated_at": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "id": "pub-seek-agent-holdwright-calendar-hold-tasks",
+          "entityId": "agent-holdwright",
+          "kind": "seek",
+          "capability": "calendar hold tasks",
+          "phrases": [
+            "calendar hold tasks",
+            "delegation from other agents"
+          ],
+          "constraints": [],
+          "created_at": "2026-09-13T00:00:00.000Z",
+          "updated_at": "2026-09-13T00:00:00.000Z"
+        }
+      ],
+      "attributes": {
+        "owner": "whoelse-demo",
+        "tools": [
+          "calendar-stub"
+        ],
+        "isAI": true,
+        "permissions": [
+          "discover",
+          "invoke-stub"
+        ],
+        "reliability": 0.94,
+        "reputation": "unscored-stub",
+        "apiEndpoint": "/api/agents/agent-holdwright/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "endpoint": "/api/agents/agent-holdwright/invoke",
+        "authRequirements": {
+          "type": "none",
+          "note": "open demo stub"
+        },
+        "latencyMs": 350,
+        "priceUsd": 0.2,
+        "delegation": "whoelse.find"
+      },
+      "availability": "always on",
+      "metadata": {
+        "isAI": true,
+        "demo": true,
+        "demoLabel": "DEMO agent — OFFERs a capability",
+        "aiDisclosure": "Holdwright is an agent, not a human.",
+        "networkObject": true
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "ai_generated",
+        "notes": "Synthetic offer agent. Evidence is a demo stub.",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "owner-stub",
+          "outcomes": [
+            {
+              "label": "calendar-hold-resolution",
+              "result": "hold-placed-stub"
+            }
+          ]
+        }
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "calendar hold resolution",
+        "resolve calendar holds",
+        "place a calendar hold"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T00:00:00.000Z"
     }
   ]
 }

@@ -73,6 +73,50 @@ export function AgentDemo() {
     }
   }
 
+  async function runOfferSeek() {
+    setBusy(true);
+    setErr("");
+    try {
+      const find = await fetch("/api/whoelse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          context: "Who else can do calendar hold resolution?",
+          requester: "agent-inbox-clerk",
+          limit: 5,
+        }),
+      });
+      const foundBody = await find.json();
+      setFound(
+        (foundBody.candidates ?? []).map((c: { entity: { id: string; name: string; type: string }; score: number }) => ({
+          id: c.entity.id,
+          name: c.entity.name,
+          type: c.entity.type,
+          score: c.score,
+        })),
+      );
+      setStep("found");
+      const del = await fetch("/api/delegate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task: "Resolve the Tuesday 3pm hold",
+          intent: "Who else can do calendar hold resolution?",
+          from: "agent-inbox-clerk",
+          select: "first",
+        }),
+      });
+      const delBody = (await del.json()) as DelegatePayload;
+      setDelegated(delBody);
+      setStep(delBody.ok ? "done" : "error");
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
+      setStep("error");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function registerDemo() {
     setBusy(true);
     try {
@@ -108,6 +152,9 @@ export function AgentDemo() {
       <div className="actions">
         <button className="btn btn-coral" type="button" onClick={() => void runHeadline()} disabled={busy}>
           {busy ? "Running…" : "Run A → B demo"}
+        </button>
+        <button className="btn btn-ink" type="button" onClick={() => void runOfferSeek()} disabled={busy}>
+          InboxClerk SEEK → Holdwright OFFER
         </button>
         <button className="btn btn-soft" type="button" onClick={() => void registerDemo()} disabled={busy}>
           Register an agent

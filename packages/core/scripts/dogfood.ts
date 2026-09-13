@@ -51,6 +51,7 @@ const queries: { q: string; entityId?: string }[] = [
   { q: "Who else has a dataset that is the original source?" },
   { q: "Who else sells nearby and is open now?" },
   { q: "I need help understanding this market." },
+  { q: "Who else can do calendar hold resolution?" },
 ];
 
 queries.forEach((item, i) => {

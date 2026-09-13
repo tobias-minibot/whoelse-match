@@ -2,6 +2,13 @@ import { buildExplanation, labelsOf } from "./explain.js";
 import { invokeAgent } from "./invoke.js";
 import { inferConstraints, inferMode, inferVertical, parseUniversal, queryText, wantsCheaper } from "./parse.js";
 import { maybeChat, maybeRerankAndExplain } from "./openai.js";
+import {
+  bagsFromPublications,
+  bestPublicationMatch,
+  normalizePublication,
+  parsePublicationInputs,
+  upsertPublications,
+} from "./publications.js";
 import { entityText, EntityStore, offersOf, seeksOf, stringList } from "./store.js";
 import { jaccard } from "./text.js";
 import { TfidfIndex } from "./tfidf.js";
@@ -14,6 +21,7 @@ import type {
   Entity,
   MatchRecord,
   MatchSide,
+  PublicationSpec,
   RegistrationSpec,
   ScoreBreakdown,
   UniversalQuery,
@@ -119,13 +127,22 @@ export class WhoElseEngine {
       if (inferredConstraints.state && !matchState(entity, inferredConstraints.state)) continue;
 
       const text = this.index.similarity(entity.id, qVec);
-      const structured = structuredScore(
+      const bags = structuredScore(
         entity,
         contextEntity,
         queryLabels,
         inferredMode,
         inferredConstraints.side,
       );
+      const pubMatch = bestPublicationMatch(
+        entity,
+        rawQuery,
+        inferredConstraints.side,
+        contextEntity,
+      );
+      // Only fold a publication hit when it is a real capability match.
+      // Weak token overlap must not reshuffle dating first-five.
+      const structured = pubMatch.score >= 0.85 ? Math.max(bags, pubMatch.score) : bags;
       const location = locationScore(entity, inferredConstraints, contextEntity);
       const typeAffinity = typeScore(entity, inferredMode, contextEntity);
       const feedback = this.store.feedbackScore(entity.id, request.context);
@@ -173,6 +190,10 @@ export class WhoElseEngine {
         entity,
         score: total,
         explanation: { ...narrative, scoreBreakdown: breakdown },
+        matched:
+          pubMatch.score >= 0.2
+            ? { offer: pubMatch.offer, seek: pubMatch.seek }
+            : undefined,
       });
     }
 
@@ -212,55 +233,90 @@ export class WhoElseEngine {
   }
 
   register(spec: RegistrationSpec): Entity {
+    const incomingSpecs = [
+      ...parsePublicationInputs("offer", spec.offers),
+      ...parsePublicationInputs("seek", spec.seeks),
+      ...(spec.publications ?? []),
+    ].filter((p) => p.capability?.trim());
+    const existing = spec.id ? this.store.get(spec.id) : undefined;
+    if (!incomingSpecs.length && !existing) {
+      throw new Error("register requires at least one offer or seek");
+    }
     const slug = spec.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "agent";
-    const id = spec.id ?? `agent-reg-${slug}-${Math.random().toString(36).slice(2, 7)}`;
+    const id = spec.id ?? existing?.id ?? `agent-reg-${slug}-${Math.random().toString(36).slice(2, 7)}`;
     const now = new Date().toISOString();
-    const endpoint = spec.endpoint?.url ?? `/api/agents/${id}/invoke`;
+    const incoming = incomingSpecs.map((p) => normalizePublication({ ...p, entityId: id }, now));
+    const publications = upsertPublications(existing?.publications ?? [], incoming);
+    const bags = bagsFromPublications(publications);
+    const offers = bags.offers.length ? bags.offers : existing?.offers ?? [];
+    const seeks = bags.seeks.length
+      ? bags.seeks
+      : existing?.seeks ?? ["work", "who else can use this capability"];
+    if (!offers.length && !seeks.length) {
+      throw new Error("register requires at least one offer or seek");
+    }
+    const endpoint = spec.endpoint?.url ?? existing?.attributes?.apiEndpoint ?? `/api/agents/${id}/invoke`;
     const entity: Entity = {
       id,
-      type: spec.type ?? "agent",
-      name: spec.name,
-      description: spec.description,
-      offers: spec.offers,
-      seeks: spec.seeks ?? ["work", "who else can use this capability"],
-      capabilities: spec.offers,
+      type: spec.type ?? existing?.type ?? "agent",
+      name: spec.name || existing?.name || slug,
+      description: spec.description || existing?.description || "",
+      publications,
+      offers,
+      seeks,
+      capabilities: offers,
       attributes: {
-        role: spec.type === "human" ? undefined : "worker",
-        owner: spec.owner,
-        version: spec.version ?? "0.1.0",
-        status: spec.status ?? "available",
-        protocol: spec.protocol ?? spec.endpoint?.protocol ?? "http",
-        requirements: spec.requirements,
-        permissions: spec.permissions,
-        priceUsd: typeof spec.cost === "number" ? spec.cost : undefined,
-        pricing: spec.cost,
-        latencyMs: typeof spec.latency === "number" ? spec.latency : undefined,
-        latency: spec.latency,
+        ...(existing?.attributes ?? {}),
+        role:
+          spec.type === "human"
+            ? undefined
+            : (existing?.attributes?.role as string | undefined) ?? "worker",
+        owner: spec.owner ?? existing?.attributes?.owner,
+        version: spec.version ?? existing?.attributes?.version ?? "0.1.0",
+        status: spec.status ?? existing?.attributes?.status ?? "available",
+        protocol: spec.protocol ?? spec.endpoint?.protocol ?? existing?.attributes?.protocol ?? "http",
+        requirements: spec.requirements ?? existing?.attributes?.requirements,
+        permissions: spec.permissions ?? existing?.attributes?.permissions,
+        priceUsd: typeof spec.cost === "number" ? spec.cost : existing?.attributes?.priceUsd,
+        pricing: spec.cost ?? existing?.attributes?.pricing,
+        latencyMs: typeof spec.latency === "number" ? spec.latency : existing?.attributes?.latencyMs,
+        latency: spec.latency ?? existing?.attributes?.latency,
         apiEndpoint: endpoint,
         mcpEndpoint: "/api/mcp",
         endpoint,
-        authRequirements: spec.endpoint?.auth ?? "none-demo",
+        authRequirements: spec.endpoint?.auth ?? existing?.attributes?.authRequirements ?? "none-demo",
         registered: true,
       },
-      preferences: {},
-      availability: spec.availability ?? "on request",
-      location: spec.location,
+      preferences: existing?.preferences ?? {},
+      availability: spec.availability ?? existing?.availability ?? "on request",
+      location: spec.location ?? existing?.location,
       metadata: {
+        ...(existing?.metadata ?? {}),
         demo: true,
-        demoLabel: "DEMO registered agent — not a production worker",
-        aiDisclosure: spec.type === "human" ? undefined : `${spec.name} is a registered agent, not a human.`,
-        vertical: "capability",
+        demoLabel: existing?.metadata?.demoLabel ?? "DEMO registered agent — not a production worker",
+        aiDisclosure:
+          spec.type === "human"
+            ? undefined
+            : existing?.metadata?.aiDisclosure ?? `${spec.name || existing?.name} is a registered agent, not a human.`,
+        vertical: existing?.metadata?.vertical ?? "capability",
       },
-      provenance: spec.type === "human" ? "user" : "ai_generated",
+      provenance: spec.type === "human" ? "user" : existing?.provenance ?? "ai_generated",
       trust: {
-        status: spec.evidence ? "evidence" : "stub",
+        status: spec.evidence || existing?.trust?.evidence ? "evidence" : existing?.trust?.status ?? "stub",
         provenance: "user",
-        notes: "Registration evidence is self-asserted.",
-        evidence: spec.evidence,
+        notes: existing?.trust?.notes ?? "Registration evidence is self-asserted.",
+        evidence: spec.evidence ?? existing?.trust?.evidence,
       },
-      created_at: now,
+      created_at: existing?.created_at ?? now,
     };
     const stored = this.store.add(entity);
+    this.index.add(stored.id, entityText(stored));
+    return stored;
+  }
+
+  /** Attach or update OFFER / SEEK records on an existing entity. Idempotent. */
+  publish(entityId: string, specs: PublicationSpec[]): Entity {
+    const stored = this.store.publish(entityId, specs);
     this.index.add(stored.id, entityText(stored));
     return stored;
   }

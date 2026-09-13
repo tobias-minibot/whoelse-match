@@ -110,6 +110,28 @@ const SCRIPTS: Record<string, (task: string) => { would: string; result: Record<
     would: `I would take over coding if CodeSmith failed on: ${task}`,
     result: { kind: "failover", role: "codesmith-understudy", assumed: false },
   }),
+  "agent-inbox-clerk": (task) => ({
+    would: `I would triage “${task}” but I cannot resolve calendar holds. Call whoelse.find for Holdwright.`,
+    result: {
+      kind: "inbox",
+      cannot: ["calendar hold resolution"],
+      hint: "whoelse.find",
+      intent: "Who else can do calendar hold resolution?",
+    },
+  }),
+  "agent-holdwright": (task) => ({
+    would: `I would resolve calendar holds described as: ${task}`,
+    result: {
+      kind: "calendar-hold",
+      resolved: true,
+      evidence: {
+        verified: true,
+        verifiedBy: "Holdwright",
+        outcomes: [{ label: "calendar-hold-resolution", result: "hold-placed-stub" }],
+        receipts: [`receipt:holdwright:${Date.now()}`],
+      },
+    },
+  }),
   "agent-claim-writer": (task) => ({
     would: `I would draft the claim “${task}” but I cannot verify it.`,
     result: {

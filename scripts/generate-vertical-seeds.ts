@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildFactoryEntities } from "./factory-entities.ts";
+import { NETWORK_OBJECT_ENTITIES } from "./network-object-entities.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SEED = join(ROOT, "data", "seed.json");
@@ -1161,11 +1162,13 @@ function main() {
     ...rides,
     ...services,
     ...factory,
+    ...NETWORK_OBJECT_ENTITIES,
   ];
   const incomingIds = new Set(incoming.map((e) => e.id));
   const kept = raw.entities.filter((e) => {
     const scale = (e.metadata as { scale?: string } | undefined)?.scale;
     if (scale === "2026-verticals") return false;
+    if ((e.metadata as { networkObject?: boolean } | undefined)?.networkObject) return false;
     return !incomingIds.has(e.id);
   });
 

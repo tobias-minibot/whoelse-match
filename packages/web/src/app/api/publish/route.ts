@@ -5,22 +5,15 @@ export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
-  const hasOffers = Array.isArray(body.offers) && body.offers.length > 0;
-  const hasSeeks = Array.isArray(body.seeks) && body.seeks.length > 0;
-  const hasPubs = Array.isArray(body.publications) && body.publications.length > 0;
-  if (!body.name || !body.description) {
-    return NextResponse.json({ error: "name and description required" }, { status: 400 });
-  }
-  if (!hasOffers && !hasSeeks && !hasPubs) {
-    return NextResponse.json({ error: "at least one offer or seek required" }, { status: 400 });
+  if (!body.entityId || !Array.isArray(body.publications) || body.publications.length === 0) {
+    return NextResponse.json({ error: "entityId and publications[] required" }, { status: 400 });
   }
   try {
-    const entity = getEngine().register(body);
+    const entity = getEngine().publish(body.entityId, body.publications);
     return NextResponse.json({
       ok: true,
       entity: {
         id: entity.id,
-        type: entity.type,
         name: entity.name,
         offers: entity.offers,
         seeks: entity.seeks,
@@ -29,7 +22,6 @@ export async function POST(req: Request) {
           kind: p.kind,
           capability: p.capability,
         })),
-        endpoint: entity.attributes.apiEndpoint,
       },
     });
   } catch (err) {

@@ -5,6 +5,7 @@ import { SiteNav } from "@/components/SiteNav";
 import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
 
 const EXAMPLES = [
+  "Who else can do calendar hold resolution?",
   "I need someone who can redesign my website next week for under $2,000.",
   "I need help understanding this market.",
   "Who else wants to build a network of voice assistants?",
@@ -58,11 +59,13 @@ export function UniversalBox() {
     <div className="app">
       <SiteNav current="box" />
       <p className="doctrine">
-        <strong>One box. No category required.</strong> Verticals are inferred views, not tabs.{" "}
+        <strong>One box. No category required.</strong> Entities publish OFFER/SEEK; this box calls the same{" "}
+        <code>whoelse.find</code>. Verticals are views, not engines.{" "}
         <a href="/">Costume tabs for comparison →</a>
       </p>
       <div className="banner banner-demo">
-        <strong>DEMO.</strong> Same <code>whoelse.find</code>. No category required. “I need help understanding this market.” should return mixed types.
+        <strong>DEMO.</strong> Same <code>whoelse.find</code>. No category required. “Who else can do calendar
+        hold resolution?” should return Holdwright (an agent OFFER) without a lens.
       </div>
       <section className="search-panel">
         <div className="eyebrow">Universal Who else?</div>
@@ -169,6 +172,7 @@ function OneCard({ candidate, onReverse }: { candidate: Candidate; onReverse: ()
         <span className={`badge ${e.type}`}>{e.type}</span>
       </div>
       <p className="why">{candidate.explanation.why}</p>
+      {pubLine(candidate) && <p className="facts">Network object · {pubLine(candidate)}</p>}
       {trust && <p className="facts evidence">Why trust this? {trust}</p>}
       <div className="actions">
         <button className="btn btn-ink btn-sm" type="button" onClick={onReverse}>
@@ -177,6 +181,23 @@ function OneCard({ candidate, onReverse }: { candidate: Candidate; onReverse: ()
       </div>
     </article>
   );
+}
+
+function pubLine(c: Candidate): string {
+  const matched = c.matched?.offer?.capability
+    ? `OFFER ${c.matched.offer.capability}`
+    : c.matched?.seek?.capability
+      ? `SEEK ${c.matched.seek.capability}`
+      : "";
+  if (matched) return matched;
+  const pubs = c.entity.publications ?? [];
+  const offer = pubs.find((p) => p.kind === "offer");
+  const seek = pubs.find((p) => p.kind === "seek");
+  if (offer) return `OFFER ${offer.capability}`;
+  if (seek) return `SEEK ${seek.capability}`;
+  if (c.entity.offers?.[0]) return `OFFER ${c.entity.offers[0]}`;
+  if (c.entity.seeks?.[0]) return `SEEK ${c.entity.seeks[0]}`;
+  return "";
 }
 
 function trustLine(e: Entity): string {

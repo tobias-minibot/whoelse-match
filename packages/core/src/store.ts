@@ -8,9 +8,17 @@ import type {
   InvokeReceipt,
   MatchRecord,
   NetworkStats,
+  Publication,
+  PublicationSpec,
   Relation,
   TrustEvidence,
 } from "./types.js";
+import {
+  bagsFromPublications,
+  hydratePublications,
+  normalizePublication,
+  upsertPublications,
+} from "./publications.js";
 import { uniqueStrings } from "./text.js";
 
 export function findSeedPath(): string {
@@ -50,10 +58,21 @@ export function seeksOf(entity: Entity): string[] {
 }
 
 export function normalizeEntity(raw: Entity): Entity {
-  const offers = offersOf(raw);
-  const seeks = seeksOf(raw);
+  const looking = uniqueStrings(raw.attributes?.lookingFor);
+  const wants = raw.preferences?.wantsMoreOf;
+  const extra = typeof wants === "string" ? [wants] : uniqueStrings(wants);
+  const withBags: Entity = {
+    ...raw,
+    offers: unique([...(raw.offers ?? []), ...(raw.capabilities ?? [])]),
+    seeks: unique([...(raw.seeks ?? []), ...looking, ...extra]),
+  };
+  const publications = hydratePublications(withBags);
+  const bags = bagsFromPublications(publications);
+  const offers = unique([...bags.offers, ...withBags.offers]);
+  const seeks = unique([...bags.seeks, ...withBags.seeks]);
   return {
     ...raw,
+    publications,
     offers,
     seeks,
     capabilities: offers,
@@ -70,6 +89,8 @@ export function normalizeEntity(raw: Entity): Entity {
 export class EntityStore {
   readonly entities: Entity[];
   readonly byId: Map<string, Entity>;
+  readonly publications: Publication[] = [];
+  readonly publicationsById = new Map<string, Publication>();
   readonly feedback: FeedbackEvent[] = [];
   readonly interests: InterestRecord[] = [];
   readonly matches: MatchRecord[] = [];
@@ -79,6 +100,7 @@ export class EntityStore {
   constructor(entities: Entity[]) {
     this.entities = entities.map(normalizeEntity);
     this.byId = new Map(this.entities.map((e) => [e.id, e]));
+    this.reindexPublications();
   }
 
   static fromSeed(seedPath = findSeedPath()): EntityStore {
@@ -104,11 +126,45 @@ export class EntityStore {
       const idx = this.entities.findIndex((e) => e.id === next.id);
       if (idx >= 0) this.entities[idx] = next;
       this.byId.set(next.id, next);
+      this.reindexPublications();
       return next;
     }
     this.entities.push(next);
     this.byId.set(next.id, next);
+    this.reindexPublications();
     return next;
+  }
+
+  publish(entityId: string, specs: PublicationSpec[]): Entity {
+    const entity = this.get(entityId);
+    if (!entity) throw new Error(`Unknown entity ${entityId}`);
+    if (!specs.length) throw new Error("publish requires at least one offer or seek");
+    const now = new Date().toISOString();
+    const incoming = specs.map((spec) => normalizePublication({ ...spec, entityId }, now));
+    const publications = upsertPublications(entity.publications ?? [], incoming);
+    const bags = bagsFromPublications(publications);
+    return this.add({
+      ...entity,
+      publications,
+      offers: bags.offers,
+      seeks: bags.seeks,
+      capabilities: bags.offers,
+    });
+  }
+
+  publication(id: string): Publication | undefined {
+    return this.publicationsById.get(id);
+  }
+
+  private reindexPublications() {
+    this.publications.length = 0;
+    this.publicationsById.clear();
+    for (const e of this.entities) {
+      for (const p of e.publications ?? []) {
+        this.publications.push(p);
+        this.publicationsById.set(p.id, p);
+      }
+    }
   }
 
   recordMatch(partial: Omit<MatchRecord, "id" | "created_at" | "updated_at" | "evidence"> & {
@@ -167,12 +223,16 @@ export class EntityStore {
       if (offersOf(e).length) offers += 1;
       if (seeksOf(e).length) seeks += 1;
     }
+    const offerRecords = this.publications.filter((p) => p.kind === "offer").length;
+    const seekRecords = this.publications.filter((p) => p.kind === "seek").length;
     const invoked = this.matches.filter((m) => m.status === "invoked" || m.status === "verified").length;
-    const unmatched = Math.max(0, seeks - this.matches.length);
+    const unmatched = Math.max(0, seekRecords - this.matches.length);
     return {
       entities: this.entities.length,
       offers,
       seeks,
+      offerRecords,
+      seekRecords,
       matches: this.matches.length,
       unmatched,
       invoked,

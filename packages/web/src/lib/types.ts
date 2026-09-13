@@ -8,6 +8,7 @@ export interface Entity {
   attributes: Record<string, unknown>;
   offers?: string[];
   seeks?: string[];
+  publications?: { id: string; kind: string; capability: string }[];
   capabilities: string[];
   preferences: Record<string, unknown>;
   availability?: string;
@@ -37,6 +38,10 @@ export interface Candidate {
     why: string;
     commonalities: string[];
     surprisingDifference?: string;
+  };
+  matched?: {
+    offer?: { id: string; kind: string; capability: string };
+    seek?: { id: string; kind: string; capability: string };
   };
 }
 

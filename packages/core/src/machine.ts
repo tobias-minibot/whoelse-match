@@ -1,3 +1,4 @@
+import { publicationsOf } from "./publications.js";
 import { offersOf, seeksOf } from "./store.js";
 import type { Candidate, Entity, WhoElseResult } from "./types.js";
 
@@ -70,6 +71,8 @@ export interface MachineMatch {
     notes?: string;
     evidence?: Entity["trust"] extends { evidence?: infer E } ? E : unknown;
   };
+  publications?: { id: string; kind: string; capability: string }[];
+  matched?: { offerId?: string; seekId?: string; capability?: string };
   next: MachineNextStep;
 }
 
@@ -145,6 +148,19 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       notes: e.trust?.notes,
       ...(e.trust?.evidence ? { evidence: e.trust.evidence } : {}),
     },
+    publications: publicationsOf(e).map((p) => ({
+      id: p.id,
+      kind: p.kind,
+      capability: p.capability,
+    })),
+    matched:
+      candidate.matched?.offer || candidate.matched?.seek
+        ? {
+            offerId: candidate.matched.offer?.id,
+            seekId: candidate.matched.seek?.id,
+            capability: candidate.matched.offer?.capability ?? candidate.matched.seek?.capability,
+          }
+        : undefined,
     next: nextStep(e),
   };
 }

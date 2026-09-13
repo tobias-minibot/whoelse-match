@@ -32,6 +32,7 @@ const CASES: [string, RegExp][] = [
     ["Who else has a room tonight in Berlin?", /Berlin|Mitte|hostel|stay/i],
     ["Who else can babysit tonight nearby?", /babysit|Priya|childcare/i],
     ["I need help understanding this market.", /market|Mira|dataset|Watchers|Socrates/i],
+    ["Who else can do calendar hold resolution?", /Holdwright|calendar hold/i],
   ];
 
 describe("MCP whoelse.find", () => {
@@ -55,6 +56,7 @@ describe("MCP whoelse.find", () => {
     const names = tools.map((t) => t.name);
     assert.ok(names.includes("whoelse.find"), `tools: ${names.join(", ")}`);
     assert.ok(names.includes("whoelse.register"));
+    assert.ok(names.includes("whoelse.publish"));
     assert.ok(names.includes("whoelse.delegate"));
     assert.ok(!names.some((n) => /apartment|jobs\.|rides\.|services\./i.test(n)), `no vertical tool: ${names.join(", ")}`);
   });
@@ -74,6 +76,21 @@ describe("MCP whoelse.find", () => {
       .join("\n");
     const reg = JSON.parse(regText) as { entity: { id: string; name: string } };
     assert.match(reg.entity.name, /ClaimCheck Mini/);
+
+    const published = await client.callTool({
+      name: "whoelse.publish",
+      arguments: {
+        entityId: reg.entity.id,
+        publications: [{ kind: "offer", capability: "verify this result", phrases: ["web verification"] }],
+      },
+    });
+    const pubText = (published.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const pub = JSON.parse(pubText) as { ok?: boolean; entity?: { id: string } };
+    assert.equal(pub.ok, true);
+    assert.equal(pub.entity?.id, reg.entity.id);
 
     const delegated = await client.callTool({
       name: "whoelse.delegate",

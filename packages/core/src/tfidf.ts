@@ -9,9 +9,12 @@ export class TfidfIndex {
     const terms = analyze(text);
     const tf = new Map<string, number>();
     for (const t of terms) tf.set(t, (tf.get(t) ?? 0) + 1);
+    const existed = this.vectors.has(id);
     this.vectors.set(id, tf);
-    this.n += 1;
-    for (const t of tf.keys()) this.df.set(t, (this.df.get(t) ?? 0) + 1);
+    if (!existed) {
+      this.n += 1;
+      for (const t of tf.keys()) this.df.set(t, (this.df.get(t) ?? 0) + 1);
+    }
   }
 
   private weight(tf: Map<string, number>): Map<string, number> {

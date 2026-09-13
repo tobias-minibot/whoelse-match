@@ -124,6 +124,8 @@ export type InferredView = InferredVertical;
 export type TrustStatus = "unscored" | "stub" | "evidence";
 export type MatchStatus = "proposed" | "accepted" | "invoked" | "verified" | "declined" | "expired";
 export type EvidenceKind = "verified" | "portfolio" | "outcome" | "license" | "reference" | "receipt" | "disclosure";
+/** First-class network object kind. String bags on ENTITY are derived views. */
+export type PublicationKind = "offer" | "seek";
 export type RelationKind = "owner" | "fallback" | "complement" | "delegate";
 export type EndpointProtocol = "http" | "mcp" | "stub";
 
@@ -203,14 +205,50 @@ export interface GeoLocation {
   country?: string;
 }
 
+/**
+ * First-class OFFER or SEEK on the shared find layer.
+ * Catalog intent IDs (505) are aliases/eval — not this runtime enum.
+ */
+export interface Publication {
+  id: string;
+  entityId: string;
+  kind: PublicationKind;
+  /** Capability / type noun this record is about. */
+  capability: string;
+  /** Extra phrases that participate in matching (compat with string bags). */
+  phrases?: string[];
+  constraints?: AttributeConstraint[];
+  evidence?: TrustEvidence;
+  created_at: string;
+  updated_at: string;
+}
+
+export type OfferRecord = Publication & { kind: "offer" };
+export type SeekRecord = Publication & { kind: "seek" };
+
+/** Input shape for register / publish. Strings still accepted. */
+export interface PublicationSpec {
+  id?: string;
+  kind: PublicationKind;
+  capability: string;
+  phrases?: string[];
+  constraints?: AttributeConstraint[];
+  evidence?: TrustEvidence;
+  created_at?: string;
+}
+
+export type PublicationInput = string | Omit<PublicationSpec, "kind"> | PublicationSpec;
+
 export interface Entity {
   id: string;
   type: EntityType;
   name: string;
   description: string;
-  /** What this entity can provide. Alias of the capability side of matching. */
+  /** First-class OFFER / SEEK records. Hydrated from string bags on load. */
+  publications?: Publication[];
+  /** What this entity can provide. Derived from offer records when present. */
   offers: string[];
-  /** What this entity wants / needs / intends. */
+  /** What this entity wants / needs / intends. Derived from seek records when present. */
   seeks: string[];
   /**
    * @deprecated Prefer `offers`. Kept as a mirror so older clients keep working.
@@ -304,6 +342,11 @@ export interface Candidate {
   entity: Entity;
   score: number;
   explanation: MatchExplanation;
+  /** Best OFFER↔SEEK pair that fired for this candidate. */
+  matched?: {
+    offer?: Publication;
+    seek?: Publication;
+  };
 }
 
 export interface WhoElseResult {
@@ -325,8 +368,10 @@ export interface WhoElseResult {
 export interface RegistrationSpec {
   name: string;
   description: string;
-  offers: string[];
-  seeks?: string[];
+  /** At least one offer or seek required (string or structured record). */
+  offers?: PublicationInput[];
+  seeks?: PublicationInput[];
+  publications?: PublicationSpec[];
   type?: EntityType;
   id?: string;
   owner?: string;
@@ -388,8 +433,14 @@ export interface DelegationResult {
 
 export interface NetworkStats {
   entities: number;
+  /** Entities that have at least one offer phrase (compat). */
   offers: number;
+  /** Entities that have at least one seek phrase (compat). */
   seeks: number;
+  /** First-class OFFER records. */
+  offerRecords: number;
+  /** First-class SEEK records. */
+  seekRecords: number;
   matches: number;
   unmatched: number;
   invoked: number;
