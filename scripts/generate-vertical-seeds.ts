@@ -1,11 +1,12 @@
 #!/usr/bin/env npx tsx
 /**
- * Idempotent seed merge for jobs / rides / services + agent deepening.
+ * Idempotent seed merge for jobs / rides / services / factory verticals + agent deepening.
  * Shared schema only — no vertical-specific types.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { buildFactoryEntities } from "./factory-entities.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SEED = join(ROOT, "data", "seed.json");
@@ -1107,33 +1108,7 @@ const services = [
   }),
 ];
 
-const PRODUCTS_EVAL = [
-  base({
-    id: "eval-product-drill",
-    type: "product",
-    name: "DEMO drill (eval-only)",
-    description: "Tier 3 eval stub. Not a shop. Who else needs a drill?",
-    offers: ["drill", "tool"],
-    seeks: ["borrower"],
-    attributes: { synthetic: true, role: "listing", price: 40 },
-    metadata: meta("products", "DEMO synthetic eval-only product"),
-    trust: trust("stub", "eval-only — no products UI"),
-    provenance: "synthetic",
-  }),
-  base({
-    id: "eval-expert-notary",
-    type: "human",
-    name: "DEMO notary (eval-only)",
-    description: "Tier 3 eval stub for notary who else. Not a real notary. No Experts UI.",
-    offers: ["notary", "notary near me"],
-    seeks: ["documents to notarize"],
-    location: DC,
-    attributes: { synthetic: true, role: "provider", licensed: true },
-    metadata: meta("experts", "DEMO synthetic eval-only expert"),
-    trust: trust("stub", "eval-only — no experts UI"),
-    provenance: "synthetic",
-  }),
-];
+const factory = buildFactoryEntities();
 
 function deepenAgents(entities: Entity[]) {
   const extras: Record<string, Record<string, unknown>> = {
@@ -1185,7 +1160,7 @@ function main() {
     ...jobAgents,
     ...rides,
     ...services,
-    ...PRODUCTS_EVAL,
+    ...factory,
   ];
   const incomingIds = new Set(incoming.map((e) => e.id));
   const kept = raw.entities.filter((e) => {
@@ -1197,11 +1172,9 @@ function main() {
   const next = { entities: [...kept, ...incoming] };
   writeFileSync(SEED, `${JSON.stringify(next, null, 2)}\n`);
 
-  const jobs = incoming.filter((e) => (e.metadata as { vertical?: string }).vertical === "jobs");
-  const rideN = incoming.filter((e) => (e.metadata as { vertical?: string }).vertical === "rides");
-  const svcN = incoming.filter((e) => (e.metadata as { vertical?: string }).vertical === "services");
+  const count = (v: string) => incoming.filter((e) => (e.metadata as { vertical?: string }).vertical === v).length;
   console.log(
-    `seed ${raw.entities.length} → ${next.entities.length} (jobs=${jobs.length} rides=${rideN.length} services=${svcN.length} agents+eval=${incoming.length - jobs.length - rideN.length - svcN.length})`,
+    `seed ${raw.entities.length} → ${next.entities.length} jobs=${count("jobs")} rides=${count("rides")} services=${count("services")} products=${count("products")} experts=${count("experts")} capital=${count("capital")} travel=${count("travel")} events=${count("events")} childcare=${count("childcare")} collab=${count("collab")} compute=${count("compute")} data=${count("data")} local=${count("local")}`,
   );
 }
 

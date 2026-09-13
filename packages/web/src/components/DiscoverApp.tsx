@@ -2,75 +2,18 @@
 
 import { useMemo, useState } from "react";
 import { SiteNav } from "@/components/SiteNav";
+import {
+  examplesFor,
+  FORCE_SIDE,
+  HAS_SIDES,
+  LENSES,
+  OFFER_SIDE_ROLES,
+  lensById,
+  type MarketSide,
+  type Vertical,
+} from "@/lib/lenses";
 import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
 
-const DATING_EXAMPLES = [
-  "Who else wants to build a network of voice assistants?",
-  "Who else near me is into mountain biking?",
-  "Who else works on real estate projects in DC right now?",
-  "Who else wants a low-key dinner and a walk, not an app marathon?",
-  "Who else is a founder looking for a thought partner?",
-];
-
-const APT_SEEK = [
-  "Who else has a 1-bedroom apartment in DC under $2,500?",
-  "Who else has a furnished sublet in Berlin for three months?",
-  "Who else has a place near Georgetown?",
-  "Who else accepts pets?",
-  "Who else has something available next month?",
-];
-
-const APT_OFFER = [
-  "I have a furnished 1-bedroom in Georgetown for $2,200 that allows pets",
-  "Who else needs a furnished apartment in Berlin?",
-  "Who else is looking for exactly the apartment I have?",
-  "Who else might be a good tenant for this listing?",
-  "Who else is looking for a 2-bedroom in DC?",
-];
-
-const JOB_SEEK = [
-  "Who else is hiring AI people in Washington?",
-  "Who else needs someone with my background?",
-  "Who else is available for a two-week coding project?",
-  "Who else can do this work for under $5,000?",
-  "Who else could do this job — human or AI?",
-];
-
-const JOB_OFFER = [
-  "I have AI engineering experience and can start immediately",
-  "Who else is looking for a role like this?",
-  "Who else should I recruit?",
-  "Who else has done this exact kind of work before?",
-  "Who else is a better fit but less obvious?",
-];
-
-const RIDE_SEEK = [
-  "Who else can give me a ride from Georgetown to Dupont?",
-  "Who else can give me a ride to the airport?",
-  "Who else has seats to Moab Saturday?",
-  "Who else can give me a ride?",
-];
-
-const RIDE_OFFER = [
-  "I have 3 seats from Georgetown to Dupont Saturday",
-  "Who else needs a ride to the airport?",
-  "Who else needs a seat to Moab Saturday?",
-];
-
-const SVC_SEEK = [
-  "Who else can fix a leak under my sink before the weekend?",
-  "Who else is a licensed plumber near me?",
-  "Who else can do emergency handyman work in DC?",
-];
-
-const SVC_OFFER = [
-  "I am a licensed plumber available tonight",
-  "Who else needs a licensed plumber?",
-  "Who else needs a handyman before the weekend?",
-];
-
-type Vertical = "dating" | "apartment" | "jobs" | "rides" | "services";
-type MarketSide = "seek" | "offer";
 type TrailItem = {
   label: string;
   context: string;
@@ -79,24 +22,6 @@ type TrailItem = {
   mode?: string;
   constraints?: Record<string, unknown>;
 };
-
-const VERTICALS: { id: Vertical; label: string }[] = [
-  { id: "dating", label: "Dating" },
-  { id: "apartment", label: "Apartment" },
-  { id: "jobs", label: "Jobs" },
-  { id: "rides", label: "Rides" },
-  { id: "services", label: "Services" },
-];
-
-const HAS_SIDES: Vertical[] = ["apartment", "jobs", "rides", "services"];
-
-function examplesFor(vertical: Vertical, side: MarketSide): string[] {
-  if (vertical === "dating") return DATING_EXAMPLES;
-  if (vertical === "apartment") return side === "offer" ? APT_OFFER : APT_SEEK;
-  if (vertical === "jobs") return side === "offer" ? JOB_OFFER : JOB_SEEK;
-  if (vertical === "rides") return side === "offer" ? RIDE_OFFER : RIDE_SEEK;
-  return side === "offer" ? SVC_OFFER : SVC_SEEK;
-}
 
 function isDatingHuman(e: Entity): boolean {
   const v = e.metadata.vertical;
@@ -110,7 +35,7 @@ function roleOf(e: Entity): string {
 export function DiscoverApp() {
   const [vertical, setVertical] = useState<Vertical>("dating");
   const [side, setSide] = useState<MarketSide>("seek");
-  const [query, setQuery] = useState(DATING_EXAMPLES[0]);
+  const [query, setQuery] = useState(examplesFor("dating", "seek")[0]);
   const [activeChip, setActiveChip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<WhoElsePayload | null>(null);
@@ -131,41 +56,34 @@ export function DiscoverApp() {
 
   const datingHumans = useMemo(() => visible.filter((c) => isDatingHuman(c.entity)), [visible]);
   const datingAis = useMemo(() => visible.filter((c) => c.entity.type === "ai"), [visible]);
-  const listings = useMemo(
+  const lens = lensById(vertical);
+  const offerCards = useMemo(
     () =>
-      visible.filter(
-        (c) =>
-          roleOf(c.entity) === "listing" ||
-          (c.entity.type === "resource" && c.entity.metadata.vertical === "apartment"),
-      ),
-    [visible],
+      visible.filter((c) => {
+        const role = roleOf(c.entity);
+        if (lens.offerRoles.includes(role)) return true;
+        if (vertical === "apartment" && c.entity.type === "resource" && c.entity.metadata.vertical === "apartment") {
+          return role === "listing" || !role;
+        }
+        return false;
+      }),
+    [visible, lens, vertical],
   );
-  const seekers = useMemo(() => visible.filter((c) => roleOf(c.entity) === "seeker"), [visible]);
-  const drivers = useMemo(() => visible.filter((c) => roleOf(c.entity) === "driver"), [visible]);
-  const passengers = useMemo(() => visible.filter((c) => roleOf(c.entity) === "passenger"), [visible]);
-  const providers = useMemo(() => visible.filter((c) => roleOf(c.entity) === "provider"), [visible]);
-  const clients = useMemo(() => visible.filter((c) => roleOf(c.entity) === "client"), [visible]);
+  const seekCards = useMemo(
+    () => visible.filter((c) => lens.seekRoles.includes(roleOf(c.entity))),
+    [visible, lens],
+  );
   const others = useMemo(
     () =>
       visible.filter((c) => {
         if (vertical === "dating") {
           return !isDatingHuman(c.entity) && c.entity.type !== "ai";
         }
-        if (vertical === "apartment") {
-          const role = roleOf(c.entity);
-          return role !== "listing" && role !== "seeker" && c.entity.type !== "resource";
-        }
-        if (vertical === "rides") {
-          const role = roleOf(c.entity);
-          return role !== "driver" && role !== "passenger";
-        }
-        if (vertical === "services") {
-          const role = roleOf(c.entity);
-          return role !== "provider" && role !== "client";
-        }
-        return false;
+        if (lens.mixed) return false;
+        const role = roleOf(c.entity);
+        return !lens.offerRoles.includes(role) && !lens.seekRoles.includes(role);
       }),
-    [visible, vertical],
+    [visible, vertical, lens],
   );
 
   function flash(message: string) {
@@ -195,8 +113,8 @@ export function DiscoverApp() {
   }
 
   function marketConstraints(s: MarketSide = side): Record<string, unknown> | undefined {
-    // Jobs: NL infers side/roles. Forcing a tab side hid complementary matches in tests.
-    if (vertical === "dating" || vertical === "jobs") return undefined;
+    // NL infers side/roles. Forcing a tab side hid complementary matches (jobs + factory).
+    if (!FORCE_SIDE.includes(vertical)) return undefined;
     return { side: s === "offer" ? "seek" : "offer" };
   }
 
@@ -256,7 +174,7 @@ export function DiscoverApp() {
 
   function reverseWhoElse(candidate: Candidate) {
     const role = roleOf(candidate.entity);
-    const hasThing = ["listing", "opening", "employer", "worker", "driver", "provider"].includes(role);
+    const hasThing = OFFER_SIDE_ROLES.includes(role);
     const context = hasThing
       ? `Who else needs what ${candidate.entity.name} has?`
       : `Who else has what ${candidate.entity.name} needs?`;
@@ -362,31 +280,19 @@ export function DiscoverApp() {
   const cta =
     loading ? "Looking…" : HAS_SIDES.includes(vertical) && side === "offer" ? "Who else needs this?" : "Who else?";
 
-  const banner =
-    vertical === "dating"
-      ? "Demo pool only. Every human is synthetic. Every AI is labeled AI — never a stand-in person. No real dating sites were used. WhoElse is for humans and machines."
-      : vertical === "apartment"
-        ? "DEMO data. Every apartment listing and seeker is synthetic — not a real home, not a real person, not scraped. Same WhoElse engine. Same whoelse.find."
-        : vertical === "jobs"
-          ? "DEMO data. Employers, openings, freelancers, and AI workers are synthetic. Trust is evidence stubs (portfolio / outcomes / verified), not a reputation market. Same whoelse.find — never jobs.find."
-          : vertical === "rides"
-            ? "DEMO data. Synthetic rides with origin, destination, seats, and changing state. Not real drivers. Same whoelse.find."
-            : "DEMO data. Synthetic plumbers and handypeople. Licensing is a stub field, not a credential. Same whoelse.find.";
-
+  const banner = lens.banner;
   const eyebrow =
     vertical === "dating"
       ? "Dating vertical · humans & AIs"
-      : vertical === "jobs"
-        ? side === "offer"
-          ? "Jobs · I HAVE · NL infers side — who needs this?"
-          : "Jobs · I NEED · humans, companies, AIs in one ranked list"
-        : `${vertical} · ${side === "offer" ? "I HAVE · who else needs this?" : "I NEED · who else has this?"}`;
+      : lens.mixed
+        ? `${lens.label} · mixed types · tab is a lens, pool is shared`
+        : `${lens.label} · ${side === "offer" ? "I HAVE · who else needs this?" : "I NEED · who else has this?"}`;
 
   const emptyCopy =
     vertical === "dating"
       ? "Ask who else — not swipe. Results split humans then AIs so the type is never ambiguous."
-      : vertical === "jobs"
-        ? "Same Who else? as dating. Not LinkedIn. Humans, companies, and AIs share one ranked list — type stays on the badge."
+      : lens.mixed
+        ? "Same Who else? Mixed types, type on the badge. The tab is a lens — whoelse.find does not fork."
         : side === "offer"
           ? "Describe what you have. WhoElse finds who needs it — the reverse marketplace question."
           : "Describe what you need. Same Who else? as dating. Not a listings grid.";
@@ -414,7 +320,7 @@ export function DiscoverApp() {
 
       <section className="search-panel">
         <div className="mode-tabs" role="tablist" aria-label="Vertical">
-          {VERTICALS.map((v) => (
+          {LENSES.map((v) => (
             <button
               key={v.id}
               type="button"
@@ -553,40 +459,14 @@ export function DiscoverApp() {
         />
       )}
 
-      {result && vertical === "apartment" && (
+      {result && vertical !== "dating" && lens.mixed && (
         <Sectioned
           blocks={[
             {
-              title: side === "offer" ? "People who need this" : "Who else has this",
-              items: side === "offer" ? seekers : listings,
-              empty: "No matches in this slice.",
-            },
-            (side === "offer" ? listings : seekers).length
-              ? {
-                  title: side === "offer" ? "Similar listings" : "People looking",
-                  items: side === "offer" ? listings.filter((c) => roleOf(c.entity) === "listing") : seekers,
-                  empty: "",
-                }
-              : null,
-            others.length ? { title: "Also in the network", items: others, empty: "" } : null,
-          ]}
-          vertical={vertical}
-          onWhoElse={recursiveWhoElse}
-          onReverse={reverseWhoElse}
-          onMore={moreLikeThis}
-          onLess={(c) => void lessLikeThis(c)}
-          onChat={(c) => void chatOrInterest(c)}
-        />
-      )}
-
-      {result && vertical === "jobs" && (
-        <Sectioned
-          blocks={[
-            {
-              title: "Who else — mixed rank (human / company / AI)",
+              title: "Who else — mixed rank (type on the badge)",
               items: visible,
               empty: "No matches in this slice.",
-              note: "Type is louder than rank: every card keeps a HUMAN / COMPANY / AGENT / OPENING badge.",
+              note: "Lens only. Same whoelse.find. Type stays louder than rank.",
             },
           ]}
           vertical={vertical}
@@ -598,44 +478,18 @@ export function DiscoverApp() {
         />
       )}
 
-      {result && vertical === "rides" && (
+      {result && vertical !== "dating" && !lens.mixed && (
         <Sectioned
           blocks={[
             {
-              title: side === "offer" ? "People who need a seat" : "Who else has a ride",
-              items: side === "offer" ? passengers : drivers,
+              title: side === "offer" ? "Who else needs this" : "Who else has this",
+              items: side === "offer" ? seekCards : offerCards,
               empty: "No matches in this slice.",
             },
-            (side === "offer" ? drivers : passengers).length
+            (side === "offer" ? offerCards : seekCards).length
               ? {
-                  title: side === "offer" ? "Similar rides" : "People looking for a seat",
-                  items: side === "offer" ? drivers : passengers,
-                  empty: "",
-                }
-              : null,
-            others.length ? { title: "Also in the network", items: others, empty: "" } : null,
-          ]}
-          vertical={vertical}
-          onWhoElse={recursiveWhoElse}
-          onReverse={reverseWhoElse}
-          onMore={moreLikeThis}
-          onLess={(c) => void lessLikeThis(c)}
-          onChat={(c) => void chatOrInterest(c)}
-        />
-      )}
-
-      {result && vertical === "services" && (
-        <Sectioned
-          blocks={[
-            {
-              title: side === "offer" ? "People who need this trade" : "Who else can do this",
-              items: side === "offer" ? clients : providers,
-              empty: "No matches in this slice.",
-            },
-            (side === "offer" ? providers : clients).length
-              ? {
-                  title: side === "offer" ? "Similar providers" : "People looking",
-                  items: side === "offer" ? providers : clients,
+                  title: side === "offer" ? "Similar offers" : "People looking",
+                  items: side === "offer" ? offerCards : seekCards,
                   empty: "",
                 }
               : null,
@@ -793,9 +647,7 @@ function ResultCard({
         </button>
         {showReverse && (
           <button className="btn btn-ink btn-sm" type="button" onClick={onReverse}>
-            {["listing", "opening", "employer", "worker", "driver", "provider"].includes(roleOf(e))
-              ? "Who else needs this?"
-              : "Who else has this?"}
+            {OFFER_SIDE_ROLES.includes(roleOf(e)) ? "Who else needs this?" : "Who else has this?"}
           </button>
         )}
         <button className="btn btn-soft btn-sm" type="button" onClick={onMore}>
@@ -824,6 +676,18 @@ function listingFacts(e: Entity): string | null {
     bits.push(`${symbol}${n}${a.role === "seeker" || a.role === "applicant" ? " budget" : ""}`);
   }
   if (typeof a.rate === "number") bits.push(`$${a.rate}${a.durationWeeks ? ` · ${a.durationWeeks}wk` : ""}`);
+  if (typeof a.price === "number") bits.push(`$${a.price}`);
+  if (typeof a.ticketSize === "number") bits.push(`$${(Number(a.ticketSize) / 1000).toFixed(0)}k ticket`);
+  if (typeof a.sku === "string") bits.push(`sku ${a.sku}`);
+  if (a.inStock === true) bits.push("in stock");
+  if (a.inStock === false) bits.push("sold out");
+  if (a.openNow === true) bits.push("open now");
+  if (a.deliverToday === true) bits.push("deliver today");
+  if (a.gpu === true) bits.push("GPU");
+  if (typeof a.latencyMs === "number") bits.push(`${a.latencyMs}ms`);
+  if (typeof a.durationNights === "number") bits.push(`${a.durationNights} night`);
+  if (typeof a.when === "string") bits.push(String(a.when));
+  if (typeof a.stage === "string") bits.push(String(a.stage));
   if (typeof a.roleTitle === "string") bits.push(String(a.roleTitle));
   if (a.start === "immediate") bits.push("starts immediately");
   if (typeof a.origin === "string" && typeof a.destination === "string") {
@@ -860,20 +724,38 @@ function avatarClass(e: Entity): string {
 
 function badgeClass(e: Entity): string {
   const role = roleOf(e);
-  if (role === "listing" || e.type === "resource") return "resource";
-  if (role === "seeker" || role === "applicant" || role === "passenger" || role === "client") return "seeker";
-  if (role === "opening" || role === "employer") return "opening";
-  if (role === "worker") return e.type === "agent" ? "ai" : "worker";
-  if (role === "driver" || role === "provider") return "driver";
-  if (e.type === "company") return "company";
+  if (role === "listing" || e.type === "resource" || e.type === "product" || e.type === "dataset") return "resource";
+  if (
+    role === "seeker" ||
+    role === "applicant" ||
+    role === "passenger" ||
+    role === "client" ||
+    role === "buyer" ||
+    role === "founder" ||
+    role === "asker" ||
+    role === "attendee" ||
+    role === "parent" ||
+    role === "workload" ||
+    role === "researcher"
+  ) {
+    return "seeker";
+  }
+  if (role === "opening" || role === "employer" || role === "event") return "opening";
+  if (role === "worker" || role === "expert" || role === "investor" || role === "caregiver") {
+    return e.type === "agent" ? "ai" : "worker";
+  }
+  if (role === "driver" || role === "provider" || role === "seller" || role === "speaker" || role === "compute" || role === "publisher") {
+    return "driver";
+  }
+  if (e.type === "company" || e.type === "community") return "company";
   if (e.type === "human" || e.type === "ai") return e.type;
   return "ai";
 }
 
 function badgeLabel(e: Entity): string {
   const role = roleOf(e);
-  if (role === "listing") return "Listing";
-  if (role === "seeker") return "Seeker";
+  if (role === "listing") return e.metadata.vertical === "travel" ? "Stay" : "Listing";
+  if (role === "seeker") return e.metadata.vertical === "travel" ? "Traveler" : "Seeker";
   if (role === "opening") return "Opening";
   if (role === "employer") return "Employer";
   if (role === "applicant") return "Applicant";
@@ -882,8 +764,26 @@ function badgeLabel(e: Entity): string {
   if (role === "passenger") return "Passenger";
   if (role === "provider") return "Provider";
   if (role === "client") return "Client";
+  if (role === "seller") return e.type === "product" ? "Product" : "Seller";
+  if (role === "buyer") return "Buyer";
+  if (role === "investor") return "Investor";
+  if (role === "founder") return "Founder";
+  if (role === "expert") return e.type === "ai" ? "AI expert" : "Expert";
+  if (role === "asker") return "Asker";
+  if (role === "speaker") return "Speaker";
+  if (role === "event") return e.type === "community" ? "Community" : "Event";
+  if (role === "attendee") return "Attendee";
+  if (role === "caregiver") return e.type === "ai" ? "AI match" : "Caregiver";
+  if (role === "parent") return "Parent";
+  if (role === "compute") return "Compute";
+  if (role === "workload") return "Workload";
+  if (role === "publisher") return e.type === "dataset" ? "Dataset" : "Publisher";
+  if (role === "researcher") return "Researcher";
   if (e.type === "ai") return "AI";
   if (e.type === "human") return "Human";
   if (e.type === "company") return "Company";
+  if (e.type === "community") return "Community";
+  if (e.type === "product") return "Product";
+  if (e.type === "dataset") return "Dataset";
   return e.type;
 }

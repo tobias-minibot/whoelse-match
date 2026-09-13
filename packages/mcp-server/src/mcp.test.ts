@@ -27,6 +27,11 @@ const CASES: [string, RegExp][] = [
     ["Who else can do this work for under $5,000?", /Aisha|BudgetCoder|Cleo|Imani/i],
     ["Who else can give me a ride from Georgetown to Dupont?", /Georgetown|Dupont|Ride/i],
     ["Who else can fix a leak under my sink before the weekend?", /Leak|Plumber|Shaw/i],
+    ["Who else has a cheaper equivalent 18V drill in stock?", /drill|Brushless|Harbor/i],
+    ["Who else invests and writes $250k checks?", /Pat|Anacostia|invest/i],
+    ["Who else has a room tonight in Berlin?", /Berlin|Mitte|hostel|stay/i],
+    ["Who else can babysit tonight nearby?", /babysit|Priya|childcare/i],
+    ["I need help understanding this market.", /market|Mira|dataset|Watchers|Socrates/i],
   ];
 
 describe("MCP whoelse.find", () => {

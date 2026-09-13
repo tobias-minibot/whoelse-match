@@ -46,7 +46,7 @@ export const findInput = {
 };
 
 export const FIND_DESCRIPTION =
-  "Primary discovery tool (whoelse.find). Find entities matching an intent — humans, labeled AIs, agents, companies, services, resources. Same engine as the consumer Who else? UI. Dating, apartment, jobs, rides, and services are costumes, not tools. Never call jobs.find or rides.find — they do not exist.";
+  "Primary discovery tool (whoelse.find). Find entities matching an intent — humans, labeled AIs, agents, companies, services, resources, products, datasets, communities. Same engine as the consumer Who else? UI. Dating, apartment, jobs, and the factory lenses are costumes, not tools. Never call products.find or jobs.find — they do not exist.";
 
 type FindArgs = {
   intent?: string;

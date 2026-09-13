@@ -567,16 +567,19 @@ function applyCheaperFromExemplar(
     contextEntity.attributes?.rent ??
       contextEntity.attributes?.rate ??
       contextEntity.attributes?.price ??
-      contextEntity.attributes?.priceUsd,
+      contextEntity.attributes?.priceUsd ??
+      contextEntity.attributes?.ticketSize,
   );
   if (amount == null) return;
   const attrs = (constraints.attributes ??= []);
   const key =
-    contextEntity.attributes?.rate != null
-      ? "rate"
-      : contextEntity.attributes?.price != null
-        ? "price"
-        : "rent";
+    contextEntity.attributes?.ticketSize != null
+      ? "ticketSize"
+      : contextEntity.attributes?.rate != null
+        ? "rate"
+        : contextEntity.attributes?.price != null
+          ? "price"
+          : "rent";
   if (!attrs.some((a) => a.key === key && a.op === "lte")) {
     attrs.push({ key, op: "lte", value: amount - 1 });
   }

@@ -10488,50 +10488,18 @@
     {
       "id": "eval-product-drill",
       "type": "product",
-      "name": "DEMO drill (eval-only)",
-      "description": "Tier 3 eval stub. Not a shop. Who else needs a drill?",
+      "name": "Harbor 18V drill",
+      "description": "DEMO synthetic corded-look 18V drill in stock at a DC merchant. Not a real SKU. Who else sells an equivalent cheaper?",
       "offers": [
         "drill",
-        "tool"
+        "18V drill",
+        "this product",
+        "this drill",
+        "in stock"
       ],
       "seeks": [
-        "borrower"
-      ],
-      "attributes": {
-        "synthetic": true,
-        "role": "listing",
-        "price": 40
-      },
-      "metadata": {
-        "demo": true,
-        "demoLabel": "DEMO synthetic eval-only product",
-        "vertical": "products",
-        "scale": "2026-verticals"
-      },
-      "trust": {
-        "status": "stub",
-        "provenance": "synthetic",
-        "notes": "eval-only — no products UI"
-      },
-      "provenance": "synthetic",
-      "capabilities": [
-        "drill",
-        "tool"
-      ],
-      "preferences": {},
-      "created_at": "2026-09-12T12:00:00.000Z"
-    },
-    {
-      "id": "eval-expert-notary",
-      "type": "human",
-      "name": "DEMO notary (eval-only)",
-      "description": "Tier 3 eval stub for notary who else. Not a real notary. No Experts UI.",
-      "offers": [
-        "notary",
-        "notary near me"
-      ],
-      "seeks": [
-        "documents to notarize"
+        "buyer who needs a drill",
+        "someone who needs a cheaper equivalent"
       ],
       "location": {
         "city": "Washington",
@@ -10540,27 +10508,3075 @@
       },
       "attributes": {
         "synthetic": true,
-        "role": "provider",
-        "licensed": true
+        "role": "seller",
+        "kind": "drill",
+        "sku": "DRILL-18V-HARBOR",
+        "price": 40,
+        "currency": "USD",
+        "inStock": true,
+        "equivalentTo": "drill",
+        "stock": 12,
+        "state": "in_stock"
       },
       "metadata": {
         "demo": true,
-        "demoLabel": "DEMO synthetic eval-only expert",
+        "demoLabel": "DEMO synthetic product",
+        "vertical": "products",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic product — not inventory"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "drill",
+        "18V drill",
+        "this product",
+        "this drill",
+        "in stock"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "product-drill-brushless",
+      "type": "product",
+      "name": "Brushless 18V drill (cheaper equivalent)",
+      "description": "DEMO cheaper equivalent 18V drill in stock. Substitution proof. Not a real SKU.",
+      "offers": [
+        "drill",
+        "equivalent drill",
+        "cheaper equivalent",
+        "18V drill",
+        "in stock",
+        "substitution"
+      ],
+      "seeks": [
+        "buyer who wants a cheaper drill"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "kind": "drill",
+        "sku": "DRILL-18V-BRUSH",
+        "price": 28,
+        "currency": "USD",
+        "inStock": true,
+        "equivalentTo": "drill",
+        "stock": 7,
+        "state": "in_stock"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic product",
+        "vertical": "products",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "drill",
+        "equivalent drill",
+        "cheaper equivalent",
+        "18V drill",
+        "in stock",
+        "substitution"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "product-drill-soldout",
+      "type": "product",
+      "name": "Pro 20V drill (sold out)",
+      "description": "DEMO sold-out drill — inventory state, not a shop. Not a real SKU.",
+      "offers": [
+        "drill",
+        "20V drill",
+        "this product"
+      ],
+      "seeks": [
+        "restock"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "kind": "drill",
+        "sku": "DRILL-20V-PRO",
+        "price": 89,
+        "currency": "USD",
+        "inStock": false,
+        "equivalentTo": "drill",
+        "stock": 0,
+        "state": "sold_out"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic product",
+        "vertical": "products",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "drill",
+        "20V drill",
+        "this product"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "company-hardware-dc",
+      "type": "company",
+      "name": "Potomac Hardware",
+      "description": "DEMO synthetic DC merchant that sells drills and tools. Not a real store.",
+      "offers": [
+        "sells this drill",
+        "merchant",
+        "in stock",
+        "hardware"
+      ],
+      "seeks": [
+        "buyers nearby"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "kind": "drill",
+        "price": 42,
+        "currency": "USD",
+        "inStock": true
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic merchant",
+        "vertical": "products",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic merchant"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "sells this drill",
+        "merchant",
+        "in stock",
+        "hardware"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "buyer-needs-drill",
+      "type": "human",
+      "name": "Chris needs a drill",
+      "description": "DEMO synthetic buyer looking for a cheaper equivalent 18V drill. Not a real person.",
+      "offers": [
+        "cash today",
+        "pickup in DC"
+      ],
+      "seeks": [
+        "drill",
+        "cheaper equivalent",
+        "18V drill",
+        "this product",
+        "in stock"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "buyer",
+        "kind": "drill",
+        "price": 35,
+        "currency": "USD",
+        "budget": 35
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic buyer",
+        "vertical": "products",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic buyer"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "cash today",
+        "pickup in DC"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "buyer-sofa",
+      "type": "human",
+      "name": "Alex needs a sofa",
+      "description": "DEMO synthetic buyer looking for a sofa. Not a real person.",
+      "offers": [
+        "pickup this weekend"
+      ],
+      "seeks": [
+        "sofa",
+        "this product"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "buyer",
+        "kind": "sofa",
+        "price": 400,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic buyer",
+        "vertical": "products",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "pickup this weekend"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "product-sofa-dc",
+      "type": "product",
+      "name": "Shaw sofa (in stock)",
+      "description": "DEMO synthetic sofa in stock. Not a real listing.",
+      "offers": [
+        "sofa",
+        "this product",
+        "in stock"
+      ],
+      "seeks": [
+        "buyer who needs a sofa"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "kind": "sofa",
+        "sku": "SOFA-SHAW",
+        "price": 380,
+        "currency": "USD",
+        "inStock": true,
+        "stock": 2
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic product",
+        "vertical": "products",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "sofa",
+        "this product",
+        "in stock"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "agent-price-compare",
+      "type": "agent",
+      "name": "PriceHop",
+      "description": "DEMO synthetic agent that finds cheaper equivalent products. Not a shop.",
+      "offers": [
+        "cheaper equivalent",
+        "price compare",
+        "substitution",
+        "this product"
+      ],
+      "seeks": [
+        "product identity to compare"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "kind": "drill",
+        "price": 2,
+        "priceUsd": 2,
+        "latencyMs": 400,
+        "apiEndpoint": "/api/agents/agent-price-compare/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "authRequirements": {
+          "demo": true
+        }
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic agent",
+        "vertical": "products",
+        "scale": "2026-verticals",
+        "aiDisclosure": "This is an AI agent. It is not a human.",
+        "isAI": true
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic agent"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "cheaper equivalent",
+        "price compare",
+        "substitution",
+        "this product"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "eval-expert-notary",
+      "type": "human",
+      "name": "Dana the notary",
+      "description": "DEMO synthetic licensed notary near DC. Authority is a license stub. Not a real notary.",
+      "offers": [
+        "notary",
+        "notary near me",
+        "knows about notarization",
+        "expert"
+      ],
+      "seeks": [
+        "documents to notarize",
+        "ask about notary"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "expert",
+        "licensed": true,
+        "domain": "notary"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic expert",
+        "vertical": "experts",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "license stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-license-stub",
+          "licenses": [
+            "notary-DC-DEMO"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "notary",
+        "notary near me",
+        "knows about notarization",
+        "expert"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "expert-market-human",
+      "type": "human",
+      "name": "Mira understands this market",
+      "description": "DEMO synthetic human expert. Offers help understanding this market with provenance notes. Not a real analyst.",
+      "offers": [
+        "help understanding this market",
+        "understand this market",
+        "knows about this market",
+        "expert",
+        "market briefing"
+      ],
+      "seeks": [
+        "ask about this market",
+        "questions about this market"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "expert",
+        "domain": "market"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic expert",
+        "vertical": "experts",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "portfolio stub",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-stub",
+          "portfolio": [
+            "https://example.invalid/mira-market"
+          ],
+          "outcomes": [
+            {
+              "label": "briefed a seed round",
+              "result": "stub"
+            }
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "help understanding this market",
+        "understand this market",
+        "knows about this market",
+        "expert",
+        "market briefing"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "expert-disagrees",
+      "type": "human",
+      "name": "Owen disagrees",
+      "description": "DEMO synthetic expert who disagrees with the consensus on this market. Not a real person.",
+      "offers": [
+        "disagrees",
+        "contrarian take",
+        "knows about this market",
+        "help understanding this market"
+      ],
+      "seeks": [
+        "someone who wants a second opinion"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "expert",
+        "domain": "market"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic expert",
         "vertical": "experts",
         "scale": "2026-verticals"
       },
       "trust": {
         "status": "stub",
         "provenance": "synthetic",
-        "notes": "eval-only — no experts UI"
+        "notes": "synthetic dissent — not advice"
       },
       "provenance": "synthetic",
       "capabilities": [
-        "notary",
-        "notary near me"
+        "disagrees",
+        "contrarian take",
+        "knows about this market",
+        "help understanding this market"
       ],
       "preferences": {},
-      "created_at": "2026-09-12T12:00:00.000Z"
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "ai-market-analyst",
+      "type": "ai",
+      "name": "MarketSocrates",
+      "description": "This is an AI. It is not a human. DEMO analyst that offers help understanding this market from public-looking stubs.",
+      "offers": [
+        "help understanding this market",
+        "understand this market",
+        "knows about this market",
+        "expert"
+      ],
+      "seeks": [
+        "ask about this market"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "role": "expert",
+        "domain": "market"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic AI expert",
+        "vertical": "experts",
+        "scale": "2026-verticals",
+        "aiDisclosure": "This is an AI. It is not a human.",
+        "isAI": true
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "AI — provenance is the model, not a person"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "help understanding this market",
+        "understand this market",
+        "knows about this market",
+        "expert"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "company-research-desk",
+      "type": "company",
+      "name": "Civic Research Desk",
+      "description": "DEMO synthetic research company that briefs this market. Not a real firm.",
+      "offers": [
+        "help understanding this market",
+        "market report",
+        "company briefing",
+        "understand this market"
+      ],
+      "seeks": [
+        "clients who need a market briefing"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "expert",
+        "domain": "market"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic company",
+        "vertical": "experts",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic firm"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "help understanding this market",
+        "market report",
+        "company briefing",
+        "understand this market"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "asker-market",
+      "type": "human",
+      "name": "Jules wants to understand this market",
+      "description": "DEMO synthetic asker. Needs help understanding this market. Not a real person.",
+      "offers": [
+        "attention",
+        "a specific question"
+      ],
+      "seeks": [
+        "help understanding this market",
+        "expert",
+        "knows about this market"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "asker",
+        "domain": "market"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic asker",
+        "vertical": "experts",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "attention",
+        "a specific question"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "asker-notary",
+      "type": "human",
+      "name": "Needs a notary today",
+      "description": "DEMO synthetic person who needs a notary near me. Not real.",
+      "offers": [
+        "documents ready"
+      ],
+      "seeks": [
+        "notary",
+        "notary near me",
+        "expert"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "asker",
+        "domain": "notary"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic asker",
+        "vertical": "experts",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "documents ready"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "investor-seed-dc",
+      "type": "human",
+      "name": "Pat writes $250k checks",
+      "description": "DEMO synthetic DC seed investor. Ticket size $250k. Not a real funder.",
+      "offers": [
+        "invests",
+        "writes $250k checks",
+        "ticket size $250k",
+        "capital",
+        "introduction"
+      ],
+      "seeks": [
+        "founder seeking a $250k check",
+        "seed round"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "investor",
+        "ticketSize": 250000,
+        "stage": "seed",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic investor",
+        "vertical": "capital",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "intro stub — not a real LP",
+        "evidence": {
+          "outcomes": [
+            {
+              "label": "seed check stub",
+              "result": "synthetic"
+            }
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "invests",
+        "writes $250k checks",
+        "ticket size $250k",
+        "capital",
+        "introduction"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "investor-berlin",
+      "type": "human",
+      "name": "Greta (Berlin seed)",
+      "description": "DEMO synthetic Berlin investor, $200k ticket. Geo contrast. Not real.",
+      "offers": [
+        "invests",
+        "writes checks",
+        "capital",
+        "ticket size"
+      ],
+      "seeks": [
+        "Berlin founder",
+        "seed round"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "investor",
+        "ticketSize": 200000,
+        "stage": "seed",
+        "currency": "EUR"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic investor",
+        "vertical": "capital",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "invests",
+        "writes checks",
+        "capital",
+        "ticket size"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "company-fund-dc",
+      "type": "company",
+      "name": "Anacostia Seed",
+      "description": "DEMO synthetic fund that invests $250k in DC. Not a real fund.",
+      "offers": [
+        "invests",
+        "writes $250k checks",
+        "capital",
+        "introduction to an investor"
+      ],
+      "seeks": [
+        "founder seeking",
+        "seed round"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "investor",
+        "ticketSize": 250000,
+        "stage": "seed",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic fund",
+        "vertical": "capital",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic fund"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "invests",
+        "writes $250k checks",
+        "capital",
+        "introduction to an investor"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "founder-seeking-250k",
+      "type": "human",
+      "name": "Rafi is raising",
+      "description": "DEMO synthetic founder seeking a $250k check in DC. Not a real company.",
+      "offers": [
+        "seed round",
+        "DC startup"
+      ],
+      "seeks": [
+        "invests",
+        "writes $250k checks",
+        "capital",
+        "need a check",
+        "looking for an investor"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "founder",
+        "ticketSize": 250000,
+        "stage": "seed",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic founder",
+        "vertical": "capital",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic founder"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "seed round",
+        "DC startup"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "founder-needs-intro",
+      "type": "human",
+      "name": "Sable needs an introduction",
+      "description": "DEMO synthetic founder looking for an introduction to an investor. Not real.",
+      "offers": [
+        "warm story",
+        "seed round"
+      ],
+      "seeks": [
+        "introduction to an investor",
+        "need an introduction",
+        "capital"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "founder",
+        "ticketSize": 250000,
+        "stage": "pre-seed",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic founder",
+        "vertical": "capital",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "warm story",
+        "seed round"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "founder-nyc",
+      "type": "human",
+      "name": "NYC founder seeking",
+      "description": "DEMO synthetic NYC founder seeking capital. Geo contrast. Not real.",
+      "offers": [
+        "seed round"
+      ],
+      "seeks": [
+        "invests",
+        "looking for an investor",
+        "capital"
+      ],
+      "location": {
+        "city": "New York",
+        "region": "NY",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "founder",
+        "ticketSize": 250000,
+        "stage": "seed",
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic founder",
+        "vertical": "capital",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "seed round"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "stay-berlin-tonight",
+      "type": "resource",
+      "name": "Mitte room tonight",
+      "description": "DEMO synthetic stay in Berlin — room tonight. Reuses listing/seeker + rent, not a hotel engine. Not a real room.",
+      "offers": [
+        "stay in Berlin",
+        "room tonight",
+        "accommodation",
+        "hotel-like room",
+        "going to Berlin"
+      ],
+      "seeks": [
+        "guest going to Berlin",
+        "someone who needs a room tonight"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "availability": "tonight",
+      "attributes": {
+        "synthetic": true,
+        "role": "listing",
+        "listingKind": "stay",
+        "rent": 78,
+        "currency": "EUR",
+        "durationNights": 1,
+        "availableFrom": "2026-09-13",
+        "neighborhood": "Mitte"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic stay",
+        "vertical": "travel",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic stay — not a booking"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "stay in Berlin",
+        "room tonight",
+        "accommodation",
+        "hotel-like room",
+        "going to Berlin"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "stay-hostel-berlin",
+      "type": "resource",
+      "name": "Kreuzberg hostel bed",
+      "description": "DEMO synthetic hostel in Berlin. Same listing role as apartments. Not real.",
+      "offers": [
+        "hostel",
+        "stay in Berlin",
+        "accommodation",
+        "room tonight",
+        "going to Berlin"
+      ],
+      "seeks": [
+        "traveler going to Berlin"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "availability": "tonight",
+      "attributes": {
+        "synthetic": true,
+        "role": "listing",
+        "listingKind": "hostel",
+        "rent": 32,
+        "currency": "EUR",
+        "durationNights": 1,
+        "availableFrom": "2026-09-13"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic stay",
+        "vertical": "travel",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "hostel",
+        "stay in Berlin",
+        "accommodation",
+        "room tonight",
+        "going to Berlin"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "stay-hotel-berlin",
+      "type": "resource",
+      "name": "Alexanderplatz hotel night",
+      "description": "DEMO synthetic hotel stay in Berlin. Not a real hotel.",
+      "offers": [
+        "hotel",
+        "stay in Berlin",
+        "accommodation",
+        "going to Berlin"
+      ],
+      "seeks": [
+        "guest"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "listing",
+        "listingKind": "hotel",
+        "rent": 140,
+        "currency": "EUR",
+        "durationNights": 1,
+        "availableFrom": "2026-09-13"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic stay",
+        "vertical": "travel",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "hotel",
+        "stay in Berlin",
+        "accommodation",
+        "going to Berlin"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "stay-dc-tonight",
+      "type": "resource",
+      "name": "Georgetown room tonight",
+      "description": "DEMO synthetic DC room tonight. Overlaps apartment Georgetown listings on purpose — same role, nights not months.",
+      "offers": [
+        "room tonight",
+        "stay in Washington",
+        "accommodation",
+        "room in Georgetown"
+      ],
+      "seeks": [
+        "guest who needs a room tonight"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "tonight",
+      "attributes": {
+        "synthetic": true,
+        "role": "listing",
+        "listingKind": "stay",
+        "rent": 95,
+        "currency": "USD",
+        "durationNights": 1,
+        "availableFrom": "2026-09-13",
+        "neighborhood": "Georgetown"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic stay",
+        "vertical": "travel",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "room tonight",
+        "stay in Washington",
+        "accommodation",
+        "room in Georgetown"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "seeker-berlin-tonight",
+      "type": "human",
+      "name": "Going to Berlin tonight",
+      "description": "DEMO synthetic traveler who needs a room tonight in Berlin. Not a real person.",
+      "offers": [
+        "one-night stay",
+        "pays tonight"
+      ],
+      "seeks": [
+        "stay in Berlin",
+        "room tonight",
+        "accommodation",
+        "hostel",
+        "going to Berlin"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seeker",
+        "listingKind": "stay",
+        "budget": 80,
+        "currency": "EUR",
+        "durationNights": 1,
+        "availableFrom": "2026-09-13"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic traveler",
+        "vertical": "travel",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic traveler"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "one-night stay",
+        "pays tonight"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "seeker-going-to-berlin",
+      "type": "human",
+      "name": "Sam is going to Berlin",
+      "description": "DEMO synthetic person going to Berlin who needs accommodation. Not real.",
+      "offers": [
+        "flexible dates"
+      ],
+      "seeks": [
+        "stay in Berlin",
+        "going to Berlin",
+        "hotel",
+        "accommodation"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seeker",
+        "listingKind": "stay",
+        "budget": 120,
+        "currency": "EUR"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic traveler",
+        "vertical": "travel",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "flexible dates"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "seeker-dc-tonight",
+      "type": "human",
+      "name": "Needs a DC room tonight",
+      "description": "DEMO synthetic person who needs a room tonight in Washington. Not real.",
+      "offers": [
+        "pays cash tonight"
+      ],
+      "seeks": [
+        "room tonight",
+        "stay in Washington",
+        "accommodation"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seeker",
+        "listingKind": "stay",
+        "budget": 100,
+        "currency": "USD",
+        "availableFrom": "2026-09-13"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic traveler",
+        "vertical": "travel",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "pays cash tonight"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "event-dc-builders",
+      "type": "resource",
+      "name": "DC Builders Night",
+      "description": "DEMO synthetic event in Washington. Shared context, not a ticket vendor. Not a real meetup.",
+      "offers": [
+        "attending",
+        "event in DC",
+        "meetup",
+        "conference-like night",
+        "from my city"
+      ],
+      "seeks": [
+        "attendees from my city",
+        "speakers"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "event",
+        "when": "Saturday",
+        "cityContext": "Washington"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic event",
+        "vertical": "events",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic event"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "attending",
+        "event in DC",
+        "meetup",
+        "conference-like night",
+        "from my city"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "event-berlin-salon",
+      "type": "resource",
+      "name": "Berlin Voice Salon",
+      "description": "DEMO synthetic Berlin event. Not a real salon.",
+      "offers": [
+        "attending",
+        "meetup",
+        "speaking slots",
+        "event in Berlin"
+      ],
+      "seeks": [
+        "attendees",
+        "speakers"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "event",
+        "when": "next week"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic event",
+        "vertical": "events",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "attending",
+        "meetup",
+        "speaking slots",
+        "event in Berlin"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "speaker-dc",
+      "type": "human",
+      "name": "Nico is speaking",
+      "description": "DEMO synthetic speaker at DC Builders Night. Not a real person.",
+      "offers": [
+        "speaking at DC Builders Night",
+        "speaking",
+        "attending"
+      ],
+      "seeks": [
+        "people attending from my city"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "speaker",
+        "eventId": "event-dc-builders"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic speaker",
+        "vertical": "events",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "speaking at DC Builders Night",
+        "speaking",
+        "attending"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "speaker-ai",
+      "type": "ai",
+      "name": "EmceeBot",
+      "description": "This is an AI. It is not a human. DEMO speaker/emcee for events.",
+      "offers": [
+        "speaking at",
+        "emcee",
+        "attending"
+      ],
+      "seeks": [
+        "events that want an AI host"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "role": "speaker"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic AI speaker",
+        "vertical": "events",
+        "scale": "2026-verticals",
+        "aiDisclosure": "This is an AI. It is not a human.",
+        "isAI": true
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "AI speaker stub"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "speaking at",
+        "emcee",
+        "attending"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "attendee-dc",
+      "type": "human",
+      "name": "Riley is attending",
+      "description": "DEMO synthetic attendee from Washington. Wants to meet people from my city. Not real.",
+      "offers": [
+        "attending",
+        "from my city"
+      ],
+      "seeks": [
+        "event in DC",
+        "meetup",
+        "people attending from my city",
+        "speaking at"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "attendee",
+        "eventId": "event-dc-builders"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic attendee",
+        "vertical": "events",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "attending",
+        "from my city"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "attendee-berlin-in-dc",
+      "type": "human",
+      "name": "Lina (Berlin, in DC this week)",
+      "description": "DEMO synthetic visitor attending DC events, not from my city. Contrast card. Not real.",
+      "offers": [
+        "attending"
+      ],
+      "seeks": [
+        "meetup",
+        "event in DC"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "attendee"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic attendee",
+        "vertical": "events",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "attending"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "community-builders",
+      "type": "community",
+      "name": "WhoElse Builders (community)",
+      "description": "DEMO synthetic community. Offers help understanding this market and shared event context. Not a real org.",
+      "offers": [
+        "help understanding this market",
+        "community",
+        "attending",
+        "from my city",
+        "understand this market"
+      ],
+      "seeks": [
+        "members",
+        "speakers"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "event",
+        "kind": "community"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic community",
+        "vertical": "events",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic community"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "help understanding this market",
+        "community",
+        "attending",
+        "from my city",
+        "understand this market"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "caregiver-tonight-dc",
+      "type": "human",
+      "name": "Priya can babysit tonight",
+      "description": "DEMO synthetic verified-stub caregiver nearby. Safety is evidence, not a score. Not a real sitter.",
+      "offers": [
+        "babysit tonight",
+        "childcare",
+        "babysitter",
+        "nearby"
+      ],
+      "seeks": [
+        "parent who needs childcare tonight"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "tonight",
+      "attributes": {
+        "synthetic": true,
+        "role": "caregiver",
+        "when": "tonight",
+        "rate": 25,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic caregiver",
+        "vertical": "childcare",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "background-check stub — not a real credential",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-safety-stub",
+          "references": [
+            "neighbor-stub"
+          ],
+          "outcomes": [
+            {
+              "label": "sat for two kids",
+              "result": "stub"
+            }
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "babysit tonight",
+        "childcare",
+        "babysitter",
+        "nearby"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "caregiver-unverified",
+      "type": "human",
+      "name": "Cash-only sitter (unverified)",
+      "description": "DEMO synthetic unverified cheaper caregiver — trust contrast, not a recommendation. Not real.",
+      "offers": [
+        "babysit tonight",
+        "childcare",
+        "babysitter"
+      ],
+      "seeks": [
+        "parent"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "caregiver",
+        "when": "tonight",
+        "rate": 12,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic caregiver",
+        "vertical": "childcare",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "unverified — contrast card"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "babysit tonight",
+        "childcare",
+        "babysitter"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "caregiver-reciprocal",
+      "type": "human",
+      "name": "Jordan (reciprocal childcare)",
+      "description": "DEMO synthetic parent/caregiver who babysits and also needs childcare. Reciprocal. Not real.",
+      "offers": [
+        "babysit tonight",
+        "childcare swap",
+        "babysitter"
+      ],
+      "seeks": [
+        "needs childcare",
+        "backup sitter nearby"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "caregiver",
+        "when": "tonight",
+        "rate": 0,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic caregiver",
+        "vertical": "childcare",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "swap stub",
+        "evidence": {
+          "references": [
+            "swap-circle-stub"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "babysit tonight",
+        "childcare swap",
+        "babysitter"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "parent-needs-tonight",
+      "type": "human",
+      "name": "Needs childcare tonight",
+      "description": "DEMO synthetic parent who needs childcare tonight nearby. Not a real family.",
+      "offers": [
+        "pay tonight",
+        "references"
+      ],
+      "seeks": [
+        "babysit tonight",
+        "childcare",
+        "babysitter",
+        "nearby"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "parent",
+        "when": "tonight",
+        "rate": 28,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic parent",
+        "vertical": "childcare",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic parent"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "pay tonight",
+        "references"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "parent-nearby",
+      "type": "human",
+      "name": "Foggy Bottom parent",
+      "description": "DEMO synthetic parent nearby who needs a babysitter. Not real.",
+      "offers": [
+        "short notice pay"
+      ],
+      "seeks": [
+        "babysitter",
+        "childcare",
+        "nearby"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "parent",
+        "when": "tonight",
+        "rate": 22,
+        "currency": "USD"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic parent",
+        "vertical": "childcare",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "short notice pay"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "ai-sitter-match",
+      "type": "ai",
+      "name": "SitterIndex",
+      "description": "This is an AI. It is not a human. DEMO matcher that helps find childcare — not a babysitter.",
+      "offers": [
+        "childcare matching",
+        "who else can babysit"
+      ],
+      "seeks": [
+        "parents who need childcare"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "role": "caregiver",
+        "when": "tonight"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic AI",
+        "vertical": "childcare",
+        "scale": "2026-verticals",
+        "aiDisclosure": "This is an AI. It is not a human. It does not babysit.",
+        "isAI": true
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "AI matcher — not a caregiver"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "childcare matching",
+        "who else can babysit"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "collab-designer",
+      "type": "human",
+      "name": "Cleo designs (seeks a writer)",
+      "description": "DEMO synthetic designer who wants a complementary writer to join this project. Not real.",
+      "offers": [
+        "design",
+        "complementary design",
+        "join this project",
+        "creative collab",
+        "design partner"
+      ],
+      "seeks": [
+        "writer",
+        "complementary writer",
+        "write together",
+        "join this project"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "craft": "design"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic collaborator",
+        "vertical": "collab",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "portfolio stub",
+        "evidence": {
+          "portfolio": [
+            "https://example.invalid/cleo"
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "design",
+        "complementary design",
+        "join this project",
+        "creative collab",
+        "design partner"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "collab-writer",
+      "type": "human",
+      "name": "Bo writes (seeks a designer)",
+      "description": "DEMO complementary writer who wants to join this project with a designer. Not real.",
+      "offers": [
+        "write together",
+        "writer",
+        "complementary",
+        "join this project",
+        "creative collab"
+      ],
+      "seeks": [
+        "design partner",
+        "design",
+        "complementary design",
+        "join this project"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "craft": "write"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic collaborator",
+        "vertical": "collab",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic writer"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "write together",
+        "writer",
+        "complementary",
+        "join this project",
+        "creative collab"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "collab-project",
+      "type": "resource",
+      "name": "Zine project (needs both)",
+      "description": "DEMO multi-party project seeking a designer and a writer. Not a real zine.",
+      "offers": [
+        "join this project",
+        "creative collab",
+        "shared credit"
+      ],
+      "seeks": [
+        "design partner",
+        "write together",
+        "complementary",
+        "designer",
+        "writer"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "craft": "project"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic project",
+        "vertical": "collab",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic project"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "join this project",
+        "creative collab",
+        "shared credit"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "collab-illustrator",
+      "type": "human",
+      "name": "Pax illustrates",
+      "description": "DEMO complementary illustrator open to join this project. Not real.",
+      "offers": [
+        "illustrate",
+        "complementary",
+        "join this project",
+        "creative collab"
+      ],
+      "seeks": [
+        "writer",
+        "design partner",
+        "join this project"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "craft": "illustrate"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic collaborator",
+        "vertical": "collab",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "illustrate",
+        "complementary",
+        "join this project",
+        "creative collab"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "collab-ai-muse",
+      "type": "ai",
+      "name": "CollabMuse",
+      "description": "This is an AI. It is not a human. DEMO complementary drafting partner for a project.",
+      "offers": [
+        "write together",
+        "complementary",
+        "join this project",
+        "creative collab"
+      ],
+      "seeks": [
+        "humans who want a drafting partner"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "craft": "write"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic AI collaborator",
+        "vertical": "collab",
+        "scale": "2026-verticals",
+        "aiDisclosure": "This is an AI. It is not a human.",
+        "isAI": true
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "AI collaborator"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "write together",
+        "complementary",
+        "join this project",
+        "creative collab"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "compute-gpu-dc",
+      "type": "resource",
+      "name": "Dupont GPU host",
+      "description": "DEMO synthetic GPU host in DC. Capacity + latency as attributes. Not real hardware.",
+      "offers": [
+        "host GPU",
+        "GPU",
+        "compute capacity",
+        "cheaper GPU",
+        "inference host"
+      ],
+      "seeks": [
+        "workload that needs a GPU",
+        "jobs that seek GPU"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "compute",
+        "gpu": true,
+        "price": 1.2,
+        "currency": "USD",
+        "latencyMs": 40,
+        "capacity": 4,
+        "state": "available"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic compute",
+        "vertical": "compute",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic GPU"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "host GPU",
+        "GPU",
+        "compute capacity",
+        "cheaper GPU",
+        "inference host"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "compute-cheap-slow",
+      "type": "resource",
+      "name": "Thrift GPU (cheap, high latency)",
+      "description": "DEMO cheaper GPU with worse latency. State + price tradeoff. Not real.",
+      "offers": [
+        "cheaper GPU",
+        "cheaper compute",
+        "GPU",
+        "host GPU"
+      ],
+      "seeks": [
+        "batch workload"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "compute",
+        "gpu": true,
+        "price": 0.3,
+        "currency": "USD",
+        "latencyMs": 400,
+        "capacity": 1,
+        "state": "available"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic compute",
+        "vertical": "compute",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "cheaper GPU",
+        "cheaper compute",
+        "GPU",
+        "host GPU"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "compute-busy",
+      "type": "resource",
+      "name": "Shaw GPU (busy)",
+      "description": "DEMO busy GPU host — state changed. Not real.",
+      "offers": [
+        "GPU",
+        "host GPU",
+        "compute capacity"
+      ],
+      "seeks": [
+        "later jobs"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "compute",
+        "gpu": true,
+        "price": 0.9,
+        "currency": "USD",
+        "latencyMs": 25,
+        "capacity": 0,
+        "state": "busy"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic compute",
+        "vertical": "compute",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "GPU",
+        "host GPU",
+        "compute capacity"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "workload-needs-gpu",
+      "type": "resource",
+      "name": "Inference job (needs GPU)",
+      "description": "DEMO synthetic workload that needs cheaper GPU capacity. Not a real job.",
+      "offers": [
+        "inference job",
+        "pays for capacity"
+      ],
+      "seeks": [
+        "host GPU",
+        "GPU",
+        "cheaper GPU",
+        "compute capacity"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "workload",
+        "gpu": true,
+        "price": 1,
+        "currency": "USD",
+        "latencyMs": 80
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic workload",
+        "vertical": "compute",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic workload"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "inference job",
+        "pays for capacity"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "agent-gpu-router",
+      "type": "agent",
+      "name": "LaneRouter",
+      "description": "DEMO synthetic agent that routes work to a cheaper GPU host via whoelse.find.",
+      "offers": [
+        "agent routing",
+        "host GPU routing",
+        "cheaper compute",
+        "GPU"
+      ],
+      "seeks": [
+        "available GPU hosts"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "role": "compute",
+        "gpu": true,
+        "price": 0.15,
+        "priceUsd": 0.15,
+        "latencyMs": 12,
+        "apiEndpoint": "/api/agents/agent-gpu-router/invoke",
+        "mcpEndpoint": "/api/mcp",
+        "authRequirements": {
+          "demo": true
+        },
+        "fallbackTo": [
+          "compute-cheap-slow"
+        ]
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic agent",
+        "vertical": "compute",
+        "scale": "2026-verticals",
+        "aiDisclosure": "This is an AI agent. It is not a human.",
+        "isAI": true
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "routing stub"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "agent routing",
+        "host GPU routing",
+        "cheaper compute",
+        "GPU"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "compute-berlin",
+      "type": "resource",
+      "name": "Mitte GPU",
+      "description": "DEMO synthetic Berlin GPU host. Geo contrast. Not real.",
+      "offers": [
+        "host GPU",
+        "GPU",
+        "compute capacity"
+      ],
+      "seeks": [
+        "EU workloads"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "compute",
+        "gpu": true,
+        "price": 1.1,
+        "currency": "EUR",
+        "latencyMs": 35,
+        "state": "available"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic compute",
+        "vertical": "compute",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "host GPU",
+        "GPU",
+        "compute capacity"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "dataset-market-dc",
+      "type": "dataset",
+      "name": "DC market dataset",
+      "description": "DEMO synthetic dataset. Offers help understanding this market via original rows. Ownership stub. Not real data.",
+      "offers": [
+        "dataset",
+        "help understanding this market",
+        "understand this market",
+        "original source",
+        "data provenance"
+      ],
+      "seeks": [
+        "researcher",
+        "someone who needs to verify this claim"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "publisher",
+        "access": "demo",
+        "owner": "dataset-market-dc"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic dataset",
+        "vertical": "data",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "provenance stub",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "demo-source-stub",
+          "outcomes": [
+            {
+              "label": "original rows",
+              "result": "synthetic"
+            }
+          ]
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "dataset",
+        "help understanding this market",
+        "understand this market",
+        "original source",
+        "data provenance"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "dataset-claims",
+      "type": "dataset",
+      "name": "Claim Ledger (original source)",
+      "description": "DEMO synthetic original source for claims. Who else can verify this claim? Not real.",
+      "offers": [
+        "original source",
+        "dataset",
+        "verify this claim",
+        "data provenance"
+      ],
+      "seeks": [
+        "unverified claims"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "role": "publisher",
+        "access": "demo"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic dataset",
+        "vertical": "data",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "evidence",
+        "provenance": "synthetic",
+        "notes": "original-source stub",
+        "evidence": {
+          "verified": true,
+          "verifiedBy": "publisher-stub"
+        }
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "original source",
+        "dataset",
+        "verify this claim",
+        "data provenance"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "report-market",
+      "type": "resource",
+      "name": "WhoElse market report",
+      "description": "DEMO synthetic report. Help understanding this market. Not a real publication.",
+      "offers": [
+        "help understanding this market",
+        "understand this market",
+        "report",
+        "original source"
+      ],
+      "seeks": [
+        "readers who need a briefing"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "publisher",
+        "kind": "report"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic report",
+        "vertical": "data",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic report"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "help understanding this market",
+        "understand this market",
+        "report",
+        "original source"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "researcher-verify-claim",
+      "type": "human",
+      "name": "Ira verifies claims",
+      "description": "DEMO synthetic researcher who wants a dataset to verify this claim. Not real.",
+      "offers": [
+        "attention",
+        "cite the source"
+      ],
+      "seeks": [
+        "dataset",
+        "original source",
+        "verify this claim",
+        "data provenance"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "researcher"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic researcher",
+        "vertical": "data",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "attention",
+        "cite the source"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "ai-source-checker",
+      "type": "ai",
+      "name": "SourcePin",
+      "description": "This is an AI. It is not a human. DEMO agent that traces an original source to verify this claim.",
+      "offers": [
+        "verify this claim",
+        "original source",
+        "data provenance"
+      ],
+      "seeks": [
+        "claims to check"
+      ],
+      "attributes": {
+        "synthetic": true,
+        "role": "publisher"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic AI",
+        "vertical": "data",
+        "scale": "2026-verticals",
+        "aiDisclosure": "This is an AI. It is not a human.",
+        "isAI": true
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "AI provenance helper"
+      },
+      "provenance": "ai_generated",
+      "capabilities": [
+        "verify this claim",
+        "original source",
+        "data provenance"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "publisher-civic",
+      "type": "company",
+      "name": "Civic Facts Desk",
+      "description": "DEMO synthetic publisher that owns a dataset. Access/ownership stub. Not real.",
+      "offers": [
+        "dataset",
+        "original source",
+        "help understanding this market"
+      ],
+      "seeks": [
+        "licensed researchers"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "publisher",
+        "access": "licensed-stub",
+        "owner": "publisher-civic"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic publisher",
+        "vertical": "data",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "ownership stub"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "dataset",
+        "original source",
+        "help understanding this market"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "shop-open-now-dc",
+      "type": "company",
+      "name": "Shaw Bodega (open now)",
+      "description": "DEMO synthetic shop open now that sells nearby and can deliver today. Not a real store.",
+      "offers": [
+        "sells nearby",
+        "open now",
+        "deliver today",
+        "local shop",
+        "local commerce"
+      ],
+      "seeks": [
+        "buyer nearby"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "availability": "open now",
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "openNow": true,
+        "deliverToday": true,
+        "price": 8,
+        "currency": "USD",
+        "state": "open"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic shop",
+        "vertical": "local",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic shop"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "sells nearby",
+        "open now",
+        "deliver today",
+        "local shop",
+        "local commerce"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "shop-closed-dc",
+      "type": "company",
+      "name": "Dupont Counter (closed)",
+      "description": "DEMO closed shop — real-time state. Not real.",
+      "offers": [
+        "sells nearby",
+        "local shop"
+      ],
+      "seeks": [
+        "tomorrow's buyers"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "openNow": false,
+        "deliverToday": false,
+        "price": 9,
+        "currency": "USD",
+        "state": "closed"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic shop",
+        "vertical": "local",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "sells nearby",
+        "local shop"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "shop-deliver-today",
+      "type": "company",
+      "name": "Adams Deliveries",
+      "description": "DEMO synthetic shop that can deliver today nearby. Not real.",
+      "offers": [
+        "deliver today",
+        "sells nearby",
+        "open now",
+        "local store"
+      ],
+      "seeks": [
+        "buyer who needs deliver today"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "openNow": true,
+        "deliverToday": true,
+        "price": 12,
+        "currency": "USD",
+        "state": "open"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic shop",
+        "vertical": "local",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "deliver today",
+        "sells nearby",
+        "open now",
+        "local store"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "buyer-nearby-local",
+      "type": "human",
+      "name": "Needs something nearby now",
+      "description": "DEMO synthetic buyer who wants a shop open now that can deliver today. Not real.",
+      "offers": [
+        "pickup or delivery"
+      ],
+      "seeks": [
+        "open now",
+        "deliver today",
+        "sells nearby",
+        "local shop"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "buyer",
+        "openNow": true,
+        "deliverToday": true
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic buyer",
+        "vertical": "local",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "pickup or delivery"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "shop-berlin-open",
+      "type": "company",
+      "name": "Späti Mitte (open now)",
+      "description": "DEMO synthetic Berlin shop open now. Geo contrast. Not real.",
+      "offers": [
+        "open now",
+        "sells nearby",
+        "local shop"
+      ],
+      "seeks": [
+        "nearby buyer"
+      ],
+      "location": {
+        "city": "Berlin",
+        "region": "BE",
+        "country": "DE"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "openNow": true,
+        "deliverToday": false,
+        "state": "open",
+        "price": 4
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic shop",
+        "vertical": "local",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "open now",
+        "sells nearby",
+        "local shop"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "local-hardware-overlap",
+      "type": "company",
+      "name": "U Street Hardware (open now)",
+      "description": "DEMO overlap with products — sells nearby drills, open now. Same seller role. Not real.",
+      "offers": [
+        "sells nearby",
+        "open now",
+        "drill",
+        "this product",
+        "local commerce"
+      ],
+      "seeks": [
+        "buyer nearby"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "seller",
+        "kind": "drill",
+        "openNow": true,
+        "deliverToday": true,
+        "inStock": true,
+        "price": 36,
+        "currency": "USD",
+        "state": "open"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic shop",
+        "vertical": "local",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "sells nearby",
+        "open now",
+        "drill",
+        "this product",
+        "local commerce"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
+    },
+    {
+      "id": "community-market-watchers",
+      "type": "community",
+      "name": "Market Watchers circle",
+      "description": "DEMO synthetic community for people who need help understanding this market. Not a real group.",
+      "offers": [
+        "help understanding this market",
+        "understand this market",
+        "community",
+        "shared notes"
+      ],
+      "seeks": [
+        "members who have questions about this market"
+      ],
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "attributes": {
+        "synthetic": true,
+        "role": "event",
+        "kind": "community"
+      },
+      "metadata": {
+        "demo": true,
+        "demoLabel": "DEMO synthetic community",
+        "vertical": "experts",
+        "scale": "2026-verticals"
+      },
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "synthetic community"
+      },
+      "provenance": "synthetic",
+      "capabilities": [
+        "help understanding this market",
+        "understand this market",
+        "community",
+        "shared notes"
+      ],
+      "preferences": {},
+      "created_at": "2026-09-13T02:00:00.000Z"
     }
   ]
 }

@@ -450,3 +450,91 @@ Verticals can disappear into views. The leftover object is ENTITY with OFFER/SEE
 34. `EntityStore.add` + index.add = registration. No capability registry.
 35. `delegate({from, task, select})` is the A→B demo. Receipts attach to `trust.evidence.receipts`.
 36. Costume tabs unchanged. `/universal` is the one-box. `/ais` runs the live A→B.
+
+---
+
+## MARKETPLACE FACTORY — breadth as the test (thin proofs)
+
+Universal leap stayed running. No new core primitive. Ten more lenses on the same `whoelse.find`. Seed ~186 → ~249. Tabs are experimental costumes; the one-box still has no required category.
+
+**Lenses now (15):** Dating, Apt, Jobs, Rides, Services, Products, Experts, Capital, Travel, Events, Childcare, Collab, Compute, Data, Local. Agents remain `/ais`, not a sixteenth matcher.
+
+### Per-vertical notes
+
+| Vertical | New primitive forced? | Existing sufficient? | Broke? | Surprisingly reusable | Same MCP? | Entity type vs offer/seek |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Products** | No | `price`, `state`, substitute mode | Sold-out must *have* `inStock: false` or it leaks | `equivalent` is just substitute + `kind` | yes | **type `product`** (already reserved) + seller/buyer roles |
+| **Experts** | No | offers + `trust.evidence` | “knows about” is vocabulary, not authority | Human vs AI is the dating badge again | yes | offer/seek; role `expert`/`asker` |
+| **Capital** | No | price parser + roles | `$250k` was parsed as `$250` until `k` suffix | Ticket size is rent with a different key | yes | offer/seek; role `investor`/`founder` |
+| **Travel** | **No — forced reuse** | listing/seeker + rent + city + `availableFrom` | Apartment “room” vs “room tonight” is the gap: nights vs months, not a new type | Georgetown room tonight sits next to Georgetown 1BR | yes | **same as apartment** (`resource` + listing/seeker) |
+| **Events** | No | location + complementary offers | `from my city` is a phrase, not a graph | Community is an open `type`, not a primitive | yes | event = resource; speaker/attendee = people |
+| **Childcare** | No | evidence + tonight as `when` | Unverified cheaper card is a trust *contrast*, same as unlicensed plumber | Reciprocal = one entity with both offers and seeks | yes | offer/seek; caregiver/parent |
+| **Collab** | No | complementary Jaccard | Roles would have stolen jobs (`worker`/`opening`) — dropped them | Multi-party is a project *resource* seeking two crafts | yes | **no role**; offers↔seeks only |
+| **Compute** | No | state + price + latency (already on agents) | Busy host still matches unless we hard-filter state | Agent routing is `whoelse.find` + `fallbackTo` | yes | resource + role `compute`/`workload` |
+| **Data** | No | reserved `dataset` + evidence provenance | `verify this claim` vs `verify this result` — one letter, two views | Report is `resource` + `kind`, not type `report` | yes | type `dataset` (reserved) + publisher/researcher |
+| **Local** | No | geo + state (`openNow`, `deliverToday`) | Overlaps Products on seller/price — correct | Open-now is ride `state` with shop words | yes | company + seller/buyer (same as products) |
+
+### Expansion scorecard
+
+Scores: **5** = reused as-is, **3** = attribute keys only, **1** = new engine temptation we refused, **0** = would have needed a new primitive (none did).
+
+| Lens | Schema | Matcher | MCP | Domain code | New primitive? | Reciprocal? | Trust? | Real-time state? | Human/AI mixed? | Network effects? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dating | 5 | 5 | 5 | UI sectioning | no | weak (same-side people) | type louder than rank | no | sectioned | exemplar trail |
+| Apt | 5 | 5 | 5 | attribute keys | no | **yes** listing↔seeker | stub | dates as strings | no | neighborhood vocab |
+| Jobs | 5 | 5 | 5 | `roles` | no | **yes** two markets | evidence | start=immediate | **mixed** | company↔opening owner |
+| Rides | 5 | 5 | 5 | origin/dest | no | driver↔passenger | stub | **state** | no | seats |
+| Services | 5 | 5 | 5 | license key | no | provider↔client | **license evidence** | urgency | no | trade vocab |
+| Products | 5 | 5 | 5 | sku/inStock | no | seller↔buyer | stub | **inStock** | agent PriceHop | substitution cluster |
+| Experts | 5 | 5 | 5 | domain key | no | expert↔asker | portfolio/license | no | **mixed** | provenance |
+| Capital | 5 | 5 | 5 | ticketSize/stage | no | investor↔founder | outcome stub | no | company fund | intro graph is a sentence |
+| Travel | 5 | 5 | 5 | durationNights | no | **reuses apt** | stub | tonight=`availableFrom` | no | city overlap with apt |
+| Events | 5 | 5 | 5 | eventId | no | speaker↔attendee | stub | when phrase | **1 AI emcee** | “from my city” |
+| Childcare | 5 | 5 | 5 | `when=tonight` | no | **yes** + swap entity | **verified vs not** | tonight | AI is a *matcher*, not a sitter | reciprocal swap |
+| Collab | 5 | 5 | 5 | craft key | no | complementary only | portfolio | no | **mixed** | multi-party project |
+| Compute | 5 | 5 | 5 | gpu/capacity | no | compute↔workload | stub | **busy/available** | **agent router** | fallbackTo |
+| Data | 5 | 5 | 5 | access/owner | no | publisher↔researcher | **provenance** | no | **mixed** | original source |
+| Local | 5 | 5 | 5 | openNow/deliver | no | seller↔buyer | stub | **open/closed** | no | overlaps products |
+
+Domain-specific code amount: **parse regex + seed + lens chips**. Zero `*Engine` classes. `inferVertical` gained view names only.
+
+### What the factory taught the core
+
+37. **Role strings are domain vocabulary, not primitives.** Adding `seller`/`investor`/`caregiver` did not change `WHOELSE`. Forgetting that, and tagging collab as `worker`, would have poisoned “who else can do this work.”
+38. **Travel did not need a type.** The gap it exposed is *duration grain* (`durationNights` vs `durationMonths`) and “tonight” as `availableFrom`, not a hotel object. Georgetown room tonight and Georgetown 1BR share `role=listing`. The costume is what lies.
+39. **Products vs Local is one market seen twice.** seller + price + geo + state. Inventory (`inStock`) and shop hours (`openNow`) are the same STATE attribute. Vertical labels are the wrong cut.
+40. **`$250k` is a parse bug, not a capital primitive.** Bare `$250` from `$250k` would have matched nothing honest. Suffix `k` is generic.
+41. **Meta-query killed the organizing principle.** “I need help understanding this market.” infers **no view** and returns human expert + AI + company + dataset + report + community in one list. The useful object is the *offer* (“help understanding this market”), not the costume.
+42. **Reserved types finally earned their keep.** `product` and `dataset` were stubs; they are now seeded. `community` and `report` stayed open strings / `kind` — we did not promote `report` to a core type.
+43. **Breadth did not force a primitive.** After 15 lenses the survivor set is still ENTITY, OFFER, SEEK, CONSTRAINT, EVIDENCE, ACTION, MATCH. RELATION/STATE/VIEW remain derived.
+
+### When vertical labels stopped mattering
+
+On the sentence **“I need help understanding this market.”** — no `inferVertical`, mixed types, same `whoelse.find`. Also on travel↔apartment (same listing) and products↔local (same seller). Labels remain useful as *lenses* (chips, banners, DEMO copy) and harmful as *architecture*.
+
+### One-sentence WhoElse (unchanged, now stress-tested)
+
+**WhoElse is a shared find layer: entities publish what they offer and seek; humans and agents ask `whoelse.find`; the system returns who else matches, why, and optionally a receipt when one agent invokes another.**
+
+### Verdicts after breadth
+
+**whoelse.find still right?** Yes. 15 lenses, one-box, MCP, reciprocal, A→B all still call `WhoElseEngine.whoelse`. A `products.find` would have been the tell we failed.
+
+**Dating-for-everything?** Operator yes, layout no — same as the leap. Dating still sections. Factory mixed lists want the badge. Childcare made this sharper: an AI named SitterIndex must not look like a babysitter.
+
+**Last marketplace (own vs not own)?** Breadth makes “own the transactions” *less* plausible. We would now also own inventory truth, background checks, hotel nights, GPU capacity, and dataset licenses. WhoElse should own **find + complementary offer/seek + constraints + evidence artifacts**. It should not own the shops, the kids, the GPUs, or the cap table.
+
+### GROK (factory)
+
+The test was whether the tenth vertical would finally demand a special engine. It did not. The interesting failures were collisions (travel/apt, products/local, `$250` vs `$250k`, collab-as-worker) — evidence the model is *too* reusable, not too thin. When one sentence returns six entity kinds, “vertical” is a filter chip.
+
+### TOBIAS (factory)
+
+Breadth is the test and it held. Keep merging when green. Do not polish these into startups. The leftover question is not “which vertical next” — it is whether anyone will publish *real* offers/seeks onto this find layer.
+
+### IMPLEMENTATION (factory)
+
+44. `scripts/factory-entities.ts` + idempotent merge. Same `scale: 2026-verticals`.
+45. `packages/web/src/lib/lenses.ts` is presentation. DiscoverApp no longer hard-codes five costumes.
+46. `InferredVertical` grew names. The ranker did not grow methods.
+47. Headline demos still green: website one-box, Georgetown reciprocal, register, ClaimWriter→Checkmate receipt. Factory tests + MCP cases sit beside them.
