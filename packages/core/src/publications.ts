@@ -106,13 +106,18 @@ export function hydratePublications(entity: Entity): Publication[] {
   const explicit = (entity.publications ?? []).map((p) =>
     normalizePublication({ ...p, entityId: entity.id, kind: p.kind }, p.created_at ?? now),
   );
+  const covered = new Set(
+    explicit.flatMap((p) =>
+      [p.capability, ...(p.phrases ?? [])].map((s) => `${p.kind}:${s.toLowerCase()}`),
+    ),
+  );
   const bags: PublicationSpec[] = [
     ...parsePublicationInputs("offer", [...(entity.offers ?? []), ...(entity.capabilities ?? [])]),
     ...parsePublicationInputs("seek", entity.seeks ?? []),
-  ];
-  const fromBags = bags
-    .filter((spec) => spec.capability.trim())
-    .map((spec) => normalizePublication({ ...spec, entityId: entity.id }, now));
+  ].filter(
+    (spec) => spec.capability.trim() && !covered.has(`${spec.kind}:${spec.capability.toLowerCase()}`),
+  );
+  const fromBags = bags.map((spec) => normalizePublication({ ...spec, entityId: entity.id }, now));
   return upsertPublications(explicit, fromBags);
 }
 
