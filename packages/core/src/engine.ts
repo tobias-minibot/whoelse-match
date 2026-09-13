@@ -380,26 +380,23 @@ export class WhoElseEngine {
       constraints: { side },
       limit: opts.limit ?? 5,
     });
-    const pair = result.pairs[0];
-    if (pair) {
+    const pair = offering
+      ? result.pairs.find((p) => p.offerEntityId === entityId) ?? result.pairs[0]
+      : result.pairs.find((p) => p.seekEntityId === entityId) ?? result.pairs[0];
+    if (result.candidates[0] || pair) {
       this.store.recordMatch({
         query: context,
-        seekEntityId: pair.seekEntityId === "query" ? undefined : pair.seekEntityId,
-        offerEntityId: pair.offerEntityId === "query" ? undefined : pair.offerEntityId,
-        offerPublicationId: pair.offer.entityId === "query" ? undefined : pair.offer.id,
-        seekPublicationId: pair.seek.entityId === "query" ? undefined : pair.seek.id,
+        seekEntityId: offering
+          ? realEntityId(pair?.seekEntityId) ?? result.candidates[0]?.entity.id
+          : entityId,
+        offerEntityId: offering
+          ? entityId
+          : realEntityId(pair?.offerEntityId) ?? result.candidates[0]?.entity.id,
+        offerPublicationId: pair && pair.offer.entityId !== "query" ? pair.offer.id : undefined,
+        seekPublicationId: pair && pair.seek.entityId !== "query" ? pair.seek.id : undefined,
         side,
         status: "proposed",
         evidence: result.candidates[0]?.entity.trust?.evidence ?? {},
-      });
-    } else if (result.candidates[0]) {
-      this.store.recordMatch({
-        query: context,
-        seekEntityId: offering ? result.candidates[0].entity.id : entityId,
-        offerEntityId: offering ? entityId : result.candidates[0].entity.id,
-        side,
-        status: "proposed",
-        evidence: result.candidates[0].entity.trust?.evidence ?? {},
       });
     }
     return result;
@@ -919,6 +916,10 @@ function evidenceRank(entity: Entity): number {
 
 function num(value: unknown, fallback: number): number {
   return typeof value === "number" && !Number.isNaN(value) ? value : fallback;
+}
+
+function realEntityId(id?: string): string | undefined {
+  return id && id !== "query" ? id : undefined;
 }
 
 function groupByType(candidates: Candidate[]): Record<string, Candidate[]> {
