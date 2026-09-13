@@ -8,16 +8,15 @@ import { explainTrust } from "./trust.js";
 const engine = WhoElseEngine.fromSeed();
 
 describe("universal primitives", () => {
-  it("keeps the hypothesized survivor set", () => {
+  it("keeps the proven survivor set — RELATION/STATE/VIEW are derived", () => {
     assert.deepEqual(UNIVERSAL_PRIMITIVES, [
       "ENTITY",
       "OFFER",
       "SEEK",
-      "RELATION",
       "CONSTRAINT",
       "EVIDENCE",
-      "STATE",
       "ACTION",
+      "MATCH",
     ]);
   });
 

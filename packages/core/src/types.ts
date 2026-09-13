@@ -9,19 +9,22 @@
  */
 
 /**
- * Survivors after costume collapse. Verticals are views, not types.
- * Domain adapters/policies/presentation may know “dating”; the ranker must not.
+ * Survivors the live matcher actually uses as first-class objects.
+ * RELATION and STATE exist as attributes (owner/fallbackTo, attributes.state) — not cores.
+ * VIEW is inferVertical — presentation only. Verticals are costumes, not types.
  */
 export const UNIVERSAL_PRIMITIVES = [
   "ENTITY",
   "OFFER",
   "SEEK",
-  "RELATION",
   "CONSTRAINT",
   "EVIDENCE",
-  "STATE",
   "ACTION",
+  "MATCH",
 ] as const;
+
+/** Derived — stored on ENTITY.attributes, not a second graph or calendar. */
+export const DERIVED_PRIMITIVES = ["RELATION", "STATE", "VIEW"] as const;
 
 export type UniversalPrimitive = (typeof UNIVERSAL_PRIMITIVES)[number];
 

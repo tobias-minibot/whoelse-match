@@ -2,14 +2,13 @@
   "n": 92,
   "clean": 18,
   "seeded": 81,
-  "collapse": "506 (claimed) → 1 operator (whoelse.find) + CONSTRAINT + optional EVIDENCE/STATE/ACTION",
+  "collapse": "506 (claimed) → 1 operator (whoelse.find) + CONSTRAINT + optional EVIDENCE/ACTION/MATCH",
   "primitives": [
     "ENTITY",
     "OFFER",
     "SEEK",
     "CONSTRAINT",
     "EVIDENCE",
-    "STATE",
     "ACTION",
     "MATCH"
   ],

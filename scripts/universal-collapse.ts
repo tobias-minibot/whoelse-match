@@ -71,8 +71,8 @@ const summary = {
   n: rows.length,
   clean,
   seeded,
-  collapse: "506 (claimed) → 1 operator (whoelse.find) + CONSTRAINT + optional EVIDENCE/STATE/ACTION",
-  primitives: ["ENTITY", "OFFER", "SEEK", "CONSTRAINT", "EVIDENCE", "STATE", "ACTION", "MATCH"],
+  collapse: "506 (claimed) → 1 operator (whoelse.find) + CONSTRAINT + optional EVIDENCE/ACTION/MATCH",
+  primitives: ["ENTITY", "OFFER", "SEEK", "CONSTRAINT", "EVIDENCE", "ACTION", "MATCH"],
   rows: rows.slice(0, 60),
 };
 

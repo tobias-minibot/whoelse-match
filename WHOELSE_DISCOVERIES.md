@@ -354,7 +354,7 @@ Costume tabs stayed for comparison. No new verticals. One box at `/universal`. A
 
 ### 1. Proposed primitive model
 
-**Kept (code uses them as the matcher):**
+**Kept as first-class (`UNIVERSAL_PRIMITIVES`):**
 
 | Primitive | What it is | What it is not |
 | --- | --- | --- |
