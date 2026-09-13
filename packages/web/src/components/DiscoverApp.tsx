@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
 import {
   examplesFor,
@@ -306,7 +307,11 @@ export function DiscoverApp() {
         <a href="/universal">One box (no category)</a>
         {" · "}
         <a href="/ais">Connect an agent →</a>
+        {" · "}
+        <a href="/onboarding">Join as a human</a>
       </p>
+
+      <JoinHint />
 
       <div className={`banner ${vertical !== "dating" ? "banner-demo" : ""}`}>
         {vertical !== "dating" ? (

@@ -297,6 +297,7 @@ describe("acceptance: durable principals and owned writes", () => {
       "ownership",
       "publications",
       "write_audit",
+      "rate_counters",
     ]) {
       assert.ok(names.includes(need), `missing ${need}: ${names.join(",")}`);
     }

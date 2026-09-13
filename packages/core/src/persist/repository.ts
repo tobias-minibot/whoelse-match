@@ -61,6 +61,8 @@ export class PostgresRepository {
           displayName: r.display_name ? String(r.display_name) : undefined,
           clerkUserId: r.clerk_user_id ? String(r.clerk_user_id) : undefined,
           synthetic: asBool(r.synthetic),
+          ageAffirmedAt: r.age_affirmed_at ? asIso(r.age_affirmed_at) : undefined,
+          ageAffirmationVersion: r.age_affirmation_version ? String(r.age_affirmation_version) : undefined,
           created_at: asIso(r.created_at),
           updated_at: asIso(r.updated_at),
         }),
@@ -110,15 +112,27 @@ export class PostgresRepository {
 
   async upsertPrincipal(p: Principal): Promise<void> {
     await this.client.query(
-      `INSERT INTO principals (id, kind, display_name, clerk_user_id, synthetic, created_at, updated_at)
-       VALUES ($1, $2, $3, $4, $5, $6::timestamptz, $7::timestamptz)
+      `INSERT INTO principals (id, kind, display_name, clerk_user_id, synthetic, age_affirmed_at, age_affirmation_version, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6::timestamptz, $7, $8::timestamptz, $9::timestamptz)
        ON CONFLICT (id) DO UPDATE SET
          kind = EXCLUDED.kind,
          display_name = EXCLUDED.display_name,
          clerk_user_id = EXCLUDED.clerk_user_id,
          synthetic = EXCLUDED.synthetic,
+         age_affirmed_at = EXCLUDED.age_affirmed_at,
+         age_affirmation_version = EXCLUDED.age_affirmation_version,
          updated_at = EXCLUDED.updated_at`,
-      [p.id, p.kind, p.displayName ?? null, p.clerkUserId ?? null, p.synthetic === true, p.created_at, p.updated_at],
+      [
+        p.id,
+        p.kind,
+        p.displayName ?? null,
+        p.clerkUserId ?? null,
+        p.synthetic === true,
+        p.ageAffirmedAt ?? null,
+        p.ageAffirmationVersion ?? null,
+        p.created_at,
+        p.updated_at,
+      ],
     );
   }
 
@@ -226,5 +240,25 @@ export class PostgresRepository {
   async entityCount(): Promise<number> {
     const rows = await this.client.query<{ n: string | number }>("SELECT count(*)::int AS n FROM entities");
     return Number(rows[0]?.n ?? 0);
+  }
+
+  async incrementRate(bucket: string, windowStart: Date, _windowSec: number): Promise<number> {
+    const start = windowStart.toISOString();
+    const rows = await this.client.query<{ count: string | number }>(
+      `INSERT INTO rate_counters (bucket, window_start, count)
+       VALUES ($1, $2::timestamptz, 1)
+       ON CONFLICT (bucket) DO UPDATE SET
+         count = CASE
+           WHEN rate_counters.window_start < EXCLUDED.window_start THEN 1
+           ELSE rate_counters.count + 1
+         END,
+         window_start = CASE
+           WHEN rate_counters.window_start < EXCLUDED.window_start THEN EXCLUDED.window_start
+           ELSE rate_counters.window_start
+         END
+       RETURNING count`,
+      [bucket, start],
+    );
+    return Number(rows[0]?.count ?? 1);
   }
 }

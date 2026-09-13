@@ -1,6 +1,7 @@
 import { publicationsOf } from "./publications.js";
 import { offersOf, seeksOf } from "./store.js";
 import type { Candidate, Entity, Publication, WhoElseResult } from "./types.js";
+import { isPrivateConstraintKey, publicPublicationsOf, visibilityOf, type Visibility } from "./visibility.js";
 
 const PRIVATE_METADATA = new Set([
   "ownerPrincipalId",
@@ -15,6 +16,11 @@ const PRIVATE_METADATA = new Set([
   "key_hash",
   "keyId",
   "accountId",
+  "ageAffirmedAt",
+  "age_affirmed_at",
+  "ageAffirmationVersion",
+  "age_affirmation_version",
+  "ageAffirmationText",
 ]);
 
 const PRIVATE_ATTRIBUTES = new Set([
@@ -28,6 +34,12 @@ const PRIVATE_ATTRIBUTES = new Set([
   "owner_principal_id",
   "clerkUserId",
   "clerk_user_id",
+  "ageAffirmedAt",
+  "ageAffirmationVersion",
+  "ageAffirmationText",
+  "datingIntent",
+  "wantsMoreOf",
+  "pace",
 ]);
 
 export interface PublicPublication {
@@ -69,7 +81,7 @@ export function toPublicPublication(p: Publication): PublicPublication {
     kind: p.kind,
     capability: p.capability,
     phrases: p.phrases,
-    constraints: p.constraints,
+    constraints: p.constraints?.filter((c) => !isPrivateConstraintKey(c.key)),
     evidence: p.evidence,
     status: p.status,
     created_at: p.created_at,
@@ -93,7 +105,7 @@ export function toPublicEntity(entity: Entity): PublicEntity {
     type: entity.type,
     name: entity.name,
     description: entity.description,
-    publications: publicationsOf(entity).map(toPublicPublication),
+    publications: publicPublicationsOf(entity).map(toPublicPublication),
     offers: offersOf(entity),
     seeks: seeksOf(entity),
     capabilities: offersOf(entity),
@@ -104,6 +116,22 @@ export function toPublicEntity(entity: Entity): PublicEntity {
     provenance: entity.provenance,
     trust: entity.trust,
     created_at: entity.created_at,
+  };
+}
+
+/** Owner card — withdrawn pubs included; still no preferences / affirmation timestamp. */
+export interface OwnerEntity extends PublicEntity {
+  visibility: Visibility;
+  ageAffirmed: boolean;
+}
+
+export function toOwnerEntity(entity: Entity): OwnerEntity {
+  const pub = toPublicEntity(entity);
+  return {
+    ...pub,
+    publications: publicationsOf(entity).map(toPublicPublication),
+    visibility: visibilityOf(entity),
+    ageAffirmed: entity.metadata?.ageAffirmed === true,
   };
 }
 

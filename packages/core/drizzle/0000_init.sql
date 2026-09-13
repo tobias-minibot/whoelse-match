@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS principals (
   display_name text,
   clerk_user_id text UNIQUE,
   synthetic boolean NOT NULL DEFAULT false,
+  age_affirmed_at timestamptz,
+  age_affirmation_version text,
   created_at timestamptz NOT NULL,
   updated_at timestamptz NOT NULL
 );

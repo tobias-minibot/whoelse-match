@@ -7,7 +7,7 @@ export function AuthButtons() {
   return (
     <span className="auth-slot">
       <SignedOut>
-        <SignInButton mode="modal">
+        <SignInButton mode="modal" forceRedirectUrl="/onboarding" signUpForceRedirectUrl="/onboarding">
           <button type="button" className="ghost auth-btn">
             Sign in
           </button>

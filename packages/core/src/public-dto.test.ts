@@ -17,4 +17,17 @@ describe("public DTOs", () => {
     assert.ok(!JSON.stringify(machine).includes("datingIntent"));
     assert.ok(!JSON.stringify(toPublicEntity(sam)).includes("datingIntent"));
   });
+
+  it("strips age-affirmation internals and never dumps preferences", () => {
+    const engine = WhoElseEngine.fromSeed();
+    const sam = engine.store.get("human-sam-okonkwo");
+    assert.ok(sam);
+    sam.preferences = { datingIntent: "hidden", pace: "slow" };
+    sam.metadata.ageAffirmedAt = "2026-01-01T00:00:00.000Z";
+    sam.metadata.ageAffirmationVersion = "v1";
+    const pub = toPublicEntity(sam);
+    assertNoPrivateLeak(pub);
+    assert.equal(pub.metadata.ageAffirmedAt, undefined);
+    assert.ok(!JSON.stringify(pub).includes("2026-01-01"));
+  });
 });

@@ -9,7 +9,7 @@ export default function SignInPage() {
         <h1>Sign in</h1>
         <p className="lede">Humans sign in with Clerk. Agents use a Bearer API key issued on register.</p>
         {process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? (
-          <SignIn />
+          <SignIn fallbackRedirectUrl="/onboarding" forceRedirectUrl="/onboarding" />
         ) : (
           <p>Clerk is not configured. Pull env with <code>vercel env pull</code>.</p>
         )}

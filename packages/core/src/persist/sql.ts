@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS principals (
   display_name text,
   clerk_user_id text UNIQUE,
   synthetic boolean NOT NULL DEFAULT false,
+  age_affirmed_at timestamptz,
+  age_affirmation_version text,
   created_at timestamptz NOT NULL,
   updated_at timestamptz NOT NULL
 );
@@ -77,4 +79,19 @@ CREATE INDEX IF NOT EXISTS write_audit_at_idx ON write_audit (at);
 CREATE INDEX IF NOT EXISTS agent_credentials_principal_idx ON agent_credentials (principal_id);
 `;
 
-export const MIGRATION_FILES = [{ id: "0000_init", sql: INIT_SQL }] as const;
+/** Additive. Safe on DBs that already ran 0000_init. */
+export const ONBOARDING_SQL = `
+ALTER TABLE principals ADD COLUMN IF NOT EXISTS age_affirmed_at timestamptz;
+ALTER TABLE principals ADD COLUMN IF NOT EXISTS age_affirmation_version text;
+
+CREATE TABLE IF NOT EXISTS rate_counters (
+  bucket text PRIMARY KEY,
+  window_start timestamptz NOT NULL,
+  count integer NOT NULL
+);
+`;
+
+export const MIGRATION_FILES = [
+  { id: "0000_init", sql: INIT_SQL },
+  { id: "0001_onboarding", sql: ONBOARDING_SQL },
+] as const;

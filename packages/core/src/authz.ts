@@ -16,8 +16,8 @@ export type AgentScope = (typeof AGENT_SCOPES)[number];
 export type PrincipalKind = "human" | "agent";
 
 export class AuthzError extends Error {
-  readonly status: 401 | 403 | 409;
-  constructor(status: 401 | 403 | 409, message: string) {
+  readonly status: 401 | 403 | 409 | 429;
+  constructor(status: 401 | 403 | 409 | 429, message: string) {
     super(message);
     this.name = "AuthzError";
     this.status = status;
@@ -31,6 +31,10 @@ export interface Principal {
   clerkUserId?: string;
   /** Every synthetic fixture is labeled. Never a real person. */
   synthetic?: boolean;
+  /** ISO timestamp. Private — never in public DTOs. */
+  ageAffirmedAt?: string;
+  /** Version key of the affirmation text the caller accepted. */
+  ageAffirmationVersion?: string;
   created_at: string;
   updated_at: string;
 }

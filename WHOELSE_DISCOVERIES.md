@@ -619,3 +619,21 @@ Launch foundation, not a demo patch. Process-memory remains the ranker; Neon hol
 ### FOLLOW-UP (not this PR)
 
 Durable match/receipt persistence, Clerk production domain, paid plans, ranking rewrite.
+
+---
+
+## HUMAN ONBOARDING + LAUNCH SAFETY (2026-09-13)
+
+Auth/ownership shipped. Production was still an empty postgres pool with no coherent human path. This is the minimum so real people can join without being reckless.
+
+### DISCOVERED THROUGH IMPLEMENTATION
+
+60. **Principal ≠ entity.** Clerk upsert already made a `kind=human` principal. Find still needed a human *entity* plus at least one OFFER/SEEK. Onboarding is that link: one owned `type=human` row, labeled HUMAN, never AI.
+61. **Private-until-affirmed is enough visibility.** An authenticated-only middle state would be a second finder. `whoelse.find` skips `visibility=private` and user-humans without `metadata.ageAffirmed`. Seed/synthetic stay public and labeled. Owner `GET /api/me` sees the draft; public `GET /api/entities/:id` is 404.
+62. **Age affirmation is an audit row, not a public field.** Store `age_affirmed_at` + `age_affirmation_version` on the principal. Public DTOs may show `ageAffirmed: true` after the fact. Timestamp and the text version never leave the strip. Dating-relevant SEEKs (`romantic compatibility` and similar nouns) stay withdrawn until that row exists — then they may activate. Same publication objects; no dating type.
+63. **Write budgets belong in Postgres.** Vercel instances do not share process memory. `rate_counters` is a windowed increment per principal (register/publish/withdraw/feedback/onboard/affirm) and per IP for anonymous reads. Upstash was not in env — do not invent it.
+64. **Register-as-human must take the same gates.** `/api/onboarding` is the product path; `whoelse.register` with `type=human` still starts private and cannot impersonate AI. Agents skip the age gate. Cross-owner stays 403; anonymous writes stay 401; over-budget writes are 429.
+
+### SHARED DERIVATION
+
+A human joins: Clerk → principal → entity + publication → 18+ affirmation → public find. Dating is the default sentence, not a vertical engine. Moderation queue, messaging, and Clerk production-domain setup stay follow-ups.

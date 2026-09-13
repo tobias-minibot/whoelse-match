@@ -1,4 +1,4 @@
-import { boolean, index, jsonb, pgTable, primaryKey, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, index, integer, jsonb, pgTable, primaryKey, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 import type { AgentScope } from "../authz.js";
 import type { Entity, Publication } from "../types.js";
 
@@ -8,6 +8,8 @@ export const principals = pgTable("principals", {
   displayName: text("display_name"),
   clerkUserId: text("clerk_user_id"),
   synthetic: boolean("synthetic").notNull().default(false),
+  ageAffirmedAt: timestamp("age_affirmed_at", { withTimezone: true }),
+  ageAffirmationVersion: text("age_affirmation_version"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
 });
@@ -93,3 +95,9 @@ export const writeAudit = pgTable(
   },
   (t) => [index("write_audit_at_idx").on(t.at)],
 );
+
+export const rateCounters = pgTable("rate_counters", {
+  bucket: text("bucket").primaryKey(),
+  windowStart: timestamp("window_start", { withTimezone: true }).notNull(),
+  count: integer("count").notNull(),
+});
