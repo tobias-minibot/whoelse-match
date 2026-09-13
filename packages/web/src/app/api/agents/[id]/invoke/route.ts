@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { getEngine } from "@/lib/engine";
-import { invokeAgent } from "@/lib/invoke";
 
 export const runtime = "nodejs";
 
@@ -14,5 +13,5 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     return NextResponse.json({ error: "invoke is only stubbed for type=agent" }, { status: 400 });
   }
   const body = await req.json().catch(() => ({}));
-  return NextResponse.json(invokeAgent(entity, body));
+  return NextResponse.json(getEngine().invoke(id, body));
 }

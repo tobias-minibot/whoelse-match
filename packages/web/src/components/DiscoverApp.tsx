@@ -397,6 +397,8 @@ export function DiscoverApp() {
 
       <p className="doctrine">
         <strong>Humans ask Who Else. Agents call WhoElse. Same network.</strong>{" "}
+        <a href="/universal">One box (no category)</a>
+        {" · "}
         <a href="/ais">Connect an agent →</a>
       </p>
 

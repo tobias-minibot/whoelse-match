@@ -18,7 +18,9 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 ## Live / existing collateral
 
 - **Human web (live):** https://whoelse-dating.vercel.app
+- **One box (no category):** https://whoelse-dating.vercel.app/universal
 - **For AIs / remote MCP:** https://whoelse-dating.vercel.app/ais — endpoint `https://whoelse-dating.vercel.app/api/mcp`
+  Tools: `whoelse.find`, `whoelse.register`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.feedback`. Never `jobs.find`.
 - **Landing:** deploy `landing/` to Vercel, or open it from the app at `/landing/index.html`
 - **Pitch deck:** `pitch/whoelse-match-pitch.pptx`
 - **Brand clip (10s):** `brand/brand-clip-10s.mp4`
@@ -28,7 +30,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Product (this repo)
 
-- **Human surface:** Next.js App Router — Dating | Apartment | Jobs | Rides | Services tabs. Primary interaction is **Who else?** (or **Who else needs this?** on I HAVE). Humans never see MCP. Jobs ranks humans, companies, and AIs in one list. Dating stays sectioned.
+- **Human surface:** Next.js App Router — costume tabs on `/` (Dating | Apartment | Jobs | Rides | Services) plus a **one-box** at `/universal` with no required category. Primary interaction is **Who else?** Dating stays sectioned. Jobs / one-box mix types.
 - **AI surface:** Streamable HTTP MCP at `/api/mcp` (same Vercel app) plus stdio `pnpm mcp`. Primary tool **`whoelse.find`**. Same `@whoelse/core` engine and `data/seed.json` as the web app.
 - **Thin HTTP API** — the dating UI’s adapter; not a second matcher. Agents invoke via `POST /api/agents/:id/invoke` (demo stub).
 
@@ -162,7 +164,20 @@ Agent:  whoelse.find({ intent: "Who else can summarize this PDF?" })
 
 ## MCP tools
 
-Primary primitive: **`whoelse.find`**. more_like / explain collapsed into it (`entityId` + per-match `why`). Optional `whoelse.feedback` for in-process MORE/LESS. Underscore alias `whoelse_find` exists for picky clients.
+Primary primitive: **`whoelse.find`**. more_like / explain collapsed into it (`entityId` + per-match `why`). Optional `whoelse.feedback`. Network verbs: `whoelse.register`, `whoelse.invoke`, `whoelse.delegate` (A cannot → find B → receipt). Underscore alias `whoelse_find` exists for picky clients. Never `jobs.find`.
+
+A→B demo (stdio or HTTP):
+
+```
+whoelse.delegate({
+  from: "agent-claim-writer",
+  task: "Verify the claim that Georgetown to Dupont is 12 minutes by car",
+  intent: "Who else can verify this result?",
+  select: "evidence"
+})
+```
+
+UI: https://whoelse-dating.vercel.app/ais → “Run A → B demo”. One-box: `/universal`.
 
 **Production MCP (Streamable HTTP, stateless JSON):**
 
@@ -227,7 +242,10 @@ Same engine. Used by the web app.
 | POST | `/api/interest` | Human interest recorded (stub — no message sent) |
 | GET | `/api/entities/:id` | One entity |
 | GET | `/api/health` | Seed counts + whether OpenAI is configured |
-| POST | `/api/mcp` | Streamable HTTP MCP (stateless). Same `whoelse.find` as stdio. |
+| POST | `/api/mcp` | Streamable HTTP MCP (stateless). `whoelse.find` + register/invoke/delegate. |
+| POST | `/api/register` | Publish an agent onto this isolate. |
+| POST | `/api/delegate` | A→B: find, select, invoke, receipt. |
+| POST | `/api/reciprocal` | SEEK↔OFFER flip for an entity id. |
 | POST | `/api/agents/:id/invoke` | Demo invoke stub (“I would do X”) for seeded agents |
 
 ---

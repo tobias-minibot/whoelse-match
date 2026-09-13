@@ -125,5 +125,93 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
     },
   );
 
+  server.tool(
+    "whoelse.register",
+    "Publish an agent (or other entity) onto the same WhoElse network. Identity, offers, endpoint, cost, latency, evidence. Not a vertical tool — never jobs.register.",
+    {
+      name: z.string(),
+      description: z.string(),
+      offers: z.array(z.string()).min(1),
+      seeks: z.array(z.string()).optional(),
+      type: z.string().optional(),
+      id: z.string().optional(),
+      owner: z.string().optional(),
+      version: z.string().optional(),
+      status: z.string().optional(),
+      protocol: z.string().optional(),
+      requirements: z.array(z.string()).optional(),
+      permissions: z.array(z.string()).optional(),
+      cost: z.union([z.number(), z.string()]).optional(),
+      latency: z.union([z.number(), z.string()]).optional(),
+      availability: z.string().optional(),
+      endpoint: z
+        .object({
+          protocol: z.enum(["http", "mcp", "stub"]).optional(),
+          url: z.string(),
+          auth: z.string().optional(),
+        })
+        .optional(),
+    },
+    async (spec) => {
+      const entity = engine.register({
+        ...spec,
+        endpoint: spec.endpoint
+          ? { protocol: spec.endpoint.protocol ?? "http", url: spec.endpoint.url, auth: spec.endpoint.auth }
+          : undefined,
+      });
+      return json({
+        ok: true,
+        entity: { id: entity.id, type: entity.type, name: entity.name, offers: entity.offers, seeks: entity.seeks },
+        next: { find: "whoelse.find", invoke: `POST /api/agents/${entity.id}/invoke` },
+      });
+    },
+  );
+
+  server.tool(
+    "whoelse.invoke",
+    "Invoke a registered or seeded agent. Demo stub returns a structured result + receipt. Same network as whoelse.find.",
+    {
+      entityId: z.string(),
+      task: z.string(),
+    },
+    async ({ entityId, task }) => {
+      try {
+        const invoked = engine.invoke(entityId, { task });
+        return json(invoked);
+      } catch (err) {
+        return json({ error: err instanceof Error ? err.message : String(err) });
+      }
+    },
+  );
+
+  server.tool(
+    "whoelse.delegate",
+    "Agent A cannot do a task: whoelse.find candidates, select, invoke Agent B, return result + evidence receipt. Headline agent-to-agent demo. Never jobs.find.",
+    {
+      task: z.string(),
+      intent: z.string().optional().describe("Find sentence. Defaults to task."),
+      from: z.string().optional().describe("Requester / Agent A id"),
+      select: z.enum(["first", "cheapest", "fastest", "evidence"]).optional(),
+      limit: z.number().int().min(1).max(20).optional(),
+    },
+    async ({ task, intent, from, select, limit }) => {
+      const result = engine.delegate({ task, intent, from, select, limit });
+      return json({
+        ok: result.ok,
+        task: result.task,
+        intent: result.intent,
+        from: result.from,
+        selected: result.selected
+          ? { id: result.selected.entity.id, name: result.selected.entity.name, score: result.selected.score }
+          : undefined,
+        invoked: result.invoked,
+        receipt: result.receipt,
+        match: result.match,
+        found: result.found.slice(0, 5).map((c) => ({ id: c.entity.id, name: c.entity.name, type: c.entity.type })),
+        reason: result.reason,
+      });
+    },
+  );
+
   return server;
 }

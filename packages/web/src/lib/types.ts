@@ -18,9 +18,12 @@ export interface Entity {
     notes?: string;
     evidence?: {
       verified?: boolean;
+      verifiedBy?: string;
       portfolio?: string[];
       outcomes?: { label: string; result?: string }[];
       licenses?: string[];
+      references?: string[];
+      receipts?: string[];
     };
   };
   provenance: string;
@@ -42,6 +45,20 @@ export interface WhoElsePayload {
   inferredMode: string;
   inferredConstraints: Record<string, unknown>;
   inferredVertical?: string;
+  inferredView?: string;
+  universal?: {
+    text: string;
+    side?: string;
+    entityType?: string;
+    relation?: string;
+    roles?: string[];
+    hard: { key: string; op: string; value?: unknown }[];
+    soft: { city?: string; neighborhood?: string; cheaper?: boolean; labels?: string[] };
+    evidenceNeeds: string[];
+    state?: { op: string; value: string };
+    ranking: string;
+    view?: string;
+  };
   usedOpenAiRerank: boolean;
   candidates: Candidate[];
   humans: Candidate[];

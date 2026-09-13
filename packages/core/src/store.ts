@@ -1,7 +1,16 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { Entity, FeedbackEvent, InterestRecord } from "./types.js";
+import type {
+  Entity,
+  FeedbackEvent,
+  InterestRecord,
+  InvokeReceipt,
+  MatchRecord,
+  NetworkStats,
+  Relation,
+  TrustEvidence,
+} from "./types.js";
 import { uniqueStrings } from "./text.js";
 
 export function findSeedPath(): string {
@@ -63,6 +72,9 @@ export class EntityStore {
   readonly byId: Map<string, Entity>;
   readonly feedback: FeedbackEvent[] = [];
   readonly interests: InterestRecord[] = [];
+  readonly matches: MatchRecord[] = [];
+  readonly receipts: InvokeReceipt[] = [];
+  readonly missingSupply: { query: string; view?: string }[] = [];
 
   constructor(entities: Entity[]) {
     this.entities = entities.map(normalizeEntity);
@@ -83,6 +95,89 @@ export class EntityStore {
 
   all(): Entity[] {
     return this.entities;
+  }
+
+  add(entity: Entity): Entity {
+    const next = normalizeEntity(entity);
+    const existing = this.byId.get(next.id);
+    if (existing) {
+      const idx = this.entities.findIndex((e) => e.id === next.id);
+      if (idx >= 0) this.entities[idx] = next;
+      this.byId.set(next.id, next);
+      return next;
+    }
+    this.entities.push(next);
+    this.byId.set(next.id, next);
+    return next;
+  }
+
+  recordMatch(partial: Omit<MatchRecord, "id" | "created_at" | "updated_at" | "evidence"> & {
+    id?: string;
+    evidence?: TrustEvidence;
+    created_at?: string;
+  }): MatchRecord {
+    const now = new Date().toISOString();
+    const full: MatchRecord = {
+      id: partial.id ?? `match-${this.matches.length + 1}-${Math.random().toString(36).slice(2, 8)}`,
+      query: partial.query,
+      seekEntityId: partial.seekEntityId,
+      offerEntityId: partial.offerEntityId,
+      side: partial.side,
+      evidence: partial.evidence ?? {},
+      status: partial.status,
+      created_at: partial.created_at ?? now,
+      updated_at: now,
+      receiptId: partial.receiptId,
+    };
+    this.matches.push(full);
+    return full;
+  }
+
+  updateMatch(id: string, patch: Partial<Pick<MatchRecord, "status" | "evidence" | "receiptId">>): MatchRecord | undefined {
+    const found = this.matches.find((m) => m.id === id);
+    if (!found) return undefined;
+    Object.assign(found, patch, { updated_at: new Date().toISOString() });
+    return found;
+  }
+
+  recordReceipt(partial: Omit<InvokeReceipt, "id" | "at"> & { id?: string; at?: string }): InvokeReceipt {
+    const full: InvokeReceipt = {
+      ...partial,
+      id: partial.id ?? `receipt-${this.receipts.length + 1}-${Math.random().toString(36).slice(2, 8)}`,
+      at: partial.at ?? new Date().toISOString(),
+    };
+    this.receipts.push(full);
+    const offer = this.get(full.toAgentId);
+    if (offer) {
+      const evidence = offer.trust?.evidence ?? {};
+      evidence.receipts = [...(evidence.receipts ?? []), full.id];
+      offer.trust = { ...(offer.trust ?? { status: "evidence" }), status: "evidence", evidence };
+    }
+    return full;
+  }
+
+  recordMissing(query: string, view?: string) {
+    this.missingSupply.push({ query, view });
+  }
+
+  stats(): NetworkStats {
+    let offers = 0;
+    let seeks = 0;
+    for (const e of this.entities) {
+      if (offersOf(e).length) offers += 1;
+      if (seeksOf(e).length) seeks += 1;
+    }
+    const invoked = this.matches.filter((m) => m.status === "invoked" || m.status === "verified").length;
+    const unmatched = Math.max(0, seeks - this.matches.length);
+    return {
+      entities: this.entities.length,
+      offers,
+      seeks,
+      matches: this.matches.length,
+      unmatched,
+      invoked,
+      missingSupply: this.missingSupply.slice(-12),
+    };
   }
 
   cities(): string[] {
@@ -174,6 +269,34 @@ function typeWords(type: string): string {
   if (type === "service") return "service provider";
   if (type === "resource") return "resource listing opening";
   return type;
+}
+
+export function relationsOf(entity: Entity): Relation[] {
+  const out: Relation[] = [];
+  const owner = entity.attributes?.owner;
+  if (typeof owner === "string" && owner) {
+    out.push({ kind: "owner", from: entity.id, to: owner });
+  }
+  const fallback = entity.attributes?.fallbackTo;
+  if (typeof fallback === "string" && fallback) {
+    out.push({ kind: "fallback", from: entity.id, to: fallback });
+  }
+  return out;
+}
+
+export function endpointOf(entity: Entity): { protocol: "http" | "mcp" | "stub"; url: string; auth?: string } | undefined {
+  const url = entity.attributes?.apiEndpoint ?? entity.attributes?.endpoint;
+  if (!url) return undefined;
+  return {
+    protocol: entity.attributes?.mcpEndpoint ? "mcp" : "http",
+    url: String(url),
+    auth: entity.attributes?.authRequirements ? String(entity.attributes.authRequirements) : undefined,
+  };
+}
+
+export function stateOf(entity: Entity): string | undefined {
+  const state = entity.attributes?.state;
+  return typeof state === "string" && state ? state : undefined;
 }
 
 function unique(values: string[]): string[] {

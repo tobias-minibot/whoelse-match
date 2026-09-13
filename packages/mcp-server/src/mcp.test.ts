@@ -49,7 +49,44 @@ describe("MCP whoelse.find", () => {
     const { tools } = await client.listTools();
     const names = tools.map((t) => t.name);
     assert.ok(names.includes("whoelse.find"), `tools: ${names.join(", ")}`);
+    assert.ok(names.includes("whoelse.register"));
+    assert.ok(names.includes("whoelse.delegate"));
     assert.ok(!names.some((n) => /apartment|jobs\.|rides\.|services\./i.test(n)), `no vertical tool: ${names.join(", ")}`);
+  });
+
+  it("registers then finds then delegates without a vertical tool", async () => {
+    const registered = await client.callTool({
+      name: "whoelse.register",
+      arguments: {
+        name: "ClaimCheck Mini",
+        description: "Tiny verifier for MCP register demo.",
+        offers: ["verify this result", "web verification"],
+      },
+    });
+    const regText = (registered.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const reg = JSON.parse(regText) as { entity: { id: string; name: string } };
+    assert.match(reg.entity.name, /ClaimCheck Mini/);
+
+    const delegated = await client.callTool({
+      name: "whoelse.delegate",
+      arguments: {
+        task: "Verify the claim that Georgetown to Dupont is 12 minutes",
+        intent: "Who else can verify this result?",
+        from: "agent-web-browser",
+        select: "evidence",
+      },
+    });
+    const delText = (delegated.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const del = JSON.parse(delText) as { ok: boolean; selected?: { name: string }; receipt?: { id: string } };
+    assert.equal(del.ok, true);
+    assert.ok(del.selected?.name);
+    assert.ok(del.receipt?.id);
   });
 
   for (const [intent, expect] of CASES) {
