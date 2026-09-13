@@ -51,6 +51,42 @@ const SCRIPTS: Record<string, (task: string) => { would: string; result: Record<
     would: `I would recommend who to delegate “${task}” to via WhoElse.`,
     result: { kind: "delegate", hint: "call whoelse.find with this intent" },
   }),
+  "agent-codesmith": (task) => ({
+    would: `I would write the two-week coding project described as: ${task}`,
+    result: { kind: "code", fallbackTo: "agent-fallback-coder", executed: false },
+  }),
+  "agent-gigwright": (task) => ({
+    would: `I would scope and run the short gig: ${task}`,
+    result: { kind: "gig", weeks: 3, executed: false },
+  }),
+  "agent-reviewer": (task) => ({
+    would: `I would review the diff in “${task}”.`,
+    result: { kind: "review", verdict: "stub-approve-with-nits" },
+  }),
+  "agent-hirescout": (task) => ({
+    would: `I would call whoelse.find to recruit for: ${task}`,
+    result: { kind: "recruit", hint: "same whoelse.find — not jobs.find" },
+  }),
+  "agent-paircoder": (task) => ({
+    would: `I would pair on: ${task}`,
+    result: { kind: "pair", executed: false },
+  }),
+  "agent-immediatebot": (task) => ({
+    would: `I would start immediately on: ${task}`,
+    result: { kind: "immediate", start: "immediate", executed: false },
+  }),
+  "agent-budgetcoder": (task) => ({
+    would: `I would do “${task}” for under $5,000.`,
+    result: { kind: "budget", rate: 800, executed: false },
+  }),
+  "agent-domainhopper": (task) => ({
+    would: `I would find a less-obvious fit for: ${task}`,
+    result: { kind: "odd-fit", hint: "whoelse.find" },
+  }),
+  "agent-fallback-coder": (task) => ({
+    would: `I would take over coding if CodeSmith failed on: ${task}`,
+    result: { kind: "failover", role: "codesmith-understudy", assumed: false },
+  }),
 };
 
 export function invokeAgent(entity: Entity, body: InvokeBody): InvokeResult {

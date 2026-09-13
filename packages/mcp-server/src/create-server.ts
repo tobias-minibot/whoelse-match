@@ -38,11 +38,15 @@ export const findInput = {
   limit: z.number().int().min(1).max(20).optional(),
   mode: modeSchema.describe("substitute | expand | peers. Default expand."),
   ranking: z.enum(["score", "sectioned"]).optional(),
-  minTrust: z.enum(["any", "unscored", "stub"]).optional(),
+  minTrust: z.enum(["any", "unscored", "stub", "evidence"]).optional(),
+  roles: z
+    .array(z.string())
+    .optional()
+    .describe("Optional marketplace roles: opening, employer, worker, applicant, driver, passenger, provider, client. Inferred from intent when omitted."),
 };
 
 export const FIND_DESCRIPTION =
-  "Primary discovery tool (whoelse.find). Find entities matching an intent — humans, labeled AIs, agents, services, resources. Same engine as the consumer Who else? UI. Dating is one seed, not the contract.";
+  "Primary discovery tool (whoelse.find). Find entities matching an intent — humans, labeled AIs, agents, companies, services, resources. Same engine as the consumer Who else? UI. Dating, apartment, jobs, rides, and services are costumes, not tools. Never call jobs.find or rides.find — they do not exist.";
 
 type FindArgs = {
   intent?: string;
@@ -60,7 +64,8 @@ type FindArgs = {
   limit?: number;
   mode?: WhoElseMode;
   ranking?: "score" | "sectioned";
-  minTrust?: "any" | "unscored" | "stub";
+  minTrust?: "any" | "unscored" | "stub" | "evidence";
+  roles?: string[];
 };
 
 function json(data: unknown) {
@@ -90,6 +95,7 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
         city: args.city ?? args.location,
         limit: args.limit,
         side: args.side,
+        roles: args.roles,
       },
       exclude: args.exclude,
       knownEntities: args.knownEntities,

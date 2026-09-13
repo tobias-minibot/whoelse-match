@@ -12,6 +12,11 @@ const LABEL_KEYS = [
   "neighborhood",
   "listingKind",
   "amenities",
+  "roleTitle",
+  "skills",
+  "trade",
+  "origin",
+  "destination",
 ];
 
 export function labelsOf(entity: Entity): string[] {
@@ -81,6 +86,15 @@ function resourceBits(entity: Entity): string | undefined {
     const symbol = a.currency === "EUR" ? "€" : "$";
     bits.push(`${symbol}${a.rent}`);
   }
+  if (typeof a.rate === "number") {
+    bits.push(`$${a.rate}${a.durationWeeks ? ` / ${a.durationWeeks}wk` : ""}`);
+  }
+  if (typeof a.roleTitle === "string") bits.push(a.roleTitle);
+  if (typeof a.origin === "string" && typeof a.destination === "string") {
+    bits.push(`${a.origin} → ${a.destination}`);
+  }
+  if (typeof a.seats === "number") bits.push(`${a.seats} seats`);
+  if (a.licensed === true) bits.push("licensed");
   if (a.furnished === true) bits.push("furnished");
   if (a.pets === true) bits.push("pets ok");
   if (typeof a.neighborhood === "string") bits.push(a.neighborhood);

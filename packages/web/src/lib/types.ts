@@ -13,6 +13,16 @@ export interface Entity {
   availability?: string;
   location?: { city?: string; region?: string; country?: string };
   metadata: Record<string, unknown>;
+  trust?: {
+    status?: string;
+    notes?: string;
+    evidence?: {
+      verified?: boolean;
+      portfolio?: string[];
+      outcomes?: { label: string; result?: string }[];
+      licenses?: string[];
+    };
+  };
   provenance: string;
   created_at: string;
 }
@@ -31,6 +41,7 @@ export interface WhoElsePayload {
   query: string;
   inferredMode: string;
   inferredConstraints: Record<string, unknown>;
+  inferredVertical?: string;
   usedOpenAiRerank: boolean;
   candidates: Candidate[];
   humans: Candidate[];

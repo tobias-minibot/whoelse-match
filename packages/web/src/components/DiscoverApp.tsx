@@ -12,7 +12,7 @@ const DATING_EXAMPLES = [
   "Who else is a founder looking for a thought partner?",
 ];
 
-const SEEK_EXAMPLES = [
+const APT_SEEK = [
   "Who else has a 1-bedroom apartment in DC under $2,500?",
   "Who else has a furnished sublet in Berlin for three months?",
   "Who else has a place near Georgetown?",
@@ -20,7 +20,7 @@ const SEEK_EXAMPLES = [
   "Who else has something available next month?",
 ];
 
-const OFFER_EXAMPLES = [
+const APT_OFFER = [
   "I have a furnished 1-bedroom in Georgetown for $2,200 that allows pets",
   "Who else needs a furnished apartment in Berlin?",
   "Who else is looking for exactly the apartment I have?",
@@ -28,8 +28,49 @@ const OFFER_EXAMPLES = [
   "Who else is looking for a 2-bedroom in DC?",
 ];
 
-type Vertical = "dating" | "apartment";
-type ApartmentSide = "seek" | "offer";
+const JOB_SEEK = [
+  "Who else is hiring AI people in Washington?",
+  "Who else needs someone with my background?",
+  "Who else is available for a two-week coding project?",
+  "Who else can do this work for under $5,000?",
+  "Who else could do this job — human or AI?",
+];
+
+const JOB_OFFER = [
+  "I have AI engineering experience and can start immediately",
+  "Who else is looking for a role like this?",
+  "Who else should I recruit?",
+  "Who else has done this exact kind of work before?",
+  "Who else is a better fit but less obvious?",
+];
+
+const RIDE_SEEK = [
+  "Who else can give me a ride from Georgetown to Dupont?",
+  "Who else can give me a ride to the airport?",
+  "Who else has seats to Moab Saturday?",
+  "Who else can give me a ride?",
+];
+
+const RIDE_OFFER = [
+  "I have 3 seats from Georgetown to Dupont Saturday",
+  "Who else needs a ride to the airport?",
+  "Who else needs a seat to Moab Saturday?",
+];
+
+const SVC_SEEK = [
+  "Who else can fix a leak under my sink before the weekend?",
+  "Who else is a licensed plumber near me?",
+  "Who else can do emergency handyman work in DC?",
+];
+
+const SVC_OFFER = [
+  "I am a licensed plumber available tonight",
+  "Who else needs a licensed plumber?",
+  "Who else needs a handyman before the weekend?",
+];
+
+type Vertical = "dating" | "apartment" | "jobs" | "rides" | "services";
+type MarketSide = "seek" | "offer";
 type TrailItem = {
   label: string;
   context: string;
@@ -39,9 +80,36 @@ type TrailItem = {
   constraints?: Record<string, unknown>;
 };
 
+const VERTICALS: { id: Vertical; label: string }[] = [
+  { id: "dating", label: "Dating" },
+  { id: "apartment", label: "Apartment" },
+  { id: "jobs", label: "Jobs" },
+  { id: "rides", label: "Rides" },
+  { id: "services", label: "Services" },
+];
+
+const HAS_SIDES: Vertical[] = ["apartment", "jobs", "rides", "services"];
+
+function examplesFor(vertical: Vertical, side: MarketSide): string[] {
+  if (vertical === "dating") return DATING_EXAMPLES;
+  if (vertical === "apartment") return side === "offer" ? APT_OFFER : APT_SEEK;
+  if (vertical === "jobs") return side === "offer" ? JOB_OFFER : JOB_SEEK;
+  if (vertical === "rides") return side === "offer" ? RIDE_OFFER : RIDE_SEEK;
+  return side === "offer" ? SVC_OFFER : SVC_SEEK;
+}
+
+function isDatingHuman(e: Entity): boolean {
+  const v = e.metadata.vertical;
+  return e.type === "human" && (!v || v === "dating");
+}
+
+function roleOf(e: Entity): string {
+  return String(e.attributes.role ?? "");
+}
+
 export function DiscoverApp() {
   const [vertical, setVertical] = useState<Vertical>("dating");
-  const [apartmentSide, setApartmentSide] = useState<ApartmentSide>("seek");
+  const [side, setSide] = useState<MarketSide>("seek");
   const [query, setQuery] = useState(DATING_EXAMPLES[0]);
   const [activeChip, setActiveChip] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -54,45 +122,48 @@ export function DiscoverApp() {
   const [chatInput, setChatInput] = useState("");
   const [hidden, setHidden] = useState<Set<string>>(new Set());
 
-  const examples =
-    vertical === "dating" ? DATING_EXAMPLES : apartmentSide === "offer" ? OFFER_EXAMPLES : SEEK_EXAMPLES;
+  const examples = examplesFor(vertical, side);
 
   const visible = useMemo(
     () => (result?.candidates ?? []).filter((c) => !hidden.has(c.entity.id)),
     [result, hidden],
   );
 
-  const datingHumans = useMemo(
+  const datingHumans = useMemo(() => visible.filter((c) => isDatingHuman(c.entity)), [visible]);
+  const datingAis = useMemo(() => visible.filter((c) => c.entity.type === "ai"), [visible]);
+  const listings = useMemo(
     () =>
       visible.filter(
-        (c) => c.entity.type === "human" && c.entity.metadata.vertical !== "apartment",
+        (c) =>
+          roleOf(c.entity) === "listing" ||
+          (c.entity.type === "resource" && c.entity.metadata.vertical === "apartment"),
       ),
     [visible],
   );
-  const datingAis = useMemo(
-    () => visible.filter((c) => c.entity.type === "ai"),
-    [visible],
-  );
-  const listings = useMemo(
-    () => visible.filter((c) => c.entity.attributes.role === "listing" || c.entity.type === "resource"),
-    [visible],
-  );
-  const seekers = useMemo(
-    () => visible.filter((c) => c.entity.attributes.role === "seeker"),
-    [visible],
-  );
+  const seekers = useMemo(() => visible.filter((c) => roleOf(c.entity) === "seeker"), [visible]);
+  const drivers = useMemo(() => visible.filter((c) => roleOf(c.entity) === "driver"), [visible]);
+  const passengers = useMemo(() => visible.filter((c) => roleOf(c.entity) === "passenger"), [visible]);
+  const providers = useMemo(() => visible.filter((c) => roleOf(c.entity) === "provider"), [visible]);
+  const clients = useMemo(() => visible.filter((c) => roleOf(c.entity) === "client"), [visible]);
   const others = useMemo(
     () =>
       visible.filter((c) => {
         if (vertical === "dating") {
-          return (
-            c.entity.type !== "human" &&
-            c.entity.type !== "ai" &&
-            c.entity.metadata.vertical !== "apartment"
-          );
+          return !isDatingHuman(c.entity) && c.entity.type !== "ai";
         }
-        const role = c.entity.attributes.role;
-        return role !== "listing" && role !== "seeker" && c.entity.type !== "resource";
+        if (vertical === "apartment") {
+          const role = roleOf(c.entity);
+          return role !== "listing" && role !== "seeker" && c.entity.type !== "resource";
+        }
+        if (vertical === "rides") {
+          const role = roleOf(c.entity);
+          return role !== "driver" && role !== "passenger";
+        }
+        if (vertical === "services") {
+          const role = roleOf(c.entity);
+          return role !== "provider" && role !== "client";
+        }
+        return false;
       }),
     [visible, vertical],
   );
@@ -109,23 +180,24 @@ export function DiscoverApp() {
     setSeen([]);
     setHidden(new Set());
     setActiveChip(0);
-    if (next === "dating") setQuery(DATING_EXAMPLES[0]);
-    else setQuery(apartmentSide === "offer" ? OFFER_EXAMPLES[0] : SEEK_EXAMPLES[0]);
+    setSide("seek");
+    setQuery(examplesFor(next, "seek")[0]);
   }
 
-  function switchApartmentSide(next: ApartmentSide) {
-    setApartmentSide(next);
+  function switchSide(next: MarketSide) {
+    setSide(next);
     setResult(null);
     setTrail([]);
     setSeen([]);
     setHidden(new Set());
     setActiveChip(0);
-    setQuery(next === "offer" ? OFFER_EXAMPLES[0] : SEEK_EXAMPLES[0]);
+    setQuery(examplesFor(vertical, next)[0]);
   }
 
-  function apartmentConstraints(side: ApartmentSide = apartmentSide): Record<string, unknown> | undefined {
-    if (vertical !== "apartment") return undefined;
-    return { side: side === "offer" ? "seek" : "offer" };
+  function marketConstraints(s: MarketSide = side): Record<string, unknown> | undefined {
+    // Jobs: NL infers side/roles. Forcing a tab side hid complementary matches in tests.
+    if (vertical === "dating" || vertical === "jobs") return undefined;
+    return { side: s === "offer" ? "seek" : "offer" };
   }
 
   async function runFind(
@@ -165,7 +237,7 @@ export function DiscoverApp() {
   }
 
   function askWhoElse() {
-    const constraints = apartmentConstraints();
+    const constraints = marketConstraints();
     const next: TrailItem = { label: query, context: query, exclude: seen, constraints };
     setTrail((t) => [...t, next]);
     void runFind(query, { constraints });
@@ -183,18 +255,19 @@ export function DiscoverApp() {
   }
 
   function reverseWhoElse(candidate: Candidate) {
-    const isListing = candidate.entity.attributes.role === "listing" || candidate.entity.type === "resource";
-    const context = isListing
-      ? `Who else might be a good tenant for this listing?`
-      : `Who else has something that matches these constraints?`;
-    const constraints = { side: isListing ? "seek" : "offer" };
+    const role = roleOf(candidate.entity);
+    const hasThing = ["listing", "opening", "employer", "worker", "driver", "provider"].includes(role);
+    const context = hasThing
+      ? `Who else needs what ${candidate.entity.name} has?`
+      : `Who else has what ${candidate.entity.name} needs?`;
+    const constraints = { side: hasThing ? "seek" : "offer" };
     setQuery(context);
     setActiveChip(-1);
-    setApartmentSide(isListing ? "offer" : "seek");
+    setSide(hasThing ? "offer" : "seek");
     setTrail((t) => [
       ...t,
       {
-        label: isListing ? `needs ${candidate.entity.name}` : `has like ${candidate.entity.name}`,
+        label: hasThing ? `needs ${candidate.entity.name}` : `has like ${candidate.entity.name}`,
         context,
         entityId: candidate.entity.id,
         exclude: [candidate.entity.id],
@@ -253,8 +326,8 @@ export function DiscoverApp() {
       flash(`${candidate.entity.name} is a ${candidate.entity.type} stub — no transaction ran.`);
       return;
     }
-    if (candidate.entity.metadata.vertical === "apartment") {
-      flash("Synthetic seeker — no message sent, no application filed.");
+    if (candidate.entity.metadata.vertical && candidate.entity.metadata.vertical !== "dating") {
+      flash("Synthetic card — no message sent, no application filed, no booking.");
       return;
     }
     const res = await fetch("/api/interest", {
@@ -283,11 +356,40 @@ export function DiscoverApp() {
   const heading =
     vertical === "dating"
       ? "Who are you looking for?"
-      : apartmentSide === "offer"
+      : side === "offer"
         ? "I have…"
         : "What are you looking for?";
   const cta =
-    loading ? "Looking…" : vertical === "apartment" && apartmentSide === "offer" ? "Who else needs this?" : "Who else?";
+    loading ? "Looking…" : HAS_SIDES.includes(vertical) && side === "offer" ? "Who else needs this?" : "Who else?";
+
+  const banner =
+    vertical === "dating"
+      ? "Demo pool only. Every human is synthetic. Every AI is labeled AI — never a stand-in person. No real dating sites were used. WhoElse is for humans and machines."
+      : vertical === "apartment"
+        ? "DEMO data. Every apartment listing and seeker is synthetic — not a real home, not a real person, not scraped. Same WhoElse engine. Same whoelse.find."
+        : vertical === "jobs"
+          ? "DEMO data. Employers, openings, freelancers, and AI workers are synthetic. Trust is evidence stubs (portfolio / outcomes / verified), not a reputation market. Same whoelse.find — never jobs.find."
+          : vertical === "rides"
+            ? "DEMO data. Synthetic rides with origin, destination, seats, and changing state. Not real drivers. Same whoelse.find."
+            : "DEMO data. Synthetic plumbers and handypeople. Licensing is a stub field, not a credential. Same whoelse.find.";
+
+  const eyebrow =
+    vertical === "dating"
+      ? "Dating vertical · humans & AIs"
+      : vertical === "jobs"
+        ? side === "offer"
+          ? "Jobs · I HAVE · NL infers side — who needs this?"
+          : "Jobs · I NEED · humans, companies, AIs in one ranked list"
+        : `${vertical} · ${side === "offer" ? "I HAVE · who else needs this?" : "I NEED · who else has this?"}`;
+
+  const emptyCopy =
+    vertical === "dating"
+      ? "Ask who else — not swipe. Results split humans then AIs so the type is never ambiguous."
+      : vertical === "jobs"
+        ? "Same Who else? as dating. Not LinkedIn. Humans, companies, and AIs share one ranked list — type stays on the badge."
+        : side === "offer"
+          ? "Describe what you have. WhoElse finds who needs it — the reverse marketplace question."
+          : "Describe what you need. Same Who else? as dating. Not a listings grid.";
 
   return (
     <div className="app">
@@ -298,73 +400,56 @@ export function DiscoverApp() {
         <a href="/ais">Connect an agent →</a>
       </p>
 
-      <div className={`banner ${vertical === "apartment" ? "banner-demo" : ""}`}>
-        {vertical === "apartment" ? (
+      <div className={`banner ${vertical !== "dating" ? "banner-demo" : ""}`}>
+        {vertical !== "dating" ? (
           <>
-            <strong>DEMO data.</strong> Every apartment listing and seeker is <strong>synthetic</strong> — not a real
-            home, not a real person, not scraped from any site. Same WhoElse engine as dating. Same{" "}
-            <code>whoelse.find</code>.
+            <strong>DEMO data.</strong> {banner.replace(/^DEMO data\.\s*/, "")}
           </>
         ) : (
-          <>
-            Demo pool only. Every human is <strong>synthetic</strong>. Every AI is labeled AI — never a stand-in person.
-            No real dating sites were used. WhoElse is for humans and machines.
-          </>
+          banner
         )}
       </div>
 
       <section className="search-panel">
         <div className="mode-tabs" role="tablist" aria-label="Vertical">
-          <button
-            type="button"
-            role="tab"
-            aria-selected={vertical === "dating"}
-            className={vertical === "dating" ? "active" : ""}
-            onClick={() => switchVertical("dating")}
-          >
-            Dating
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={vertical === "apartment"}
-            className={vertical === "apartment" ? "active" : ""}
-            onClick={() => switchVertical("apartment")}
-          >
-            Apartment
-          </button>
+          {VERTICALS.map((v) => (
+            <button
+              key={v.id}
+              type="button"
+              role="tab"
+              aria-selected={vertical === v.id}
+              className={vertical === v.id ? "active" : ""}
+              onClick={() => switchVertical(v.id)}
+            >
+              {v.label}
+            </button>
+          ))}
         </div>
 
-        {vertical === "apartment" && (
+        {HAS_SIDES.includes(vertical) && (
           <div className="mode-tabs side-tabs" role="tablist" aria-label="Offer or seek">
             <button
               type="button"
               role="tab"
-              aria-selected={apartmentSide === "seek"}
-              className={apartmentSide === "seek" ? "active" : ""}
-              onClick={() => switchApartmentSide("seek")}
+              aria-selected={side === "seek"}
+              className={side === "seek" ? "active" : ""}
+              onClick={() => switchSide("seek")}
             >
               I need
             </button>
             <button
               type="button"
               role="tab"
-              aria-selected={apartmentSide === "offer"}
-              className={apartmentSide === "offer" ? "active" : ""}
-              onClick={() => switchApartmentSide("offer")}
+              aria-selected={side === "offer"}
+              className={side === "offer" ? "active" : ""}
+              onClick={() => switchSide("offer")}
             >
               I have
             </button>
           </div>
         )}
 
-        <div className="eyebrow">
-          {vertical === "dating"
-            ? "Dating vertical · humans & AIs"
-            : apartmentSide === "offer"
-              ? "Apartment · I HAVE · who else needs this?"
-              : "Apartment · SEEK · who else has this?"}
-        </div>
+        <div className="eyebrow">{eyebrow}</div>
         <h1>{heading}</h1>
         <div className="search-row">
           <textarea
@@ -403,7 +488,14 @@ export function DiscoverApp() {
         {result && (
           <div className="meta-row">
             mode <strong>{result.inferredMode}</strong>
+            {result.inferredVertical ? ` · NL reads as ${result.inferredVertical}` : ""}
+            {result.inferredVertical && result.inferredVertical !== vertical
+              ? " · tab is a costume, pool is shared"
+              : ""}
             {result.inferredConstraints.side ? ` · side ${String(result.inferredConstraints.side)}` : ""}
+            {Array.isArray(result.inferredConstraints.roles)
+              ? ` · roles ${(result.inferredConstraints.roles as string[]).join("/")}`
+              : ""}
             {result.inferredConstraints.city ? ` · city ${String(result.inferredConstraints.city)}` : ""}
             {result.inferredConstraints.neighborhood
               ? ` · near ${String(result.inferredConstraints.neighborhood)}`
@@ -435,133 +527,125 @@ export function DiscoverApp() {
         </div>
       )}
 
-      {!result && (
-        <p className="empty">
-          {vertical === "dating"
-            ? "Ask who else — not swipe. Results split humans then AIs so the type is never ambiguous."
-            : apartmentSide === "offer"
-              ? "Describe what you have. WhoElse finds who needs it — the reverse marketplace question."
-              : "Describe the apartment you need. Same Who else? as dating. Not a listings grid."}
-        </p>
-      )}
+      {!result && <p className="empty">{emptyCopy}</p>}
 
       {result && vertical === "dating" && (
-        <>
-          <h2 className="section-title">Humans</h2>
-          <div className="cards">
-            {datingHumans.length === 0 && <p className="empty">No human matches in this slice.</p>}
-            {datingHumans.map((c) => (
-              <ResultCard
-                key={c.entity.id}
-                candidate={c}
-                vertical="dating"
-                onWhoElse={() => recursiveWhoElse(c)}
-                onMore={() => moreLikeThis(c)}
-                onLess={() => void lessLikeThis(c)}
-                onChat={() => void chatOrInterest(c)}
-              />
-            ))}
-          </div>
-
-          <h2 className="section-title">AIs</h2>
-          <div className="cards">
-            {datingAis.length === 0 && <p className="empty">No AI matches in this slice.</p>}
-            {datingAis.map((c) => (
-              <ResultCard
-                key={c.entity.id}
-                candidate={c}
-                vertical="dating"
-                onWhoElse={() => recursiveWhoElse(c)}
-                onMore={() => moreLikeThis(c)}
-                onLess={() => void lessLikeThis(c)}
-                onChat={() => void chatOrInterest(c)}
-              />
-            ))}
-          </div>
-
-          {others.length > 0 && (
-            <>
-              <h2 className="section-title">Also in the network</h2>
-              <p className="empty">Agents, services, and resources — same operator, not dating profiles.</p>
-              <div className="cards">
-                {others.map((c) => (
-                  <ResultCard
-                    key={c.entity.id}
-                    candidate={c}
-                    vertical="dating"
-                    onWhoElse={() => recursiveWhoElse(c)}
-                    onMore={() => moreLikeThis(c)}
-                    onLess={() => void lessLikeThis(c)}
-                    onChat={() => void chatOrInterest(c)}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </>
+        <Sectioned
+          blocks={[
+            { title: "Humans", items: datingHumans, empty: "No human matches in this slice." },
+            { title: "AIs", items: datingAis, empty: "No AI matches in this slice." },
+            others.length
+              ? {
+                  title: "Also in the network",
+                  items: others,
+                  empty: "",
+                  note: "Agents, services, and resources — same operator, not dating profiles.",
+                }
+              : null,
+          ]}
+          vertical={vertical}
+          onWhoElse={recursiveWhoElse}
+          onMore={moreLikeThis}
+          onLess={(c) => void lessLikeThis(c)}
+          onChat={(c) => void chatOrInterest(c)}
+        />
       )}
 
       {result && vertical === "apartment" && (
-        <>
-          <h2 className="section-title">{apartmentSide === "offer" ? "People who need this" : "Who else has this"}</h2>
-          <div className="cards">
-            {(apartmentSide === "offer" ? seekers : listings).length === 0 && (
-              <p className="empty">No matches in this slice.</p>
-            )}
-            {(apartmentSide === "offer" ? seekers : listings).map((c) => (
-              <ResultCard
-                key={c.entity.id}
-                candidate={c}
-                vertical="apartment"
-                onWhoElse={() => recursiveWhoElse(c)}
-                onReverse={() => reverseWhoElse(c)}
-                onMore={() => moreLikeThis(c)}
-                onLess={() => void lessLikeThis(c)}
-                onChat={() => void chatOrInterest(c)}
-              />
-            ))}
-          </div>
+        <Sectioned
+          blocks={[
+            {
+              title: side === "offer" ? "People who need this" : "Who else has this",
+              items: side === "offer" ? seekers : listings,
+              empty: "No matches in this slice.",
+            },
+            (side === "offer" ? listings : seekers).length
+              ? {
+                  title: side === "offer" ? "Similar listings" : "People looking",
+                  items: side === "offer" ? listings.filter((c) => roleOf(c.entity) === "listing") : seekers,
+                  empty: "",
+                }
+              : null,
+            others.length ? { title: "Also in the network", items: others, empty: "" } : null,
+          ]}
+          vertical={vertical}
+          onWhoElse={recursiveWhoElse}
+          onReverse={reverseWhoElse}
+          onMore={moreLikeThis}
+          onLess={(c) => void lessLikeThis(c)}
+          onChat={(c) => void chatOrInterest(c)}
+        />
+      )}
 
-          {(apartmentSide === "offer" ? listings : seekers).length > 0 && (
-            <>
-              <h2 className="section-title">{apartmentSide === "offer" ? "Similar listings" : "People looking"}</h2>
-              <div className="cards">
-                {(apartmentSide === "offer" ? listings : seekers).map((c) => (
-                  <ResultCard
-                    key={c.entity.id}
-                    candidate={c}
-                    vertical="apartment"
-                    onWhoElse={() => recursiveWhoElse(c)}
-                    onReverse={() => reverseWhoElse(c)}
-                    onMore={() => moreLikeThis(c)}
-                    onLess={() => void lessLikeThis(c)}
-                    onChat={() => void chatOrInterest(c)}
-                  />
-                ))}
-              </div>
-            </>
-          )}
+      {result && vertical === "jobs" && (
+        <Sectioned
+          blocks={[
+            {
+              title: "Who else — mixed rank (human / company / AI)",
+              items: visible,
+              empty: "No matches in this slice.",
+              note: "Type is louder than rank: every card keeps a HUMAN / COMPANY / AGENT / OPENING badge.",
+            },
+          ]}
+          vertical={vertical}
+          onWhoElse={recursiveWhoElse}
+          onReverse={reverseWhoElse}
+          onMore={moreLikeThis}
+          onLess={(c) => void lessLikeThis(c)}
+          onChat={(c) => void chatOrInterest(c)}
+        />
+      )}
 
-          {others.length > 0 && (
-            <>
-              <h2 className="section-title">Also in the network</h2>
-              <div className="cards">
-                {others.map((c) => (
-                  <ResultCard
-                    key={c.entity.id}
-                    candidate={c}
-                    vertical="apartment"
-                    onWhoElse={() => recursiveWhoElse(c)}
-                    onReverse={() => reverseWhoElse(c)}
-                    onMore={() => moreLikeThis(c)}
-                    onLess={() => void lessLikeThis(c)}
-                    onChat={() => void chatOrInterest(c)}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </>
+      {result && vertical === "rides" && (
+        <Sectioned
+          blocks={[
+            {
+              title: side === "offer" ? "People who need a seat" : "Who else has a ride",
+              items: side === "offer" ? passengers : drivers,
+              empty: "No matches in this slice.",
+            },
+            (side === "offer" ? drivers : passengers).length
+              ? {
+                  title: side === "offer" ? "Similar rides" : "People looking for a seat",
+                  items: side === "offer" ? drivers : passengers,
+                  empty: "",
+                }
+              : null,
+            others.length ? { title: "Also in the network", items: others, empty: "" } : null,
+          ]}
+          vertical={vertical}
+          onWhoElse={recursiveWhoElse}
+          onReverse={reverseWhoElse}
+          onMore={moreLikeThis}
+          onLess={(c) => void lessLikeThis(c)}
+          onChat={(c) => void chatOrInterest(c)}
+        />
+      )}
+
+      {result && vertical === "services" && (
+        <Sectioned
+          blocks={[
+            {
+              title: side === "offer" ? "People who need this trade" : "Who else can do this",
+              items: side === "offer" ? clients : providers,
+              empty: "No matches in this slice.",
+            },
+            (side === "offer" ? providers : clients).length
+              ? {
+                  title: side === "offer" ? "Similar providers" : "People looking",
+                  items: side === "offer" ? providers : clients,
+                  empty: "",
+                }
+              : null,
+            others.length ? { title: "Also in the network", items: others, empty: "" } : null,
+          ]}
+          vertical={vertical}
+          onWhoElse={recursiveWhoElse}
+          onReverse={reverseWhoElse}
+          onMore={moreLikeThis}
+          onLess={(c) => void lessLikeThis(c)}
+          onChat={(c) => void chatOrInterest(c)}
+        />
       )}
 
       {toast && <div className="toast">{toast}</div>}
@@ -595,6 +679,53 @@ export function DiscoverApp() {
   );
 }
 
+function Sectioned({
+  blocks,
+  vertical,
+  onWhoElse,
+  onReverse,
+  onMore,
+  onLess,
+  onChat,
+}: {
+  blocks: ({ title: string; items: Candidate[]; empty: string; note?: string } | null)[];
+  vertical: Vertical;
+  onWhoElse: (c: Candidate) => void;
+  onReverse?: (c: Candidate) => void;
+  onMore: (c: Candidate) => void;
+  onLess: (c: Candidate) => void;
+  onChat: (c: Candidate) => void;
+}) {
+  return (
+    <>
+      {blocks.map((block) => {
+        if (!block) return null;
+        return (
+          <div key={block.title}>
+            <h2 className="section-title">{block.title}</h2>
+            {block.note && <p className="empty">{block.note}</p>}
+            <div className="cards">
+              {block.items.length === 0 && block.empty && <p className="empty">{block.empty}</p>}
+              {block.items.map((c) => (
+                <ResultCard
+                  key={c.entity.id}
+                  candidate={c}
+                  vertical={vertical}
+                  onWhoElse={() => onWhoElse(c)}
+                  onReverse={onReverse ? () => onReverse(c) : undefined}
+                  onMore={() => onMore(c)}
+                  onLess={() => onLess(c)}
+                  onChat={() => onChat(c)}
+                />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
 function ResultCard({
   candidate,
   vertical,
@@ -623,24 +754,26 @@ function ResultCard({
     e.metadata.demoLabel ??
       (e.type === "human" ? "synthetic human" : e.metadata.aiDisclosure ?? "AI — not a human"),
   );
-  const role = String(e.attributes.role ?? e.type);
   const facts = listingFacts(e);
+  const evidence = evidenceLine(e);
+  const showReverse = vertical !== "dating" && onReverse;
 
   return (
     <article className="card">
       <div className="card-top">
         <div className="identity">
-          <div className={`av ${e.type === "resource" ? "resource" : e.type}`}>{initials}</div>
+          <div className={`av ${avatarClass(e)}`}>{initials}</div>
           <div>
             <h3>{e.name}</h3>
             <p>
-              {loc || (e.type === "ai" ? "not geo-bound" : "location unset")} · {demo}
+              {loc || (e.type === "ai" || e.type === "agent" ? "not geo-bound" : "location unset")} · {demo}
             </p>
           </div>
         </div>
         <span className={`badge ${badgeClass(e)}`}>{badgeLabel(e)}</span>
       </div>
       {facts && <p className="facts">{facts}</p>}
+      {evidence && <p className="facts evidence">{evidence}</p>}
       <p className="why">{candidate.explanation.why}</p>
       <div className="pills">
         {candidate.explanation.commonalities.slice(0, 5).map((c) => (
@@ -656,9 +789,11 @@ function ResultCard({
         <button className="btn btn-coral btn-sm" type="button" onClick={onWhoElse}>
           Who else?
         </button>
-        {vertical === "apartment" && onReverse && (
+        {showReverse && (
           <button className="btn btn-ink btn-sm" type="button" onClick={onReverse}>
-            {role === "listing" || e.type === "resource" ? "Who else needs this?" : "Who else has this?"}
+            {["listing", "opening", "employer", "worker", "driver", "provider"].includes(roleOf(e))
+              ? "Who else needs this?"
+              : "Who else has this?"}
           </button>
         )}
         <button className="btn btn-soft btn-sm" type="button" onClick={onMore}>
@@ -667,7 +802,7 @@ function ResultCard({
         <button className="btn btn-soft btn-sm" type="button" onClick={onLess}>
           Less like this
         </button>
-        {vertical === "dating" && (
+        {(vertical === "dating" || e.type === "ai" || e.type === "agent") && (
           <button className={`btn btn-sm ${e.type === "human" ? "btn-ink" : "btn-ai"}`} type="button" onClick={onChat}>
             {e.type === "human" ? "Chat (interest)" : e.type === "ai" || e.type === "agent" ? "Chat" : "Open"}
           </button>
@@ -684,25 +819,69 @@ function listingFacts(e: Entity): string | null {
   if (typeof a.rent === "number" || typeof a.budget === "number") {
     const n = Number(a.rent ?? a.budget);
     const symbol = a.currency === "EUR" ? "€" : "$";
-    bits.push(`${symbol}${n}${a.role === "seeker" ? " budget" : ""}`);
+    bits.push(`${symbol}${n}${a.role === "seeker" || a.role === "applicant" ? " budget" : ""}`);
   }
+  if (typeof a.rate === "number") bits.push(`$${a.rate}${a.durationWeeks ? ` · ${a.durationWeeks}wk` : ""}`);
+  if (typeof a.roleTitle === "string") bits.push(String(a.roleTitle));
+  if (a.start === "immediate") bits.push("starts immediately");
+  if (typeof a.origin === "string" && typeof a.destination === "string") {
+    bits.push(`${a.origin} → ${a.destination}`);
+  }
+  if (typeof a.seats === "number") bits.push(`${a.seats} seats`);
+  if (typeof a.state === "string") bits.push(String(a.state));
+  if (a.licensed === true) bits.push("licensed");
+  if (typeof a.urgency === "string" && a.urgency !== "normal") bits.push(String(a.urgency));
   if (a.furnished === true) bits.push("furnished");
   if (a.pets === true) bits.push("pets ok");
   if (typeof a.listingKind === "string" && a.listingKind !== "rent") bits.push(String(a.listingKind));
   return bits.length ? bits.join(" · ") : null;
 }
 
+function evidenceLine(e: Entity): string | null {
+  const ev = e.trust?.evidence;
+  if (!ev) return null;
+  const bits: string[] = [];
+  if (ev.verified) bits.push("verified stub");
+  if (ev.outcomes?.length) bits.push(`${ev.outcomes.length} past outcome${ev.outcomes.length > 1 ? "s" : ""}`);
+  if (ev.portfolio?.length) bits.push("portfolio");
+  if (ev.licenses?.length) bits.push(`license: ${ev.licenses[0]}`);
+  return bits.length ? `Evidence · ${bits.join(" · ")}` : null;
+}
+
+function avatarClass(e: Entity): string {
+  const role = roleOf(e);
+  if (role === "listing" || e.type === "resource") return "resource";
+  if (e.type === "company") return "company";
+  if (e.type === "human" || e.type === "ai" || e.type === "agent") return e.type;
+  return "ai";
+}
+
 function badgeClass(e: Entity): string {
-  if (e.attributes.role === "listing" || e.type === "resource") return "resource";
-  if (e.attributes.role === "seeker") return "seeker";
+  const role = roleOf(e);
+  if (role === "listing" || e.type === "resource") return "resource";
+  if (role === "seeker" || role === "applicant" || role === "passenger" || role === "client") return "seeker";
+  if (role === "opening" || role === "employer") return "opening";
+  if (role === "worker") return e.type === "agent" ? "ai" : "worker";
+  if (role === "driver" || role === "provider") return "driver";
+  if (e.type === "company") return "company";
   if (e.type === "human" || e.type === "ai") return e.type;
   return "ai";
 }
 
 function badgeLabel(e: Entity): string {
-  if (e.attributes.role === "listing") return "Listing";
-  if (e.attributes.role === "seeker") return "Seeker";
+  const role = roleOf(e);
+  if (role === "listing") return "Listing";
+  if (role === "seeker") return "Seeker";
+  if (role === "opening") return "Opening";
+  if (role === "employer") return "Employer";
+  if (role === "applicant") return "Applicant";
+  if (role === "worker") return e.type === "agent" ? "AI worker" : e.type === "company" ? "Vendor" : "Worker";
+  if (role === "driver") return e.type === "human" ? "Driver" : "Ride";
+  if (role === "passenger") return "Passenger";
+  if (role === "provider") return "Provider";
+  if (role === "client") return "Client";
   if (e.type === "ai") return "AI";
   if (e.type === "human") return "Human";
+  if (e.type === "company") return "Company";
   return e.type;
 }

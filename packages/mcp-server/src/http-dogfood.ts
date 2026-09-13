@@ -45,6 +45,10 @@ const queries: { intent: string; extra?: Record<string, unknown> }[] = [
   { intent: "Who else should Tobias meet who is building an AI startup?", extra: { type: "human" } },
   { intent: "Who else has an apartment?" },
   { intent: "Who else can give me a ride?" },
+  { intent: "Who else is hiring AI people in Washington?" },
+  { intent: "Who else can do this work for under $5,000?" },
+  { intent: "Who else can give me a ride from Georgetown to Dupont?" },
+  { intent: "Who else can fix a leak under my sink before the weekend?" },
 ];
 
 const client = new Client({ name: "whoelse-http-dogfood", version: "0.2.0" });

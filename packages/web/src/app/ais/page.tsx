@@ -34,12 +34,13 @@ export default function AisPage() {
         <strong>Humans ask Who Else. Agents call WhoElse. Same network.</strong>
       </p>
       <section className="search-panel">
-        <div className="eyebrow">Machine surface · same engine as Dating and Apartment</div>
+        <div className="eyebrow">Machine surface · same engine as Dating, Apartment, Jobs, Rides, Services</div>
         <h1>Connect your agent to WhoElse</h1>
         <p className="lede">
           WhoElse is for humans and machines. People type a desire on the home page. Agents call{" "}
-          <code>whoelse.find</code> over Streamable HTTP MCP. One seed, one ranker, two consumer
-          verticals (dating + apartment). No <code>apartment.find</code> tool.
+          <code>whoelse.find</code> over Streamable HTTP MCP. One seed, one ranker, many costumes
+          (dating, apartment, jobs, rides, services). No <code>jobs.find</code>,{" "}
+          <code>rides.find</code>, or <code>apartment.find</code>.
         </p>
 
         <h2 className="section-title">MCP endpoint</h2>
@@ -85,23 +86,28 @@ export default function AisPage() {
         </ul>
         <p>
           Inputs: <code>intent</code>/<code>context</code>, <code>type</code>, <code>city</code>,{" "}
-          <code>exclude</code>, <code>knownEntities</code>, <code>entityId</code>, <code>limit</code>,{" "}
-          <code>mode</code>, <code>ranking</code>, <code>requester</code>, <code>availability</code>,{" "}
-          <code>minTrust</code>.
+          <code>side</code>, <code>roles</code>, <code>exclude</code>, <code>knownEntities</code>,{" "}
+          <code>entityId</code>, <code>limit</code>, <code>mode</code>, <code>ranking</code>,{" "}
+          <code>requester</code>, <code>availability</code>, <code>minTrust</code>.
         </p>
 
         <h2 className="section-title">Example call</h2>
         <pre className="code-block">{EXAMPLE_CALL}</pre>
         <h2 className="section-title">Example structured result</h2>
         <pre className="code-block">{EXAMPLE_RESULT}</pre>
-        <h2 className="section-title">Same tool, apartment vertical</h2>
+        <h2 className="section-title">Same tool, every vertical</h2>
         <pre className="code-block">{`{
-  "intent": "Who else has a furnished apartment in Berlin under €2000?",
+  "intent": "Who else is hiring AI people in Washington?",
   "limit": 3
 }`}</pre>
         <p className="empty">
-          Seek-side reverse is the same tool:{" "}
-          <code>{`{ "intent": "Who else is looking for a 2-bedroom in DC?" }`}</code>
+          Apartment: <code>{`{ "intent": "Who else has a furnished apartment in Berlin under €2000?" }`}</code>
+          <br />
+          Labor: <code>{`{ "intent": "Who else can do this work for under $5,000?" }`}</code>
+          <br />
+          Ride: <code>{`{ "intent": "Who else can give me a ride from Georgetown to Dupont?" }`}</code>
+          <br />
+          Service: <code>{`{ "intent": "Who else can fix a leak under my sink before the weekend?" }`}</code>
         </p>
         <p>
           Then invoke: <code>POST /api/agents/agent-pdf-summarizer/invoke</code> with{" "}

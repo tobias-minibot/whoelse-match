@@ -9,9 +9,9 @@
  */
 
 /** Seeded now. Open string so later types do not require a core fork. */
-export const SEEDED_ENTITY_TYPES = ["human", "ai", "agent"] as const;
+export const SEEDED_ENTITY_TYPES = ["human", "ai", "agent", "company", "service", "resource"] as const;
 
-/** Reserved — do not emit in the dating MVP; the matcher already accepts them. */
+/** Reserved — later types do not require a core fork. */
 export const RESERVED_ENTITY_TYPES = [
   "agent",
   "service",
@@ -20,6 +20,18 @@ export const RESERVED_ENTITY_TYPES = [
   "dataset",
   "resource",
 ] as const;
+
+/**
+ * Marketplace role on an entity — not a new type.
+ * Offer-side: listing / opening / employer / worker / driver / provider
+ * Seek-side: seeker / applicant / passenger / client
+ */
+export const OFFER_ROLES = ["listing", "opening", "employer", "worker", "driver", "provider"] as const;
+export const SEEK_ROLES = ["seeker", "applicant", "passenger", "client"] as const;
+
+export type OfferRole = (typeof OFFER_ROLES)[number];
+export type SeekRole = (typeof SEEK_ROLES)[number];
+export type MarketRole = OfferRole | SeekRole;
 
 export type SeededEntityType = (typeof SEEDED_ENTITY_TYPES)[number];
 export type ReservedEntityType = (typeof RESERVED_ENTITY_TYPES)[number];
@@ -30,7 +42,30 @@ export type Provenance = "synthetic" | "ai_generated" | "user";
 export type WhoElseMode = "substitute" | "expand" | "peers";
 /** Marketplace direction: who HAS the thing vs who NEEDS it. Not vertical-specific. */
 export type MatchSide = "offer" | "seek";
-export type AttributeOp = "eq" | "lte" | "gte" | "includes" | "truthy";
+export type AttributeOp = "eq" | "lte" | "gte" | "includes" | "truthy" | "neq";
+/** Costume hint from language — never a second matcher. */
+export type InferredVertical = "dating" | "apartment" | "jobs" | "rides" | "services" | "capability";
+export type TrustStatus = "unscored" | "stub" | "evidence";
+
+/**
+ * Smallest useful trust — evidence, not a reputation market.
+ * verification / portfolio / past outcomes are fields, not scores for sale.
+ */
+export interface TrustEvidence {
+  verified?: boolean;
+  verifiedBy?: string;
+  portfolio?: string[];
+  outcomes?: { label: string; result?: string }[];
+  licenses?: string[];
+  references?: string[];
+}
+
+export interface TrustRecord {
+  status: TrustStatus;
+  provenance?: Provenance;
+  notes?: string;
+  evidence?: TrustEvidence;
+}
 
 /** Generic structured filter. Apartment rent/bedrooms/pets are just keys. */
 export interface AttributeConstraint {
@@ -67,14 +102,10 @@ export interface Entity {
   metadata: Record<string, unknown>;
   provenance: Provenance;
   /**
-   * Stub only. Reputation / verification / payments are not implemented.
-   * Shape exists so later trust graphs do not require a schema break.
+   * Evidence stub — not a reputation graph or market.
+   * Fill verified / portfolio / outcomes without renaming this field.
    */
-  trust?: {
-    status: "unscored" | "stub";
-    provenance?: Provenance;
-    notes?: string;
-  };
+  trust?: TrustRecord;
   created_at: string;
 }
 
@@ -97,8 +128,15 @@ export interface WhoElseConstraints {
    * seek = return entities that want the thing (renters, passengers, applicants…).
    */
   side?: MatchSide;
-  /** Generic attribute filters (price, bedrooms, pets, dates, …). */
+  /** Generic attribute filters (price, bedrooms, pets, dates, rate, seats, …). */
   attributes?: AttributeConstraint[];
+  /**
+   * Marketplace roles to keep. Generic — jobs use opening/worker/applicant,
+   * rides use driver/passenger, services use provider/client.
+   */
+  roles?: string[];
+  /** Optional changing-state filter (open / full / departing / completed). */
+  state?: string;
 }
 
 export interface WhoElseRequest {
@@ -119,8 +157,8 @@ export interface WhoElseRequest {
   /** Soft availability phrase, e.g. "always on". */
   availability?: string;
   ranking?: "score" | "sectioned";
-  /** Stub only — entities without a score still pass unless this is set to a future real grade. */
-  minTrust?: "any" | "unscored" | "stub";
+  /** Stub only — "evidence" keeps entities that attached portfolio/outcomes/verified. */
+  minTrust?: "any" | "unscored" | "stub" | "evidence";
 }
 
 export interface ScoreBreakdown {
@@ -149,6 +187,7 @@ export interface WhoElseResult {
   query: string;
   inferredMode: WhoElseMode;
   inferredConstraints: WhoElseConstraints;
+  inferredVertical?: InferredVertical;
   usedOpenAiRerank: boolean;
   candidates: Candidate[];
   /** Convenience views for the dating client. Prefer `byType` for new surfaces. */

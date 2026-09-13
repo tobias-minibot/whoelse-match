@@ -2739,23 +2739,20 @@
       ],
       "whoelse_find": {
         "intent": "Who else can fix a leak under my sink before the weekend, not too pricey?",
-        "type": "service",
         "mode": "expand",
         "limit": 5
       },
       "expressibility": {
         "verdict": "EXPRESSIBLE_AS_FIND",
-        "why": "whoelse.find accepts free-text intent. The noun is not an endpoint. Structured slots mostly ride inside the sentence.",
+        "why": "whoelse.find accepts free-text intent. Licensed/urgency/rate are generic attributes. No plumber.find.",
         "slot_map": {
           "LOCATION": "city / location",
-          "URGENCY": "intent text",
-          "BUDGET": "intent text (no structured price)",
-          "TIME": "intent text (no structured time)",
+          "URGENCY": "attributes.urgency",
+          "BUDGET": "attributes.rate",
+          "TIME": "availability / start",
           "OBJECT": "intent"
         },
         "structured_slots_missing_from_schema": [
-          "URGENCY",
-          "BUDGET",
           "TIME"
         ],
         "human_language_preserved": true,
@@ -4589,27 +4586,22 @@
         "ai"
       ],
       "whoelse_find": {
-        "intent": "Who else can give me a ride?",
-        "type": "service",
+        "intent": "Who else can give me a ride from Georgetown to Dupont?",
         "mode": "expand",
         "limit": 5
       },
       "expressibility": {
         "verdict": "EXPRESSIBLE_AS_FIND",
-        "why": "whoelse.find accepts free-text intent. The noun is not an endpoint. Structured slots mostly ride inside the sentence.",
+        "why": "whoelse.find accepts free-text intent. Origin/destination/seats/state are generic attributes, not a rides.find tool. Do not lock type=service — humans can be drivers.",
         "slot_map": {
-          "ORIGIN": "intent text + location",
-          "DESTINATION": "intent text / predicate",
-          "TIME": "intent text (no structured time)",
-          "BUDGET": "intent text (no structured price)",
-          "PARTY_SIZE": "intent text"
+          "ORIGIN": "attributes.origin",
+          "DESTINATION": "attributes.destination",
+          "TIME": "attributes.departAt / availability (phrase, not a calendar)",
+          "BUDGET": "attributes.price",
+          "PARTY_SIZE": "attributes.seats"
         },
         "structured_slots_missing_from_schema": [
-          "ORIGIN",
-          "DESTINATION",
-          "TIME",
-          "BUDGET",
-          "PARTY_SIZE"
+          "TIME"
         ],
         "human_language_preserved": true,
         "hardcoded_endpoint_required": false
@@ -5673,23 +5665,20 @@
         "service"
       ],
       "whoelse_find": {
-        "intent": "Who else is hiring for this kind of work?",
-        "type": "company",
+        "intent": "Who else is hiring AI people in Washington?",
         "mode": "expand",
         "limit": 5
       },
       "expressibility": {
         "verdict": "EXPRESSIBLE_AS_FIND",
-        "why": "whoelse.find accepts free-text intent. The noun is not an endpoint. Structured slots mostly ride inside the sentence.",
+        "why": "whoelse.find accepts free-text intent. The noun is not an endpoint. Do not lock type=company — openings and humans share the pool. Structured rate/start now parse from NL.",
         "slot_map": {
           "LOCATION": "city / location",
           "SKILL": "intent / predicate",
-          "BUDGET": "intent text (no structured price)",
-          "AVAILABILITY": "availability"
+          "BUDGET": "attributes.rate / budget (generic price parse)",
+          "AVAILABILITY": "attributes.start / availability"
         },
-        "structured_slots_missing_from_schema": [
-          "BUDGET"
-        ],
+        "structured_slots_missing_from_schema": [],
         "human_language_preserved": true,
         "hardcoded_endpoint_required": false
       },

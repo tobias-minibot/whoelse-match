@@ -20,9 +20,13 @@ const CASES: [string, RegExp][] = [
   ["Who else should I date?", /Riley|Harper|Theo|dinner/i],
   ["Who else should I meet?", /Sam|Nia|Nova|Jordan/i],
     ["Who else has an apartment?", /apartment|Adams/i],
-    ["Who else can give me a ride?", /Ride|transport/i],
+    ["Who else can give me a ride?", /Ride|transport|Airport|Dupont|Moab|seats/i],
     ["Who else has a furnished apartment in Berlin under €2000?", /Berlin|Mitte|furnished|sublet/i],
     ["Who else is looking for a 2-bedroom in DC?", /Ben|Dupont|Adams|2-bedroom/i],
+    ["Who else is hiring AI people in Washington?", /Northwind|opening|AI engineer/i],
+    ["Who else can do this work for under $5,000?", /Aisha|BudgetCoder|Cleo|Imani/i],
+    ["Who else can give me a ride from Georgetown to Dupont?", /Georgetown|Dupont|Ride/i],
+    ["Who else can fix a leak under my sink before the weekend?", /Leak|Plumber|Shaw/i],
   ];
 
 describe("MCP whoelse.find", () => {
@@ -45,7 +49,7 @@ describe("MCP whoelse.find", () => {
     const { tools } = await client.listTools();
     const names = tools.map((t) => t.name);
     assert.ok(names.includes("whoelse.find"), `tools: ${names.join(", ")}`);
-    assert.ok(!names.some((n) => /apartment/i.test(n)), `no apartment-only tool: ${names.join(", ")}`);
+    assert.ok(!names.some((n) => /apartment|jobs\.|rides\.|services\./i.test(n)), `no vertical tool: ${names.join(", ")}`);
   });
 
   for (const [intent, expect] of CASES) {

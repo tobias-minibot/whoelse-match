@@ -26,6 +26,20 @@ const queries: { q: string; entityId?: string }[] = [
   { q: "Who else accepts pets?" },
   { q: "Who else needs a furnished apartment in Berlin?" },
   { q: "Who else might be a good tenant for this listing?", entityId: "resource-apt-dc-georgetown-1br" },
+  { q: "Who else is hiring AI people in Washington?" },
+  { q: "Who else needs someone with my background?" },
+  { q: "Who else is available for a two-week coding project?" },
+  { q: "Who else can do this work for under $5,000?" },
+  { q: "Who else is looking for a role like this?" },
+  { q: "Who else should I recruit?" },
+  { q: "Who else has done this exact kind of work before?" },
+  { q: "Who else can start immediately?" },
+  { q: "Who else is a better fit but less obvious?" },
+  { q: "Who else could do this job — human or AI?" },
+  { q: "Who else can give me a ride from Georgetown to Dupont?" },
+  { q: "Who else needs a ride to the airport?" },
+  { q: "Who else can fix a leak under my sink before the weekend?" },
+  { q: "Who else needs a licensed plumber?" },
 ];
 
 queries.forEach((item, i) => {

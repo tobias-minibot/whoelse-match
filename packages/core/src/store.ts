@@ -170,6 +170,9 @@ function typeWords(type: string): string {
   if (type === "ai") return "AI artificial intelligence agent bot persona";
   if (type === "agent") return "agent bot service capability worker";
   if (type === "human") return "human people";
+  if (type === "company") return "company employer organization";
+  if (type === "service") return "service provider";
+  if (type === "resource") return "resource listing opening";
   return type;
 }
 
