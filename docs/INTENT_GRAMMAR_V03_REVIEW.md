@@ -72,9 +72,18 @@ Attested leaks (Part 1 — do not soften):
 
 Briefing “RESTAURANT education-style” is **not** in the attested restaurant row (that row is the good deep food template). The education shirt is on COOKING CLASS — then duplicated again in EDUCATION. SPORTS TEAM in Part 1 uses the fitness template, not food.
 
-Overgeneration even when the template fits: 15 specialists that differ only by `{slug}-reason`; drink SKUs (`WATER`, `TEA`) as intents; HOME utilities sharing one house-constraint family.
+Catalog facts that must be listed (Tobias recitation + attested Part 1):
 
-MISC residual + 53 extra duplicate-label rows are the catalog admitting it could not stop minting IDs.
+| Required leak | Where |
+| --- | --- |
+| PERSONAL TRAINER origin/destination | `i038` — rideshare shirt |
+| PALLIATIVE / HOME / ELDER CARE vehicle | `i025`, `i034`, `i035` (+ dementia `i036`) |
+| WHEELCHAIR beauty slots | `i032` — `style, availability, price` |
+| RESTAURANT education-style | **not** on attested `i060` (cuisine/diet/occasion/…); the education shirt is COOKING CLASS |
+| COOKING CLASS duplicated | `i072` FOOD + EDUCATION fill |
+| MISC residual duplicates | 45 alias rows; 53 extra duplicate-label rows catalog-wide |
+
+Overgeneration even when the template fits: 15 specialists that differ only by `{slug}-reason`; drink SKUs (`WATER`, `TEA`) as intents; HOME utilities sharing one house-constraint family.
 
 ---
 
@@ -228,6 +237,20 @@ Not 505. Not 22. Not 3 matchers. **One find.**
 - AI TOOLS is n=399 in the compact index because of the skip (`id` stays `i400-ai-tools`).
 - WHEELCHAIR beauty slots and BEAUTY’s `service,style,…` template are the same shirt.
 - “RESTAURANT education-style” in the briefing does not match the attested restaurant row; the education leak is COOKING CLASS (then duplicated).
+
+---
+
+### PREVIOUS WHOELSE WORK
+
+PR #5 (`LEGACY_506_ANALYSIS.md`) already proved `whoelse.find` can *express* every recovered noun. 250 reconstructed IDs, 78/78 schema probe, hybrid C+D (one operator; taxonomy as eval). v0.3 does not reopen that. It supplies the missing cabinet: routing, slot keys, DATE fold, `i326` hole. The 15-lens factory on main (`970fb94`) already covers the nouns that pay rent — without those IDs.
+
+### GROK DERIVATION
+
+Read the leaked shirts, not the labels. Trainer→rideshare, care→vehicle, wheelchair→beauty, cooking class→education (then duplicated), MISC residual aliases. That is one operator with ~10 constraint families, not 505 schemas. DATE’s event slots (`date-type, format, date, location, safety, budget`) compile to `find(compatible entities)` — the same op as JOB, RIDESHARE, and agent-delegation. Routing (geo 235 / mixed 198 / network 56 / missing 16) is “does this entity need a city?” Infer it. Do not first-class it.
+
+### DISCOVERED THROUGH IMPLEMENTATION
+
+Live dating already had humans+AIs, sectioned UI, offer↔seek, recursive Who else?, evidence. The catalog had dinner-date enums and a fold. Implementation won. Apartment/rides/jobs/travel/events/agents did not need `i088` / `i138` / `i177` / `i353` / `i400`. `whoelse.find` stayed. This PR does not add a slot schema or a vertical engine.
 
 ---
 
