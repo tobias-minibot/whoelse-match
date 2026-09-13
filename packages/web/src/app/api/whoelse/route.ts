@@ -22,6 +22,7 @@ export async function POST(req: Request) {
         knownEntities: body.knownEntities,
         mode: body.mode,
         entityId: body.entityId,
+        matchId: body.matchId,
         limit: body.limit ?? 8,
         availability: body.availability,
         ranking: body.ranking,

@@ -10,6 +10,9 @@ export const AGENT_SCOPES = [
   "invoke",
   "delegate",
   "feedback",
+  "match",
+  "act",
+  "receipt",
 ] as const;
 
 export type AgentScope = (typeof AGENT_SCOPES)[number];

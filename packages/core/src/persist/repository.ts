@@ -1,7 +1,7 @@
 import type { Account, AgentCredential, Ownership, Principal, WriteAudit } from "../authz.js";
 import type { IdentitySnapshot } from "../identity.js";
 import { hydratePublications } from "../publications.js";
-import type { Entity, Publication } from "../types.js";
+import type { Entity, InvokeReceipt, MatchRecord, Publication, ReputationRecord, ThreadMessage } from "../types.js";
 import type { SqlClient } from "./client.js";
 import { applyMigrations } from "./client.js";
 
@@ -242,6 +242,153 @@ export class PostgresRepository {
     return Number(rows[0]?.n ?? 0);
   }
 
+  async loadLoop(): Promise<{
+    matches: MatchRecord[];
+    receipts: InvokeReceipt[];
+    messages: ThreadMessage[];
+    reputations: ReputationRecord[];
+  }> {
+    const matchRows = await this.client.query<Record<string, unknown>>("SELECT * FROM matches ORDER BY created_at ASC");
+    const receiptRows = await this.client.query<Record<string, unknown>>("SELECT * FROM receipts ORDER BY created_at ASC");
+    const messageRows = await this.client.query<Record<string, unknown>>(
+      "SELECT * FROM match_messages ORDER BY created_at ASC",
+    );
+    const repRows = await this.client.query<Record<string, unknown>>("SELECT * FROM reputations");
+    return {
+      matches: matchRows.map(rowToMatch),
+      receipts: receiptRows.map(rowToReceipt),
+      messages: messageRows.map(
+        (r): ThreadMessage => ({
+          id: String(r.id),
+          matchId: String(r.match_id),
+          fromEntityId: String(r.from_entity_id),
+          body: String(r.body),
+          created_at: asIso(r.created_at),
+        }),
+      ),
+      reputations: repRows.map(rowToReputation),
+    };
+  }
+
+  async upsertMatch(m: MatchRecord): Promise<void> {
+    await this.client.query(
+      `INSERT INTO matches (
+         id, requester_entity_id, candidate_entity_id, seek_entity_id, offer_entity_id,
+         seek_publication_id, offer_publication_id, query, score, explanation, status,
+         evidence, receipt_id, created_at, updated_at
+       ) VALUES (
+         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb, $11, $12::jsonb, $13, $14::timestamptz, $15::timestamptz
+       )
+       ON CONFLICT (id) DO UPDATE SET
+         status = EXCLUDED.status,
+         score = EXCLUDED.score,
+         explanation = EXCLUDED.explanation,
+         evidence = EXCLUDED.evidence,
+         receipt_id = EXCLUDED.receipt_id,
+         updated_at = EXCLUDED.updated_at`,
+      [
+        m.id,
+        m.requesterEntityId,
+        m.candidateEntityId,
+        m.seekEntityId ?? null,
+        m.offerEntityId ?? null,
+        m.seekPublicationId ?? null,
+        m.offerPublicationId ?? null,
+        m.query,
+        m.score ?? null,
+        JSON.stringify(m.explanation ?? {}),
+        m.status,
+        JSON.stringify(m.evidence ?? {}),
+        m.receiptId ?? null,
+        m.created_at,
+        m.updated_at,
+      ],
+    );
+  }
+
+  async upsertReceipt(r: InvokeReceipt): Promise<void> {
+    await this.client.query(
+      `INSERT INTO receipts (
+         id, match_id, actor_entity_id, counterparty_entity_id, action_type, status,
+         outcome, evidence, task, would, created_at, updated_at
+       ) VALUES (
+         $1, $2, $3, $4, $5, $6, $7::jsonb, $8::jsonb, $9, $10, $11::timestamptz, $12::timestamptz
+       )
+       ON CONFLICT (id) DO UPDATE SET
+         status = EXCLUDED.status,
+         outcome = EXCLUDED.outcome,
+         evidence = EXCLUDED.evidence,
+         updated_at = EXCLUDED.updated_at`,
+      [
+        r.id,
+        r.matchId ?? null,
+        r.actorEntityId,
+        r.counterpartyEntityId,
+        r.actionType,
+        r.status,
+        JSON.stringify(r.outcome ?? {}),
+        JSON.stringify(r.evidence ?? {}),
+        r.task ?? null,
+        r.would ?? null,
+        r.at,
+        r.updated_at,
+      ],
+    );
+  }
+
+  async upsertMessage(m: ThreadMessage): Promise<void> {
+    await this.client.query(
+      `INSERT INTO match_messages (id, match_id, from_entity_id, body, created_at)
+       VALUES ($1, $2, $3, $4, $5::timestamptz)
+       ON CONFLICT (id) DO NOTHING`,
+      [m.id, m.matchId, m.fromEntityId, m.body, m.created_at],
+    );
+  }
+
+  async upsertReputation(r: ReputationRecord): Promise<void> {
+    await this.client.query(
+      `INSERT INTO reputations (
+         entity_id, completion_reliability, response_rate, acceptance_rate, failure_rate,
+         verified_successes, proposed, accepted, declined, started, completed, failed, cancelled,
+         evidence_receipt_ids, updated_at
+       ) VALUES (
+         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14::jsonb, $15::timestamptz
+       )
+       ON CONFLICT (entity_id) DO UPDATE SET
+         completion_reliability = EXCLUDED.completion_reliability,
+         response_rate = EXCLUDED.response_rate,
+         acceptance_rate = EXCLUDED.acceptance_rate,
+         failure_rate = EXCLUDED.failure_rate,
+         verified_successes = EXCLUDED.verified_successes,
+         proposed = EXCLUDED.proposed,
+         accepted = EXCLUDED.accepted,
+         declined = EXCLUDED.declined,
+         started = EXCLUDED.started,
+         completed = EXCLUDED.completed,
+         failed = EXCLUDED.failed,
+         cancelled = EXCLUDED.cancelled,
+         evidence_receipt_ids = EXCLUDED.evidence_receipt_ids,
+         updated_at = EXCLUDED.updated_at`,
+      [
+        r.entityId,
+        r.completionReliability,
+        r.responseRate,
+        r.acceptanceRate,
+        r.failureRate,
+        r.verifiedSuccesses,
+        r.proposed,
+        r.accepted,
+        r.declined,
+        r.started,
+        r.completed,
+        r.failed,
+        r.cancelled,
+        JSON.stringify(r.evidenceReceiptIds),
+        r.updated_at,
+      ],
+    );
+  }
+
   async incrementRate(bucket: string, windowStart: Date, _windowSec: number): Promise<number> {
     const start = windowStart.toISOString();
     const rows = await this.client.query<{ count: string | number }>(
@@ -261,4 +408,68 @@ export class PostgresRepository {
     );
     return Number(rows[0]?.count ?? 1);
   }
+}
+
+function rowToMatch(r: Record<string, unknown>): MatchRecord {
+  const explanation = r.explanation ? asJson<{ why: string; commonalities?: string[] }>(r.explanation) : undefined;
+  return {
+    id: String(r.id),
+    query: String(r.query),
+    requesterEntityId: String(r.requester_entity_id),
+    candidateEntityId: String(r.candidate_entity_id),
+    seekEntityId: r.seek_entity_id ? String(r.seek_entity_id) : undefined,
+    offerEntityId: r.offer_entity_id ? String(r.offer_entity_id) : undefined,
+    seekPublicationId: r.seek_publication_id ? String(r.seek_publication_id) : undefined,
+    offerPublicationId: r.offer_publication_id ? String(r.offer_publication_id) : undefined,
+    score: r.score == null ? undefined : Number(r.score),
+    explanation: explanation?.why ? explanation : undefined,
+    evidence: r.evidence ? asJson(r.evidence) : {},
+    status: String(r.status) as MatchRecord["status"],
+    created_at: asIso(r.created_at),
+    updated_at: asIso(r.updated_at),
+    receiptId: r.receipt_id ? String(r.receipt_id) : undefined,
+  };
+}
+
+function rowToReceipt(r: Record<string, unknown>): InvokeReceipt {
+  const actor = String(r.actor_entity_id);
+  const counterparty = String(r.counterparty_entity_id);
+  const outcome = r.outcome ? asJson<Record<string, unknown>>(r.outcome) : {};
+  return {
+    id: String(r.id),
+    matchId: r.match_id ? String(r.match_id) : undefined,
+    actorEntityId: actor,
+    counterpartyEntityId: counterparty,
+    actionType: String(r.action_type) as InvokeReceipt["actionType"],
+    status: String(r.status) as InvokeReceipt["status"],
+    outcome,
+    fromAgentId: actor,
+    toAgentId: counterparty,
+    task: r.task ? String(r.task) : String(r.action_type),
+    would: r.would ? String(r.would) : String(r.action_type),
+    result: outcome,
+    evidence: r.evidence ? asJson(r.evidence) : {},
+    at: asIso(r.created_at),
+    updated_at: asIso(r.updated_at),
+  };
+}
+
+function rowToReputation(r: Record<string, unknown>): ReputationRecord {
+  return {
+    entityId: String(r.entity_id),
+    completionReliability: Number(r.completion_reliability ?? 0),
+    responseRate: Number(r.response_rate ?? 0),
+    acceptanceRate: Number(r.acceptance_rate ?? 0),
+    failureRate: Number(r.failure_rate ?? 0),
+    verifiedSuccesses: Number(r.verified_successes ?? 0),
+    proposed: Number(r.proposed ?? 0),
+    accepted: Number(r.accepted ?? 0),
+    declined: Number(r.declined ?? 0),
+    started: Number(r.started ?? 0),
+    completed: Number(r.completed ?? 0),
+    failed: Number(r.failed ?? 0),
+    cancelled: Number(r.cancelled ?? 0),
+    evidenceReceiptIds: r.evidence_receipt_ids ? asJson<string[]>(r.evidence_receipt_ids) : [],
+    updated_at: asIso(r.updated_at),
+  };
 }

@@ -1,16 +1,22 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { computeReputation, emptyReputation, NETWORK_REPUTATION_ISSUER } from "./reputation.js";
 import type {
+  ActionType,
   Entity,
   FeedbackEvent,
   InterestRecord,
   InvokeReceipt,
   MatchRecord,
+  MatchStatus,
   NetworkStats,
   Publication,
   PublicationSpec,
+  ReceiptStatus,
   Relation,
+  ReputationRecord,
+  ThreadMessage,
   TrustEvidence,
 } from "./types.js";
 import {
@@ -95,6 +101,8 @@ export class EntityStore {
   readonly interests: InterestRecord[] = [];
   readonly matches: MatchRecord[] = [];
   readonly receipts: InvokeReceipt[] = [];
+  readonly messages: ThreadMessage[] = [];
+  readonly reputations = new Map<string, ReputationRecord>();
   readonly missingSupply: { query: string; view?: string }[] = [];
 
   constructor(entities: Entity[]) {
@@ -167,20 +175,64 @@ export class EntityStore {
     }
   }
 
-  recordMatch(partial: Omit<MatchRecord, "id" | "created_at" | "updated_at" | "evidence"> & {
-    id?: string;
-    evidence?: TrustEvidence;
-    created_at?: string;
-  }): MatchRecord {
+  match(id: string): MatchRecord | undefined {
+    return this.matches.find((m) => m.id === id);
+  }
+
+  findOpenPair(opts: {
+    requesterEntityId: string;
+    candidateEntityId: string;
+    seekPublicationId?: string;
+    offerPublicationId?: string;
+  }): MatchRecord | undefined {
+    return this.matches.find((m) => {
+      if (m.requesterEntityId !== opts.requesterEntityId || m.candidateEntityId !== opts.candidateEntityId) {
+        return false;
+      }
+      if ((opts.seekPublicationId || m.seekPublicationId) && m.seekPublicationId !== opts.seekPublicationId) {
+        return false;
+      }
+      if ((opts.offerPublicationId || m.offerPublicationId) && m.offerPublicationId !== opts.offerPublicationId) {
+        return false;
+      }
+      return m.status === "proposed" || m.status === "accepted" || m.status === "invoked";
+    });
+  }
+
+  recordMatch(
+    partial: Omit<MatchRecord, "id" | "created_at" | "updated_at" | "evidence" | "requesterEntityId" | "candidateEntityId"> & {
+      id?: string;
+      evidence?: TrustEvidence;
+      created_at?: string;
+      requesterEntityId?: string;
+      candidateEntityId?: string;
+    },
+  ): MatchRecord {
     const now = new Date().toISOString();
+    const requesterEntityId = partial.requesterEntityId ?? partial.seekEntityId ?? "";
+    const candidateEntityId = partial.candidateEntityId ?? partial.offerEntityId ?? "";
+    if (!requesterEntityId || !candidateEntityId) {
+      throw new Error("match requires requesterEntityId and candidateEntityId");
+    }
+    const existing = this.findOpenPair({
+      requesterEntityId,
+      candidateEntityId,
+      seekPublicationId: partial.seekPublicationId,
+      offerPublicationId: partial.offerPublicationId,
+    });
+    if (existing && !partial.id) return existing;
     const full: MatchRecord = {
       id: partial.id ?? `match-${this.matches.length + 1}-${Math.random().toString(36).slice(2, 8)}`,
       query: partial.query,
-      seekEntityId: partial.seekEntityId,
-      offerEntityId: partial.offerEntityId,
+      requesterEntityId,
+      candidateEntityId,
+      seekEntityId: partial.seekEntityId ?? requesterEntityId,
+      offerEntityId: partial.offerEntityId ?? candidateEntityId,
       offerPublicationId: partial.offerPublicationId,
       seekPublicationId: partial.seekPublicationId,
       side: partial.side,
+      score: partial.score,
+      explanation: partial.explanation,
       evidence: partial.evidence ?? {},
       status: partial.status,
       created_at: partial.created_at ?? now,
@@ -197,27 +249,161 @@ export class EntityStore {
     );
   }
 
-  updateMatch(id: string, patch: Partial<Pick<MatchRecord, "status" | "evidence" | "receiptId">>): MatchRecord | undefined {
+  updateMatch(
+    id: string,
+    patch: Partial<Pick<MatchRecord, "status" | "evidence" | "receiptId" | "score" | "explanation">>,
+  ): MatchRecord | undefined {
     const found = this.matches.find((m) => m.id === id);
     if (!found) return undefined;
     Object.assign(found, patch, { updated_at: new Date().toISOString() });
     return found;
   }
 
-  recordReceipt(partial: Omit<InvokeReceipt, "id" | "at"> & { id?: string; at?: string }): InvokeReceipt {
+  recordReceipt(
+    partial: Partial<InvokeReceipt> & {
+      toAgentId?: string;
+      task?: string;
+      would?: string;
+      result?: Record<string, unknown>;
+      evidence?: TrustEvidence;
+      id?: string;
+      at?: string;
+    },
+  ): InvokeReceipt {
+    const now = new Date().toISOString();
+    const actorEntityId = partial.actorEntityId ?? partial.fromAgentId ?? "";
+    const counterpartyEntityId = partial.counterpartyEntityId ?? partial.toAgentId ?? "";
+    if (!counterpartyEntityId) throw new Error("receipt requires a counterparty");
+    const actionType: ActionType = partial.actionType ?? "invoke";
+    const status: ReceiptStatus = partial.status ?? "completed";
+    const outcome = partial.outcome ?? partial.result ?? {};
     const full: InvokeReceipt = {
-      ...partial,
       id: partial.id ?? `receipt-${this.receipts.length + 1}-${Math.random().toString(36).slice(2, 8)}`,
-      at: partial.at ?? new Date().toISOString(),
+      matchId: partial.matchId,
+      actorEntityId: actorEntityId || counterpartyEntityId,
+      counterpartyEntityId,
+      actionType,
+      status,
+      outcome,
+      fromAgentId: partial.fromAgentId ?? (actorEntityId || undefined),
+      toAgentId: counterpartyEntityId,
+      task: partial.task ?? (typeof outcome.task === "string" ? outcome.task : actionType),
+      would: partial.would ?? (typeof outcome.would === "string" ? outcome.would : `${actionType} → ${status}`),
+      result: partial.result ?? outcome,
+      evidence: partial.evidence ?? {},
+      at: partial.at ?? now,
+      updated_at: now,
     };
     this.receipts.push(full);
-    const offer = this.get(full.toAgentId);
-    if (offer) {
-      const evidence = offer.trust?.evidence ?? {};
-      evidence.receipts = [...(evidence.receipts ?? []), full.id];
-      offer.trust = { ...(offer.trust ?? { status: "evidence" }), status: "evidence", evidence };
+    if (full.matchId) {
+      const nextStatus = matchStatusFromReceipt(full);
+      this.updateMatch(full.matchId, nextStatus ? { receiptId: full.id, status: nextStatus } : { receiptId: full.id });
+    }
+    this.applyReceiptToTrust(full);
+    this.recomputeReputation(full.actorEntityId);
+    if (full.counterpartyEntityId !== full.actorEntityId) {
+      this.recomputeReputation(full.counterpartyEntityId);
     }
     return full;
+  }
+
+  recordMessage(partial: Omit<ThreadMessage, "id" | "created_at"> & { id?: string; created_at?: string }): ThreadMessage {
+    const full: ThreadMessage = {
+      id: partial.id ?? `msg-${this.messages.length + 1}-${Math.random().toString(36).slice(2, 8)}`,
+      matchId: partial.matchId,
+      fromEntityId: partial.fromEntityId,
+      body: partial.body,
+      created_at: partial.created_at ?? new Date().toISOString(),
+    };
+    this.messages.push(full);
+    return full;
+  }
+
+  messagesFor(matchId: string): ThreadMessage[] {
+    return this.messages.filter((m) => m.matchId === matchId);
+  }
+
+  receiptsFor(opts: { matchId?: string; entityId?: string }): InvokeReceipt[] {
+    return this.receipts.filter((r) => {
+      if (opts.matchId && r.matchId !== opts.matchId) return false;
+      if (
+        opts.entityId &&
+        r.actorEntityId !== opts.entityId &&
+        r.counterpartyEntityId !== opts.entityId &&
+        r.fromAgentId !== opts.entityId &&
+        r.toAgentId !== opts.entityId
+      ) {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  reputationOf(entityId: string): ReputationRecord {
+    return this.reputations.get(entityId) ?? emptyReputation(entityId);
+  }
+
+  recomputeReputation(entityId: string): ReputationRecord {
+    const rec = computeReputation(entityId, this.receipts);
+    this.reputations.set(entityId, rec);
+    this.stampReputationEvidence(entityId, rec);
+    return rec;
+  }
+
+  hydrateLoop(input: {
+    matches?: MatchRecord[];
+    receipts?: InvokeReceipt[];
+    messages?: ThreadMessage[];
+    reputations?: ReputationRecord[];
+  }): void {
+    if (input.matches?.length) this.matches.push(...input.matches);
+    if (input.receipts?.length) this.receipts.push(...input.receipts);
+    if (input.messages?.length) this.messages.push(...input.messages);
+    const entityIds = new Set<string>();
+    for (const r of this.receipts) {
+      entityIds.add(r.actorEntityId);
+      entityIds.add(r.counterpartyEntityId);
+    }
+    for (const id of entityIds) {
+      if (id) this.recomputeReputation(id);
+    }
+    for (const rec of input.reputations ?? []) {
+      if (!this.reputations.has(rec.entityId)) this.reputations.set(rec.entityId, rec);
+    }
+  }
+
+  private applyReceiptToTrust(receipt: InvokeReceipt) {
+    for (const id of [receipt.counterpartyEntityId, receipt.actorEntityId]) {
+      const entity = this.get(id);
+      if (!entity) continue;
+      const evidence = entity.trust?.evidence ?? {};
+      evidence.receipts = [...new Set([...(evidence.receipts ?? []), receipt.id])];
+      entity.trust = { ...(entity.trust ?? { status: "evidence" }), status: "evidence", evidence };
+    }
+  }
+
+  private stampReputationEvidence(entityId: string, rec: ReputationRecord) {
+    const entity = this.get(entityId);
+    if (!entity) return;
+    const evidence = { ...(entity.trust?.evidence ?? {}) };
+    evidence.receipts = [...rec.evidenceReceiptIds];
+    evidence.outcomes = [
+      ...(evidence.outcomes ?? []).filter((o) => !o.label.startsWith("network.")),
+      { label: "network.completionReliability", result: rec.completionReliability.toFixed(4) },
+      { label: "network.verifiedSuccesses", result: String(rec.verifiedSuccesses) },
+    ];
+    if (rec.verifiedSuccesses > 0) {
+      evidence.verified = true;
+      evidence.verifiedBy = NETWORK_REPUTATION_ISSUER;
+    }
+    entity.trust = {
+      ...(entity.trust ?? { status: "evidence" }),
+      status: rec.evidenceReceiptIds.length ? "evidence" : entity.trust?.status ?? "unscored",
+      notes: rec.evidenceReceiptIds.length
+        ? "Network reputation from receipts — issued by whoelse-network, not self-asserted."
+        : entity.trust?.notes,
+      evidence,
+    };
   }
 
   recordMissing(query: string, view?: string) {
@@ -369,4 +555,21 @@ export function stateOf(entity: Entity): string | undefined {
 
 function unique(values: string[]): string[] {
   return [...new Set(values.map((s) => s.trim()).filter(Boolean))];
+}
+
+function matchStatusFromReceipt(receipt: InvokeReceipt): MatchStatus | undefined {
+  if (receipt.actionType === "accept" || receipt.status === "accepted") return "accepted";
+  if (receipt.actionType === "decline" || receipt.status === "declined") return "declined";
+  if (receipt.actionType === "cancel" || receipt.status === "cancelled") return "cancelled";
+  if (receipt.status === "completed") {
+    if (receipt.evidence?.verified || receipt.result?.kind === "verify") return "verified";
+    return "completed";
+  }
+  if (
+    (receipt.actionType === "invoke" || receipt.actionType === "delegate" || receipt.actionType === "handoff") &&
+    (receipt.status === "started" || receipt.status === "failed")
+  ) {
+    return "invoked";
+  }
+  return undefined;
 }

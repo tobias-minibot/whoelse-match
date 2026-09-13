@@ -1,6 +1,16 @@
 import { publicationsOf } from "./publications.js";
 import { offersOf, seeksOf } from "./store.js";
-import type { Candidate, Entity, Publication, WhoElseResult } from "./types.js";
+import { publicReputation } from "./reputation.js";
+import type {
+  Candidate,
+  Entity,
+  InvokeReceipt,
+  MatchRecord,
+  Publication,
+  ReputationRecord,
+  ThreadMessage,
+  WhoElseResult,
+} from "./types.js";
 import { isPrivateConstraintKey, publicPublicationsOf, visibilityOf, type Visibility } from "./visibility.js";
 
 const PRIVATE_METADATA = new Set([
@@ -148,6 +158,57 @@ export function toPublicCandidate(candidate: Candidate) {
         }
       : undefined,
   };
+}
+
+export function toPublicMatch(match: MatchRecord) {
+  return {
+    id: match.id,
+    requesterEntityId: match.requesterEntityId,
+    candidateEntityId: match.candidateEntityId,
+    seekEntityId: match.seekEntityId,
+    offerEntityId: match.offerEntityId,
+    seekPublicationId: match.seekPublicationId,
+    offerPublicationId: match.offerPublicationId,
+    query: match.query,
+    score: match.score,
+    explanation: match.explanation,
+    status: match.status,
+    receiptId: match.receiptId,
+    created_at: match.created_at,
+    updated_at: match.updated_at,
+  };
+}
+
+export function toPublicReceipt(receipt: InvokeReceipt) {
+  return {
+    id: receipt.id,
+    matchId: receipt.matchId,
+    actorEntityId: receipt.actorEntityId,
+    counterpartyEntityId: receipt.counterpartyEntityId,
+    actionType: receipt.actionType,
+    status: receipt.status,
+    outcome: receipt.outcome,
+    task: receipt.task,
+    would: receipt.would,
+    result: receipt.result,
+    evidence: receipt.evidence,
+    at: receipt.at,
+    updated_at: receipt.updated_at,
+  };
+}
+
+export function toPublicMessage(message: ThreadMessage) {
+  return {
+    id: message.id,
+    matchId: message.matchId,
+    fromEntityId: message.fromEntityId,
+    body: message.body,
+    created_at: message.created_at,
+  };
+}
+
+export function toPublicReputation(rep: ReputationRecord) {
+  return publicReputation(rep);
 }
 
 export function toPublicWhoElseResult(result: WhoElseResult) {

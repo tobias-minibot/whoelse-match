@@ -200,8 +200,8 @@ function nextStep(entity: Entity): MachineNextStep {
   if (entity.type === "human") {
     return {
       action: "record_interest",
-      via: "POST /api/interest",
-      note: "Human surface stub — no message is sent.",
+      via: "POST /api/matches",
+      note: "Propose a MATCH (explicit save), then act/message on /matches. Find does not persist matches.",
     };
   }
   if (entity.type === "agent") {

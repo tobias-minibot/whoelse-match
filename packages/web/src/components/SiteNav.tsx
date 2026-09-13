@@ -1,6 +1,6 @@
 import { AuthButtons } from "@/components/AuthButtons";
 
-export function SiteNav({ current }: { current?: "home" | "ais" | "box" | "join" | "me" }) {
+export function SiteNav({ current }: { current?: "home" | "ais" | "box" | "join" | "me" | "matches" }) {
   return (
     <nav className="nav">
       <a className="logo" href="/">
@@ -12,6 +12,9 @@ export function SiteNav({ current }: { current?: "home" | "ais" | "box" | "join"
         </a>
         <a className={current === "me" ? "ghost current" : "ghost"} href="/me">
           Profile
+        </a>
+        <a className={current === "matches" ? "ghost current" : "ghost"} href="/matches">
+          Matches
         </a>
         <a className={current === "box" ? "ghost current" : "ghost"} href="/universal">
           One box

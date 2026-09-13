@@ -467,3 +467,13 @@ h1 {
   font-weight: 400;
 }
 .profile-panel h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+
+.match-layout { display: grid; gap: 16px; }
+.match-pick { width: 100%; text-align: left; cursor: pointer; }
+.match-pick.selected { border-color: var(--coral); box-shadow: 0 0 0 2px var(--coral-soft); }
+.badge.proposed { background: var(--sand); color: var(--deep); }
+.badge.accepted, .status-pill.accepted { background: #e8f5e9; color: #1b5e20; }
+.badge.declined, .badge.cancelled { background: #fdecea; color: #9a1f1f; }
+.badge.completed, .badge.started { background: var(--ai-soft); color: var(--ai); }
+.badge.invoked { background: #fff3e0; color: #e65100; }
+.status-pill.proposed { background: var(--sand); color: var(--muted); }

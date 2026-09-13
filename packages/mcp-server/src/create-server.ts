@@ -5,11 +5,17 @@ import {
   RESERVED_ENTITY_TYPES,
   SEEDED_ENTITY_TYPES,
   WhoElseNetwork,
+  gatewayAct,
   gatewayDelegate,
   gatewayFeedback,
+  gatewayGetMatch,
   gatewayInvoke,
+  gatewayListMatches,
+  gatewayProposeMatch,
   gatewayPublish,
   gatewayRegister,
+  gatewayReputation,
+  gatewayWriteReceipt,
   requireCaller,
   toMachineFindResult,
   type Caller,
@@ -64,6 +70,10 @@ export const findInput = {
   exclude: z.array(z.string()).optional(),
   knownEntities: z.array(z.string()).optional().describe("Ids already known / shown"),
   entityId: z.string().optional().describe("Exemplar id — recursive more-like without a second tool"),
+  matchId: z
+    .string()
+    .optional()
+    .describe("Recursive Who else? from an existing MATCH. Excludes both parties and carries the match query."),
   limit: z.number().int().min(1).max(20).optional(),
   mode: modeSchema.describe("substitute | expand | peers. Default expand."),
   ranking: z.enum(["score", "sectioned"]).optional(),
@@ -90,6 +100,7 @@ type FindArgs = {
   exclude?: string[];
   knownEntities?: string[];
   entityId?: string;
+  matchId?: string;
   limit?: number;
   mode?: WhoElseMode;
   ranking?: "score" | "sectioned";
@@ -131,8 +142,8 @@ export function createWhoElseMcpServer(
 
   async function find(args: FindArgs) {
     const context = (args.intent ?? args.context ?? "").trim();
-    if (!context && !args.entityId) {
-      return json({ error: "intent or entityId required" });
+    if (!context && !args.entityId && !args.matchId) {
+      return json({ error: "intent, entityId, or matchId required" });
     }
     if (args.requester) {
       try {
@@ -142,8 +153,12 @@ export function createWhoElseMcpServer(
         return authJson(err);
       }
     }
+    if (args.matchId) {
+      const existing = engine.store.match(args.matchId);
+      if (!existing) return json({ error: `Unknown match ${args.matchId}`, status: 404 });
+    }
     const result = await engine.whoelseAsync({
-      context: context || "Who else like this?",
+      context: context || (args.matchId ? "" : "Who else like this?"),
       predicate: args.predicate,
       requester: args.requester,
       constraints: {
@@ -156,6 +171,7 @@ export function createWhoElseMcpServer(
       exclude: args.exclude,
       knownEntities: args.knownEntities,
       entityId: args.entityId,
+      matchId: args.matchId,
       mode: args.mode,
       limit: args.limit,
       availability: args.availability,
@@ -301,6 +317,120 @@ export function createWhoElseMcpServer(
         found: delegated.found.slice(0, 5).map((c) => ({ id: c.entity.id, name: c.entity.name, type: c.entity.type })),
         reason: delegated.reason,
       });
+    },
+  );
+
+  const actionEnum = z.enum([
+    "connect",
+    "intro",
+    "message",
+    "accept",
+    "decline",
+    "cancel",
+    "invoke",
+    "delegate",
+    "negotiate",
+    "handoff",
+  ]);
+  const receiptStatus = z.enum([
+    "proposed",
+    "accepted",
+    "declined",
+    "started",
+    "completed",
+    "failed",
+    "cancelled",
+  ]);
+
+  server.tool(
+    "whoelse.match",
+    "Explicitly propose/save a durable MATCH from find results. Find never writes MATCH rows. One row per SEEK↔OFFER pair. Same objects as the human Matches UI.",
+    {
+      candidateEntityId: z.string(),
+      requesterEntityId: z.string().optional(),
+      seekPublicationId: z.string().optional(),
+      offerPublicationId: z.string().optional(),
+      query: z.string().optional(),
+      score: z.number().optional(),
+      explanation: z.string().optional(),
+    },
+    async (args) => {
+      const result = await gatewayProposeMatch(
+        network,
+        {
+          candidateEntityId: args.candidateEntityId,
+          requesterEntityId: args.requesterEntityId,
+          seekPublicationId: args.seekPublicationId,
+          offerPublicationId: args.offerPublicationId,
+          query: args.query,
+          score: args.score,
+          explanation: args.explanation ? { why: args.explanation } : undefined,
+        },
+        caller,
+      );
+      return json(result.body);
+    },
+  );
+
+  server.tool(
+    "whoelse.act",
+    "Act on a MATCH: connect / intro / message / accept / decline / invoke / delegate / negotiate / handoff. Writes a structured receipt. Same path as the human UI.",
+    {
+      matchId: z.string(),
+      action: actionEnum,
+      actorEntityId: z.string().optional(),
+      message: z.string().optional(),
+      task: z.string().optional(),
+    },
+    async (args) => {
+      const result = await gatewayAct(network, args, caller);
+      return json(result.body);
+    },
+  );
+
+  server.tool(
+    "whoelse.receipt",
+    "Write a structured receipt (proposed|accepted|declined|started|completed|failed|cancelled). Outcomes update portable reputation. Not dating-specific.",
+    {
+      counterpartyEntityId: z.string(),
+      actionType: actionEnum,
+      status: receiptStatus,
+      matchId: z.string().optional(),
+      actorEntityId: z.string().optional(),
+      task: z.string().optional(),
+      outcome: z.record(z.unknown()).optional(),
+    },
+    async (args) => {
+      const result = await gatewayWriteReceipt(network, args, caller);
+      return json(result.body);
+    },
+  );
+
+  server.tool(
+    "whoelse.reputation",
+    "Inspect receipt-backed reputation for an entity: completion reliability, response/acceptance/failure rates, verified successes, evidence receipt ids. Issued by the network — not self-asserted.",
+    {
+      entityId: z.string(),
+    },
+    async ({ entityId }) => {
+      const result = await gatewayReputation(network, entityId, caller);
+      return json(result.body);
+    },
+  );
+
+  server.tool(
+    "whoelse.matches",
+    "List MATCH rows the caller is a party to, or fetch one by id, with receipts and thread messages.",
+    {
+      matchId: z.string().optional(),
+    },
+    async ({ matchId }) => {
+      if (matchId) {
+        const one = await gatewayGetMatch(network, matchId, caller);
+        return json(one.body);
+      }
+      const listed = await gatewayListMatches(network, caller);
+      return json(listed.body);
     },
   );
 

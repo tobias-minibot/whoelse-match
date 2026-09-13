@@ -199,6 +199,15 @@ export class IdentityLedger {
     return who;
   }
 
+  /** Caller owns at least one of the given entities (match party). */
+  assertParty(caller: Caller | null | undefined, entityIds: string[]): Caller {
+    const who = requireCaller(caller);
+    if (!entityIds.some((id) => this.owns(who.principalId, id))) {
+      throw new AuthzError(403, "forbidden: not a party");
+    }
+    return who;
+  }
+
   issueKey(principalId: string, scopes: AgentScope[] = [...AGENT_SCOPES]): IssuedAgentKey {
     const principal = this.principals.get(principalId);
     if (!principal) throw new AuthzError(403, "unknown principal");
