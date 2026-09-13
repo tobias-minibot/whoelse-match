@@ -64,6 +64,22 @@ describe("OFFER / SEEK as first-class network objects", () => {
     );
   });
 
+  it("whoelseAsync keeps requester pairs after the optional rerank slice", async () => {
+    const engine = WhoElseEngine.fromSeed();
+    const found = await engine.whoelseAsync({
+      context: "Who else can do calendar hold resolution?",
+      requester: "agent-inbox-clerk",
+      limit: 8,
+    });
+    assert.ok(found.candidates.some((c) => c.entity.id === "agent-holdwright"));
+    assert.ok(
+      found.pairs.some(
+        (p) => p.offerEntityId === "agent-holdwright" && p.seekEntityId === "agent-inbox-clerk",
+      ),
+      `pairs: ${found.pairs.map((p) => `${p.seek.id}↔${p.offer.id}`).join(", ")}`,
+    );
+  });
+
   it("withdrawn publications drop out of pairing", () => {
     const isolated = WhoElseEngine.fromSeed();
     const clerk = isolated.store.get("agent-inbox-clerk");

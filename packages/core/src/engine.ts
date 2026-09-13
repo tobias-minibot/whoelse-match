@@ -224,6 +224,15 @@ export class WhoElseEngine {
     const reranked = await maybeRerankAndExplain(request.context, local.candidates);
     const limit = request.limit ?? request.constraints?.limit ?? 8;
     const candidates = reranked.candidates.slice(0, limit);
+    const keep = new Set(candidates.map((c) => c.entity.id));
+    if (request.requester) keep.add(request.requester);
+    const pairs = local.pairs.filter(
+      (p) =>
+        keep.has(p.offerEntityId) ||
+        keep.has(p.seekEntityId) ||
+        p.offerEntityId === "query" ||
+        p.seekEntityId === "query",
+    );
     return finish(
       request.context,
       local.inferredMode,
@@ -232,7 +241,7 @@ export class WhoElseEngine {
       reranked.used,
       candidates,
       local.universal,
-      collectPairs(candidates),
+      pairs,
     );
   }
 
