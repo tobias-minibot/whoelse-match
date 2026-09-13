@@ -359,7 +359,7 @@ Costume tabs stayed for comparison. No new verticals. One box at `/universal`. A
 | Primitive | What it is | What it is not |
 | --- | --- | --- |
 | **ENTITY** | Open `type` + name + offers/seeks + attributes | A dating profile type, a JobOpening type |
-| **OFFER / SEEK** | Two bags on every entity; `side` picks direction | Separate listing/job/ride engines |
+| **OFFER / SEEK** | First-class records on every entity (`publications[]`); string bags are derived; `side` picks direction | Separate listing/job/ride engines |
 | **CONSTRAINT** | Generic `{key, op, value}` hard filters | Per-vertical query languages |
 | **EVIDENCE** | Composable artifacts (verified, portfolio, outcomes, licenses, receipts) | A trust score or reputation market |
 | **ACTION** | `endpoint` / invoke / `next.action` | Fulfillment, booking, payments |
@@ -568,3 +568,36 @@ Live factory did not need these IDs. Apartment and rideshare slots are already a
 ### SHARED DERIVATION
 
 Catalog helps humans express (`DATE who else?`, dating/romance synonyms). Protocol lets machines exchange (`whoelse.find` + register/invoke/delegate/feedback). Complementary. Do not unify them by shipping 505 enums. Thin one-box hints live in `legacy/intent-protocol/onebox-alias-hints.json` only.
+
+---
+
+## NETWORK OBJECT — OFFER / SEEK as first-class records (2026-09-13)
+
+Doctrine after catalog lock: WhoElse is a shared find layer. Entities publish OFFER/SEEK. Humans and agents call `whoelse.find`. Lenses are views. The 505 catalog is **vocab/eval, not a runtime enum**.
+
+### DISCOVERED THROUGH IMPLEMENTATION
+
+48. **Bags were the costume; records are the object.** `offers[]` / `seeks[]` were enough to *score* complementary Jaccard. They were not enough to *address* a publication (`id`, constraints, evidence, timestamps). Hydrating bags into `publications[]` on load unified apartment listings, job openings, and agent capabilities without a second engine.
+49. **Register was the right verb — once it accepted a SEEK-only agent.** Requiring `offers.min(1)` hid InboxClerk. The contract is now “identity + at least one OFFER and/or SEEK.” Idempotent on `id` (same capability upserts phrases). `whoelse.publish` is the focused attach/update for an entity that already exists.
+50. **A find with no lens is the proof.** `Who else can do calendar hold resolution?` infers no view and no roles. Holdwright ranks because its OFFER record capability is in the sentence — not because a `calendar` tab exists. Dating / apt / jobs first-five stayed in-cluster; the new pair does not mention voice assistants.
+51. **Catalog IDs must not become `Publication.kind`.** Kind is only `offer` \| `seek`. `DATE` / `i308-date` / `AI TOOLS` stay in `legacy/intent-protocol/` as aliases for humans to start a sentence. Agents skip the alias table and call `whoelse.find({ intent })`.
+52. **Find was still an entity ranker.** `matched` pointers were not a pair list. `WhoElseResult.pairs` (and machine `pairs`) is the complementary object: high-confidence OFFER↔SEEK only (score ≥ 0.85). Dating first-five stays entity candidates; it does not mint a pair per dinner-date human.
+53. **Requester is the other side of the pair.** `requester` was exclude-only. InboxClerk as requester now supplies its SEEK record, so the pair is clerk SEEK id ↔ Holdwright OFFER id — not `pub-query-seek`. Durable pairs persist as `MatchRecord` with publication ids. Query-synthetic sides are returned but not stored.
+54. **Lifecycle is status, not a second graph.** `active` / `withdrawn` / `expired` on the publication. Withdrawn Holdwright OFFER drops out of pairing. Record field is `kind`; query HAS-vs-NEEDS stays `side`.
+
+### SHARED DERIVATION
+
+The leftover network object is:
+
+```
+ENTITY  →  publications: [{ id, entityId, kind: offer|seek, capability, status, constraints?, evidence?, created_at }]
+whoelse.find  →  candidates[] + pairs[] (OFFER↔SEEK, including requester records)
+whoelse.register / whoelse.publish  →  write those records
+whoelse.invoke / whoelse.delegate  →  find + invoke + receipt
+```
+
+String bags remain a derived view so TF-IDF and old clients do not fork. Lenses remain chips. One-box `/universal` is the same `POST /api/whoelse` path.
+
+Demo: InboxClerk SEEKs `calendar hold resolution` → find (no lens) → Holdwright OFFER → invoke/delegate receipt.
+
+**Do not restore 505 as an API contract. Do not promise 500 marketplaces.**

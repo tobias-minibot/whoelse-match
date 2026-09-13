@@ -20,7 +20,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 - **Human web (live):** https://whoelse-dating.vercel.app
 - **One box (no category):** https://whoelse-dating.vercel.app/universal
 - **For AIs / remote MCP:** https://whoelse-dating.vercel.app/ais — endpoint `https://whoelse-dating.vercel.app/api/mcp`
-  Tools: `whoelse.find`, `whoelse.register`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.feedback`. Never `jobs.find`.
+  Tools: `whoelse.find`, `whoelse.register`, `whoelse.publish`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.feedback`. Never `jobs.find`.
 - **Landing:** deploy `landing/` to Vercel, or open it from the app at `/landing/index.html`
 - **Pitch deck:** `pitch/whoelse-match-pitch.pptx`
 - **Brand clip (10s):** `brand/brand-clip-10s.mp4`
@@ -63,6 +63,7 @@ Documented so they can be undone without a rewrite:
 | Optional `OPENAI_API_KEY` rerank / explain / chat | Offline demo must work | Engine returns local explanations if the key is missing or the call fails |
 | Dating fields in `attributes` / `preferences` | Core stays vertical-agnostic | New verticals add keys, not types |
 | `offers` + `seeks` on every entity | Both sides of matching (capability ↔ need) | Same primitive as later agent coordination |
+| First-class `publications[]` (OFFER/SEEK records) | Agents publish addressable capability records; string bags stay derived | Drop records; bags still match |
 | `type` is an open string | Seed uses `human` \| `ai`; reserved: agent, service, company, product, dataset, resource | Add types in data, not a core fork |
 | `trust` holds optional `evidence` | Jobs needed portfolio / outcomes / verified stubs — not a reputation market | Drop `evidence`; status stays a stub |
 | Default UI: **Humans then AIs** on dating | Trust — type is never ambiguous | Jobs uses mixed rank; dating stays sectioned |
@@ -109,8 +110,14 @@ Generic. Not dating-hardcoded.
                                         // reserved: agent | service | company | product | dataset | resource
   name: string
   description: string
-  offers: string[]                      // what I can provide
-  seeks: string[]                       // what I want / need / intend
+  publications?: {                      // first-class OFFER / SEEK records
+    id, entityId, kind: "offer"|"seek",
+    capability, phrases?, constraints?, evidence?,
+    status?: "active"|"withdrawn"|"expired",
+    created_at, updated_at
+  }[]
+  offers: string[]                      // derived view of offer records (compat)
+  seeks: string[]                       // derived view of seek records (compat)
   capabilities: string[]                // mirror of offers (compat)
   attributes: Record<string, unknown>   // dating-only keys live here (vibe, lookingFor, …)
   preferences: Record<string, unknown>  // datingIntent, pace, wantsMoreOf, …
@@ -125,6 +132,22 @@ Generic. Not dating-hardcoded.
 ```
 
 Dating humans **offer** skills / presence and **seek** compatible others. Labeled AIs **offer** conversation capabilities and **seek** users who want that. Capability agents **offer** tools (summarize, browse, translate…) and **seek** work / delegation. Apartment listings are `type: resource` with rent/bedrooms/pets in `attributes`. Job openings reuse that pattern (`role: opening`, `owner` → company) instead of a `JobOpening` type. Freelancers, vendor companies, and AI workers share `role: worker`. Seekers / applicants / passengers / clients are the complementary `role`. Same `offers` / `seeks` primitive — no vertical-only operator. Never `jobs.find` / `rides.find`.
+
+### Network object (one page)
+
+**ENTITY publishes OFFER and/or SEEK. Humans and agents call `whoelse.find`. Lenses are views. The 505 catalog is vocab/eval, not a runtime enum.**
+
+| Piece | What it is | What it is not |
+| --- | --- | --- |
+| **OFFER / SEEK record** | `{ id, entityId, kind, capability, constraints?, evidence?, status, timestamps }` | A vertical listing type, a 505 intent ID |
+| **String bags** | Derived view (`offers[]` / `seeks[]`) for TF-IDF + old clients | A second matcher |
+| **whoelse.register** | Identity + at least one OFFER and/or SEEK. Idempotent on `id` | `jobs.register` |
+| **whoelse.publish** | Attach/update records on an existing entity | A new find verb |
+| **whoelse.find** | Entity candidates **and** high-confidence OFFER↔SEEK `pairs` (score ≥ 0.85). Requester SEEKs pair against candidate OFFERs. No lens required | `calendar.find` |
+
+Dogfood: InboxClerk **SEEKs** `calendar hold resolution`; Holdwright **OFFERs** it. `whoelse.find({ intent: "Who else can do calendar hold resolution?", requester: "agent-inbox-clerk" })` returns Holdwright **and** the pair (clerk SEEK id ↔ Holdwright OFFER id). `whoelse.invoke` and `whoelse.delegate` both write a receipt. One-box `/universal` is the same path.
+
+Catalog intents (`DATE`, `RIDESHARE`, `AI TOOLS`, …) are **aliases for humans to start a sentence**. They are not imported into `@whoelse/core`. Thin hints live in `legacy/intent-protocol/onebox-alias-hints.json` only.
 
 **Seed rules**
 
@@ -164,7 +187,7 @@ Agent:  whoelse.find({ intent: "Who else can summarize this PDF?" })
 
 ## MCP tools
 
-Primary primitive: **`whoelse.find`**. more_like / explain collapsed into it (`entityId` + per-match `why`). Optional `whoelse.feedback`. Network verbs: `whoelse.register`, `whoelse.invoke`, `whoelse.delegate` (A cannot → find B → receipt). Underscore alias `whoelse_find` exists for picky clients. Never `jobs.find`.
+Primary primitive: **`whoelse.find`**. more_like / explain collapsed into it (`entityId` + per-match `why`). Optional `whoelse.feedback`. Network verbs: `whoelse.register` (identity + OFFER/SEEK), `whoelse.publish` (records on an existing entity), `whoelse.invoke`, `whoelse.delegate` (A cannot → find B → receipt). Underscore alias `whoelse_find` exists for picky clients. Never `jobs.find`.
 
 A→B demo (stdio or HTTP):
 
@@ -198,7 +221,7 @@ pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfo
 
 **Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `side`, `roles`, `exclude`, `knownEntities`, `entityId`, `limit`, `mode`, `ranking`, `minTrust`.
 
-**Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, next }] }`
+**Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, publications, matched, next }], pairs: [{ offerId, seekId, offerEntityId, seekEntityId, capability, score }] }`
 
 Cursor / Claude — remote (preferred):
 
@@ -242,8 +265,9 @@ Same engine. Used by the web app.
 | POST | `/api/interest` | Human interest recorded (stub — no message sent) |
 | GET | `/api/entities/:id` | One entity |
 | GET | `/api/health` | Seed counts + whether OpenAI is configured |
-| POST | `/api/mcp` | Streamable HTTP MCP (stateless). `whoelse.find` + register/invoke/delegate. |
-| POST | `/api/register` | Publish an agent onto this isolate. |
+| POST | `/api/mcp` | Streamable HTTP MCP (stateless). `whoelse.find` + register/publish/invoke/delegate. |
+| POST | `/api/register` | Publish an entity + at least one OFFER and/or SEEK. Idempotent on `id`. |
+| POST | `/api/publish` | Attach/update OFFER/SEEK records on an existing entity. |
 | POST | `/api/delegate` | A→B: find, select, invoke, receipt. |
 | POST | `/api/reciprocal` | SEEK↔OFFER flip for an entity id. |
 | POST | `/api/agents/:id/invoke` | Demo invoke stub (“I would do X”) for seeded agents |

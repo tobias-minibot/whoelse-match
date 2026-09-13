@@ -8,6 +8,7 @@ export interface Entity {
   attributes: Record<string, unknown>;
   offers?: string[];
   seeks?: string[];
+  publications?: { id: string; kind: string; capability: string }[];
   capabilities: string[];
   preferences: Record<string, unknown>;
   availability?: string;
@@ -38,6 +39,10 @@ export interface Candidate {
     commonalities: string[];
     surprisingDifference?: string;
   };
+  matched?: {
+    offer?: { id: string; kind: string; capability: string };
+    seek?: { id: string; kind: string; capability: string };
+  };
 }
 
 export interface WhoElsePayload {
@@ -61,6 +66,13 @@ export interface WhoElsePayload {
   };
   usedOpenAiRerank: boolean;
   candidates: Candidate[];
+  pairs?: {
+    offer: { id: string; entityId: string; kind: string; capability: string };
+    seek: { id: string; entityId: string; kind: string; capability: string };
+    score: number;
+    offerEntityId: string;
+    seekEntityId: string;
+  }[];
   humans: Candidate[];
   ais: Candidate[];
   byType?: Record<string, Candidate[]>;

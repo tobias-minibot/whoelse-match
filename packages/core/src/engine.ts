@@ -2,6 +2,13 @@ import { buildExplanation, labelsOf } from "./explain.js";
 import { invokeAgent } from "./invoke.js";
 import { inferConstraints, inferMode, inferVertical, parseUniversal, queryText, wantsCheaper } from "./parse.js";
 import { maybeChat, maybeRerankAndExplain } from "./openai.js";
+import {
+  bagsFromPublications,
+  bestPublicationMatch,
+  normalizePublication,
+  parsePublicationInputs,
+  upsertPublications,
+} from "./publications.js";
 import { entityText, EntityStore, offersOf, seeksOf, stringList } from "./store.js";
 import { jaccard } from "./text.js";
 import { TfidfIndex } from "./tfidf.js";
@@ -14,6 +21,8 @@ import type {
   Entity,
   MatchRecord,
   MatchSide,
+  PublicationPair,
+  PublicationSpec,
   RegistrationSpec,
   ScoreBreakdown,
   UniversalQuery,
@@ -53,6 +62,8 @@ export class WhoElseEngine {
 
   whoelse(request: WhoElseRequest): WhoElseResult {
     const contextEntity = request.entityId ? this.store.get(request.entityId) : undefined;
+    const requesterEntity = request.requester ? this.store.get(request.requester) : undefined;
+    const counterparts = [contextEntity, requesterEntity].filter((e): e is Entity => Boolean(e));
     const userText = [request.context, request.predicate ?? ""].filter(Boolean).join(" ");
     const rawQuery = queryText({
       context: request.context,
@@ -119,13 +130,22 @@ export class WhoElseEngine {
       if (inferredConstraints.state && !matchState(entity, inferredConstraints.state)) continue;
 
       const text = this.index.similarity(entity.id, qVec);
-      const structured = structuredScore(
+      const bags = structuredScore(
         entity,
         contextEntity,
         queryLabels,
         inferredMode,
         inferredConstraints.side,
       );
+      const pubMatch = bestPublicationMatch(
+        entity,
+        rawQuery,
+        inferredConstraints.side,
+        counterparts,
+      );
+      // Only fold a publication hit when it is a real capability match.
+      // Weak token overlap must not reshuffle dating first-five.
+      const structured = pubMatch.score >= 0.85 ? Math.max(bags, pubMatch.score) : bags;
       const location = locationScore(entity, inferredConstraints, contextEntity);
       const typeAffinity = typeScore(entity, inferredMode, contextEntity);
       const feedback = this.store.feedbackScore(entity.id, request.context);
@@ -173,6 +193,10 @@ export class WhoElseEngine {
         entity,
         score: total,
         explanation: { ...narrative, scoreBreakdown: breakdown },
+        matched:
+          pubMatch.score >= 0.2
+            ? { offer: pubMatch.offer, seek: pubMatch.seek, score: pubMatch.score }
+            : undefined,
       });
     }
 
@@ -181,6 +205,8 @@ export class WhoElseEngine {
     const top = scored.slice(0, Math.max(limit, 8));
     const sliced = top.slice(0, limit);
     if (sliced.length === 0) this.store.recordMissing(request.context, universal.view);
+    const pairs = collectPairs(sliced);
+    this.persistHighConfidencePairs(request.context, inferredConstraints.side, pairs);
     return finish(
       request.context,
       inferredMode,
@@ -189,6 +215,7 @@ export class WhoElseEngine {
       false,
       sliced,
       universal,
+      pairs,
     );
   }
 
@@ -196,15 +223,43 @@ export class WhoElseEngine {
     const local = this.whoelse({ ...request, limit: Math.max(request.limit ?? 8, 12) });
     const reranked = await maybeRerankAndExplain(request.context, local.candidates);
     const limit = request.limit ?? request.constraints?.limit ?? 8;
+    const candidates = reranked.candidates.slice(0, limit);
+    const keep = new Set(candidates.map((c) => c.entity.id));
+    if (request.requester) keep.add(request.requester);
+    const pairs = local.pairs.filter(
+      (p) =>
+        keep.has(p.offerEntityId) ||
+        keep.has(p.seekEntityId) ||
+        p.offerEntityId === "query" ||
+        p.seekEntityId === "query",
+    );
     return finish(
       request.context,
       local.inferredMode,
       local.inferredConstraints,
       local.inferredVertical,
       reranked.used,
-      reranked.candidates.slice(0, limit),
+      candidates,
       local.universal,
+      pairs,
     );
+  }
+
+  private persistHighConfidencePairs(query: string, side: MatchSide | undefined, pairs: PublicationPair[]) {
+    for (const pair of pairs) {
+      if (pair.offer.entityId === "query" || pair.seek.entityId === "query") continue;
+      if (this.store.hasPublicationPair(pair.offer.id, pair.seek.id)) continue;
+      this.store.recordMatch({
+        query,
+        offerEntityId: pair.offerEntityId,
+        seekEntityId: pair.seekEntityId,
+        offerPublicationId: pair.offer.id,
+        seekPublicationId: pair.seek.id,
+        side,
+        status: "proposed",
+        evidence: {},
+      });
+    }
   }
 
   parse(text: string): UniversalQuery {
@@ -212,55 +267,90 @@ export class WhoElseEngine {
   }
 
   register(spec: RegistrationSpec): Entity {
+    const incomingSpecs = [
+      ...parsePublicationInputs("offer", spec.offers),
+      ...parsePublicationInputs("seek", spec.seeks),
+      ...(spec.publications ?? []),
+    ].filter((p) => p.capability?.trim());
+    const existing = spec.id ? this.store.get(spec.id) : undefined;
+    if (!incomingSpecs.length && !existing) {
+      throw new Error("register requires at least one offer or seek");
+    }
     const slug = spec.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "agent";
-    const id = spec.id ?? `agent-reg-${slug}-${Math.random().toString(36).slice(2, 7)}`;
+    const id = spec.id ?? existing?.id ?? `agent-reg-${slug}-${Math.random().toString(36).slice(2, 7)}`;
     const now = new Date().toISOString();
-    const endpoint = spec.endpoint?.url ?? `/api/agents/${id}/invoke`;
+    const incoming = incomingSpecs.map((p) => normalizePublication({ ...p, entityId: id }, now));
+    const publications = upsertPublications(existing?.publications ?? [], incoming);
+    const bags = bagsFromPublications(publications);
+    const offers = bags.offers.length ? bags.offers : existing?.offers ?? [];
+    const seeks = bags.seeks.length
+      ? bags.seeks
+      : existing?.seeks ?? ["work", "who else can use this capability"];
+    if (!offers.length && !seeks.length) {
+      throw new Error("register requires at least one offer or seek");
+    }
+    const endpoint = spec.endpoint?.url ?? existing?.attributes?.apiEndpoint ?? `/api/agents/${id}/invoke`;
     const entity: Entity = {
       id,
-      type: spec.type ?? "agent",
-      name: spec.name,
-      description: spec.description,
-      offers: spec.offers,
-      seeks: spec.seeks ?? ["work", "who else can use this capability"],
-      capabilities: spec.offers,
+      type: spec.type ?? existing?.type ?? "agent",
+      name: spec.name || existing?.name || slug,
+      description: spec.description || existing?.description || "",
+      publications,
+      offers,
+      seeks,
+      capabilities: offers,
       attributes: {
-        role: spec.type === "human" ? undefined : "worker",
-        owner: spec.owner,
-        version: spec.version ?? "0.1.0",
-        status: spec.status ?? "available",
-        protocol: spec.protocol ?? spec.endpoint?.protocol ?? "http",
-        requirements: spec.requirements,
-        permissions: spec.permissions,
-        priceUsd: typeof spec.cost === "number" ? spec.cost : undefined,
-        pricing: spec.cost,
-        latencyMs: typeof spec.latency === "number" ? spec.latency : undefined,
-        latency: spec.latency,
+        ...(existing?.attributes ?? {}),
+        role:
+          spec.type === "human"
+            ? undefined
+            : (existing?.attributes?.role as string | undefined) ?? "worker",
+        owner: spec.owner ?? existing?.attributes?.owner,
+        version: spec.version ?? existing?.attributes?.version ?? "0.1.0",
+        status: spec.status ?? existing?.attributes?.status ?? "available",
+        protocol: spec.protocol ?? spec.endpoint?.protocol ?? existing?.attributes?.protocol ?? "http",
+        requirements: spec.requirements ?? existing?.attributes?.requirements,
+        permissions: spec.permissions ?? existing?.attributes?.permissions,
+        priceUsd: typeof spec.cost === "number" ? spec.cost : existing?.attributes?.priceUsd,
+        pricing: spec.cost ?? existing?.attributes?.pricing,
+        latencyMs: typeof spec.latency === "number" ? spec.latency : existing?.attributes?.latencyMs,
+        latency: spec.latency ?? existing?.attributes?.latency,
         apiEndpoint: endpoint,
         mcpEndpoint: "/api/mcp",
         endpoint,
-        authRequirements: spec.endpoint?.auth ?? "none-demo",
+        authRequirements: spec.endpoint?.auth ?? existing?.attributes?.authRequirements ?? "none-demo",
         registered: true,
       },
-      preferences: {},
-      availability: spec.availability ?? "on request",
-      location: spec.location,
+      preferences: existing?.preferences ?? {},
+      availability: spec.availability ?? existing?.availability ?? "on request",
+      location: spec.location ?? existing?.location,
       metadata: {
+        ...(existing?.metadata ?? {}),
         demo: true,
-        demoLabel: "DEMO registered agent — not a production worker",
-        aiDisclosure: spec.type === "human" ? undefined : `${spec.name} is a registered agent, not a human.`,
-        vertical: "capability",
+        demoLabel: existing?.metadata?.demoLabel ?? "DEMO registered agent — not a production worker",
+        aiDisclosure:
+          spec.type === "human"
+            ? undefined
+            : existing?.metadata?.aiDisclosure ?? `${spec.name || existing?.name} is a registered agent, not a human.`,
+        vertical: existing?.metadata?.vertical ?? "capability",
       },
-      provenance: spec.type === "human" ? "user" : "ai_generated",
+      provenance: spec.type === "human" ? "user" : existing?.provenance ?? "ai_generated",
       trust: {
-        status: spec.evidence ? "evidence" : "stub",
+        status: spec.evidence || existing?.trust?.evidence ? "evidence" : existing?.trust?.status ?? "stub",
         provenance: "user",
-        notes: "Registration evidence is self-asserted.",
-        evidence: spec.evidence,
+        notes: existing?.trust?.notes ?? "Registration evidence is self-asserted.",
+        evidence: spec.evidence ?? existing?.trust?.evidence,
       },
-      created_at: now,
+      created_at: existing?.created_at ?? now,
     };
     const stored = this.store.add(entity);
+    this.index.add(stored.id, entityText(stored));
+    return stored;
+  }
+
+  /** Attach or update OFFER / SEEK records on an existing entity. Idempotent. */
+  publish(entityId: string, specs: PublicationSpec[]): Entity {
+    const stored = this.store.publish(entityId, specs);
     this.index.add(stored.id, entityText(stored));
     return stored;
   }
@@ -299,14 +389,23 @@ export class WhoElseEngine {
       constraints: { side },
       limit: opts.limit ?? 5,
     });
-    if (result.candidates[0]) {
+    const pair = offering
+      ? result.pairs.find((p) => p.offerEntityId === entityId) ?? result.pairs[0]
+      : result.pairs.find((p) => p.seekEntityId === entityId) ?? result.pairs[0];
+    if (result.candidates[0] || pair) {
       this.store.recordMatch({
         query: context,
-        seekEntityId: offering ? result.candidates[0].entity.id : entityId,
-        offerEntityId: offering ? entityId : result.candidates[0].entity.id,
+        seekEntityId: offering
+          ? realEntityId(pair?.seekEntityId) ?? result.candidates[0]?.entity.id
+          : entityId,
+        offerEntityId: offering
+          ? entityId
+          : realEntityId(pair?.offerEntityId) ?? result.candidates[0]?.entity.id,
+        offerPublicationId: pair && pair.offer.entityId !== "query" ? pair.offer.id : undefined,
+        seekPublicationId: pair && pair.seek.entityId !== "query" ? pair.seek.id : undefined,
         side,
         status: "proposed",
-        evidence: result.candidates[0].entity.trust?.evidence ?? {},
+        evidence: result.candidates[0]?.entity.trust?.evidence ?? {},
       });
     }
     return result;
@@ -316,12 +415,16 @@ export class WhoElseEngine {
     query: string;
     offerEntityId?: string;
     seekEntityId?: string;
+    offerPublicationId?: string;
+    seekPublicationId?: string;
     side?: MatchSide;
   }): MatchRecord {
     return this.store.recordMatch({
       query: opts.query,
       offerEntityId: opts.offerEntityId,
       seekEntityId: opts.seekEntityId,
+      offerPublicationId: opts.offerPublicationId,
+      seekPublicationId: opts.seekPublicationId,
       side: opts.side,
       status: "proposed",
       evidence: {},
@@ -338,7 +441,26 @@ export class WhoElseEngine {
     const entity = this.store.get(entityId);
     if (!entity) throw new Error(`Unknown entity ${entityId}`);
     if (entity.type !== "agent") throw new Error("invoke is only stubbed for type=agent");
-    return invokeAgent(entity, body);
+    const invoked = invokeAgent(entity, body);
+    const ev = (invoked.result.evidence as {
+      verified?: boolean;
+      verifiedBy?: string;
+      outcomes?: { label: string; result?: string }[];
+      receipts?: string[];
+    } | undefined) ?? entity.trust?.evidence;
+    const receipt = this.store.recordReceipt({
+      toAgentId: entity.id,
+      task: body.task ?? body.input ?? body.context ?? "this task",
+      would: invoked.would,
+      result: invoked.result,
+      evidence: {
+        verified: Boolean(ev?.verified),
+        verifiedBy: ev?.verifiedBy ?? entity.name,
+        outcomes: ev?.outcomes,
+        receipts: ev?.receipts,
+      },
+    });
+    return { ...invoked, receipt };
   }
 
   delegate(opts: {
@@ -381,10 +503,14 @@ export class WhoElseEngine {
         receipts: ev?.receipts,
       },
     });
+    const pair =
+      found.pairs.find((p) => p.offerEntityId === selected.entity.id) ?? found.pairs[0];
     const match = this.store.recordMatch({
       query: intent,
       seekEntityId: opts.from,
       offerEntityId: selected.entity.id,
+      offerPublicationId: pair?.offer.entityId === "query" ? undefined : pair?.offer.id,
+      seekPublicationId: pair?.seek.entityId === "query" ? undefined : pair?.seek.id,
       side: "offer",
       status: invoked.result.kind === "verify" ? "verified" : "invoked",
       evidence: receipt.evidence,
@@ -727,6 +853,30 @@ function evidenceScore(entity: Entity, query: string): number {
   return Math.min(0.16, score);
 }
 
+const PAIR_SCORE_MIN = 0.85;
+
+function collectPairs(candidates: Candidate[]): PublicationPair[] {
+  const pairs: PublicationPair[] = [];
+  const seen = new Set<string>();
+  for (const c of candidates) {
+    const offer = c.matched?.offer;
+    const seek = c.matched?.seek;
+    const score = c.matched?.score ?? 0;
+    if (!offer || !seek || score < PAIR_SCORE_MIN) continue;
+    const key = `${offer.id}::${seek.id}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    pairs.push({
+      offer,
+      seek,
+      score,
+      offerEntityId: offer.entityId,
+      seekEntityId: seek.entityId,
+    });
+  }
+  return pairs;
+}
+
 function finish(
   query: string,
   inferredMode: WhoElseMode,
@@ -735,6 +885,7 @@ function finish(
   usedOpenAiRerank: boolean,
   candidates: Candidate[],
   universal?: UniversalQuery,
+  pairs: PublicationPair[] = [],
 ): WhoElseResult {
   return {
     query,
@@ -745,6 +896,7 @@ function finish(
     universal,
     usedOpenAiRerank,
     candidates,
+    pairs,
     humans: candidates.filter((c) => c.entity.type === "human"),
     ais: candidates.filter((c) => c.entity.type === "ai"),
     byType: groupByType(candidates),
@@ -773,6 +925,10 @@ function evidenceRank(entity: Entity): number {
 
 function num(value: unknown, fallback: number): number {
   return typeof value === "number" && !Number.isNaN(value) ? value : fallback;
+}
+
+function realEntityId(id?: string): string | undefined {
+  return id && id !== "query" ? id : undefined;
 }
 
 function groupByType(candidates: Candidate[]): Record<string, Candidate[]> {

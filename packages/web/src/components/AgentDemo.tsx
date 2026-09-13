@@ -23,6 +23,7 @@ export function AgentDemo() {
   const [step, setStep] = useState<"idle" | "draft" | "found" | "done" | "error">("idle");
   const [draft, setDraft] = useState<string>("");
   const [found, setFound] = useState<{ id: string; name: string; type: string; score: number }[]>([]);
+  const [pairs, setPairs] = useState<{ seek: string; offer: string }[]>([]);
   const [delegated, setDelegated] = useState<DelegatePayload | null>(null);
   const [registered, setRegistered] = useState<string>("");
   const [busy, setBusy] = useState(false);
@@ -31,6 +32,7 @@ export function AgentDemo() {
   async function runHeadline() {
     setBusy(true);
     setErr("");
+    setPairs([]);
     try {
       const a = await fetch(`/api/agents/${FROM}/invoke`, {
         method: "POST",
@@ -55,12 +57,69 @@ export function AgentDemo() {
           score: c.score,
         })),
       );
+      setPairs(
+        (foundBody.pairs ?? []).map((p: { seek: { capability: string }; offer: { capability: string } }) => ({
+          seek: p.seek.capability,
+          offer: p.offer.capability,
+        })),
+      );
       setStep("found");
 
       const del = await fetch("/api/delegate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ task: TASK, intent: INTENT, from: FROM, select: "evidence" }),
+      });
+      const delBody = (await del.json()) as DelegatePayload;
+      setDelegated(delBody);
+      setStep(delBody.ok ? "done" : "error");
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
+      setStep("error");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function runOfferSeek() {
+    setBusy(true);
+    setErr("");
+    setPairs([]);
+    try {
+      const find = await fetch("/api/whoelse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          context: "Who else can do calendar hold resolution?",
+          requester: "agent-inbox-clerk",
+          limit: 5,
+        }),
+      });
+      const foundBody = await find.json();
+      setFound(
+        (foundBody.candidates ?? []).map((c: { entity: { id: string; name: string; type: string }; score: number }) => ({
+          id: c.entity.id,
+          name: c.entity.name,
+          type: c.entity.type,
+          score: c.score,
+        })),
+      );
+      setPairs(
+        (foundBody.pairs ?? []).map((p: { seek: { capability: string }; offer: { capability: string } }) => ({
+          seek: p.seek.capability,
+          offer: p.offer.capability,
+        })),
+      );
+      setStep("found");
+      const del = await fetch("/api/delegate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task: "Resolve the Tuesday 3pm hold",
+          intent: "Who else can do calendar hold resolution?",
+          from: "agent-inbox-clerk",
+          select: "first",
+        }),
       });
       const delBody = (await del.json()) as DelegatePayload;
       setDelegated(delBody);
@@ -109,6 +168,9 @@ export function AgentDemo() {
         <button className="btn btn-coral" type="button" onClick={() => void runHeadline()} disabled={busy}>
           {busy ? "Running…" : "Run A → B demo"}
         </button>
+        <button className="btn btn-ink" type="button" onClick={() => void runOfferSeek()} disabled={busy}>
+          InboxClerk SEEK → Holdwright OFFER
+        </button>
         <button className="btn btn-soft" type="button" onClick={() => void registerDemo()} disabled={busy}>
           Register an agent
         </button>
@@ -130,6 +192,11 @@ export function AgentDemo() {
               </li>
             ))}
           </ul>
+          {pairs.length > 0 && (
+            <p className="facts">
+              Pairs: {pairs.map((p) => `SEEK ${p.seek} ↔ OFFER ${p.offer}`).join(" · ")}
+            </p>
+          )}
         </div>
       )}
       {delegated?.ok && selected && (

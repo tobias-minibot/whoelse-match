@@ -8,6 +8,22 @@ import {
 } from "@whoelse/core";
 import { z } from "zod";
 
+const pubObject = z.object({
+  id: z.string().optional(),
+  capability: z.string(),
+  phrases: z.array(z.string()).optional(),
+  status: z.enum(["active", "withdrawn", "expired"]).optional(),
+  constraints: z
+    .array(
+      z.object({
+        key: z.string(),
+        op: z.enum(["eq", "lte", "gte", "includes", "truthy", "neq"]),
+        value: z.unknown().optional(),
+      }),
+    )
+    .optional(),
+});
+const bagItem = z.union([z.string(), pubObject]);
 const modeSchema = z.enum(["substitute", "expand", "peers"]).optional();
 const typeSchema = z
   .string()
@@ -22,7 +38,10 @@ export const findInput = {
     .optional()
     .describe("Natural-language intent. Alias of context. e.g. 'Who else can summarize this PDF?'"),
   context: z.string().optional().describe("Same as intent (human-surface wording)"),
-  requester: z.string().optional().describe("Entity id of the caller — excluded from results"),
+  requester: z
+    .string()
+    .optional()
+    .describe("Entity id of the caller — excluded from results; their SEEKs/OFFERs pair against candidates"),
   predicate: z.string().optional().describe("Optional relation / extra clause"),
   type: typeSchema,
   city: z.string().optional(),
@@ -46,7 +65,7 @@ export const findInput = {
 };
 
 export const FIND_DESCRIPTION =
-  "Primary discovery tool (whoelse.find). Find entities matching an intent — humans, labeled AIs, agents, companies, services, resources, products, datasets, communities. Same engine as the consumer Who else? UI. Dating, apartment, jobs, and the factory lenses are costumes, not tools. Never call products.find or jobs.find — they do not exist.";
+  "Primary discovery tool (whoelse.find). Returns entity candidates plus high-confidence OFFER↔SEEK pairs. Same engine as the consumer Who else? UI. Dating, apartment, jobs, and the factory lenses are costumes, not tools. Never call products.find or jobs.find — they do not exist.";
 
 type FindArgs = {
   intent?: string;
@@ -127,12 +146,12 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
 
   server.tool(
     "whoelse.register",
-    "Publish an agent (or other entity) onto the same WhoElse network. Identity, offers, endpoint, cost, latency, evidence. Not a vertical tool — never jobs.register.",
+    "Register or update an entity on the shared WhoElse network and publish at least one OFFER and/or SEEK. Idempotent on id. Strings or {capability, phrases, constraints}. Not a vertical tool — never jobs.register. 505 catalog IDs are not a runtime enum.",
     {
       name: z.string(),
       description: z.string(),
-      offers: z.array(z.string()).min(1),
-      seeks: z.array(z.string()).optional(),
+      offers: z.array(bagItem).optional(),
+      seeks: z.array(bagItem).optional(),
       type: z.string().optional(),
       id: z.string().optional(),
       owner: z.string().optional(),
@@ -153,17 +172,72 @@ export function createWhoElseMcpServer(engine: WhoElseEngine): McpServer {
         .optional(),
     },
     async (spec) => {
-      const entity = engine.register({
-        ...spec,
-        endpoint: spec.endpoint
-          ? { protocol: spec.endpoint.protocol ?? "http", url: spec.endpoint.url, auth: spec.endpoint.auth }
-          : undefined,
-      });
-      return json({
-        ok: true,
-        entity: { id: entity.id, type: entity.type, name: entity.name, offers: entity.offers, seeks: entity.seeks },
-        next: { find: "whoelse.find", invoke: `POST /api/agents/${entity.id}/invoke` },
-      });
+      if (!spec.offers?.length && !spec.seeks?.length) {
+        return json({ error: "register requires at least one offer or seek" });
+      }
+      try {
+        const entity = engine.register({
+          ...spec,
+          endpoint: spec.endpoint
+            ? { protocol: spec.endpoint.protocol ?? "http", url: spec.endpoint.url, auth: spec.endpoint.auth }
+            : undefined,
+        });
+        return json({
+          ok: true,
+          entity: {
+            id: entity.id,
+            type: entity.type,
+            name: entity.name,
+            offers: entity.offers,
+            seeks: entity.seeks,
+            publications: entity.publications?.map((p) => ({
+              id: p.id,
+              kind: p.kind,
+              capability: p.capability,
+              status: p.status,
+            })),
+          },
+          next: { find: "whoelse.find", invoke: `POST /api/agents/${entity.id}/invoke`, publish: "whoelse.publish" },
+        });
+      } catch (err) {
+        return json({ error: err instanceof Error ? err.message : String(err) });
+      }
+    },
+  );
+
+  server.tool(
+    "whoelse.publish",
+    "Attach or update first-class OFFER / SEEK records on an existing entity. Idempotent on (entityId, kind, capability). Same network as whoelse.find — not a vertical tool.",
+    {
+      entityId: z.string(),
+      publications: z
+        .array(
+          pubObject.extend({
+            kind: z.enum(["offer", "seek"]),
+          }),
+        )
+        .min(1),
+    },
+    async ({ entityId, publications }) => {
+      try {
+        const entity = engine.publish(entityId, publications);
+        return json({
+          ok: true,
+          entity: {
+            id: entity.id,
+            name: entity.name,
+            publications: entity.publications?.map((p) => ({
+              id: p.id,
+              kind: p.kind,
+              capability: p.capability,
+              status: p.status,
+            })),
+          },
+          next: { find: "whoelse.find" },
+        });
+      } catch (err) {
+        return json({ error: err instanceof Error ? err.message : String(err) });
+      }
     },
   );
 

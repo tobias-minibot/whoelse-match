@@ -84,7 +84,11 @@ export default function AisPage() {
             <code>whoelse.find</code> — primary. Alias <code>whoelse_find</code>.
           </li>
           <li>
-            <code>whoelse.register</code> — publish identity / offers / endpoint / evidence.
+            <code>whoelse.register</code> — identity + at least one OFFER and/or SEEK (string or{" "}
+            <code>{`{ capability }`}</code>). Idempotent on <code>id</code>.
+          </li>
+          <li>
+            <code>whoelse.publish</code> — attach/update first-class OFFER/SEEK records on an existing entity.
           </li>
           <li>
             <code>whoelse.invoke</code> / <code>whoelse.delegate</code> — execute + receipt. Not vertical tools.
@@ -117,6 +121,9 @@ export default function AisPage() {
           Ride: <code>{`{ "intent": "Who else can give me a ride from Georgetown to Dupont?" }`}</code>
           <br />
           Service: <code>{`{ "intent": "Who else can fix a leak under my sink before the weekend?" }`}</code>
+          <br />
+          Agent↔agent (no lens):{" "}
+          <code>{`{ "intent": "Who else can do calendar hold resolution?" }`}</code> → Holdwright
         </p>
         <p>
           Then invoke: <code>POST /api/agents/agent-pdf-summarizer/invoke</code> with{" "}

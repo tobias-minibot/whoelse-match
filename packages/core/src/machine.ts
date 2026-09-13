@@ -1,5 +1,15 @@
+import { publicationsOf } from "./publications.js";
 import { offersOf, seeksOf } from "./store.js";
-import type { Candidate, Entity, WhoElseResult } from "./types.js";
+import type { Candidate, Entity, PublicationPair, WhoElseResult } from "./types.js";
+
+export interface MachinePublicationPair {
+  offerId: string;
+  seekId: string;
+  offerEntityId: string;
+  seekEntityId: string;
+  capability: string;
+  score: number;
+}
 
 export interface MachineNextStep {
   action: "chat" | "record_interest" | "invoke" | "open";
@@ -70,6 +80,8 @@ export interface MachineMatch {
     notes?: string;
     evidence?: Entity["trust"] extends { evidence?: infer E } ? E : unknown;
   };
+  publications?: { id: string; kind: string; capability: string }[];
+  matched?: { offerId?: string; seekId?: string; capability?: string };
   next: MachineNextStep;
 }
 
@@ -78,6 +90,8 @@ export interface MachineFindResult {
   mode: string;
   usedOpenAiRerank: boolean;
   matches: MachineMatch[];
+  /** High-confidence OFFER↔SEEK pairs. Entity matches stay in `matches`. */
+  pairs: MachinePublicationPair[];
 }
 
 export function toMachineMatch(candidate: Candidate): MachineMatch {
@@ -145,7 +159,31 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       notes: e.trust?.notes,
       ...(e.trust?.evidence ? { evidence: e.trust.evidence } : {}),
     },
+    publications: publicationsOf(e).map((p) => ({
+      id: p.id,
+      kind: p.kind,
+      capability: p.capability,
+    })),
+    matched:
+      candidate.matched?.offer || candidate.matched?.seek
+        ? {
+            offerId: candidate.matched.offer?.id,
+            seekId: candidate.matched.seek?.id,
+            capability: candidate.matched.offer?.capability ?? candidate.matched.seek?.capability,
+          }
+        : undefined,
     next: nextStep(e),
+  };
+}
+
+export function toMachinePair(pair: PublicationPair): MachinePublicationPair {
+  return {
+    offerId: pair.offer.id,
+    seekId: pair.seek.id,
+    offerEntityId: pair.offerEntityId,
+    seekEntityId: pair.seekEntityId,
+    capability: pair.offer.capability,
+    score: Number(pair.score.toFixed(4)),
   };
 }
 
@@ -155,6 +193,7 @@ export function toMachineFindResult(result: WhoElseResult): MachineFindResult {
     mode: result.inferredMode,
     usedOpenAiRerank: result.usedOpenAiRerank,
     matches: result.candidates.map(toMachineMatch),
+    pairs: (result.pairs ?? []).map(toMachinePair),
   };
 }
 

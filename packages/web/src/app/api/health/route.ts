@@ -40,6 +40,7 @@ export async function GET() {
       "whoelse.register",
       "whoelse.invoke",
       "whoelse.delegate",
+      "whoelse.publish",
       "whoelse.feedback",
     ],
   });
