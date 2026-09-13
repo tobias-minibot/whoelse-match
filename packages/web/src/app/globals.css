@@ -367,3 +367,13 @@ h1 {
 .bubble.assistant { background: var(--ai-soft); }
 
 .empty { color: var(--muted); padding: 12px 0; }
+
+.infer-panel {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: var(--sand);
+  border-radius: 16px;
+  font-size: 0.9rem;
+}
+.infer-panel p { margin: 4px 0; }
+.agent-demo { margin-top: 22px; }

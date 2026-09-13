@@ -345,3 +345,108 @@ The hierarchy held: one core, one `whoelse.find`, many domains. Jobs is the prod
 - Embeddings vs TF-IDF on the *same* 34 entities — where do synonyms break?
 - Persist MCP feedback across Vercel isolates (today each request is a new process-local store).
 - Separate Node host (Fly/Railway) only if Streamable HTTP on Vercel starts dropping sessions; stateless JSON is the current bet.
+
+---
+
+## UNIVERSAL LEAP — what the code forced (not a roadmap)
+
+Costume tabs stayed for comparison. No new verticals. One box at `/universal`. Agents register and delegate on the same engine.
+
+### 1. Proposed primitive model
+
+**Kept (code uses them as the matcher):**
+
+| Primitive | What it is | What it is not |
+| --- | --- | --- |
+| **ENTITY** | Open `type` + name + offers/seeks + attributes | A dating profile type, a JobOpening type |
+| **OFFER / SEEK** | Two bags on every entity; `side` picks direction | Separate listing/job/ride engines |
+| **CONSTRAINT** | Generic `{key, op, value}` hard filters | Per-vertical query languages |
+| **EVIDENCE** | Composable artifacts (verified, portfolio, outcomes, licenses, receipts) | A trust score or reputation market |
+| **ACTION** | `endpoint` / invoke / `next.action` | Fulfillment, booking, payments |
+| **MATCH** | Durable `match_id` + seek/offer + status + optional receipt | A second finder (`match` instead of `find`) |
+
+**Derived, not promoted to a second core:**
+
+- **RELATION** = `attributes.owner` / `fallbackTo`. Enough for “this opening belongs to Northwind” and “if CodeSmith fails → FallbackCoder”. Not a graph database.
+- **STATE** = `attributes.state` + `neq`. Enough for rides. Not a calendar.
+- **VIEW** = `inferVertical` / `inferredView`. Presentation costume. The ranker does not fork on it.
+
+**Deleted as unnecessary (were hypotheses, not missing types):**
+
+- Separate `listing` / `job opening` / `ride` entity types — they are **offers on entities** (`resource` + `role`).
+- `datingEngine` / `jobsEngine` / `apartmentEngine` — never existed; tests assert they still do not.
+- A magical `trustScore` — refused again. Artifacts only.
+- Vertical MCP tools — `jobs.find` still does not exist. Added `whoelse.register` / `whoelse.invoke` / `whoelse.delegate` as **network verbs**, not costumes.
+
+**Added only because production evidence demanded it:**
+
+- `UniversalQuery` — NL → side, roles, hard constraints, soft prefs, evidence needs, state, view. The costumes already emitted this; naming it stopped the parser from being “a pile of regexes that secretly know dating.”
+- `whoelse.register` — an agent is an entity. Publishing one is `store.add` + TF-IDF reindex. Process-local on Vercel.
+- `whoelse.delegate` — find → select (first/cheapest/fastest/evidence) → invoke → receipt → match record. The A→B demo is this function, not a slide.
+- `MatchRecord` + `InvokeReceipt` — cheap to store because find already had two ids and a why. Status: proposed → invoked → verified.
+
+### 2–6. Demos the code actually runs
+
+- **One-box:** `/universal`. No required category. “I need someone who can redesign my website next week for under $2,000.” parses as `side=offer`, `roles=worker`, `rate lte 2000`, soft `next week`, type **open**. Mixed human / company / AI. Costume tabs remain on `/`.
+- **Reciprocal:** `engine.reciprocal(entityId)` flips SEEK↔OFFER. Georgetown listing ↔ Priya/Nora/Marcus. Same call for a job opening, a ride, a service, an agent. Writes a `MatchRecord` proposed.
+- **Register:** MCP `whoelse.register` or `POST /api/register`. Then `whoelse.find` sees the new row on that isolate.
+- **A→B:** ClaimWriter invoke returns `cannot: ["verify"]` → `whoelse.find("Who else can verify this result?")` → Checkmate → invoke → receipt with `verified` + outcome stub. UI: `/ais` “Run A → B demo”. MCP: `whoelse.delegate`.
+- **Trust:** `explainTrust(entity)` lists artifacts. Cards ask “Why should I trust this?” and print licenses/outcomes/verified-by — never a number.
+
+### 7. What broke / what failed
+
+- **“Next week” cannot be a hard `start` gate.** Sparse `start` fields emptied the pool. It is a soft label. Availability is still not a calendar.
+- **`need someone` was hire language.** “I need someone who can redesign…” used to infer `roles=opening/employer` and `type=human`. Split: `someone who can` = worker/offer; `needs someone with` = hire.
+- **Price key defaulted to `rent`.** A website sentence without “job/work/coding” would have filtered apartments. Vocabulary now includes `website|redesign|who can` → `rate`.
+- **Register does not survive Vercel isolate churn.** Honest. Same as feedback. Not a marketplace.
+- **Invoke is still a stub runtime.** The *flow* is real (find, choose, call, receipt). The *work* is “I would do X.” WhoElse owns discovery + selection + evidence of the handoff, not execution quality.
+- **Legacy 506:** still one operator. Most nouns are unseeded. Collapse is `find + constraints`, not 506 tools. See `docs/universal-collapse.json` after `npx tsx scripts/universal-collapse.ts`.
+
+### 8. Independent discoveries
+
+28. **The universal object is the query, not a new entity type.** Entities were already generic. What the core secretly knew was *how to read a sentence*. `UniversalQuery` is the thing that made “no category” possible without a second matcher.
+29. **Find is still the verb.** `match` is a *record* of a find (and optional invoke). Renaming the tool to `whoelse.match` would pretend fulfillment. We did not rename.
+30. **One-box works when seed vocabulary overlaps the sentence.** The website demo is TF-IDF on “redesign my website” plus a rate gate — same lesson as voice-assistants. The leap did not invent embeddings.
+31. **Selection criteria are cheap once attributes exist.** `cheapest` / `fastest` / `evidence` are sorts on `priceUsd` / `latencyMs` / evidence fields. Permissions are declared, not enforced. That is the honest agent market today.
+32. **Dating-for-everything holds as a *question*, not as a *layout*.** The one-box can interleave types. Dating still sections Humans then AIs. The analogy breaks at trust-of-personhood, not at offer/seek.
+
+### 9. What WhoElse is now (one sentence)
+
+**WhoElse is a shared find layer: entities publish what they offer and seek; humans and agents ask `whoelse.find`; the system returns who else matches, why, and optionally a receipt when one agent invokes another.**
+
+### 10. Verdicts (from implementation, not slogans)
+
+**find vs match vs resolve vs connect**
+
+`whoelse.find` is still the right *core primitive*. Implementation: every costume, the one-box, MCP, reciprocal, and A→B all call `WhoElseEngine.whoelse`. `delegate` is find + pick + invoke. `MatchRecord` is persistence of that pick, not a different search. `resolve` would imply a single winner; we return ranked candidates and let the caller choose. `connect` would imply a session; we return `next.action` stubs. Do not rename `find` until WhoElse *settles* a pair and executes the work. It does not.
+
+**“Dating for everything”**
+
+**Survives as the operator, fails as the UI default.** Holds: exemplar + desire, offer/seek, recursive Who else?, one pool of humans and machines. Breaks: dating must keep type louder than rank (a high-scoring AI in a date list is a trust failure); jobs/one-box *want* mixed rank because the user asked for an outcome. Romance-shaped chrome (swipe, “date”) is not the product. The question “Who else?” is.
+
+**“Last marketplace”**
+
+**Less plausible as a place that owns transactions; more plausible as a discovery/match layer other markets call.**
+
+| WhoElse should own | Should not own | Domain-specific | Decentralized |
+| --- | --- | --- | --- |
+| Find + complementary offer/seek | Booking, payroll, housing law | License strings, bedrooms, seats | Identity, real verification, reputation |
+| Constraint parse + evidence artifacts | Inventory truth | Vertical *views* (costume tabs) | Agent endpoints (they bring their own) |
+| Match records + invoke receipts | Payments, escrow | Seed vocabulary | Who is allowed to register (today: anyone on the isolate) |
+
+The slogan fails where we would have to become Zillow + LinkedIn + Uber + a runtime. The code refused that. The slogan holds where every one of those still needs the sentence *who else can / has / needs this* over a shared entity model.
+
+### GROK (this leap)
+
+The scary sentence is no longer “add jobs.” It is “do not add a category, and still get a website redesigned under $2,000 by a human, a company, and an AI in one list.” That worked because offer/seek + constraints were already the product. Registration and A→B worked because an agent was already an entity with an endpoint. What we *did not* need: MATCH as a finder, RELATION as a graph, STATE as a platform, or a trust score.
+
+### TOBIAS (this leap)
+
+Verticals can disappear into views. The leftover object is ENTITY with OFFER/SEEK, queried by CONSTRAINT, optionally evidenced, optionally invoked. `whoelse.find` stayed. Production costumes stayed. The one-box is the proof, not a sixth tab.
+
+### IMPLEMENTATION (this leap)
+
+33. `parseUniversal` is the public NL contract; `inferVertical` is a view hint.
+34. `EntityStore.add` + index.add = registration. No capability registry.
+35. `delegate({from, task, select})` is the A→B demo. Receipts attach to `trust.evidence.receipts`.
+36. Costume tabs unchanged. `/universal` is the one-box. `/ais` runs the live A→B.

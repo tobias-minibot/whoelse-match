@@ -6,6 +6,7 @@ import {
   inferSide,
   inferVertical,
   parseAttributeConstraints,
+  parseUniversal,
   wantsCheaper,
 } from "./parse.js";
 
@@ -82,6 +83,14 @@ describe("generic constraint parsing", () => {
     assert.equal(hire.side, "offer");
   });
 
+  it("treats I-need-someone-who-can as labor, not a hire board", () => {
+    const q = parseUniversal("I need someone who can redesign my website next week for under $2,000.", cities);
+    assert.equal(q.side, "offer");
+    assert.deepEqual(q.roles, ["worker"]);
+    assert.notEqual(q.entityType, "human");
+    assert.ok(q.hard.some((a) => a.key === "rate" && a.op === "lte" && Number(a.value) === 2000));
+  });
+
   it("does not treat 'someone with my background' as a human-only type lock", () => {
     const c = inferConstraints("Who else needs someone with my background?", cities);
     assert.notEqual(c.type, "human");
@@ -96,6 +105,15 @@ describe("generic constraint parsing", () => {
     assert.ok(attrs.some((a) => a.key === "durationWeeks" && a.value === 2));
     assert.ok(attrs.some((a) => a.key === "start" && a.value === "immediate"));
     assert.ok(attrs.some((a) => a.key === "rate" && a.op === "lte" && a.value === 5000));
+  });
+
+  it("emits a universal query with view as costume, not a second core", () => {
+    const anything = parseUniversal("Who else can do this?", cities);
+    assert.ok(anything.hard);
+    assert.ok(anything.ranking);
+    const dating = parseUniversal("Who else wants to build a network of voice assistants?", cities);
+    assert.equal(dating.view, "dating");
+    assert.equal(dating.side, undefined);
   });
 
   it("parses ride origin/destination and service license", () => {

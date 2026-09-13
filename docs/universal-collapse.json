@@ -1,0 +1,565 @@
+{
+  "n": 92,
+  "clean": 18,
+  "seeded": 81,
+  "collapse": "506 (claimed) → 1 operator (whoelse.find) + CONSTRAINT + optional EVIDENCE/STATE/ACTION",
+  "primitives": [
+    "ENTITY",
+    "OFFER",
+    "SEEK",
+    "CONSTRAINT",
+    "EVIDENCE",
+    "STATE",
+    "ACTION",
+    "MATCH"
+  ],
+  "rows": [
+    {
+      "id": "DENTIST",
+      "phrase": "Who else is a dentist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "ORTHODONTIST",
+      "phrase": "Who else is a orthodontist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "DENTAL_HYGIENIST",
+      "phrase": "Who else is a dental hygienist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "DOCTOR",
+      "phrase": "Who else is a doctor near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "GP",
+      "phrase": "Who else is a general practitioner near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "PEDIATRICIAN",
+      "phrase": "Who else is a pediatrician near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "DERMATOLOGIST",
+      "phrase": "Who else is a dermatologist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "CARDIOLOGIST",
+      "phrase": "Who else is a cardiologist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "GYNECOLOGIST",
+      "phrase": "Who else is a gynecologist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "ENT",
+      "phrase": "Who else is a ent near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "OPHTHALMOLOGIST",
+      "phrase": "Who else is a ophthalmologist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "OPTICIAN",
+      "phrase": "Who else is a optician near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "PSYCHIATRIST",
+      "phrase": "Who else is a psychiatrist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "PSYCHOLOGIST",
+      "phrase": "Who else is a psychologist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "THERAPIST",
+      "phrase": "Who else is a therapist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "COUNSELOR",
+      "phrase": "Who else is a counselor near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "PHYSIOTHERAPIST",
+      "phrase": "Who else is a physiotherapist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "CHIROPRACTOR",
+      "phrase": "Who else is a chiropractor near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "ACUPUNCTURIST",
+      "phrase": "Who else is a acupuncturist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "MASSAGE",
+      "phrase": "Who else is a massage near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "PHARMACY",
+      "phrase": "Who else is a pharmacy near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "URGENT_CARE",
+      "phrase": "Who else is a urgent care near me who is available this week?",
+      "clean": true,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "ER",
+      "phrase": "Who else is a emergency room near me who is available this week?",
+      "clean": true,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "HOSPITAL",
+      "phrase": "Who else is a hospital near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "LAB_TEST",
+      "phrase": "Who else is a lab test near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "VACCINATION",
+      "phrase": "Who else is a vaccination near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "RADIOLOGIST",
+      "phrase": "Who else is a radiologist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "NUTRITIONIST",
+      "phrase": "Who else is a nutritionist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "MIDWIFE",
+      "phrase": "Who else is a midwife near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "DOULA",
+      "phrase": "Who else is a doula near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "PODIATRIST",
+      "phrase": "Who else is a podiatrist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "ALLERGIST",
+      "phrase": "Who else is a allergist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "SLEEP",
+      "phrase": "Who else is a sleep clinic near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "ADDICTION",
+      "phrase": "Who else is a addiction support near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "SPEECH_THERAPY",
+      "phrase": "Who else is a speech therapy near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "AUDIOLOGIST",
+      "phrase": "Who else is a audiologist near me who is available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "APARTMENT",
+      "phrase": "Who else has an apartment?",
+      "view": "apartment",
+      "side": "offer",
+      "clean": true,
+      "seeded": true,
+      "needs": []
+    },
+    {
+      "id": "HOUSE",
+      "phrase": "Who else can help with house?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "ROOM",
+      "phrase": "Who else can help with room?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "STUDIO",
+      "phrase": "Who else can help with studio?",
+      "view": "apartment",
+      "clean": true,
+      "seeded": true,
+      "needs": []
+    },
+    {
+      "id": "SUBLET",
+      "phrase": "Who else can help with sublet?",
+      "view": "apartment",
+      "clean": true,
+      "seeded": true,
+      "needs": []
+    },
+    {
+      "id": "ROOMMATE",
+      "phrase": "Who else can help with roommate?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "LANDLORD",
+      "phrase": "Who else can help with landlord?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "REAL_ESTATE",
+      "phrase": "Who else can help with real estate?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "REALTOR",
+      "phrase": "Who else can help with realtor?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "PROPERTY_MANAGER",
+      "phrase": "Who else can help with property manager?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "LEASE",
+      "phrase": "Who else can help with lease?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "HOME_INSPECTOR",
+      "phrase": "Who else can help with home inspector?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "MOVER",
+      "phrase": "Who else can help with mover?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "STORAGE",
+      "phrase": "Who else can help with storage?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "CLEANER",
+      "phrase": "Who else can help with cleaner?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "HOUSEKEEPER",
+      "phrase": "Who else can help with housekeeper?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "HANDYMAN",
+      "phrase": "Who else can help with handyman?",
+      "view": "services",
+      "clean": true,
+      "seeded": true,
+      "needs": []
+    },
+    {
+      "id": "LOCKSMITH",
+      "phrase": "Who else can help with locksmith?",
+      "clean": false,
+      "seeded": false,
+      "needs": [
+        "ambiguous-noun",
+        "missing-supply"
+      ]
+    },
+    {
+      "id": "PLUMBER",
+      "phrase": "Who else can fix a leak under my sink before the weekend, not too pricey?",
+      "view": "services",
+      "side": "offer",
+      "clean": true,
+      "seeded": true,
+      "needs": []
+    },
+    {
+      "id": "ELECTRICIAN",
+      "phrase": "Who else is a electrician near me available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "HVAC",
+      "phrase": "Who else is a hvac near me available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "CARPENTER",
+      "phrase": "Who else is a carpenter near me available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "PAINTER",
+      "phrase": "Who else is a painter near me available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    },
+    {
+      "id": "ROOFER",
+      "phrase": "Who else is a roofer near me available this week?",
+      "clean": false,
+      "seeded": true,
+      "needs": [
+        "ambiguous-noun"
+      ]
+    }
+  ]
+}

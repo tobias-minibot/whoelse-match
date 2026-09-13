@@ -3,6 +3,8 @@ export * from "./store.js";
 export * from "./engine.js";
 export * from "./parse.js";
 export * from "./tfidf.js";
+export * from "./trust.js";
+export * from "./invoke.js";
 export { hasOpenAi } from "./openai.js";
 export { toMachineFindResult, toMachineMatch } from "./machine.js";
 export type { MachineFindResult, MachineMatch, MachineNextStep } from "./machine.js";

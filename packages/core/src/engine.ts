@@ -1,16 +1,22 @@
 import { buildExplanation, labelsOf } from "./explain.js";
-import { inferConstraints, inferMode, inferVertical, queryText, wantsCheaper } from "./parse.js";
+import { invokeAgent } from "./invoke.js";
+import { inferConstraints, inferMode, inferVertical, parseUniversal, queryText, wantsCheaper } from "./parse.js";
 import { maybeChat, maybeRerankAndExplain } from "./openai.js";
 import { entityText, EntityStore, offersOf, seeksOf, stringList } from "./store.js";
 import { jaccard } from "./text.js";
 import { TfidfIndex } from "./tfidf.js";
+import { explainTrust } from "./trust.js";
 import type {
   AttributeConstraint,
   Candidate,
   ChatMessage,
+  DelegationResult,
   Entity,
+  MatchRecord,
   MatchSide,
+  RegistrationSpec,
   ScoreBreakdown,
+  UniversalQuery,
   WhoElseConstraints,
   WhoElseMode,
   WhoElseRequest,
@@ -54,6 +60,13 @@ export class WhoElseEngine {
       entity: contextEntity,
     });
     const inferredMode = inferMode(userText, Boolean(contextEntity), request.mode);
+    const universal = parseUniversal(
+      userText,
+      this.store.cities(),
+      request.constraints,
+      this.store.places(),
+      { hasEntity: Boolean(contextEntity), mode: request.mode },
+    );
     const inferredConstraints = inferConstraints(
       userText,
       this.store.cities(),
@@ -166,13 +179,16 @@ export class WhoElseEngine {
     scored.sort((a, b) => b.score - a.score);
     const limit = request.limit ?? request.constraints?.limit ?? 8;
     const top = scored.slice(0, Math.max(limit, 8));
+    const sliced = top.slice(0, limit);
+    if (sliced.length === 0) this.store.recordMissing(request.context, universal.view);
     return finish(
       request.context,
       inferredMode,
       inferredConstraints,
       inferVertical(userText),
       false,
-      top.slice(0, limit),
+      sliced,
+      universal,
     );
   }
 
@@ -187,7 +203,204 @@ export class WhoElseEngine {
       local.inferredVertical,
       reranked.used,
       reranked.candidates.slice(0, limit),
+      local.universal,
     );
+  }
+
+  parse(text: string): UniversalQuery {
+    return parseUniversal(text, this.store.cities(), undefined, this.store.places());
+  }
+
+  register(spec: RegistrationSpec): Entity {
+    const slug = spec.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "agent";
+    const id = spec.id ?? `agent-reg-${slug}-${Math.random().toString(36).slice(2, 7)}`;
+    const now = new Date().toISOString();
+    const endpoint = spec.endpoint?.url ?? `/api/agents/${id}/invoke`;
+    const entity: Entity = {
+      id,
+      type: spec.type ?? "agent",
+      name: spec.name,
+      description: spec.description,
+      offers: spec.offers,
+      seeks: spec.seeks ?? ["work", "who else can use this capability"],
+      capabilities: spec.offers,
+      attributes: {
+        role: spec.type === "human" ? undefined : "worker",
+        owner: spec.owner,
+        version: spec.version ?? "0.1.0",
+        status: spec.status ?? "available",
+        protocol: spec.protocol ?? spec.endpoint?.protocol ?? "http",
+        requirements: spec.requirements,
+        permissions: spec.permissions,
+        priceUsd: typeof spec.cost === "number" ? spec.cost : undefined,
+        pricing: spec.cost,
+        latencyMs: typeof spec.latency === "number" ? spec.latency : undefined,
+        latency: spec.latency,
+        apiEndpoint: endpoint,
+        mcpEndpoint: "/api/mcp",
+        endpoint,
+        authRequirements: spec.endpoint?.auth ?? "none-demo",
+        registered: true,
+      },
+      preferences: {},
+      availability: spec.availability ?? "on request",
+      location: spec.location,
+      metadata: {
+        demo: true,
+        demoLabel: "DEMO registered agent — not a production worker",
+        aiDisclosure: spec.type === "human" ? undefined : `${spec.name} is a registered agent, not a human.`,
+        vertical: "capability",
+      },
+      provenance: spec.type === "human" ? "user" : "ai_generated",
+      trust: {
+        status: spec.evidence ? "evidence" : "stub",
+        provenance: "user",
+        notes: "Registration evidence is self-asserted.",
+        evidence: spec.evidence,
+      },
+      created_at: now,
+    };
+    const stored = this.store.add(entity);
+    this.index.add(stored.id, entityText(stored));
+    return stored;
+  }
+
+  ensureDemoAgents() {
+    if (!this.store.get("agent-claim-writer")) {
+      this.register({
+        id: "agent-claim-writer",
+        name: "ClaimWriter",
+        description: "Drafts web claims. Cannot verify them. Seeks a verifier on the same network.",
+        offers: ["draft claims", "write web claims"],
+        seeks: ["verify this result", "web verification"],
+        owner: "whoelse-demo",
+        version: "0.1.0",
+        cost: 0,
+        latency: 40,
+        evidence: { outcomes: [{ label: "drafts-only", result: "never-verifies" }] },
+      });
+    }
+  }
+
+  reciprocal(entityId: string, opts: { context?: string; limit?: number } = {}) {
+    const entity = this.store.get(entityId);
+    if (!entity) throw new Error(`Unknown entity ${entityId}`);
+    const role = typeof entity.attributes?.role === "string" ? entity.attributes.role : "";
+    const offering = (OFFER_ROLES as readonly string[]).includes(role) || (!role && offersOf(entity).length);
+    const context =
+      opts.context ??
+      (offering
+        ? `Who else needs this? ${entity.name}`
+        : `Who else has this? ${entity.name}`);
+    const side: MatchSide = offering ? "seek" : "offer";
+    const result = this.whoelse({
+      context,
+      entityId,
+      constraints: { side },
+      limit: opts.limit ?? 5,
+    });
+    if (result.candidates[0]) {
+      this.store.recordMatch({
+        query: context,
+        seekEntityId: offering ? result.candidates[0].entity.id : entityId,
+        offerEntityId: offering ? entityId : result.candidates[0].entity.id,
+        side,
+        status: "proposed",
+        evidence: result.candidates[0].entity.trust?.evidence ?? {},
+      });
+    }
+    return result;
+  }
+
+  proposeMatch(opts: {
+    query: string;
+    offerEntityId?: string;
+    seekEntityId?: string;
+    side?: MatchSide;
+  }): MatchRecord {
+    return this.store.recordMatch({
+      query: opts.query,
+      offerEntityId: opts.offerEntityId,
+      seekEntityId: opts.seekEntityId,
+      side: opts.side,
+      status: "proposed",
+      evidence: {},
+    });
+  }
+
+  trustWhy(entityId: string) {
+    const entity = this.store.get(entityId);
+    if (!entity) throw new Error(`Unknown entity ${entityId}`);
+    return explainTrust(entity);
+  }
+
+  invoke(entityId: string, body: { task?: string; input?: string; context?: string } = {}) {
+    const entity = this.store.get(entityId);
+    if (!entity) throw new Error(`Unknown entity ${entityId}`);
+    if (entity.type !== "agent") throw new Error("invoke is only stubbed for type=agent");
+    return invokeAgent(entity, body);
+  }
+
+  delegate(opts: {
+    task: string;
+    intent?: string;
+    from?: string;
+    select?: "first" | "cheapest" | "fastest" | "evidence";
+    limit?: number;
+  }): DelegationResult {
+    const intent = opts.intent ?? opts.task;
+    const found = this.whoelse({
+      context: intent,
+      requester: opts.from,
+      limit: opts.limit ?? 8,
+    });
+    const agents = found.candidates.filter(
+      (c) => c.entity.type === "agent" && c.entity.id !== opts.from,
+    );
+    const selected = pickDelegate(agents, opts.select ?? "first");
+    if (!selected) {
+      return { ok: false, task: opts.task, intent, from: opts.from, found: found.candidates, reason: "no agent candidate" };
+    }
+    const invoked = invokeAgent(selected.entity, { task: opts.task });
+    const ev = (invoked.result.evidence as {
+      verified?: boolean;
+      verifiedBy?: string;
+      outcomes?: { label: string; result?: string }[];
+      receipts?: string[];
+    } | undefined) ?? selected.entity.trust?.evidence;
+    const receipt = this.store.recordReceipt({
+      fromAgentId: opts.from,
+      toAgentId: selected.entity.id,
+      task: opts.task,
+      would: invoked.would,
+      result: invoked.result,
+      evidence: {
+        verified: Boolean(ev?.verified),
+        verifiedBy: ev?.verifiedBy ?? selected.entity.name,
+        outcomes: ev?.outcomes,
+        receipts: ev?.receipts,
+      },
+    });
+    const match = this.store.recordMatch({
+      query: intent,
+      seekEntityId: opts.from,
+      offerEntityId: selected.entity.id,
+      side: "offer",
+      status: invoked.result.kind === "verify" ? "verified" : "invoked",
+      evidence: receipt.evidence,
+      receiptId: receipt.id,
+    });
+    return {
+      ok: true,
+      task: opts.task,
+      intent,
+      from: opts.from,
+      found: found.candidates,
+      selected,
+      invoked,
+      receipt,
+      match,
+    };
   }
 
   explain(entityId: string, context: string, entityContextId?: string): Candidate | undefined {
@@ -516,18 +729,45 @@ function finish(
   inferredVertical: WhoElseResult["inferredVertical"],
   usedOpenAiRerank: boolean,
   candidates: Candidate[],
+  universal?: UniversalQuery,
 ): WhoElseResult {
   return {
     query,
     inferredMode,
     inferredConstraints,
     inferredVertical,
+    inferredView: inferredVertical,
+    universal,
     usedOpenAiRerank,
     candidates,
     humans: candidates.filter((c) => c.entity.type === "human"),
     ais: candidates.filter((c) => c.entity.type === "ai"),
     byType: groupByType(candidates),
   };
+}
+
+function pickDelegate(candidates: Candidate[], select: "first" | "cheapest" | "fastest" | "evidence"): Candidate | undefined {
+  if (!candidates.length) return undefined;
+  if (select === "first") return candidates[0];
+  const scored = [...candidates];
+  if (select === "cheapest") {
+    scored.sort((a, b) => num(a.entity.attributes?.priceUsd ?? a.entity.attributes?.rate, 9999) - num(b.entity.attributes?.priceUsd ?? b.entity.attributes?.rate, 9999));
+  } else if (select === "fastest") {
+    scored.sort((a, b) => num(a.entity.attributes?.latencyMs, 9999) - num(b.entity.attributes?.latencyMs, 9999));
+  } else if (select === "evidence") {
+    scored.sort((a, b) => evidenceRank(b.entity) - evidenceRank(a.entity));
+  }
+  return scored[0];
+}
+
+function evidenceRank(entity: Entity): number {
+  const ev = entity.trust?.evidence;
+  if (!ev) return 0;
+  return (ev.verified ? 4 : 0) + (ev.outcomes?.length ?? 0) + (ev.licenses?.length ?? 0) + (ev.portfolio?.length ?? 0);
+}
+
+function num(value: unknown, fallback: number): number {
+  return typeof value === "number" && !Number.isNaN(value) ? value : fallback;
 }
 
 function groupByType(candidates: Candidate[]): Record<string, Candidate[]> {

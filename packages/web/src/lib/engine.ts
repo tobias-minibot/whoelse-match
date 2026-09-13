@@ -5,7 +5,9 @@ const globalForEngine = globalThis as unknown as { whoelse?: WhoElseEngine };
 
 export function getEngine(): WhoElseEngine {
   if (!globalForEngine.whoelse) {
-    globalForEngine.whoelse = WhoElseEngine.fromEntities(seed.entities as Entity[]);
+    const engine = WhoElseEngine.fromEntities(seed.entities as Entity[]);
+    engine.ensureDemoAgents();
+    globalForEngine.whoelse = engine;
   }
   return globalForEngine.whoelse;
 }

@@ -1,8 +1,10 @@
 import type {
   AttributeConstraint,
   Entity,
+  EvidenceKind,
   InferredVertical,
   MatchSide,
+  UniversalQuery,
   WhoElseConstraints,
   WhoElseMode,
 } from "./types.js";
@@ -23,7 +25,9 @@ const WANT_SEEKERS =
 const CHEAPER = /\bcheaper\b|\bless expensive\b|\bunder budget\b|\bbut cheaper\b/i;
 
 const HIRE_LANG =
-  /\bhir(e|ing)\b|\brecruit\b|\bjob opening\b|\bwho else should i recruit\b|\bneeds someone\b|\bneed someone\b/i;
+  /\bhir(e|ing)\b|\brecruit\b|\bjob opening\b|\bwho else should i recruit\b|\bneeds someone with\b/i;
+const SOMEONE_WHO_CAN =
+  /\b(someone|somebody|a (human|company|agent|freelancer|person|studio)) who can\b|\bi need (someone|somebody) who can\b|\bredesign (my )?(web)?site\b|\bwebsite (redesign|next week)\b/i;
 const LABOR_LANG =
   /\bcan do this (work|job|task)\b|\bfreelancer\b|\bcoding project\b|\b(two|2|three|3)[-\s]?week (coding )?project\b|\bdone this exact\b|\bcan start immediately\b|\bhuman or ai\b|\bbetter fit but less obvious\b|\bavailable for a (two|2|three|3)/i;
 const JOB_SEEK_LANG =
@@ -35,7 +39,7 @@ const SERVICE_LANG =
 const APARTMENT_LANG =
   /\bapartment\b|\bbedroom\b|\bstudio\b|\bsublet\b|\btenant\b|\bfurnished\b|\bpets? allowed\b|\brent\b/i;
 const CAPABILITY_LANG =
-  /\bsummarize\b|\btranslate\b|\bbrowse the web\b|\bdelegate\b|\bfailover\b|\bverify this result\b|\bpdf\b/i;
+  /\bsummarize\b|\btranslate\b|\bbrowse the web\b|\bdelegate\b|\bfailover\b|\bverify this (result|web|claim)\b|\bweb verification\b|\bpdf\b/i;
 const DATING_LANG =
   /\bdate\b|\bmeet\b|\bvoice assistants?\b|\bdinner\b|\bmountain bik|\bthought partner\b|\blow-key\b/i;
 
@@ -59,13 +63,14 @@ export function inferSide(text: string, explicit?: MatchSide): MatchSide | undef
     if (/\bi have\b|\bgood tenant\b|\bneeds\b|\bgood (hire|fit)\b/i.test(text)) return "seek";
     return "offer";
   }
-  if (HIRE_LANG.test(text) || LABOR_LANG.test(text)) return "offer";
+  if (SOMEONE_WHO_CAN.test(text) || HIRE_LANG.test(text) || LABOR_LANG.test(text)) return "offer";
   if (JOB_SEEK_LANG.test(text)) return "seek";
   return undefined;
 }
 
 export function inferRoles(text: string, explicit?: string[]): string[] | undefined {
   if (explicit?.length) return explicit;
+  if (SOMEONE_WHO_CAN.test(text)) return ["worker"];
   if (HIRE_LANG.test(text)) return ["opening", "employer"];
   if (LABOR_LANG.test(text)) return ["worker"];
   if (JOB_SEEK_LANG.test(text)) return ["applicant"];
@@ -81,7 +86,9 @@ export function inferRoles(text: string, explicit?: string[]): string[] | undefi
 export function inferVertical(text: string): InferredVertical | undefined {
   const hits: InferredVertical[] = [];
   if (APARTMENT_LANG.test(text)) hits.push("apartment");
-  if (HIRE_LANG.test(text) || LABOR_LANG.test(text) || JOB_SEEK_LANG.test(text)) hits.push("jobs");
+  if (HIRE_LANG.test(text) || LABOR_LANG.test(text) || JOB_SEEK_LANG.test(text) || SOMEONE_WHO_CAN.test(text)) {
+    hits.push("jobs");
+  }
   if (RIDE_LANG.test(text)) hits.push("rides");
   if (SERVICE_LANG.test(text) && !APARTMENT_LANG.test(text)) hits.push("services");
   if (CAPABILITY_LANG.test(text) && !LABOR_LANG.test(text)) hits.push("capability");
@@ -108,7 +115,9 @@ export function inferConstraints(
   const wantsHuman = TYPE_HUMAN.test(text);
   const wantsAi = TYPE_AI.test(text);
   const someoneIsSlot =
-    /\bneeds someone\b|\bsomeone with\b|\bhuman or ai\b|\bhir(e|ing)\b|\brecruit\b/i.test(text);
+    /\bneeds someone\b|\bsomeone with\b|\bsomeone who can\b|\bhuman or ai\b|\bhir(e|ing)\b|\brecruit\b/i.test(
+      text,
+    );
   if (!constraints.type) {
     if (wantsHuman && !wantsAi && !someoneIsSlot) constraints.type = "human";
     else if (wantsAi && !wantsHuman) constraints.type = "ai";
@@ -195,6 +204,7 @@ export function parseAttributeConstraints(text: string, side?: MatchSide): Attri
   if (/\b(immediately|right away|can start now|start immediately)\b/.test(lower)) {
     out.push({ key: "start", op: "eq", value: "immediate" });
   }
+  // "next week" is a preference, not a missing-key hard gate — sparse start fields would empty the pool.
 
   if (/\blicensed\b/.test(lower)) {
     out.push({ key: "licensed", op: "truthy", value: true });
@@ -244,7 +254,7 @@ export function priceKey(lower: string, side?: MatchSide): string {
   }
   if (/\bride|\bseat|\bpassenger|\bairport|\bmoab/.test(lower)) return "price";
   if (
-    /hir(e|ing)|recruit|job|gig|freelancer|project|work|plumber|handyman|repair|rate|salary|coding/.test(
+    /hir(e|ing)|recruit|job|gig|freelancer|project|work|plumber|handyman|repair|rate|salary|coding|website|redesign|who can/.test(
       lower,
     )
   ) {
@@ -255,6 +265,80 @@ export function priceKey(lower: string, side?: MatchSide): string {
 
 export function wantsCheaper(text: string): boolean {
   return CHEAPER.test(text);
+}
+
+export function inferEvidenceNeeds(text: string): EvidenceKind[] {
+  const needs: EvidenceKind[] = [];
+  if (/\b(verified|verify|verification)\b/i.test(text)) needs.push("verified");
+  if (/\bportfolio\b/i.test(text)) needs.push("portfolio");
+  if (/\b(done this|past (work|outcome)|exact kind|outcomes?)\b/i.test(text)) needs.push("outcome");
+  if (/\b(licensed|license)\b/i.test(text)) needs.push("license");
+  if (/\breference/i.test(text)) needs.push("reference");
+  if (/\breceipt\b/i.test(text)) needs.push("receipt");
+  return needs;
+}
+
+export function inferRelation(text: string): string | undefined {
+  if (/\btake over|failover|fallback|if .+ fails\b/i.test(text)) return "fallback";
+  if (/\bdelegate|hand[- ]?off|who else should i (use|call)\b/i.test(text)) return "delegate";
+  if (/\binstead of|replace|substitute|alternative to\b/i.test(text)) return "substitute";
+  if (/\bpeers?|colleagues?|others like\b/i.test(text)) return "peer";
+  if (/\bneeds this|who else needs|good (tenant|hire|fit)|looking for exactly\b/i.test(text)) {
+    return "complement";
+  }
+  if (/\bwho else has\b|\bcan (do|fix|give|verify|summarize)\b/i.test(text)) return "complement";
+  return undefined;
+}
+
+/**
+ * NL → universal WhoElse representation.
+ * Costume (view) is inferred last and never becomes a second matcher.
+ */
+export function parseUniversal(
+  text: string,
+  knownCities: string[] = [],
+  explicit?: WhoElseConstraints,
+  knownPlaces: { neighborhood: string; city?: string; region?: string }[] = [],
+  opts: { hasEntity?: boolean; mode?: WhoElseMode } = {},
+): UniversalQuery {
+  const constraints = inferConstraints(text, knownCities, explicit, knownPlaces);
+  const hard = [...(constraints.attributes ?? [])];
+  const state = hard.find((a) => a.key === "state");
+  const evidenceNeeds = inferEvidenceNeeds(text);
+  return {
+    text,
+    side: constraints.side,
+    entityType: constraints.type,
+    relation: inferRelation(text),
+    roles: constraints.roles,
+    hard,
+    soft: {
+      city: constraints.city,
+      region: constraints.region,
+      neighborhood: constraints.neighborhood,
+      cheaper: wantsCheaper(text),
+      ...( /\bnext week\b/i.test(text) ? { labels: ["next week"] } : {}),
+    },
+    evidenceNeeds,
+    state: state
+      ? { op: state.op, value: String(state.value ?? "") }
+      : undefined,
+    ranking: inferMode(text, Boolean(opts.hasEntity), opts.mode),
+    view: inferVertical(text),
+  };
+}
+
+export function constraintsFromUniversal(q: UniversalQuery): WhoElseConstraints {
+  return {
+    type: q.entityType,
+    city: q.soft.city,
+    region: q.soft.region,
+    neighborhood: q.soft.neighborhood,
+    side: q.side,
+    roles: q.roles,
+    attributes: q.hard.length ? q.hard : undefined,
+    state: q.state && q.state.op === "eq" ? q.state.value : undefined,
+  };
 }
 
 export function queryText(input: {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AgentDemo } from "@/components/AgentDemo";
 import { SiteNav } from "@/components/SiteNav";
 
 export const metadata: Metadata = {
@@ -75,10 +76,18 @@ export default function AisPage() {
   }
 }`}</pre>
 
+        <AgentDemo />
+
         <h2 className="section-title">Tools</h2>
         <ul className="plain">
           <li>
             <code>whoelse.find</code> — primary. Alias <code>whoelse_find</code>.
+          </li>
+          <li>
+            <code>whoelse.register</code> — publish identity / offers / endpoint / evidence.
+          </li>
+          <li>
+            <code>whoelse.invoke</code> / <code>whoelse.delegate</code> — execute + receipt. Not vertical tools.
           </li>
           <li>
             <code>whoelse.feedback</code> — optional more/less for this process.

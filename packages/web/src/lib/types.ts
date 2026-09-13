@@ -42,6 +42,20 @@ export interface WhoElsePayload {
   inferredMode: string;
   inferredConstraints: Record<string, unknown>;
   inferredVertical?: string;
+  inferredView?: string;
+  universal?: {
+    text: string;
+    side?: string;
+    entityType?: string;
+    relation?: string;
+    roles?: string[];
+    hard: { key: string; op: string; value?: unknown }[];
+    soft: { city?: string; neighborhood?: string; cheaper?: boolean };
+    evidenceNeeds: string[];
+    state?: { op: string; value: string };
+    ranking: string;
+    view?: string;
+  };
   usedOpenAiRerank: boolean;
   candidates: Candidate[];
   humans: Candidate[];
