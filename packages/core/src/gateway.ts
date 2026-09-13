@@ -8,8 +8,25 @@ import {
 import { WhoElseEngine } from "./engine.js";
 import type { IssuedAgentKey } from "./identity.js";
 import type { WhoElseNetwork } from "./network.js";
-import { toPublicEntity, toPublicWhoElseResult } from "./public-dto.js";
+import {
+  DEFAULT_HUMAN_SEEK,
+  onboardState,
+  ownedHumanEntity,
+  parseOnboardPublications,
+  requireHumanCaller,
+  stampHumanLabels,
+  type OnboardSpec,
+} from "./onboarding.js";
+import { toOwnerEntity, toPublicEntity, toPublicWhoElseResult } from "./public-dto.js";
+import { ipBucket, principalBucket, type RateAction } from "./rate-limit.js";
 import type { PublicationSpec, RegistrationSpec, WhoElseRequest } from "./types.js";
+import {
+  AGE_AFFIRMATION_TEXT,
+  AGE_AFFIRMATION_VERSION,
+  applyHumanSafety,
+  humanEntityIdFor,
+  isPubliclyFindable,
+} from "./visibility.js";
 
 export interface GatewayOk<T> {
   ok: true;
@@ -19,8 +36,12 @@ export interface GatewayOk<T> {
 
 export interface GatewayErr {
   ok: false;
-  status: 400 | 401 | 403 | 404 | 409;
+  status: 400 | 401 | 403 | 404 | 409 | 429;
   body: { error: string; status: number };
+}
+
+export interface RequestMeta {
+  ip?: string;
 }
 
 export type GatewayResult<T> = GatewayOk<T> | GatewayErr;
@@ -50,11 +71,27 @@ async function persistWrite(network: WhoElseNetwork, entity: { id: string }, cal
   }
 }
 
-async function persistIdentity(network: WhoElseNetwork): Promise<void> {
+export async function persistIdentity(network: WhoElseNetwork): Promise<void> {
   if (!network.persist) return;
   for (const p of network.identity.principals.values()) await network.persist.upsertPrincipal(p);
   for (const a of network.identity.accounts.values()) await network.persist.upsertAccount(a);
   for (const c of network.identity.credentials.values()) await network.persist.upsertCredential(c);
+}
+
+async function enforceRate(network: WhoElseNetwork, action: RateAction, bucket: string): Promise<void> {
+  const hit = await network.rateLimit.hit(action, bucket);
+  if (!hit.ok) {
+    throw new AuthzError(429, `rate limit exceeded for ${action}`);
+  }
+}
+
+async function enforceWriteRate(network: WhoElseNetwork, caller: Caller, action: RateAction): Promise<void> {
+  await enforceRate(network, action, principalBucket(caller.principalId, action));
+}
+
+async function enforceAnonRead(network: WhoElseNetwork, caller: Caller | null, meta?: RequestMeta): Promise<void> {
+  if (caller || !meta?.ip) return;
+  await enforceRate(network, "read", ipBucket(meta.ip, "read"));
 }
 
 function audit(
@@ -77,8 +114,10 @@ export async function gatewayFind(
   network: WhoElseNetwork,
   request: WhoElseRequest,
   caller: Caller | null,
+  meta?: RequestMeta,
 ) {
   try {
+    await enforceAnonRead(network, caller, meta);
     if (request.requester) {
       requireCaller(caller);
       network.identity.assertOwns(caller, request.requester);
@@ -98,11 +137,19 @@ export async function gatewayRegister(
   try {
     const who = requireCaller(caller);
     requireScope(who, "register");
+    await enforceWriteRate(network, who, "register");
     const type = assertRegisterType(who, spec.type);
     if (spec.id && network.engine.store.get(spec.id)) {
       throw new AuthzError(409, "cannot register over existing id");
     }
-    const entity = network.engine.register({ ...spec, type });
+    let entity = network.engine.register({ ...spec, type });
+    if (type === "human") {
+      entity = network.engine.upsertStored(
+        applyHumanSafety(stampHumanLabels(entity), {
+          affirmed: network.identity.isAgeAffirmed(who.principalId),
+        }),
+      );
+    }
     network.identity.own(entity.id, who.principalId, "owner");
     let agentKey: IssuedAgentKey | undefined;
     if (entity.type === "agent" && who.kind === "human") {
@@ -132,9 +179,15 @@ export async function gatewayPublish(
     const who = requireCaller(caller);
     const withdrawing = publications.some((p) => p.status === "withdrawn" || p.status === "expired");
     requireScope(who, withdrawing ? "withdraw" : "publish");
+    await enforceWriteRate(network, who, withdrawing ? "withdraw" : "publish");
     if (!network.engine.store.get(entityId)) throw new Error(`Unknown entity ${entityId}`);
     network.identity.assertOwns(who, entityId);
-    const entity = network.engine.publish(entityId, publications);
+    let entity = network.engine.publish(entityId, publications);
+    if (entity.type === "human" && entity.provenance === "user") {
+      entity = network.engine.upsertStored(
+        applyHumanSafety(entity, { affirmed: network.identity.isAgeAffirmed(who.principalId) }),
+      );
+    }
     audit(network, who, withdrawing ? "withdraw" : "publish", entityId, {
       publications: publications.map((p) => ({ kind: p.kind, capability: p.capability, status: p.status })),
     });
@@ -157,6 +210,7 @@ export async function gatewayFeedback(
   try {
     const who = requireCaller(caller);
     requireScope(who, "feedback");
+    await enforceWriteRate(network, who, "feedback");
     const event = network.engine.feedback(input.entityId, input.signal, input.query);
     audit(network, who, "feedback", input.entityId, { signal: input.signal });
     return { ok: true as const, status: 200 as const, body: { ok: true, event } };
@@ -263,8 +317,155 @@ export async function gatewayRevokeAgentKey(network: WhoElseNetwork, caller: Cal
   }
 }
 
-export function publicEntityOr404(engine: WhoElseEngine, id: string) {
+export function publicEntityOr404(engine: WhoElseEngine, id: string, opts?: { allowPrivate?: boolean }) {
   const entity = engine.store.get(id);
   if (!entity) return fail(404, "not found");
+  if (!opts?.allowPrivate && !isPubliclyFindable(entity)) return fail(404, "not found");
   return { ok: true as const, status: 200 as const, body: toPublicEntity(entity) };
+}
+
+export async function gatewayMe(network: WhoElseNetwork, caller: Caller | null) {
+  try {
+    const who = requireCaller(caller);
+    await persistIdentity(network);
+    const state = onboardState(network, who);
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: {
+        principalId: who.principalId,
+        kind: who.kind,
+        entity: state.entity ? toOwnerEntity(state.entity) : null,
+        visibility: state.visibility,
+        ageAffirmed: state.ageAffirmed,
+        findable: state.findable,
+        needsOnboarding: state.needsOnboarding,
+        affirmation: state.affirmation,
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+export async function gatewayOnboard(
+  network: WhoElseNetwork,
+  spec: OnboardSpec,
+  caller: Caller | null,
+): Promise<GatewayResult<{ entity: ReturnType<typeof toOwnerEntity>; ageAffirmed: boolean; findable: boolean }>> {
+  try {
+    const who = requireHumanCaller(requireCaller(caller));
+    requireScope(who, "register");
+    await enforceWriteRate(network, who, "onboard");
+    if (!spec.name?.trim() || !spec.description?.trim()) {
+      throw new Error("name and description required");
+    }
+    let publications = parseOnboardPublications(spec);
+    if (!publications.length) publications = [{ ...DEFAULT_HUMAN_SEEK }];
+    const existing = ownedHumanEntity(network, who.principalId);
+    const id = existing?.id ?? humanEntityIdFor(who.principalId);
+    let entity;
+    if (existing) {
+      if (spec.name) existing.name = spec.name.trim();
+      if (spec.description) existing.description = spec.description.trim();
+      if (spec.location) existing.location = spec.location;
+      if (spec.availability) existing.availability = spec.availability;
+      network.identity.own(existing.id, who.principalId, "owner");
+      entity = network.engine.publish(existing.id, publications);
+      entity = network.engine.upsertStored(stampHumanLabels(entity));
+    } else {
+      if (network.engine.store.get(id)) throw new AuthzError(409, "cannot register over existing id");
+      entity = network.engine.register({
+        id,
+        type: "human",
+        name: spec.name.trim(),
+        description: spec.description.trim(),
+        publications,
+        location: spec.location,
+        availability: spec.availability,
+      });
+      network.identity.own(entity.id, who.principalId, "owner");
+      entity = network.engine.upsertStored(stampHumanLabels(entity));
+    }
+    if (spec.affirmAge) {
+      await applyAffirmation(network, who);
+    }
+    const affirmed = network.identity.isAgeAffirmed(who.principalId);
+    entity = network.engine.upsertStored(
+      applyHumanSafety(entity, { affirmed, activateDatingSeeks: Boolean(spec.affirmAge && affirmed) }),
+    );
+    if (who.kind === "human") {
+      const principal = network.identity.principals.get(who.principalId);
+      if (principal) {
+        principal.displayName = entity.name;
+        principal.updated_at = new Date().toISOString();
+      }
+    }
+    audit(network, who, spec.affirmAge ? "onboard-affirm" : "onboard", entity.id, {
+      visibility: entity.metadata.visibility,
+    });
+    await persistWrite(network, entity, who);
+    await persistIdentity(network);
+    const stored = network.engine.store.get(entity.id)!;
+    return {
+      ok: true,
+      status: 200,
+      body: {
+        entity: toOwnerEntity(stored),
+        ageAffirmed: affirmed,
+        findable: isPubliclyFindable(stored),
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+async function applyAffirmation(network: WhoElseNetwork, who: Caller, version = AGE_AFFIRMATION_VERSION): Promise<void> {
+  if (version !== AGE_AFFIRMATION_VERSION) {
+    throw new Error(`unknown affirmation version (current is ${AGE_AFFIRMATION_VERSION})`);
+  }
+  network.identity.affirmAge(who.principalId, version);
+}
+
+export async function gatewayAffirm(
+  network: WhoElseNetwork,
+  caller: Caller | null,
+  input: { version?: string } = {},
+): Promise<
+  GatewayResult<{
+    ageAffirmed: boolean;
+    version: string;
+    text: string;
+    entity: ReturnType<typeof toOwnerEntity> | null;
+    findable: boolean;
+  }>
+> {
+  try {
+    const who = requireHumanCaller(requireCaller(caller));
+    await enforceWriteRate(network, who, "affirm");
+    await applyAffirmation(network, who, input.version ?? AGE_AFFIRMATION_VERSION);
+    const existing = ownedHumanEntity(network, who.principalId);
+    let entity = existing ?? null;
+    if (entity) {
+      entity = network.engine.upsertStored(applyHumanSafety(entity, { affirmed: true, activateDatingSeeks: true }));
+      await persistWrite(network, entity, who);
+    }
+    audit(network, who, "affirm-age", entity?.id, { version: AGE_AFFIRMATION_VERSION });
+    await persistIdentity(network);
+    const stored = entity ? network.engine.store.get(entity.id) : null;
+    return {
+      ok: true,
+      status: 200,
+      body: {
+        ageAffirmed: true,
+        version: AGE_AFFIRMATION_VERSION,
+        text: AGE_AFFIRMATION_TEXT,
+        entity: stored ? toOwnerEntity(stored) : null,
+        findable: stored ? isPubliclyFindable(stored) : false,
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
 }

@@ -2,16 +2,22 @@ import type { Caller } from "./authz.js";
 import { WhoElseEngine } from "./engine.js";
 import { IdentityLedger } from "./identity.js";
 import type { PostgresRepository } from "./persist/repository.js";
+import { RateLimiter } from "./rate-limit.js";
 import type { SeedMode } from "./seed-policy.js";
 import type { Entity } from "./types.js";
 
 export class WhoElseNetwork {
+  readonly rateLimit: RateLimiter;
+
   constructor(
     readonly engine: WhoElseEngine,
     readonly identity: IdentityLedger,
     readonly persist: PostgresRepository | null,
     readonly seedMode: SeedMode,
-  ) {}
+    rateLimit?: RateLimiter,
+  ) {
+    this.rateLimit = rateLimit ?? new RateLimiter(persist);
+  }
 
   static memory(engine: WhoElseEngine, identity: IdentityLedger, seedMode: SeedMode = "demo"): WhoElseNetwork {
     return new WhoElseNetwork(engine, identity, null, seedMode);

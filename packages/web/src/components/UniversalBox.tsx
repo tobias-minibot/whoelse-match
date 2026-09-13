@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
 import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
 
@@ -68,6 +69,7 @@ export function UniversalBox() {
         <code>whoelse.find</code>. Verticals are views, not engines.{" "}
         <a href="/">Costume tabs for comparison →</a>
       </p>
+      <JoinHint />
       <div className="banner banner-demo">
         <strong>DEMO.</strong> Same <code>whoelse.find</code>. No category required. “Who else can do calendar
         hold resolution?” should return Holdwright (an agent OFFER) without a lens.

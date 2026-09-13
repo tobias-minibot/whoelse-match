@@ -269,8 +269,11 @@ Same engine. Used by the web app.
 | GET | `/api/entities/:id` | One entity |
 | GET | `/api/health` | Seed counts + whether OpenAI is configured |
 | POST | `/api/mcp` | Streamable HTTP MCP (stateless). `whoelse.find` + register/publish/invoke/delegate. |
-| POST | `/api/register` | Auth required. Create an entity you own. Cannot overwrite an existing id. Agent type (human caller) issues a one-time API key. |
-| POST | `/api/publish` | Auth required. Attach/update/withdraw OFFER/SEEK records on an entity you own. Idempotent on `(entityId, kind, capability)`. |
+| GET | `/api/me` | Clerk session. Principal + owned human entity + onboarding/affirmation state. 401 if signed out. |
+| POST | `/api/me` or `/api/onboarding` | Clerk human. Create/update owned human + publications. `affirmAge: true` stores 18+ and publishes. |
+| POST | `/api/me/affirm` | Clerk human. Persist affirmation version + timestamp; activate dating-relevant SEEKs; set visibility public. |
+| POST | `/api/register` | Auth required. Create an entity you own. Cannot overwrite an existing id. Human type starts private. Agent type (human caller) issues a one-time API key. |
+| POST | `/api/publish` | Auth required. Attach/update/withdraw OFFER/SEEK records on an entity you own. Idempotent on `(entityId, kind, capability)`. Rate-limited. |
 | POST | `/api/delegate` | Auth required. `from` must be an entity you own. |
 | POST | `/api/reciprocal` | SEEK↔OFFER flip for an entity id (read). |
 | POST | `/api/agents/:id/invoke` | Auth required. Demo invoke stub (“I would do X”). |
@@ -283,6 +286,8 @@ Same engine. Used by the web app.
 ## UI
 
 - Doctrine on home + `/ais`: **Humans ask Who Else. Agents call WhoElse. Same network.**
+- `/onboarding` — signed-in human path: name, bio, HUMAN label, OFFER/SEEK, 18+ affirmation
+- `/me` — edit publications; withdraw is durable
 - `/ais` — MCP URL, Cursor config, tools, example call/result
 - Tabs: **15 lenses** (Dating, Apt, Jobs, Rides, Services, Products, Experts, Capital, Travel, Events, Childcare, Collab, Compute, Data, Local). Dating home is unchanged. Tabs are costumes; `/universal` is the no-category box. Jobs + factory mixed lenses do **not** force `side` — NL infers it. Travel reuses apartment listing/seeker.
 - Apartment SEEK: **What are you looking for?** + **Who else?**
@@ -343,9 +348,39 @@ npx vercel env pull .env.local --yes
 ### Humans (Clerk)
 
 - `@clerk/nextjs` middleware populates the session. It does **not** lock public find.
-- Sign in / sign up: `/sign-in`, `/sign-up`. Sign out is the Clerk user button.
-- First authenticated write upserts a `principals` row (`kind=human`) linked by `accounts.clerk_user_id`.
+- Sign in / sign up: `/sign-in`, `/sign-up`. After auth, Clerk redirects to `/onboarding`. Sign out is the Clerk user button.
+- First authenticated request upserts a `principals` row (`kind=human`) linked by `accounts.clerk_user_id`.
 - Clerk owns session TTL and logout. A missing/expired cookie is a 401 on write routes.
+
+### How a human joins
+
+Production starts **empty**. Nobody is findable until they complete this path. Dating is the first costume; the objects are the same OFFER/SEEK records agents publish.
+
+1. **Sign up** at `/sign-up` (or Sign in). Clerk session required.
+2. **Onboard** at `/onboarding` (also **Join** in the nav). Display name + short bio. The card is labeled **HUMAN** — never AI.
+3. **Publish** at least one SEEK and/or OFFER. The form defaults to SEEK `romantic compatibility` (dating-legible). Any capability string is valid — same publication objects, no dating type.
+4. **Affirm 18+**. The affirmation text + version (`v1`) are stored with a timestamp on the principal. Without this, the profile stays **private** and dating-relevant SEEKs stay withdrawn.
+5. **Discover**. `/` and `/universal` call `whoelse.find`. After affirmation the entity is `visibility=public` and can appear. Edit later at `/me` (withdraw / add publications).
+
+**Visibility model:** `private` until age affirmation, then `public`. No authenticated-only middle state. Seed/synthetic rows stay public and labeled. Owner reads their own private card via `GET /api/me`; `GET /api/entities/:id` is 404 to everyone else until public.
+
+**Clerk production domain:** sign-in on `whoelse-dating.vercel.app` (or a custom domain) needs that origin allowed on the Clerk production instance. If the hosted sign-in page 404s or refuses the redirect, add the domain in the Clerk dashboard — do not invent a new Clerk app.
+
+Do **not** set `WHOELSE_SEED=demo` on production to fake a crowd.
+
+### Dogfood (two accounts)
+
+1. Account A: sign up → `/onboarding` → name/bio → keep the default SEEK → check 18+ → **Affirm 18+ and publish**.
+2. Account B (incognito): sign up → same path with a complementary OFFER or a dating query.
+3. From B (or logged out): `/` dating tab or `/universal` → “Who else seeks romantic compatibility?” / “Who else should I meet?”
+4. A should appear as **HUMAN**. B’s unaffirmed draft must not.
+
+### Authorization
+
+| Caller | Find / read public-active records | register / publish / withdraw / onboard / feedback |
+| --- | --- | --- |
+| Anonymous | yes (`requester` forbidden); cheap per-IP read budget | 401 |
+| Human or agent | yes; `requester` only if they own that entity | own entities only → 403 cross-owner; 429 if the write budget trips |
 
 ### Agents (API keys)
 
@@ -355,20 +390,13 @@ npx vercel env pull .env.local --yes
 4. Rotate / revoke: `POST /api/agents/keys/rotate` and `/revoke`. Revoked keys fail.
 5. Stdio MCP: `WHOELSE_AGENT_KEY`. Demo seed installs a labeled synthetic owner key (see `DEMO_OWNER_KEY` in `@whoelse/core`) — never present on production-empty.
 
-### Authorization
-
-| Caller | Find / read public active records | register / publish / withdraw / invoke / delegate / feedback |
-| --- | --- | --- |
-| Anonymous | yes (`requester` forbidden) | 401 |
-| Human or agent | yes; `requester` only if they own that entity | own entities only → 403 cross-owner |
-
 Callers cannot overwrite an existing entity id (409) or spoof `human` / `ai` type (403). `ai` stays seed/synthetic.
 
 ### Schema + migrations
 
-Drizzle schema: `packages/core/src/persist/schema.ts`. SQL: `packages/core/drizzle/0000_init.sql`.
+Drizzle schema: `packages/core/src/persist/schema.ts`. SQL: `packages/core/drizzle/0000_init.sql` + `0001_onboarding.sql`.
 
-Tables: `principals`, `accounts`, `agent_credentials`, `entities` (`owner_principal_id`), `ownership`, `publications` (OFFER/SEEK + lifecycle), `write_audit`.
+Tables: `principals` (plus `age_affirmed_at` / `age_affirmation_version`), `accounts`, `agent_credentials`, `entities` (`owner_principal_id`), `ownership`, `publications` (OFFER/SEEK + lifecycle), `write_audit`, `rate_counters` (Postgres-backed write budgets — no extra paid infra).
 
 ```bash
 # from repo root after vercel env pull / sourcing .env.local
@@ -427,7 +455,7 @@ After deploy, check `GET /api/health` for `persistence`, `seedMode`, and seed co
 - “Near me” means Washington, DC in this seed.
 - Romance, collaboration, hobbies, and projects are the same operator with different predicates.
 - AIs may be geo-tagged for local skills (trails, permits) but are not filtered out of a city query the way a remote-incompatible human would be.
-- Production identity is Clerk (humans) + hashed agent keys. The dating pool is empty until someone registers or you set `WHOELSE_SEED=demo`.
+- Production identity is Clerk (humans) + hashed agent keys. The dating pool is empty until a human onboards and affirms 18+, or you set `WHOELSE_SEED=demo` (never on production).
 - MCP and the web app share Neon when `DATABASE_URL` is set. Find still ranks from the in-process TF-IDF index loaded at boot.
 
 ## Weaknesses
@@ -435,7 +463,7 @@ After deploy, check `GET /api/health` for `persistence`, `seedMode`, and seed co
 - TF-IDF cannot see synonymy (“MTB” vs “mountain biking”) unless the seed text overlaps.
 - Feedback is authenticated and still process-local (not a preference graph). Entity/publication writes survive restart in Neon.
 - OpenAI rerank is a best-effort overlay; the local ranker is the source of truth.
-- Chat / interest are stubs. There is no messaging, safety stack, or consent protocol.
+- Chat / interest are stubs. There is no messaging, report/block UI, or third-party age verification — only a stored 18+ affirmation.
 - Sectioned Humans→AIs can hide a stronger AI below a weaker human (the mixed-rank experiment).
 - Query parsing is keyword-scale, not a real intent grammar.
 

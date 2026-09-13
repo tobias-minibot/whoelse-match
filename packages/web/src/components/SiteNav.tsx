@@ -1,12 +1,18 @@
 import { AuthButtons } from "@/components/AuthButtons";
 
-export function SiteNav({ current }: { current?: "home" | "ais" | "box" }) {
+export function SiteNav({ current }: { current?: "home" | "ais" | "box" | "join" | "me" }) {
   return (
     <nav className="nav">
       <a className="logo" href="/">
         who <em>else?</em>
       </a>
       <div className="nav-links">
+        <a className={current === "join" ? "ghost current" : "ghost"} href="/onboarding">
+          Join
+        </a>
+        <a className={current === "me" ? "ghost current" : "ghost"} href="/me">
+          Profile
+        </a>
         <a className={current === "box" ? "ghost current" : "ghost"} href="/universal">
           One box
         </a>

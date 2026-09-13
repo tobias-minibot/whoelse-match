@@ -103,7 +103,15 @@ export class IdentityLedger {
     };
   }
 
-  createPrincipal(input: { kind: Principal["kind"]; displayName?: string; clerkUserId?: string; synthetic?: boolean; id?: string }): Principal {
+  createPrincipal(input: {
+    kind: Principal["kind"];
+    displayName?: string;
+    clerkUserId?: string;
+    synthetic?: boolean;
+    id?: string;
+    ageAffirmedAt?: string;
+    ageAffirmationVersion?: string;
+  }): Principal {
     const at = nowIso();
     const principal: Principal = {
       id: input.id ?? id("principal"),
@@ -111,6 +119,8 @@ export class IdentityLedger {
       displayName: input.displayName,
       clerkUserId: input.clerkUserId,
       synthetic: input.synthetic,
+      ageAffirmedAt: input.ageAffirmedAt,
+      ageAffirmationVersion: input.ageAffirmationVersion,
       created_at: at,
       updated_at: at,
     };
@@ -127,6 +137,10 @@ export class IdentityLedger {
         clerkUserId,
         displayName: displayName ?? "human",
       });
+    if (displayName && principal.displayName !== displayName) {
+      principal.displayName = displayName;
+      principal.updated_at = nowIso();
+    }
     if (!this.accounts.has(clerkUserId)) {
       const account: Account = {
         id: id("acct"),
@@ -158,6 +172,23 @@ export class IdentityLedger {
 
   owns(principalId: string, entityId: string): boolean {
     return this.ownership.some((o) => o.entityId === entityId && o.principalId === principalId);
+  }
+
+  entitiesOwnedBy(principalId: string): string[] {
+    return this.ownership.filter((o) => o.principalId === principalId).map((o) => o.entityId);
+  }
+
+  isAgeAffirmed(principalId: string): boolean {
+    return Boolean(this.principals.get(principalId)?.ageAffirmedAt);
+  }
+
+  affirmAge(principalId: string, version: string, at = nowIso()): Principal {
+    const principal = this.principals.get(principalId);
+    if (!principal) throw new AuthzError(403, "unknown principal");
+    principal.ageAffirmedAt = principal.ageAffirmedAt ?? at;
+    principal.ageAffirmationVersion = version;
+    principal.updated_at = at;
+    return principal;
   }
 
   assertOwns(caller: Caller | null | undefined, entityId: string): Caller {

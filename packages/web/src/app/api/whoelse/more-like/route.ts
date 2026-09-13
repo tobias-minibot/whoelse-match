@@ -1,5 +1,6 @@
 import { gatewayFind } from "@whoelse/core";
 import { resolveCaller } from "@/lib/auth";
+import { clientIp } from "@/lib/client-ip";
 import { getNetwork } from "@/lib/engine";
 import { gatewayResponse } from "@/lib/respond";
 
@@ -25,6 +26,7 @@ export async function POST(req: Request) {
         limit: body.limit ?? 8,
       },
       caller,
+      { ip: clientIp(req) },
     ),
   );
 }

@@ -32,6 +32,7 @@ import type {
   WhoElseResult,
 } from "./types.js";
 import { OFFER_ROLES, SEEK_ROLES } from "./types.js";
+import { isPubliclyFindable } from "./visibility.js";
 
 const TEXT_W = 0.5;
 const STRUCT_W = 0.28;
@@ -104,6 +105,7 @@ export class WhoElseEngine {
 
     const scored: Candidate[] = [];
     for (const entity of this.store.all()) {
+      if (!isPubliclyFindable(entity)) continue;
       if (exclude.has(entity.id)) continue;
       if (inferredConstraints.type && entity.type !== inferredConstraints.type) continue;
       if (!passesGeo(entity, inferredConstraints)) continue;
@@ -261,14 +263,15 @@ export class WhoElseEngine {
     if (!incomingSpecs.length) {
       throw new Error("register requires at least one offer or seek");
     }
-    const slug = spec.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "agent";
-    const id = spec.id ?? `agent-reg-${slug}-${Math.random().toString(36).slice(2, 7)}`;
+    const isHuman = spec.type === "human";
+    const slug = spec.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || (isHuman ? "human" : "agent");
+    const id = spec.id ?? `${isHuman ? "human" : "agent-reg"}-${slug}-${Math.random().toString(36).slice(2, 7)}`;
     const now = new Date().toISOString();
     const incoming = incomingSpecs.map((p) => normalizePublication({ ...p, entityId: id }, now));
     const publications = upsertPublications([], incoming);
     const bags = bagsFromPublications(publications);
     const offers = bags.offers;
-    const seeks = bags.seeks.length ? bags.seeks : ["work", "who else can use this capability"];
+    const seeks = bags.seeks.length ? bags.seeks : isHuman ? [] : ["work", "who else can use this capability"];
     if (!offers.length && !seeks.length) {
       throw new Error("register requires at least one offer or seek");
     }
@@ -282,35 +285,43 @@ export class WhoElseEngine {
       offers,
       seeks,
       capabilities: offers,
-      attributes: {
-        role: spec.type === "human" ? undefined : "worker",
-        owner: spec.owner,
-        version: spec.version ?? "0.1.0",
-        status: spec.status ?? "available",
-        protocol: spec.protocol ?? spec.endpoint?.protocol ?? "http",
-        requirements: spec.requirements,
-        permissions: spec.permissions,
-        priceUsd: typeof spec.cost === "number" ? spec.cost : undefined,
-        pricing: spec.cost,
-        latencyMs: typeof spec.latency === "number" ? spec.latency : undefined,
-        latency: spec.latency,
-        apiEndpoint: endpoint,
-        mcpEndpoint: "/api/mcp",
-        endpoint,
-        authRequirements: spec.endpoint?.auth ?? "none-demo",
-        registered: true,
-      },
+      attributes: isHuman
+        ? { kind: "human", registered: true }
+        : {
+            role: "worker",
+            owner: spec.owner,
+            version: spec.version ?? "0.1.0",
+            status: spec.status ?? "available",
+            protocol: spec.protocol ?? spec.endpoint?.protocol ?? "http",
+            requirements: spec.requirements,
+            permissions: spec.permissions,
+            priceUsd: typeof spec.cost === "number" ? spec.cost : undefined,
+            pricing: spec.cost,
+            latency: spec.latency,
+            latencyMs: typeof spec.latency === "number" ? spec.latency : undefined,
+            apiEndpoint: endpoint,
+            mcpEndpoint: "/api/mcp",
+            endpoint,
+            authRequirements: spec.endpoint?.auth ?? "none-demo",
+            registered: true,
+          },
       preferences: {},
-      availability: spec.availability ?? "on request",
+      availability: spec.availability ?? (isHuman ? "weekends" : "on request"),
       location: spec.location,
-      metadata: {
-        demo: true,
-        demoLabel: "DEMO registered agent — not a production worker",
-        aiDisclosure:
-          spec.type === "human" ? undefined : `${spec.name || slug} is a registered agent, not a human.`,
-        vertical: "capability",
-      },
-      provenance: spec.type === "human" ? "user" : "ai_generated",
+      metadata: isHuman
+        ? {
+            kindLabel: "human",
+            humanNotAi: true,
+            visibility: "private",
+            ageAffirmed: false,
+          }
+        : {
+            demo: true,
+            demoLabel: "DEMO registered agent — not a production worker",
+            aiDisclosure: `${spec.name || slug} is a registered agent, not a human.`,
+            vertical: "capability",
+          },
+      provenance: isHuman ? "user" : "ai_generated",
       trust: {
         status: spec.evidence ? "evidence" : "stub",
         provenance: "user",
@@ -319,6 +330,12 @@ export class WhoElseEngine {
       },
       created_at: now,
     };
+    const stored = this.store.add(entity);
+    this.index.add(stored.id, entityText(stored));
+    return stored;
+  }
+
+  upsertStored(entity: Entity): Entity {
     const stored = this.store.add(entity);
     this.index.add(stored.id, entityText(stored));
     return stored;
