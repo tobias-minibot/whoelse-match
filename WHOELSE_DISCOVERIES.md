@@ -538,3 +538,33 @@ Breadth is the test and it held. Keep merging when green. Do not polish these in
 45. `packages/web/src/lib/lenses.ts` is presentation. DiscoverApp no longer hard-codes five costumes.
 46. `InferredVertical` grew names. The ranker did not grow methods.
 47. Headline demos still green: website one-box, Georgetown reciprocal, register, ClaimWriter→Checkmate receipt. Factory tests + MCP cases sit beside them.
+
+---
+
+## INTENT PROTOCOL v0.3 — archaeology
+
+Production catalog (505). Compact file: `legacy/intent-protocol/`. Review: `docs/INTENT_GRAMMAR_V03_REVIEW.md`. **Not imported into core.** 172 attested recitation rows + 333 fill rows (subgroup counts + PR #5 names). SOCIAL skips `i326`.
+
+### PREVIOUS WHOELSE WORK
+
+PR #5 already collapsed the reconstructed 250 to one `whoelse.find`. That operator claim is unchanged. v0.3 is the *cabinet*: `i001-doctor` IDs, 22 subgroups, geo/mixed/network, slot-key templates, DATE fold. The 15 live lenses already cover the nouns that matter (services, apt, rides, jobs, travel, events, capital, agents) without those IDs.
+
+### GROK DERIVATION
+
+The catalog is a **template cloner**. `{slug}-reason,care-type,payment,visit-mode,availability` mints specialists. COOKING CLASS wears the education shirt in FOOD and is duplicated in EDUCATION. PERSONAL TRAINER wears rideshare. Care nouns wear `vehicle`. WHEELCHAIR wears beauty `style`. Leakage is the collapse proof.
+
+Routing is the adult field: geo = needs a city; mixed = place + graph; network = BANK / AI TOOLS / agents. Infer from seed, do not add a `routing` column.
+
+`MORTGAGE` ×2 (HOME geo vs FINANCE network) is the two-market lesson. `i326` missing after DATE is the fold left a hole — IDs were never a stable API.
+
+**DATE is an alias, not a primitive.** Catalog: event framing, safety/budget/format, Dating ⊂ DATE. Live dating: humans+AIs, sectioned UI, offer↔seek, recursive Who else?, evidence. Dinner-date enums lost. Dating / hiring / rideshare / agent-delegation are one `whoelse.find(compatible entities)`.
+
+**N ≈ 17:** one find + ~12 constraint families + register/invoke/delegate/feedback.
+
+### DISCOVERED THROUGH IMPLEMENTATION
+
+Live factory did not need these IDs. Apartment and rideshare slots are already attributes. Doctor/restaurant/DATE/AIRBNB/LAWYER deep keys are constraint *hints*. Catalog `status` is hygiene, not `trust.evidence`. AI TOOLS vocab (`use-case, integration, pricing, data-policy`) is seed language for MCP capability discovery — agents should skip the alias table and call `whoelse.find` with the task sentence.
+
+### SHARED DERIVATION
+
+Catalog helps humans express (`DATE who else?`, dating/romance synonyms). Protocol lets machines exchange (`whoelse.find` + register/invoke/delegate/feedback). Complementary. Do not unify them by shipping 505 enums. Thin one-box hints live in `legacy/intent-protocol/onebox-alias-hints.json` only.

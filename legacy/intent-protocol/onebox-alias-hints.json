@@ -1,0 +1,13 @@
+{
+  "purpose": "Thin synonym hints for the one-box. Not a 505 enum. Humans may type these; agents can skip straight to whoelse.find({ intent }).",
+  "risk": "low — vocabulary only; do not add per-noun engines",
+  "aliases": {
+    "DATE": ["dating", "meet someone", "romance", "date night"],
+    "RIDESHARE": ["ride", "ride-share", "lift"],
+    "APARTMENT": ["flat", "rental", "flat share"],
+    "JOB": ["hiring", "gig", "role"],
+    "AI TOOLS": ["ai tool", "mcp", "agent capability"],
+    "LAWYER": ["attorney", "digital lawyer"],
+    "AIRBNB": ["vacation rental", "short stay", "homestay"]
+  }
+}

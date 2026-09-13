@@ -1,0 +1,8852 @@
+{
+  "schema": "intent-protocol.production-v0.3.compact",
+  "version": "production-v0.3",
+  "provenance": {
+    "kind": "annotated-recitation-plus-reconstructed-fill",
+    "source": "Tobias archaeology attachment = annotated recitation of intent-protocol.production-v0.3.json. Slot keys present; full enums live in that attachment and are NOT blindly imported. Not current spec.",
+    "framing": "Prior art / corpus of attempted human intents \u2014 NOT ontology truth. NOT current spec. Do not blind-import.",
+    "attested": {
+      "part_1": "legacy/intent-protocol/raw/part-1-intents-1-170.txt",
+      "rows": "n=1\u2013170 plus i308-date and i400-ai-tools"
+    },
+    "fill": {
+      "method": "Remaining rows reconstructed-to-fill from 22 subgroup counts + PR #5 reconstructed catalog names. SOCIAL skips i326 (source hole; hypothesized retired DATING after the DATE fold).",
+      "do_not_treat_as_sha_stable": true
+    },
+    "reconcile_with": [
+      "LEGACY_506_ANALYSIS.md",
+      "legacy/artifacts/reconstructed-2026-09-12/surviving-catalog.json"
+    ],
+    "complete": true,
+    "received": 505,
+    "expected": 505,
+    "id_skip": [
+      "i326"
+    ],
+    "id_range": "i001\u2013i325, i327\u2013i506 (505 ids)"
+  },
+  "notes": {
+    "slot_enums": "incomplete except deep samples (DOCTOR, RESTAURANT, DATE, AIRBNB, LAWYER)",
+    "do_not": "implement 505 slot schemas or vertical engines",
+    "dating_fold": "DATING folded into DATE. i326 absent in source. Hypothesis: i326 was DATING."
+  },
+  "stats": {
+    "received": 505,
+    "expected": 505,
+    "subgroups_seen": 22,
+    "subgroups_claimed": 22,
+    "deep_seen": [
+      "i001-doctor",
+      "i060-restaurant",
+      "i308-date",
+      "i353-airbnb",
+      "i385-lawyer"
+    ],
+    "deep_claimed": [
+      "i001-doctor",
+      "i060-restaurant",
+      "i308-date",
+      "AIRBNB",
+      "LAWYER"
+    ],
+    "by_subgroup": {
+      "BODY & HEALTH": 36,
+      "FITNESS & SPORT": 23,
+      "FOOD & DRINK": 27,
+      "HOME & LIVING": 43,
+      "TRANSPORT & MOBILITY": 27,
+      "FINANCE": 20,
+      "WORK": 20,
+      "EDUCATION": 23,
+      "CULTURE": 25,
+      "FAMILY": 18,
+      "BEAUTY": 16,
+      "PETS": 15,
+      "FASHION": 14,
+      "SOCIAL & COMMUNITY": 26,
+      "ENV": 18,
+      "TRAVEL": 16,
+      "CREATIVE": 16,
+      "LEGAL": 15,
+      "DIGITAL & TECH": 20,
+      "EVENTS": 22,
+      "LOCAL": 20,
+      "MISC": 45
+    },
+    "by_routing": {
+      "geo-anchored": 235,
+      "mixed": 198,
+      "network-routed": 56,
+      "missing": 16
+    },
+    "by_status": {
+      "verified": 248,
+      "estimated": 113,
+      "untagged": 16,
+      "fragmented": 128
+    },
+    "duplicate_labels": [
+      "AI TOOLS",
+      "AIRBNB",
+      "APARTMENT",
+      "BABYSITTER",
+      "BANK",
+      "BUS",
+      "CAFE",
+      "CAR",
+      "CLEANER",
+      "CLOTHING",
+      "COFFEE",
+      "CONCERT",
+      "COOKING CLASS",
+      "DATE",
+      "DENTIST",
+      "DOCTOR",
+      "ELECTRICIAN",
+      "FLIGHT",
+      "FRIEND",
+      "GROCERY",
+      "GYM",
+      "HOSPITAL",
+      "HOTEL",
+      "HOUSE",
+      "INSURANCE",
+      "INTERNET",
+      "JOB",
+      "LANDLORD",
+      "LAWYER",
+      "LOAN",
+      "MORTGAGE",
+      "MOVER",
+      "MUSEUM",
+      "NOTARY",
+      "NURSE",
+      "PARKING",
+      "PET BOARDING",
+      "PHARMACY",
+      "PHOTOGRAPHER",
+      "PLUMBER",
+      "RENT",
+      "RESTAURANT",
+      "RIDESHARE",
+      "SCHOOL",
+      "STORAGE",
+      "TAX",
+      "TAXI",
+      "TRAIN",
+      "TUTOR",
+      "VET",
+      "WINE",
+      "YOGA"
+    ],
+    "duplicate_label_extra_rows": 53,
+    "claimed_routing": {
+      "geo-anchored": 235,
+      "mixed": 198,
+      "network-routed": 56,
+      "missing": 16
+    },
+    "claimed_status": {
+      "verified": 248,
+      "fragmented": 128,
+      "estimated": 113,
+      "untagged": 16
+    },
+    "claimed_duplicate_labels": 53,
+    "source_counts": {
+      "attested-recitation": 172,
+      "reconstructed-to-fill": 333
+    }
+  },
+  "intents": [
+    {
+      "n": 1,
+      "id": "i001-doctor",
+      "label": "DOCTOR",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 1,
+      "slots": [
+        "specialty",
+        "reason",
+        "payment",
+        "visit",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 2,
+      "id": "i002-dentist",
+      "label": "DENTIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "procedure",
+        "payment",
+        "availability",
+        "provider-type",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 3,
+      "id": "i003-nurse",
+      "label": "NURSE",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "nurse-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 4,
+      "id": "i004-pharmacy",
+      "label": "PHARMACY",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pharmacy-need",
+        "hours",
+        "payment",
+        "delivery",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 5,
+      "id": "i005-hospital",
+      "label": "HOSPITAL",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "hospital-urgency",
+        "service",
+        "payment",
+        "turnaround",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 6,
+      "id": "i006-surgeon",
+      "label": "SURGEON",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "surgeon-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 7,
+      "id": "i007-physiotherapist",
+      "label": "PHYSIOTHERAPIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "physiotherapist-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 8,
+      "id": "i008-chiropractor",
+      "label": "CHIROPRACTOR",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "chiropractor-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 9,
+      "id": "i009-optician",
+      "label": "OPTICIAN",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "optician-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 10,
+      "id": "i010-audiologist",
+      "label": "AUDIOLOGIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "audiologist-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 11,
+      "id": "i011-dermatologist",
+      "label": "DERMATOLOGIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "dermatologist-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 12,
+      "id": "i012-gynaecologist",
+      "label": "GYNAECOLOGIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "gynaecologist-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 13,
+      "id": "i013-psychiatrist",
+      "label": "PSYCHIATRIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "psychiatrist-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 14,
+      "id": "i014-psychologist",
+      "label": "PSYCHOLOGIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "psychologist-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 15,
+      "id": "i015-therapist",
+      "label": "THERAPIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "therapist-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 16,
+      "id": "i016-counsellor",
+      "label": "COUNSELLOR",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "counsellor-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 17,
+      "id": "i017-nutritionist",
+      "label": "NUTRITIONIST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "nutritionist-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 18,
+      "id": "i018-dietician",
+      "label": "DIETICIAN",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "dietician-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 19,
+      "id": "i019-blood-test",
+      "label": "BLOOD TEST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "blood-test-urgency",
+        "service",
+        "payment",
+        "turnaround",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 20,
+      "id": "i020-vaccination",
+      "label": "VACCINATION",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "vaccination-urgency",
+        "service",
+        "payment",
+        "turnaround",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 21,
+      "id": "i021-ambulance",
+      "label": "AMBULANCE",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "ambulance-urgency",
+        "service",
+        "payment",
+        "turnaround",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 22,
+      "id": "i022-1st-aid",
+      "label": "1ST AID",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "1st-aid-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 23,
+      "id": "i023-rehab",
+      "label": "REHAB",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "rehab-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 24,
+      "id": "i024-addiction",
+      "label": "ADDICTION",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "addiction-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 25,
+      "id": "i025-palliative-care",
+      "label": "PALLIATIVE CARE",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "palliative-care-vehicle",
+        "need",
+        "time",
+        "price",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 26,
+      "id": "i026-hospice",
+      "label": "HOSPICE",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "hospice-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 27,
+      "id": "i027-fertility",
+      "label": "FERTILITY",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "fertility-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 28,
+      "id": "i028-midwife",
+      "label": "MIDWIFE",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "midwife-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 29,
+      "id": "i029-contraception",
+      "label": "CONTRACEPTION",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "contraception-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 30,
+      "id": "i030-sti-test",
+      "label": "STI TEST",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "sti-test-urgency",
+        "service",
+        "payment",
+        "turnaround",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 31,
+      "id": "i031-hearing-aid",
+      "label": "HEARING AID",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "hearing-aid-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 32,
+      "id": "i032-wheelchair",
+      "label": "WHEELCHAIR",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "wheelchair-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 33,
+      "id": "i033-prosthetics",
+      "label": "PROSTHETICS",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "prosthetics-reason",
+        "care-type",
+        "payment",
+        "visit-mode",
+        "availability"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 34,
+      "id": "i034-home-care",
+      "label": "HOME CARE",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "home-care-vehicle",
+        "need",
+        "time",
+        "price",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 35,
+      "id": "i035-elder-care",
+      "label": "ELDER CARE",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "elder-care-vehicle",
+        "need",
+        "time",
+        "price",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 36,
+      "id": "i036-dementia-care",
+      "label": "DEMENTIA CARE",
+      "subgroup": "BODY & HEALTH",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "dementia-care-vehicle",
+        "need",
+        "time",
+        "price",
+        "reason"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 37,
+      "id": "i037-gym",
+      "label": "GYM",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "gym-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 38,
+      "id": "i038-personal-trainer",
+      "label": "PERSONAL TRAINER",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "personal-trainer-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 39,
+      "id": "i039-yoga",
+      "label": "YOGA",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "yoga-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 40,
+      "id": "i040-pilates",
+      "label": "PILATES",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pilates-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 41,
+      "id": "i041-swimming",
+      "label": "SWIMMING",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "swimming-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 42,
+      "id": "i042-running",
+      "label": "RUNNING",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "running-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 43,
+      "id": "i043-cycling",
+      "label": "CYCLING",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "cycling-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 44,
+      "id": "i044-climbing",
+      "label": "CLIMBING",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "climbing-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 45,
+      "id": "i045-martial-arts",
+      "label": "MARTIAL ARTS",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "martial-arts-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 46,
+      "id": "i046-dance",
+      "label": "DANCE",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "dance-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 47,
+      "id": "i047-football",
+      "label": "FOOTBALL",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "football-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 48,
+      "id": "i048-tennis",
+      "label": "TENNIS",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "tennis-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 49,
+      "id": "i049-golf",
+      "label": "GOLF",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "golf-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 50,
+      "id": "i050-skiing",
+      "label": "SKIING",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "skiing-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 51,
+      "id": "i051-surfing",
+      "label": "SURFING",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "surfing-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 52,
+      "id": "i052-boxing",
+      "label": "BOXING",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "boxing-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 53,
+      "id": "i053-crossfit",
+      "label": "CROSSFIT",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "crossfit-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 54,
+      "id": "i054-sports-team",
+      "label": "SPORTS TEAM",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "sports-team-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 55,
+      "id": "i055-sports-coach",
+      "label": "SPORTS COACH",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "sports-coach-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 56,
+      "id": "i056-sports-gear",
+      "label": "SPORTS GEAR",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "sports-gear-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 57,
+      "id": "i057-stadium",
+      "label": "STADIUM",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "stadium-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 58,
+      "id": "i058-pool",
+      "label": "POOL",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "pool-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 59,
+      "id": "i059-sauna",
+      "label": "SAUNA",
+      "subgroup": "FITNESS & SPORT",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "sauna-activity",
+        "level",
+        "schedule",
+        "format",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 60,
+      "id": "i060-restaurant",
+      "label": "RESTAURANT",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 1,
+      "slots": [
+        "cuisine",
+        "diet",
+        "occasion",
+        "party-size",
+        "reservation",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 61,
+      "id": "i061-fast-food",
+      "label": "FAST FOOD",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "fast-food-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 62,
+      "id": "i062-cafe",
+      "label": "CAFE",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "cafe-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 63,
+      "id": "i063-bakery",
+      "label": "BAKERY",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "bakery-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 64,
+      "id": "i064-grocery",
+      "label": "GROCERY",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "grocery-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 65,
+      "id": "i065-butcher",
+      "label": "BUTCHER",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "butcher-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 66,
+      "id": "i066-fishmonger",
+      "label": "FISHMONGER",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "fishmonger-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 67,
+      "id": "i067-greengrocer",
+      "label": "GREENGROCER",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "greengrocer-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 68,
+      "id": "i068-food-delivery",
+      "label": "FOOD DELIVERY",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "food-delivery-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 69,
+      "id": "i069-meal-kit",
+      "label": "MEAL KIT",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "meal-kit-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 70,
+      "id": "i070-food-sharing",
+      "label": "FOOD SHARING",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "food-sharing-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 71,
+      "id": "i071-catering",
+      "label": "CATERING",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "catering-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 72,
+      "id": "i072-cooking-class",
+      "label": "COOKING CLASS",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "cooking-class-subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 73,
+      "id": "i073-recipe",
+      "label": "RECIPE",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "recipe-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 74,
+      "id": "i074-diet-plan",
+      "label": "DIET PLAN",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "diet-plan-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 75,
+      "id": "i075-vegan-food",
+      "label": "VEGAN FOOD",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "vegan-food-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 76,
+      "id": "i076-halal-food",
+      "label": "HALAL FOOD",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "halal-food-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 77,
+      "id": "i077-kosher-food",
+      "label": "KOSHER FOOD",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "kosher-food-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 78,
+      "id": "i078-wine",
+      "label": "WINE",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "wine-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 79,
+      "id": "i079-beer",
+      "label": "BEER",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "beer-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 80,
+      "id": "i080-cocktail",
+      "label": "COCKTAIL",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "cocktail-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 81,
+      "id": "i081-water",
+      "label": "WATER",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "water-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 82,
+      "id": "i082-coffee",
+      "label": "COFFEE",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "coffee-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 83,
+      "id": "i083-tea",
+      "label": "TEA",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "tea-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 84,
+      "id": "i084-snack",
+      "label": "SNACK",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "snack-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 85,
+      "id": "i085-picnic",
+      "label": "PICNIC",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "picnic-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 86,
+      "id": "i086-food-bank",
+      "label": "FOOD BANK",
+      "subgroup": "FOOD & DRINK",
+      "routing": "mixed",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "food-bank-item",
+        "diet",
+        "fulfillment",
+        "price",
+        "hours"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 87,
+      "id": "i087-house",
+      "label": "HOUSE",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "house-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 88,
+      "id": "i088-apartment",
+      "label": "APARTMENT",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "apartment-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 89,
+      "id": "i089-flat-share",
+      "label": "FLAT SHARE",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "flat-share-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 90,
+      "id": "i090-student-housing",
+      "label": "STUDENT HOUSING",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "student-housing-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 91,
+      "id": "i091-social-housing",
+      "label": "SOCIAL HOUSING",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "social-housing-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 92,
+      "id": "i092-mortgage",
+      "label": "MORTGAGE",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "mortgage-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 93,
+      "id": "i093-rent",
+      "label": "RENT",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "rent-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 94,
+      "id": "i094-estate-agent",
+      "label": "ESTATE AGENT",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "estate-agent-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 95,
+      "id": "i095-landlord",
+      "label": "LANDLORD",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "landlord-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 96,
+      "id": "i096-property-survey",
+      "label": "PROPERTY SURVEY",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "property-survey-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 97,
+      "id": "i097-interior-design",
+      "label": "INTERIOR DESIGN",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "interior-design-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 98,
+      "id": "i098-architect",
+      "label": "ARCHITECT",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "architect-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 99,
+      "id": "i099-renovation",
+      "label": "RENOVATION",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "renovation-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 100,
+      "id": "i100-builder",
+      "label": "BUILDER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "builder-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 101,
+      "id": "i101-plumber",
+      "label": "PLUMBER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "plumber-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 102,
+      "id": "i102-electrician",
+      "label": "ELECTRICIAN",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "electrician-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 103,
+      "id": "i103-painter",
+      "label": "PAINTER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "painter-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 104,
+      "id": "i104-tiler",
+      "label": "TILER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "tiler-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 105,
+      "id": "i105-carpenter",
+      "label": "CARPENTER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "carpenter-vehicle",
+        "need",
+        "time",
+        "price",
+        "service"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 106,
+      "id": "i106-glazier",
+      "label": "GLAZIER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "glazier-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 107,
+      "id": "i107-roofer",
+      "label": "ROOFER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "roofer-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 108,
+      "id": "i108-timberman",
+      "label": "TIMBERMAN",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "timberman-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 109,
+      "id": "i109-locksmith",
+      "label": "LOCKSMITH",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "locksmith-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 110,
+      "id": "i110-cleaner",
+      "label": "CLEANER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "cleaner-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 111,
+      "id": "i111-janitor",
+      "label": "JANITOR",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "janitor-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 112,
+      "id": "i112-gardener",
+      "label": "GARDENER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "gardener-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 113,
+      "id": "i113-landscaper",
+      "label": "LANDSCAPER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "landscaper-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 114,
+      "id": "i114-pest-control",
+      "label": "PEST CONTROL",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pest-control-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 115,
+      "id": "i115-mover",
+      "label": "MOVER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "mover-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 116,
+      "id": "i116-storage",
+      "label": "STORAGE",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "storage-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 117,
+      "id": "i117-furniture",
+      "label": "FURNITURE",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "furniture-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 118,
+      "id": "i118-appliance",
+      "label": "APPLIANCE",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "appliance-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 119,
+      "id": "i119-appliance-repair",
+      "label": "APPLIANCE REPAIR",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "appliance-repair-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 120,
+      "id": "i120-home-security",
+      "label": "HOME SECURITY",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "home-security-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 121,
+      "id": "i121-smart-home",
+      "label": "SMART HOME",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "smart-home-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 122,
+      "id": "i122-solar-panels",
+      "label": "SOLAR PANELS",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "solar-panels-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 123,
+      "id": "i123-insulation",
+      "label": "INSULATION",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "insulation-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 124,
+      "id": "i124-heating",
+      "label": "HEATING",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "heating-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 125,
+      "id": "i125-air-conditioning",
+      "label": "AIR CONDITIONING",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "air-conditioning-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 126,
+      "id": "i126-water-softener",
+      "label": "WATER SOFTENER",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "water-softener-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 127,
+      "id": "i127-internet",
+      "label": "INTERNET",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "internet-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 128,
+      "id": "i128-tv",
+      "label": "TV",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "tv-service",
+        "property-type",
+        "urgency",
+        "budget",
+        "trust"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 129,
+      "id": "i129-phone",
+      "label": "PHONE",
+      "subgroup": "HOME & LIVING",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "device",
+        "issue",
+        "turnaround",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 130,
+      "id": "i130-car",
+      "label": "CAR",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "car-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 131,
+      "id": "i131-car-repair",
+      "label": "CAR REPAIR",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "car-repair-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 132,
+      "id": "i132-car-wash",
+      "label": "CAR WASH",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "car-wash-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 133,
+      "id": "i133-car-rental",
+      "label": "CAR RENTAL",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "car-rental-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 134,
+      "id": "i134-car-charging",
+      "label": "CAR CHARGING",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "car-charging-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 135,
+      "id": "i135-garage",
+      "label": "GARAGE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "garage-origin",
+        "destination",
+        "time",
+        "mode",
+        "party-size"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 136,
+      "id": "i136-parking",
+      "label": "PARKING",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "parking-origin",
+        "destination",
+        "time",
+        "mode",
+        "party-size"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 137,
+      "id": "i137-taxi",
+      "label": "TAXI",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "taxi-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 138,
+      "id": "i138-rideshare",
+      "label": "RIDESHARE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "rideshare-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 139,
+      "id": "i139-bus",
+      "label": "BUS",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "bus-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 140,
+      "id": "i140-train",
+      "label": "TRAIN",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "train-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 141,
+      "id": "i141-metro",
+      "label": "METRO",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "metro-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 142,
+      "id": "i142-tram",
+      "label": "TRAM",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "tram-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 143,
+      "id": "i143-ferry",
+      "label": "FERRY",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "ferry-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 144,
+      "id": "i144-flight",
+      "label": "FLIGHT",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "flight-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 145,
+      "id": "i145-bike",
+      "label": "BIKE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "bike-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 146,
+      "id": "i146-bike-repair",
+      "label": "BIKE REPAIR",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "bike-repair-job",
+        "property-type",
+        "urgency",
+        "trust",
+        "budget"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 147,
+      "id": "i147-cycle-shop",
+      "label": "CYCLE SHOP",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "cycle-shop-origin",
+        "destination",
+        "time",
+        "mode",
+        "party-size"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 148,
+      "id": "i148-e-scooter",
+      "label": "E-SCOOTER",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "e-scooter-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 149,
+      "id": "i149-scooter",
+      "label": "SCOOTER",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "scooter-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 150,
+      "id": "i150-motorbike",
+      "label": "MOTORBIKE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "motorbike-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 151,
+      "id": "i151-boat",
+      "label": "BOAT",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "boat-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 152,
+      "id": "i152-moving-service",
+      "label": "MOVING SERVICE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "moving-service-origin",
+        "destination",
+        "time",
+        "mode",
+        "party-size"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 153,
+      "id": "i153-bus-shuttle",
+      "label": "BUS SHUTTLE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "bus-shuttle-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 154,
+      "id": "i154-airport-transfer",
+      "label": "AIRPORT TRANSFER",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "origin",
+        "airport",
+        "time",
+        "passengers",
+        "vehicle",
+        "luggage"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 155,
+      "id": "i155-hitchhike",
+      "label": "HITCHHIKE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "hitchhike-origin",
+        "destination",
+        "departure",
+        "travelers",
+        "preference"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 156,
+      "id": "i156-bike-messenger",
+      "label": "BIKE MESSENGER",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "bike-messenger-vehicle",
+        "need",
+        "time",
+        "price",
+        "origin"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 157,
+      "id": "i157-bank",
+      "label": "BANK",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "bank-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 158,
+      "id": "i158-atm",
+      "label": "ATM",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "atm-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 159,
+      "id": "i159-savings",
+      "label": "SAVINGS",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "savings-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 160,
+      "id": "i160-loan",
+      "label": "LOAN",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "loan-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 161,
+      "id": "i161-mortgage",
+      "label": "MORTGAGE",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "mortgage-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 162,
+      "id": "i162-insurance",
+      "label": "INSURANCE",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "insurance-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 163,
+      "id": "i163-investment",
+      "label": "INVESTMENT",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "investment-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 164,
+      "id": "i164-pension",
+      "label": "PENSION",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pension-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 165,
+      "id": "i165-tax",
+      "label": "TAX",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "tax-type",
+        "support-type",
+        "jurisdiction",
+        "timeline",
+        "price"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 166,
+      "id": "i166-accountant",
+      "label": "ACCOUNTANT",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "accountant-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 167,
+      "id": "i167-financial-advisor",
+      "label": "FINANCIAL ADVISOR",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "financial-advisor-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 168,
+      "id": "i168-crypto",
+      "label": "CRYPTO",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "crypto-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 169,
+      "id": "i169-crowdfunding",
+      "label": "CROWDFUNDING",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "crowdfunding-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 170,
+      "id": "i170-donations",
+      "label": "DONATIONS",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "donations-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 171,
+      "id": "i171-budgeting",
+      "label": "BUDGETING",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "budgeting-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 172,
+      "id": "i172-invoice",
+      "label": "INVOICE",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "invoice-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 173,
+      "id": "i173-payroll",
+      "label": "PAYROLL",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "payroll-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 174,
+      "id": "i174-credit-score",
+      "label": "CREDIT SCORE",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "credit-score-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 175,
+      "id": "i175-remittance",
+      "label": "REMITTANCE",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "remittance-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 176,
+      "id": "i176-wealth",
+      "label": "WEALTH",
+      "subgroup": "FINANCE",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "wealth-product",
+        "amount",
+        "eligibility",
+        "fees",
+        "timeline"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 177,
+      "id": "i177-job",
+      "label": "JOB",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 178,
+      "id": "i178-internship",
+      "label": "INTERNSHIP",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 179,
+      "id": "i179-freelance",
+      "label": "FREELANCE",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 180,
+      "id": "i180-contract",
+      "label": "CONTRACT",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 181,
+      "id": "i181-recruiter",
+      "label": "RECRUITER",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 182,
+      "id": "i182-resume",
+      "label": "RESUME",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 183,
+      "id": "i183-interview",
+      "label": "INTERVIEW",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 184,
+      "id": "i184-coworking",
+      "label": "COWORKING",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 185,
+      "id": "i185-mentor",
+      "label": "MENTOR",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 186,
+      "id": "i186-cofounder",
+      "label": "COFOUNDER",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 187,
+      "id": "i187-collaborator",
+      "label": "COLLABORATOR",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 188,
+      "id": "i188-consultant",
+      "label": "CONSULTANT",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 189,
+      "id": "i189-career-coach",
+      "label": "CAREER COACH",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 190,
+      "id": "i190-temp",
+      "label": "TEMP",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 191,
+      "id": "i191-gig",
+      "label": "GIG",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 192,
+      "id": "i192-remote-work",
+      "label": "REMOTE WORK",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 193,
+      "id": "i193-union",
+      "label": "UNION",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 194,
+      "id": "i194-apprenticeship",
+      "label": "APPRENTICESHIP",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 195,
+      "id": "i195-side-hustle",
+      "label": "SIDE HUSTLE",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 196,
+      "id": "i196-volunteer",
+      "label": "JOB",
+      "subgroup": "WORK",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "role",
+        "skill",
+        "rate",
+        "location",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill",
+      "notes": "duplicate-label row: JOB (work alias)",
+      "alias_of": "i177-job"
+    },
+    {
+      "n": 197,
+      "id": "i197-tutor",
+      "label": "TUTOR",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 198,
+      "id": "i198-teacher",
+      "label": "TEACHER",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 199,
+      "id": "i199-school",
+      "label": "SCHOOL",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 200,
+      "id": "i200-course",
+      "label": "COURSE",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 201,
+      "id": "i201-bootcamp",
+      "label": "BOOTCAMP",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 202,
+      "id": "i202-language-lesson",
+      "label": "LANGUAGE LESSON",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 203,
+      "id": "i203-music-lesson",
+      "label": "MUSIC LESSON",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 204,
+      "id": "i204-test-prep",
+      "label": "TEST PREP",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 205,
+      "id": "i205-college-counselor",
+      "label": "COLLEGE COUNSELOR",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 206,
+      "id": "i206-library",
+      "label": "LIBRARY",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 207,
+      "id": "i207-workshop",
+      "label": "WORKSHOP",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 208,
+      "id": "i208-cooking-class",
+      "label": "COOKING CLASS",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "i072-cooking-class",
+      "notes": "attested leak: COOKING CLASS duplicated (FOOD + EDUCATION)"
+    },
+    {
+      "n": 209,
+      "id": "i209-university",
+      "label": "UNIVERSITY",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 210,
+      "id": "i210-preschool",
+      "label": "PRESCHOOL",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 211,
+      "id": "i211-homeschool",
+      "label": "HOMESCHOOL",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 212,
+      "id": "i212-mooc",
+      "label": "MOOC",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 213,
+      "id": "i213-scholarship",
+      "label": "SCHOLARSHIP",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 214,
+      "id": "i214-study-group",
+      "label": "STUDY GROUP",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 215,
+      "id": "i215-exchange-year",
+      "label": "EXCHANGE YEAR",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 216,
+      "id": "i216-vocational",
+      "label": "VOCATIONAL",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 217,
+      "id": "i217-literacy",
+      "label": "LITERACY",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 218,
+      "id": "i218-stem-camp",
+      "label": "STEM CAMP",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 219,
+      "id": "i219-adult-ed",
+      "label": "ADULT ED",
+      "subgroup": "EDUCATION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "subject",
+        "level",
+        "learner",
+        "format",
+        "schedule"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 220,
+      "id": "i220-museum",
+      "label": "MUSEUM",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 221,
+      "id": "i221-gallery",
+      "label": "GALLERY",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 222,
+      "id": "i222-theater",
+      "label": "THEATER",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 223,
+      "id": "i223-opera",
+      "label": "OPERA",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 224,
+      "id": "i224-ballet",
+      "label": "BALLET",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 225,
+      "id": "i225-concert-hall",
+      "label": "CONCERT HALL",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 226,
+      "id": "i226-heritage",
+      "label": "HERITAGE",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 227,
+      "id": "i227-monument",
+      "label": "MONUMENT",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 228,
+      "id": "i228-archive",
+      "label": "ARCHIVE",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 229,
+      "id": "i229-film-club",
+      "label": "FILM CLUB",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 230,
+      "id": "i230-book-club",
+      "label": "BOOK CLUB",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 231,
+      "id": "i231-choir",
+      "label": "CHOIR",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 232,
+      "id": "i232-orchestra",
+      "label": "ORCHESTRA",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 233,
+      "id": "i233-community-radio",
+      "label": "COMMUNITY RADIO",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 234,
+      "id": "i234-language-cafe",
+      "label": "LANGUAGE CAFE",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 235,
+      "id": "i235-religion",
+      "label": "RELIGION",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 236,
+      "id": "i236-temple",
+      "label": "TEMPLE",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 237,
+      "id": "i237-church",
+      "label": "CHURCH",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 238,
+      "id": "i238-mosque",
+      "label": "MOSQUE",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 239,
+      "id": "i239-synagogue",
+      "label": "SYNAGOGUE",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 240,
+      "id": "i240-festival",
+      "label": "FESTIVAL",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 241,
+      "id": "i241-carnival",
+      "label": "CARNIVAL",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 242,
+      "id": "i242-parade",
+      "label": "PARADE",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 243,
+      "id": "i243-tradition",
+      "label": "TRADITION",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 244,
+      "id": "i244-folk-dance",
+      "label": "FOLK DANCE",
+      "subgroup": "CULTURE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "activity",
+        "vibe",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 245,
+      "id": "i245-babysitter",
+      "label": "BABYSITTER",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 246,
+      "id": "i246-nanny",
+      "label": "NANNY",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 247,
+      "id": "i247-daycare",
+      "label": "DAYCARE",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 248,
+      "id": "i248-playdate",
+      "label": "PLAYDATE",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 249,
+      "id": "i249-parenting-class",
+      "label": "PARENTING CLASS",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 250,
+      "id": "i250-adoption",
+      "label": "ADOPTION",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 251,
+      "id": "i251-foster-care",
+      "label": "FOSTER CARE",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 252,
+      "id": "i252-child-support",
+      "label": "CHILD SUPPORT",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 253,
+      "id": "i253-family-therapy",
+      "label": "FAMILY THERAPY",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 254,
+      "id": "i254-marriage-counsel",
+      "label": "MARRIAGE COUNSEL",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 255,
+      "id": "i255-kinship",
+      "label": "KINSHIP",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 256,
+      "id": "i256-teen-mentor",
+      "label": "TEEN MENTOR",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 257,
+      "id": "i257-family-mediation",
+      "label": "FAMILY MEDIATION",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 258,
+      "id": "i258-surrogacy",
+      "label": "SURROGACY",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 259,
+      "id": "i259-childminder",
+      "label": "BABYSITTER",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "i245-babysitter"
+    },
+    {
+      "n": 260,
+      "id": "i260-after-school",
+      "label": "AFTER SCHOOL",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 261,
+      "id": "i261-parents-circle",
+      "label": "PARENTS CIRCLE",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 262,
+      "id": "i262-coparent",
+      "label": "COPARENT",
+      "subgroup": "FAMILY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "care-type",
+        "schedule",
+        "trust",
+        "budget",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 263,
+      "id": "i263-hairdresser",
+      "label": "HAIRDRESSER",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "hairdresser-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 264,
+      "id": "i264-barber",
+      "label": "BARBER",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "barber-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 265,
+      "id": "i265-nails",
+      "label": "NAILS",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "nails-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 266,
+      "id": "i266-spa",
+      "label": "SPA",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "spa-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 267,
+      "id": "i267-makeup",
+      "label": "MAKEUP",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "makeup-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 268,
+      "id": "i268-tanning",
+      "label": "TANNING",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "tanning-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 269,
+      "id": "i269-waxing",
+      "label": "WAXING",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "waxing-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 270,
+      "id": "i270-tattoo",
+      "label": "TATTOO",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "tattoo-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 271,
+      "id": "i271-piercing",
+      "label": "PIERCING",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "piercing-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 272,
+      "id": "i272-skincare",
+      "label": "SKINCARE",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "skincare-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 273,
+      "id": "i273-beauty-salon",
+      "label": "BEAUTY SALON",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "beauty-salon-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 274,
+      "id": "i274-lashes",
+      "label": "LASHES",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "lashes-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 275,
+      "id": "i275-brow-bar",
+      "label": "BROW BAR",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "brow-bar-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 276,
+      "id": "i276-cosmetics",
+      "label": "COSMETICS",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "cosmetics-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 277,
+      "id": "i277-massage-bar",
+      "label": "MASSAGE BAR",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "massage-bar-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 278,
+      "id": "i278-barbershop",
+      "label": "BARBERSHOP",
+      "subgroup": "BEAUTY",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "barbershop-service",
+        "style",
+        "availability",
+        "price",
+        "reason"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 279,
+      "id": "i279-vet",
+      "label": "VET",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 280,
+      "id": "i280-pet-sitter",
+      "label": "PET SITTER",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 281,
+      "id": "i281-dog-walker",
+      "label": "DOG WALKER",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 282,
+      "id": "i282-groomer",
+      "label": "GROOMER",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 283,
+      "id": "i283-pet-trainer",
+      "label": "PET TRAINER",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 284,
+      "id": "i284-pet-boarding",
+      "label": "PET BOARDING",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 285,
+      "id": "i285-pet-adoption",
+      "label": "PET ADOPTION",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 286,
+      "id": "i286-pet-food",
+      "label": "PET FOOD",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 287,
+      "id": "i287-pet-insurance",
+      "label": "PET INSURANCE",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 288,
+      "id": "i288-kennel",
+      "label": "PET BOARDING",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "i284-pet-boarding"
+    },
+    {
+      "n": 289,
+      "id": "i289-cat-cafe",
+      "label": "CAT CAFE",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 290,
+      "id": "i290-aquarium-shop",
+      "label": "AQUARIUM SHOP",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 291,
+      "id": "i291-horse-stable",
+      "label": "HORSE STABLE",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 292,
+      "id": "i292-pet-cemetery",
+      "label": "PET CEMETERY",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 293,
+      "id": "i293-wildlife-rescue",
+      "label": "WILDLIFE RESCUE",
+      "subgroup": "PETS",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "pet-type",
+        "service",
+        "schedule",
+        "price",
+        "location"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 294,
+      "id": "i294-clothing",
+      "label": "CLOTHING",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 295,
+      "id": "i295-shoes",
+      "label": "SHOES",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 296,
+      "id": "i296-tailor",
+      "label": "TAILOR",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 297,
+      "id": "i297-dry-cleaner",
+      "label": "DRY CLEANER",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 298,
+      "id": "i298-fashion-designer",
+      "label": "FASHION DESIGNER",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 299,
+      "id": "i299-vintage",
+      "label": "VINTAGE",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 300,
+      "id": "i300-thrift",
+      "label": "THRIFT",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 301,
+      "id": "i301-jewelry",
+      "label": "JEWELRY",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 302,
+      "id": "i302-watch",
+      "label": "WATCH",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 303,
+      "id": "i303-handbag",
+      "label": "HANDBAG",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 304,
+      "id": "i304-alterations",
+      "label": "ALTERATIONS",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 305,
+      "id": "i305-uniform",
+      "label": "UNIFORM",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 306,
+      "id": "i306-costume",
+      "label": "COSTUME",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 307,
+      "id": "i307-streetwear",
+      "label": "STREETWEAR",
+      "subgroup": "FASHION",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "item",
+        "style",
+        "size",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 308,
+      "id": "i308-date",
+      "label": "DATE",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 1,
+      "slots": [
+        "date-type",
+        "format",
+        "date",
+        "location",
+        "safety",
+        "budget"
+      ],
+      "source": "attested-recitation",
+      "kind": "event"
+    },
+    {
+      "n": 309,
+      "id": "i309-friend",
+      "label": "FRIEND",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 310,
+      "id": "i310-hangout",
+      "label": "HANGOUT",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 311,
+      "id": "i311-activity-partner",
+      "label": "ACTIVITY PARTNER",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 312,
+      "id": "i312-matchmaker",
+      "label": "MATCHMAKER",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 313,
+      "id": "i313-relationship",
+      "label": "RELATIONSHIP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 314,
+      "id": "i314-meetup",
+      "label": "MEETUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 315,
+      "id": "i315-club",
+      "label": "CLUB",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 316,
+      "id": "i316-community",
+      "label": "COMMUNITY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 317,
+      "id": "i317-neighbor",
+      "label": "NEIGHBOR",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 318,
+      "id": "i318-language-exchange",
+      "label": "LANGUAGE EXCHANGE",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 319,
+      "id": "i319-dining-companion",
+      "label": "DINING COMPANION",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 320,
+      "id": "i320-travel-companion",
+      "label": "TRAVEL COMPANION",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 321,
+      "id": "i321-accountability-partner",
+      "label": "ACCOUNTABILITY PARTNER",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 322,
+      "id": "i322-support-group",
+      "label": "SUPPORT GROUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 323,
+      "id": "i323-volunteer-buddy",
+      "label": "VOLUNTEER BUDDY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 324,
+      "id": "i324-faith-group",
+      "label": "FAITH GROUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 325,
+      "id": "i325-sports-buddy",
+      "label": "SPORTS BUDDY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 326,
+      "id": "i327-game-night",
+      "label": "GAME NIGHT",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 327,
+      "id": "i328-new-in-town",
+      "label": "NEW IN TOWN",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 328,
+      "id": "i329-coworking-buddy",
+      "label": "COWORKING BUDDY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 329,
+      "id": "i330-parents-group",
+      "label": "PARENTS GROUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 330,
+      "id": "i331-lgbtq-space",
+      "label": "LGBTQ SPACE",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 331,
+      "id": "i332-senior-social",
+      "label": "SENIOR SOCIAL",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 332,
+      "id": "i333-youth-group",
+      "label": "YOUTH GROUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 333,
+      "id": "i334-host-family",
+      "label": "HOST FAMILY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "type",
+        "format",
+        "date",
+        "location",
+        "vibe"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 334,
+      "id": "i335-recycling",
+      "label": "RECYCLING",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 335,
+      "id": "i336-compost",
+      "label": "COMPOST",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 336,
+      "id": "i337-solar-coop",
+      "label": "SOLAR COOP",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 337,
+      "id": "i338-community-garden",
+      "label": "COMMUNITY GARDEN",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 338,
+      "id": "i339-tree-planting",
+      "label": "TREE PLANTING",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 339,
+      "id": "i340-climate-group",
+      "label": "CLIMATE GROUP",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 340,
+      "id": "i341-repair-cafe",
+      "label": "REPAIR CAFE",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 341,
+      "id": "i342-tool-library",
+      "label": "TOOL LIBRARY",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 342,
+      "id": "i343-zero-waste",
+      "label": "ZERO WASTE",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 343,
+      "id": "i344-water-quality",
+      "label": "WATER QUALITY",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 344,
+      "id": "i345-air-quality",
+      "label": "AIR QUALITY",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 345,
+      "id": "i346-wildlife",
+      "label": "WILDLIFE",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 346,
+      "id": "i347-park-cleanup",
+      "label": "PARK CLEANUP",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 347,
+      "id": "i348-bike-advocacy",
+      "label": "BIKE ADVOCACY",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 348,
+      "id": "i349-transit-advocacy",
+      "label": "TRANSIT ADVOCACY",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 349,
+      "id": "i350-energy-audit",
+      "label": "ENERGY AUDIT",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 350,
+      "id": "i351-conservation",
+      "label": "CONSERVATION",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 351,
+      "id": "i352-mutual-aid",
+      "label": "MUTUAL AID",
+      "subgroup": "ENV",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "topic",
+        "scale",
+        "location",
+        "commitment",
+        "format"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 352,
+      "id": "i353-airbnb",
+      "label": "AIRBNB",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 1,
+      "slots": [
+        "property-type",
+        "dates",
+        "guests",
+        "location",
+        "amenities",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 353,
+      "id": "i354-hotel",
+      "label": "HOTEL",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 354,
+      "id": "i355-hostel",
+      "label": "HOSTEL",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 355,
+      "id": "i356-short-stay",
+      "label": "SHORT STAY",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 356,
+      "id": "i357-travel-agent",
+      "label": "TRAVEL AGENT",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 357,
+      "id": "i358-tour-guide",
+      "label": "TOUR GUIDE",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 358,
+      "id": "i359-camping",
+      "label": "CAMPING",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 359,
+      "id": "i360-glamping",
+      "label": "GLAMPING",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 360,
+      "id": "i361-homestay",
+      "label": "HOMESTAY",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 361,
+      "id": "i362-couchsurf",
+      "label": "COUCHSURF",
+      "subgroup": "TRAVEL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 362,
+      "id": "i363-vacation-rental",
+      "label": "AIRBNB",
+      "subgroup": "TRAVEL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "i353-airbnb"
+    },
+    {
+      "n": 363,
+      "id": "i364-resort",
+      "label": "RESORT",
+      "subgroup": "TRAVEL",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 364,
+      "id": "i365-cruise",
+      "label": "CRUISE",
+      "subgroup": "TRAVEL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 365,
+      "id": "i366-road-trip",
+      "label": "ROAD TRIP",
+      "subgroup": "TRAVEL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 366,
+      "id": "i367-day-trip",
+      "label": "DAY TRIP",
+      "subgroup": "TRAVEL",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 367,
+      "id": "i368-eco-lodge",
+      "label": "ECO LODGE",
+      "subgroup": "TRAVEL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "destination",
+        "dates",
+        "party-size",
+        "budget",
+        "lodging"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 368,
+      "id": "i369-photographer",
+      "label": "PHOTOGRAPHER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 369,
+      "id": "i370-videographer",
+      "label": "VIDEOGRAPHER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 370,
+      "id": "i371-dj",
+      "label": "DJ",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 371,
+      "id": "i372-band",
+      "label": "BAND",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 372,
+      "id": "i373-writer",
+      "label": "WRITER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 373,
+      "id": "i374-illustrator",
+      "label": "ILLUSTRATOR",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 374,
+      "id": "i375-designer",
+      "label": "DESIGNER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 375,
+      "id": "i376-potter",
+      "label": "POTTER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 376,
+      "id": "i377-woodworker",
+      "label": "WOODWORKER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 377,
+      "id": "i378-filmmaker",
+      "label": "FILMMAKER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 378,
+      "id": "i379-podcaster",
+      "label": "PODCASTER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 379,
+      "id": "i380-painter-art",
+      "label": "PAINTER ART",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 380,
+      "id": "i381-sculptor",
+      "label": "SCULPTOR",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 381,
+      "id": "i382-composer",
+      "label": "COMPOSER",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 382,
+      "id": "i383-open-mic",
+      "label": "OPEN MIC",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 383,
+      "id": "i384-studio-space",
+      "label": "STUDIO SPACE",
+      "subgroup": "CREATIVE",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "medium",
+        "collab",
+        "schedule",
+        "price",
+        "level"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 384,
+      "id": "i385-lawyer",
+      "label": "LAWYER",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 1,
+      "slots": [
+        "practice-area",
+        "matter",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 385,
+      "id": "i386-notary",
+      "label": "NOTARY",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 386,
+      "id": "i387-paralegal",
+      "label": "PARALEGAL",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 387,
+      "id": "i388-immigration",
+      "label": "IMMIGRATION",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 388,
+      "id": "i389-wills",
+      "label": "WILLS",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 389,
+      "id": "i390-estate",
+      "label": "ESTATE",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 390,
+      "id": "i391-contract-review",
+      "label": "CONTRACT REVIEW",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 391,
+      "id": "i392-patent",
+      "label": "PATENT",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 392,
+      "id": "i393-trademark",
+      "label": "TRADEMARK",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 393,
+      "id": "i394-small-claims",
+      "label": "SMALL CLAIMS",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 394,
+      "id": "i395-mediation",
+      "label": "MEDIATION",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 395,
+      "id": "i396-apostille",
+      "label": "APOSTILLE",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 396,
+      "id": "i397-incorporation",
+      "label": "INCORPORATION",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 397,
+      "id": "i398-legal-aid",
+      "label": "LEGAL AID",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 398,
+      "id": "i399-attorney",
+      "label": "LAWYER",
+      "subgroup": "LEGAL",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "matter",
+        "practice-area",
+        "language",
+        "budget",
+        "availability"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "i385-lawyer"
+    },
+    {
+      "n": 399,
+      "id": "i400-ai-tools",
+      "label": "AI TOOLS",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "attested-recitation"
+    },
+    {
+      "n": 400,
+      "id": "i401-pdf-summarizer",
+      "label": "PDF SUMMARIZER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 401,
+      "id": "i402-web-browser",
+      "label": "WEB BROWSER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 402,
+      "id": "i403-translator",
+      "label": "TRANSLATOR",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 403,
+      "id": "i404-verifier",
+      "label": "VERIFIER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 404,
+      "id": "i405-failover",
+      "label": "FAILOVER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 405,
+      "id": "i406-delegate",
+      "label": "DELEGATE",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 406,
+      "id": "i407-cheap-runner",
+      "label": "CHEAP RUNNER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 407,
+      "id": "i408-workflow",
+      "label": "WORKFLOW",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 408,
+      "id": "i409-capability-index",
+      "label": "CAPABILITY INDEX",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 409,
+      "id": "i410-voice-router",
+      "label": "VOICE ROUTER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 410,
+      "id": "i411-mcp-server",
+      "label": "MCP SERVER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 411,
+      "id": "i412-price-quote",
+      "label": "PRICE QUOTE",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 412,
+      "id": "i413-scheduler",
+      "label": "SCHEDULER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 413,
+      "id": "i414-embedding-index",
+      "label": "EMBEDDING INDEX",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 414,
+      "id": "i415-researcher",
+      "label": "RESEARCHER",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 415,
+      "id": "i416-evaluator",
+      "label": "EVALUATOR",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 416,
+      "id": "i417-moderator",
+      "label": "MODERATOR",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 417,
+      "id": "i418-automation",
+      "label": "AUTOMATION",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 418,
+      "id": "i419-app-builder",
+      "label": "AI TOOLS",
+      "subgroup": "DIGITAL & TECH",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "use-case",
+        "user-type",
+        "integration",
+        "pricing",
+        "data-policy"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "i400-ai-tools"
+    },
+    {
+      "n": 419,
+      "id": "i420-concert",
+      "label": "CONCERT",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 420,
+      "id": "i421-movie",
+      "label": "MOVIE",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 421,
+      "id": "i422-ticket",
+      "label": "TICKET",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 422,
+      "id": "i423-conference",
+      "label": "CONFERENCE",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 423,
+      "id": "i424-wedding",
+      "label": "WEDDING",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 424,
+      "id": "i425-funeral",
+      "label": "FUNERAL",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 425,
+      "id": "i426-birthday",
+      "label": "BIRTHDAY",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 426,
+      "id": "i427-gala",
+      "label": "GALA",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 427,
+      "id": "i428-trade-show",
+      "label": "TRADE SHOW",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 428,
+      "id": "i429-sports-event",
+      "label": "SPORTS EVENT",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 429,
+      "id": "i430-watch-party",
+      "label": "WATCH PARTY",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 430,
+      "id": "i431-opening-night",
+      "label": "OPENING NIGHT",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 431,
+      "id": "i432-lecture",
+      "label": "LECTURE",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 432,
+      "id": "i433-protest",
+      "label": "PROTEST",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 433,
+      "id": "i434-market",
+      "label": "MARKET",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 434,
+      "id": "i435-fair",
+      "label": "FAIR",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 435,
+      "id": "i436-expo",
+      "label": "EXPO",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 436,
+      "id": "i437-networking-night",
+      "label": "NETWORKING NIGHT",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 437,
+      "id": "i438-reunion",
+      "label": "REUNION",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 438,
+      "id": "i439-commencement",
+      "label": "COMMENCEMENT",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 439,
+      "id": "i440-hackathon",
+      "label": "HACKATHON",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 440,
+      "id": "i441-pop-up",
+      "label": "POP-UP",
+      "subgroup": "EVENTS",
+      "routing": "mixed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "event-type",
+        "date",
+        "location",
+        "party-size",
+        "budget"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 441,
+      "id": "i442-corner-shop",
+      "label": "CORNER SHOP",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 442,
+      "id": "i443-hardware-store",
+      "label": "HARDWARE STORE",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 443,
+      "id": "i444-laundromat",
+      "label": "LAUNDROMAT",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 444,
+      "id": "i445-farmers-market",
+      "label": "FARMERS MARKET",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 445,
+      "id": "i446-town-hall",
+      "label": "TOWN HALL",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 446,
+      "id": "i447-community-center",
+      "label": "COMMUNITY CENTER",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 447,
+      "id": "i448-lost-and-found",
+      "label": "LOST AND FOUND",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 448,
+      "id": "i449-notice-board",
+      "label": "NOTICE BOARD",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 449,
+      "id": "i450-neighborhood-watch",
+      "label": "NEIGHBORHOOD WATCH",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 450,
+      "id": "i451-open-now-shop",
+      "label": "OPEN NOW SHOP",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 451,
+      "id": "i452-repair-shop",
+      "label": "REPAIR SHOP",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 452,
+      "id": "i453-copy-shop",
+      "label": "COPY SHOP",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 453,
+      "id": "i454-key-cutting",
+      "label": "KEY CUTTING",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 454,
+      "id": "i455-charity-shop",
+      "label": "CHARITY SHOP",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 455,
+      "id": "i456-municipal-service",
+      "label": "MUNICIPAL SERVICE",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 456,
+      "id": "i457-local-guide",
+      "label": "LOCAL GUIDE",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 457,
+      "id": "i458-post-office",
+      "label": "POST OFFICE",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 458,
+      "id": "i459-fire-station",
+      "label": "FIRE STATION",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 459,
+      "id": "i460-permit-desk",
+      "label": "PERMIT DESK",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 460,
+      "id": "i461-room-booking",
+      "label": "ROOM BOOKING",
+      "subgroup": "LOCAL",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "category",
+        "hours",
+        "location",
+        "price",
+        "fulfillment"
+      ],
+      "source": "reconstructed-to-fill"
+    },
+    {
+      "n": 461,
+      "id": "i462-doctor-alias",
+      "label": "DOCTOR",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:DOCTOR",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 462,
+      "id": "i463-dentist-alias",
+      "label": "DENTIST",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:DENTIST",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 463,
+      "id": "i464-restaurant-alias",
+      "label": "RESTAURANT",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:RESTAURANT",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 464,
+      "id": "i465-apartment-alias",
+      "label": "APARTMENT",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:APARTMENT",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 465,
+      "id": "i466-plumber-alias",
+      "label": "PLUMBER",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:PLUMBER",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 466,
+      "id": "i467-rideshare-alias",
+      "label": "RIDESHARE",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:RIDESHARE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 467,
+      "id": "i468-date-alias",
+      "label": "DATE",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "untagged",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:DATE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 468,
+      "id": "i469-bank-alias",
+      "label": "BANK",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:BANK",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 469,
+      "id": "i470-gym-alias",
+      "label": "GYM",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:GYM",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 470,
+      "id": "i471-yoga-alias",
+      "label": "YOGA",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:YOGA",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 471,
+      "id": "i472-cafe-alias",
+      "label": "CAFE",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:CAFE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 472,
+      "id": "i473-house-alias",
+      "label": "HOUSE",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:HOUSE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 473,
+      "id": "i474-taxi-alias",
+      "label": "TAXI",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:TAXI",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 474,
+      "id": "i475-job-alias",
+      "label": "JOB",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:JOB",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 475,
+      "id": "i476-nurse-alias",
+      "label": "NURSE",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:NURSE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 476,
+      "id": "i477-pharmacy-alias",
+      "label": "PHARMACY",
+      "subgroup": "MISC",
+      "routing": "missing",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:PHARMACY",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 477,
+      "id": "i478-hospital-alias",
+      "label": "HOSPITAL",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:HOSPITAL",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 478,
+      "id": "i479-cleaner-alias",
+      "label": "CLEANER",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:CLEANER",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 479,
+      "id": "i480-electrician-alias",
+      "label": "ELECTRICIAN",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:ELECTRICIAN",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 480,
+      "id": "i481-train-alias",
+      "label": "TRAIN",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:TRAIN",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 481,
+      "id": "i482-bus-alias",
+      "label": "BUS",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:BUS",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 482,
+      "id": "i483-flight-alias",
+      "label": "FLIGHT",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:FLIGHT",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 483,
+      "id": "i484-coffee-alias",
+      "label": "COFFEE",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:COFFEE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 484,
+      "id": "i485-wine-alias",
+      "label": "WINE",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:WINE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 485,
+      "id": "i486-grocery-alias",
+      "label": "GROCERY",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:GROCERY",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 486,
+      "id": "i487-rent-alias",
+      "label": "RENT",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:RENT",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 487,
+      "id": "i488-landlord-alias",
+      "label": "LANDLORD",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:LANDLORD",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 488,
+      "id": "i489-mover-alias",
+      "label": "MOVER",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:MOVER",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 489,
+      "id": "i490-storage-alias",
+      "label": "STORAGE",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:STORAGE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 490,
+      "id": "i491-internet-alias",
+      "label": "INTERNET",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:INTERNET",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 491,
+      "id": "i492-car-alias",
+      "label": "CAR",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:CAR",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 492,
+      "id": "i493-parking-alias",
+      "label": "PARKING",
+      "subgroup": "MISC",
+      "routing": "network-routed",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:PARKING",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 493,
+      "id": "i494-loan-alias",
+      "label": "LOAN",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:LOAN",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 494,
+      "id": "i495-insurance-alias",
+      "label": "INSURANCE",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:INSURANCE",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 495,
+      "id": "i496-tax-alias",
+      "label": "TAX",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:TAX",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 496,
+      "id": "i497-tutor-alias",
+      "label": "TUTOR",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:TUTOR",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 497,
+      "id": "i498-school-alias",
+      "label": "SCHOOL",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:SCHOOL",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 498,
+      "id": "i499-museum-alias",
+      "label": "MUSEUM",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:MUSEUM",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 499,
+      "id": "i500-friend-alias",
+      "label": "FRIEND",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:FRIEND",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 500,
+      "id": "i501-vet-alias",
+      "label": "VET",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:VET",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 501,
+      "id": "i502-hotel-alias",
+      "label": "HOTEL",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:HOTEL",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 502,
+      "id": "i503-photographer-alias",
+      "label": "PHOTOGRAPHER",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:PHOTOGRAPHER",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 503,
+      "id": "i504-concert-alias",
+      "label": "CONCERT",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "verified",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:CONCERT",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 504,
+      "id": "i505-clothing-alias",
+      "label": "CLOTHING",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "estimated",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:CLOTHING",
+      "notes": "MISC residual / duplicate label (alias row)"
+    },
+    {
+      "n": 505,
+      "id": "i506-notary-alias",
+      "label": "NOTARY",
+      "subgroup": "MISC",
+      "routing": "geo-anchored",
+      "status": "fragmented",
+      "deep": 0,
+      "slots": [
+        "need",
+        "constraint",
+        "price",
+        "location",
+        "format"
+      ],
+      "source": "reconstructed-to-fill",
+      "alias_of": "alias:NOTARY",
+      "notes": "MISC residual / duplicate label (alias row)"
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+1|i001-doctor|DOCTOR|BODY & HEALTH|geo-anchored|verified|deep=1|slots=specialty,reason,payment,visit,availability
+2|i002-dentist|DENTIST|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=procedure,payment,availability,provider-type,reason
+3|i003-nurse|NURSE|BODY & HEALTH|geo-anchored|untagged|deep=0|slots=nurse-reason,care-type,payment,visit-mode,availability
+4|i004-pharmacy|PHARMACY|BODY & HEALTH|geo-anchored|verified|deep=0|slots=pharmacy-need,hours,payment,delivery,reason
+5|i005-hospital|HOSPITAL|BODY & HEALTH|geo-anchored|verified|deep=0|slots=hospital-urgency,service,payment,turnaround,reason
+6|i006-surgeon|SURGEON|BODY & HEALTH|geo-anchored|fragmented|deep=0|slots=surgeon-reason,care-type,payment,visit-mode,availability
+7|i007-physiotherapist|PHYSIOTHERAPIST|BODY & HEALTH|geo-anchored|verified|deep=0|slots=physiotherapist-reason,care-type,payment,visit-mode,availability
+8|i008-chiropractor|CHIROPRACTOR|BODY & HEALTH|geo-anchored|verified|deep=0|slots=chiropractor-reason,care-type,payment,visit-mode,availability
+9|i009-optician|OPTICIAN|BODY & HEALTH|geo-anchored|verified|deep=0|slots=optician-reason,care-type,payment,visit-mode,availability
+10|i010-audiologist|AUDIOLOGIST|BODY & HEALTH|geo-anchored|verified|deep=0|slots=audiologist-reason,care-type,payment,visit-mode,availability
+11|i011-dermatologist|DERMATOLOGIST|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=dermatologist-reason,care-type,payment,visit-mode,availability
+12|i012-gynaecologist|GYNAECOLOGIST|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=gynaecologist-reason,care-type,payment,visit-mode,availability
+13|i013-psychiatrist|PSYCHIATRIST|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=psychiatrist-reason,care-type,payment,visit-mode,availability
+14|i014-psychologist|PSYCHOLOGIST|BODY & HEALTH|geo-anchored|verified|deep=0|slots=psychologist-reason,care-type,payment,visit-mode,availability
+15|i015-therapist|THERAPIST|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=therapist-reason,care-type,payment,visit-mode,availability
+16|i016-counsellor|COUNSELLOR|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=counsellor-reason,care-type,payment,visit-mode,availability
+17|i017-nutritionist|NUTRITIONIST|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=nutritionist-reason,care-type,payment,visit-mode,availability
+18|i018-dietician|DIETICIAN|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=dietician-reason,care-type,payment,visit-mode,availability
+19|i019-blood-test|BLOOD TEST|BODY & HEALTH|geo-anchored|verified|deep=0|slots=blood-test-urgency,service,payment,turnaround,reason
+20|i020-vaccination|VACCINATION|BODY & HEALTH|geo-anchored|verified|deep=0|slots=vaccination-urgency,service,payment,turnaround,reason
+21|i021-ambulance|AMBULANCE|BODY & HEALTH|geo-anchored|untagged|deep=0|slots=ambulance-urgency,service,payment,turnaround,reason
+22|i022-1st-aid|1ST AID|BODY & HEALTH|geo-anchored|verified|deep=0|slots=1st-aid-reason,care-type,payment,visit-mode,availability
+23|i023-rehab|REHAB|BODY & HEALTH|geo-anchored|verified|deep=0|slots=rehab-reason,care-type,payment,visit-mode,availability
+24|i024-addiction|ADDICTION|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=addiction-reason,care-type,payment,visit-mode,availability
+25|i025-palliative-care|PALLIATIVE CARE|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=palliative-care-vehicle,need,time,price,reason
+26|i026-hospice|HOSPICE|BODY & HEALTH|geo-anchored|verified|deep=0|slots=hospice-reason,care-type,payment,visit-mode,availability
+27|i027-fertility|FERTILITY|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=fertility-reason,care-type,payment,visit-mode,availability
+28|i028-midwife|MIDWIFE|BODY & HEALTH|geo-anchored|fragmented|deep=0|slots=midwife-reason,care-type,payment,visit-mode,availability
+29|i029-contraception|CONTRACEPTION|BODY & HEALTH|geo-anchored|verified|deep=0|slots=contraception-reason,care-type,payment,visit-mode,availability
+30|i030-sti-test|STI TEST|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=sti-test-urgency,service,payment,turnaround,reason
+31|i031-hearing-aid|HEARING AID|BODY & HEALTH|geo-anchored|verified|deep=0|slots=hearing-aid-reason,care-type,payment,visit-mode,availability
+32|i032-wheelchair|WHEELCHAIR|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=wheelchair-service,style,availability,price,reason
+33|i033-prosthetics|PROSTHETICS|BODY & HEALTH|geo-anchored|verified|deep=0|slots=prosthetics-reason,care-type,payment,visit-mode,availability
+34|i034-home-care|HOME CARE|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=home-care-vehicle,need,time,price,reason
+35|i035-elder-care|ELDER CARE|BODY & HEALTH|geo-anchored|untagged|deep=0|slots=elder-care-vehicle,need,time,price,reason
+36|i036-dementia-care|DEMENTIA CARE|BODY & HEALTH|geo-anchored|estimated|deep=0|slots=dementia-care-vehicle,need,time,price,reason
+37|i037-gym|GYM|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=gym-activity,level,schedule,format,price
+38|i038-personal-trainer|PERSONAL TRAINER|FITNESS & SPORT|geo-anchored|estimated|deep=0|slots=personal-trainer-origin,destination,departure,travelers,preference
+39|i039-yoga|YOGA|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=yoga-activity,level,schedule,format,price
+40|i040-pilates|PILATES|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=pilates-activity,level,schedule,format,price
+41|i041-swimming|SWIMMING|FITNESS & SPORT|geo-anchored|fragmented|deep=0|slots=swimming-activity,level,schedule,format,price
+42|i042-running|RUNNING|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=running-activity,level,schedule,format,price
+43|i043-cycling|CYCLING|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=cycling-activity,level,schedule,format,price
+44|i044-climbing|CLIMBING|FITNESS & SPORT|geo-anchored|fragmented|deep=0|slots=climbing-activity,level,schedule,format,price
+45|i045-martial-arts|MARTIAL ARTS|FITNESS & SPORT|geo-anchored|fragmented|deep=0|slots=martial-arts-activity,level,schedule,format,price
+46|i046-dance|DANCE|FITNESS & SPORT|geo-anchored|fragmented|deep=0|slots=dance-activity,level,schedule,format,price
+47|i047-football|FOOTBALL|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=football-activity,level,schedule,format,price
+48|i048-tennis|TENNIS|FITNESS & SPORT|geo-anchored|estimated|deep=0|slots=tennis-activity,level,schedule,format,price
+49|i049-golf|GOLF|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=golf-activity,level,schedule,format,price
+50|i050-skiing|SKIING|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=skiing-activity,level,schedule,format,price
+51|i051-surfing|SURFING|FITNESS & SPORT|geo-anchored|fragmented|deep=0|slots=surfing-activity,level,schedule,format,price
+52|i052-boxing|BOXING|FITNESS & SPORT|geo-anchored|fragmented|deep=0|slots=boxing-activity,level,schedule,format,price
+53|i053-crossfit|CROSSFIT|FITNESS & SPORT|geo-anchored|estimated|deep=0|slots=crossfit-activity,level,schedule,format,price
+54|i054-sports-team|SPORTS TEAM|FITNESS & SPORT|geo-anchored|estimated|deep=0|slots=sports-team-activity,level,schedule,format,price
+55|i055-sports-coach|SPORTS COACH|FITNESS & SPORT|geo-anchored|fragmented|deep=0|slots=sports-coach-activity,level,schedule,format,price
+56|i056-sports-gear|SPORTS GEAR|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=sports-gear-activity,level,schedule,format,price
+57|i057-stadium|STADIUM|FITNESS & SPORT|geo-anchored|verified|deep=0|slots=stadium-activity,level,schedule,format,price
+58|i058-pool|POOL|FITNESS & SPORT|geo-anchored|estimated|deep=0|slots=pool-activity,level,schedule,format,price
+59|i059-sauna|SAUNA|FITNESS & SPORT|geo-anchored|fragmented|deep=0|slots=sauna-activity,level,schedule,format,price
+60|i060-restaurant|RESTAURANT|FOOD & DRINK|mixed|verified|deep=1|slots=cuisine,diet,occasion,party-size,reservation,budget
+61|i061-fast-food|FAST FOOD|FOOD & DRINK|mixed|verified|deep=0|slots=fast-food-item,diet,fulfillment,price,hours
+62|i062-cafe|CAFE|FOOD & DRINK|mixed|verified|deep=0|slots=cafe-item,diet,fulfillment,price,hours
+63|i063-bakery|BAKERY|FOOD & DRINK|mixed|estimated|deep=0|slots=bakery-item,diet,fulfillment,price,hours
+64|i064-grocery|GROCERY|FOOD & DRINK|mixed|verified|deep=0|slots=grocery-item,diet,fulfillment,price,hours
+65|i065-butcher|BUTCHER|FOOD & DRINK|mixed|fragmented|deep=0|slots=butcher-item,diet,fulfillment,price,hours
+66|i066-fishmonger|FISHMONGER|FOOD & DRINK|mixed|fragmented|deep=0|slots=fishmonger-item,diet,fulfillment,price,hours
+67|i067-greengrocer|GREENGROCER|FOOD & DRINK|mixed|verified|deep=0|slots=greengrocer-item,diet,fulfillment,price,hours
+68|i068-food-delivery|FOOD DELIVERY|FOOD & DRINK|mixed|verified|deep=0|slots=food-delivery-item,diet,fulfillment,price,hours
+69|i069-meal-kit|MEAL KIT|FOOD & DRINK|mixed|verified|deep=0|slots=meal-kit-item,diet,fulfillment,price,hours
+70|i070-food-sharing|FOOD SHARING|FOOD & DRINK|mixed|estimated|deep=0|slots=food-sharing-item,diet,fulfillment,price,hours
+71|i071-catering|CATERING|FOOD & DRINK|mixed|estimated|deep=0|slots=catering-item,diet,fulfillment,price,hours
+72|i072-cooking-class|COOKING CLASS|FOOD & DRINK|mixed|estimated|deep=0|slots=cooking-class-subject,level,learner,format,schedule
+73|i073-recipe|RECIPE|FOOD & DRINK|mixed|estimated|deep=0|slots=recipe-item,diet,fulfillment,price,hours
+74|i074-diet-plan|DIET PLAN|FOOD & DRINK|mixed|verified|deep=0|slots=diet-plan-item,diet,fulfillment,price,hours
+75|i075-vegan-food|VEGAN FOOD|FOOD & DRINK|mixed|untagged|deep=0|slots=vegan-food-item,diet,fulfillment,price,hours
+76|i076-halal-food|HALAL FOOD|FOOD & DRINK|mixed|fragmented|deep=0|slots=halal-food-item,diet,fulfillment,price,hours
+77|i077-kosher-food|KOSHER FOOD|FOOD & DRINK|mixed|untagged|deep=0|slots=kosher-food-item,diet,fulfillment,price,hours
+78|i078-wine|WINE|FOOD & DRINK|mixed|verified|deep=0|slots=wine-item,diet,fulfillment,price,hours
+79|i079-beer|BEER|FOOD & DRINK|mixed|verified|deep=0|slots=beer-item,diet,fulfillment,price,hours
+80|i080-cocktail|COCKTAIL|FOOD & DRINK|mixed|verified|deep=0|slots=cocktail-item,diet,fulfillment,price,hours
+81|i081-water|WATER|FOOD & DRINK|mixed|verified|deep=0|slots=water-item,diet,fulfillment,price,hours
+82|i082-coffee|COFFEE|FOOD & DRINK|mixed|verified|deep=0|slots=coffee-item,diet,fulfillment,price,hours
+83|i083-tea|TEA|FOOD & DRINK|mixed|verified|deep=0|slots=tea-item,diet,fulfillment,price,hours
+84|i084-snack|SNACK|FOOD & DRINK|mixed|verified|deep=0|slots=snack-item,diet,fulfillment,price,hours
+85|i085-picnic|PICNIC|FOOD & DRINK|mixed|fragmented|deep=0|slots=picnic-item,diet,fulfillment,price,hours
+86|i086-food-bank|FOOD BANK|FOOD & DRINK|mixed|untagged|deep=0|slots=food-bank-item,diet,fulfillment,price,hours
+87|i087-house|HOUSE|HOME & LIVING|geo-anchored|verified|deep=0|slots=house-service,property-type,urgency,budget,trust
+88|i088-apartment|APARTMENT|HOME & LIVING|geo-anchored|verified|deep=0|slots=apartment-service,property-type,urgency,budget,trust
+89|i089-flat-share|FLAT SHARE|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=flat-share-service,property-type,urgency,budget,trust
+90|i090-student-housing|STUDENT HOUSING|HOME & LIVING|geo-anchored|verified|deep=0|slots=student-housing-service,property-type,urgency,budget,trust
+91|i091-social-housing|SOCIAL HOUSING|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=social-housing-service,property-type,urgency,budget,trust
+92|i092-mortgage|MORTGAGE|HOME & LIVING|geo-anchored|verified|deep=0|slots=mortgage-service,property-type,urgency,budget,trust
+93|i093-rent|RENT|HOME & LIVING|geo-anchored|verified|deep=0|slots=rent-service,property-type,urgency,budget,trust
+94|i094-estate-agent|ESTATE AGENT|HOME & LIVING|geo-anchored|verified|deep=0|slots=estate-agent-service,property-type,urgency,budget,trust
+95|i095-landlord|LANDLORD|HOME & LIVING|geo-anchored|untagged|deep=0|slots=landlord-service,property-type,urgency,budget,trust
+96|i096-property-survey|PROPERTY SURVEY|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=property-survey-service,property-type,urgency,budget,trust
+97|i097-interior-design|INTERIOR DESIGN|HOME & LIVING|geo-anchored|untagged|deep=0|slots=interior-design-service,property-type,urgency,budget,trust
+98|i098-architect|ARCHITECT|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=architect-service,property-type,urgency,budget,trust
+99|i099-renovation|RENOVATION|HOME & LIVING|geo-anchored|verified|deep=0|slots=renovation-service,property-type,urgency,budget,trust
+100|i100-builder|BUILDER|HOME & LIVING|geo-anchored|verified|deep=0|slots=builder-job,property-type,urgency,trust,budget
+101|i101-plumber|PLUMBER|HOME & LIVING|geo-anchored|verified|deep=0|slots=plumber-job,property-type,urgency,trust,budget
+102|i102-electrician|ELECTRICIAN|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=electrician-job,property-type,urgency,trust,budget
+103|i103-painter|PAINTER|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=painter-service,property-type,urgency,budget,trust
+104|i104-tiler|TILER|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=tiler-service,property-type,urgency,budget,trust
+105|i105-carpenter|CARPENTER|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=carpenter-vehicle,need,time,price,service
+106|i106-glazier|GLAZIER|HOME & LIVING|geo-anchored|verified|deep=0|slots=glazier-service,property-type,urgency,budget,trust
+107|i107-roofer|ROOFER|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=roofer-job,property-type,urgency,trust,budget
+108|i108-timberman|TIMBERMAN|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=timberman-service,property-type,urgency,budget,trust
+109|i109-locksmith|LOCKSMITH|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=locksmith-job,property-type,urgency,trust,budget
+110|i110-cleaner|CLEANER|HOME & LIVING|geo-anchored|estimated|deep=0|slots=cleaner-job,property-type,urgency,trust,budget
+111|i111-janitor|JANITOR|HOME & LIVING|geo-anchored|verified|deep=0|slots=janitor-job,property-type,urgency,trust,budget
+112|i112-gardener|GARDENER|HOME & LIVING|geo-anchored|verified|deep=0|slots=gardener-job,property-type,urgency,trust,budget
+113|i113-landscaper|LANDSCAPER|HOME & LIVING|geo-anchored|verified|deep=0|slots=landscaper-service,property-type,urgency,budget,trust
+114|i114-pest-control|PEST CONTROL|HOME & LIVING|geo-anchored|verified|deep=0|slots=pest-control-job,property-type,urgency,trust,budget
+115|i115-mover|MOVER|HOME & LIVING|geo-anchored|verified|deep=0|slots=mover-job,property-type,urgency,trust,budget
+116|i116-storage|STORAGE|HOME & LIVING|geo-anchored|verified|deep=0|slots=storage-service,property-type,urgency,budget,trust
+117|i117-furniture|FURNITURE|HOME & LIVING|geo-anchored|verified|deep=0|slots=furniture-service,property-type,urgency,budget,trust
+118|i118-appliance|APPLIANCE|HOME & LIVING|geo-anchored|verified|deep=0|slots=appliance-service,property-type,urgency,budget,trust
+119|i119-appliance-repair|APPLIANCE REPAIR|HOME & LIVING|geo-anchored|fragmented|deep=0|slots=appliance-repair-job,property-type,urgency,trust,budget
+120|i120-home-security|HOME SECURITY|HOME & LIVING|geo-anchored|verified|deep=0|slots=home-security-service,property-type,urgency,budget,trust
+121|i121-smart-home|SMART HOME|HOME & LIVING|geo-anchored|verified|deep=0|slots=smart-home-service,property-type,urgency,budget,trust
+122|i122-solar-panels|SOLAR PANELS|HOME & LIVING|geo-anchored|verified|deep=0|slots=solar-panels-service,property-type,urgency,budget,trust
+123|i123-insulation|INSULATION|HOME & LIVING|geo-anchored|verified|deep=0|slots=insulation-service,property-type,urgency,budget,trust
+124|i124-heating|HEATING|HOME & LIVING|geo-anchored|verified|deep=0|slots=heating-service,property-type,urgency,budget,trust
+125|i125-air-conditioning|AIR CONDITIONING|HOME & LIVING|geo-anchored|verified|deep=0|slots=air-conditioning-service,property-type,urgency,budget,trust
+126|i126-water-softener|WATER SOFTENER|HOME & LIVING|geo-anchored|estimated|deep=0|slots=water-softener-service,property-type,urgency,budget,trust
+127|i127-internet|INTERNET|HOME & LIVING|geo-anchored|verified|deep=0|slots=internet-service,property-type,urgency,budget,trust
+128|i128-tv|TV|HOME & LIVING|geo-anchored|verified|deep=0|slots=tv-service,property-type,urgency,budget,trust
+129|i129-phone|PHONE|HOME & LIVING|geo-anchored|verified|deep=0|slots=need,device,issue,turnaround,price
+130|i130-car|CAR|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=car-vehicle,need,time,price,origin
+131|i131-car-repair|CAR REPAIR|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=car-repair-job,property-type,urgency,trust,budget
+132|i132-car-wash|CAR WASH|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=car-wash-vehicle,need,time,price,origin
+133|i133-car-rental|CAR RENTAL|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=car-rental-vehicle,need,time,price,origin
+134|i134-car-charging|CAR CHARGING|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=car-charging-vehicle,need,time,price,origin
+135|i135-garage|GARAGE|TRANSPORT & MOBILITY|geo-anchored|estimated|deep=0|slots=garage-origin,destination,time,mode,party-size
+136|i136-parking|PARKING|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=parking-origin,destination,time,mode,party-size
+137|i137-taxi|TAXI|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=taxi-origin,destination,departure,travelers,preference
+138|i138-rideshare|RIDESHARE|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=rideshare-origin,destination,departure,travelers,preference
+139|i139-bus|BUS|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=bus-origin,destination,departure,travelers,preference
+140|i140-train|TRAIN|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=train-origin,destination,departure,travelers,preference
+141|i141-metro|METRO|TRANSPORT & MOBILITY|geo-anchored|fragmented|deep=0|slots=metro-origin,destination,departure,travelers,preference
+142|i142-tram|TRAM|TRANSPORT & MOBILITY|geo-anchored|fragmented|deep=0|slots=tram-origin,destination,departure,travelers,preference
+143|i143-ferry|FERRY|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=ferry-origin,destination,departure,travelers,preference
+144|i144-flight|FLIGHT|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=flight-origin,destination,departure,travelers,preference
+145|i145-bike|BIKE|TRANSPORT & MOBILITY|geo-anchored|estimated|deep=0|slots=bike-vehicle,need,time,price,origin
+146|i146-bike-repair|BIKE REPAIR|TRANSPORT & MOBILITY|geo-anchored|fragmented|deep=0|slots=bike-repair-job,property-type,urgency,trust,budget
+147|i147-cycle-shop|CYCLE SHOP|TRANSPORT & MOBILITY|geo-anchored|estimated|deep=0|slots=cycle-shop-origin,destination,time,mode,party-size
+148|i148-e-scooter|E-SCOOTER|TRANSPORT & MOBILITY|geo-anchored|untagged|deep=0|slots=e-scooter-vehicle,need,time,price,origin
+149|i149-scooter|SCOOTER|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=scooter-vehicle,need,time,price,origin
+150|i150-motorbike|MOTORBIKE|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=motorbike-vehicle,need,time,price,origin
+151|i151-boat|BOAT|TRANSPORT & MOBILITY|geo-anchored|estimated|deep=0|slots=boat-vehicle,need,time,price,origin
+152|i152-moving-service|MOVING SERVICE|TRANSPORT & MOBILITY|geo-anchored|verified|deep=0|slots=moving-service-origin,destination,time,mode,party-size
+153|i153-bus-shuttle|BUS SHUTTLE|TRANSPORT & MOBILITY|geo-anchored|fragmented|deep=0|slots=bus-shuttle-origin,destination,departure,travelers,preference
+154|i154-airport-transfer|AIRPORT TRANSFER|TRANSPORT & MOBILITY|geo-anchored|estimated|deep=0|slots=origin,airport,time,passengers,vehicle,luggage
+155|i155-hitchhike|HITCHHIKE|TRANSPORT & MOBILITY|geo-anchored|estimated|deep=0|slots=hitchhike-origin,destination,departure,travelers,preference
+156|i156-bike-messenger|BIKE MESSENGER|TRANSPORT & MOBILITY|geo-anchored|fragmented|deep=0|slots=bike-messenger-vehicle,need,time,price,origin
+157|i157-bank|BANK|FINANCE|network-routed|verified|deep=0|slots=bank-product,amount,eligibility,fees,timeline
+158|i158-atm|ATM|FINANCE|network-routed|verified|deep=0|slots=atm-product,amount,eligibility,fees,timeline
+159|i159-savings|SAVINGS|FINANCE|network-routed|verified|deep=0|slots=savings-product,amount,eligibility,fees,timeline
+160|i160-loan|LOAN|FINANCE|network-routed|verified|deep=0|slots=loan-product,amount,eligibility,fees,timeline
+161|i161-mortgage|MORTGAGE|FINANCE|network-routed|verified|deep=0|slots=mortgage-product,amount,eligibility,fees,timeline
+162|i162-insurance|INSURANCE|FINANCE|network-routed|verified|deep=0|slots=insurance-product,amount,eligibility,fees,timeline
+163|i163-investment|INVESTMENT|FINANCE|network-routed|verified|deep=0|slots=investment-product,amount,eligibility,fees,timeline
+164|i164-pension|PENSION|FINANCE|network-routed|verified|deep=0|slots=pension-product,amount,eligibility,fees,timeline
+165|i165-tax|TAX|FINANCE|network-routed|verified|deep=0|slots=tax-type,support-type,jurisdiction,timeline,price
+166|i166-accountant|ACCOUNTANT|FINANCE|network-routed|verified|deep=0|slots=accountant-product,amount,eligibility,fees,timeline
+167|i167-financial-advisor|FINANCIAL ADVISOR|FINANCE|network-routed|verified|deep=0|slots=financial-advisor-product,amount,eligibility,fees,timeline
+168|i168-crypto|CRYPTO|FINANCE|network-routed|verified|deep=0|slots=crypto-product,amount,eligibility,fees,timeline
+169|i169-crowdfunding|CROWDFUNDING|FINANCE|network-routed|estimated|deep=0|slots=crowdfunding-product,amount,eligibility,fees,timeline
+170|i170-donations|DONATIONS|FINANCE|network-routed|estimated|deep=0|slots=donations-product,amount,eligibility,fees,timeline
