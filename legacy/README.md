@@ -7,4 +7,4 @@ Do not treat this tree as production. It is archaeology.
 - [`artifacts/MANIFEST.md`](artifacts/MANIFEST.md) — SHA, date, source URL
 - [`live-probe-results.json`](live-probe-results.json) — production laboratory (generated)
 
-Machine files (`intent-slots-506.csv`, `intent-protocol.json`) were not recovered. The reconstructed snapshot is labeled **PROVENANCE: user-pasted surviving catalog 2026-09-12**.
+Machine files (`intent-slots-506.csv`, `intent-protocol.json`) were not recovered on the PR #5 hunt. A later **annotated recitation** of production v0.3 (505 IDs, routing, slot keys, DATE fold) is stored — parse-only, no runtime import — under [`intent-protocol/`](intent-protocol/). The reconstructed 250-row snapshot remains labeled **PROVENANCE: user-pasted surviving catalog 2026-09-12**.

@@ -538,3 +538,29 @@ Breadth is the test and it held. Keep merging when green. Do not polish these in
 45. `packages/web/src/lib/lenses.ts` is presentation. DiscoverApp no longer hard-codes five costumes.
 46. `InferredVertical` grew names. The ranker did not grow methods.
 47. Headline demos still green: website one-box, Georgetown reciprocal, register, ClaimWriter→Checkmate receipt. Factory tests + MCP cases sit beside them.
+
+---
+
+## INTENT PROTOCOL v0.3 — archaeology (in progress)
+
+Production catalog recitation (505 claimed). Compact file: `legacy/intent-protocol/`. Review: `docs/INTENT_GRAMMAR_V03_REVIEW.md`. **Not imported into core.** Parts 2–3 still incoming; Part 1 = i001–i170 only.
+
+### PREVIOUS WHOELSE WORK
+
+PR #5 already collapsed the reconstructed 250 to one `whoelse.find`. That operator claim is unchanged. What v0.3 adds is the *real* filing cabinet: `i001-doctor` IDs, 22 subgroups, geo/mixed/network routing, and per-noun slot keys. The 15 live lenses (health 2026-09-13) already cover the Part 1 nouns that matter (services, apt, rides, capital) without those IDs.
+
+### GROK DERIVATION
+
+From Part 1 alone: the catalog is a **template cloner**. `{slug}-reason,care-type,payment,visit-mode,availability` mints 15 specialists. Food is `item,diet,fulfillment,price,hours` except COOKING CLASS, which wears the education shirt. PERSONAL TRAINER wears rideshare. Palliative/home/elder/dementia wear `vehicle`. That leakage is the collapse proof — not a reason to build `findTrainer`.
+
+Routing is the adult field. BODY/FITNESS/HOME/TRANSPORT are geo. FOOD is mixed. FINANCE is network. That is “does this entity need a city?” — already a property of the seed, not a second matcher.
+
+`MORTGAGE` ×2 (HOME geo `i092` vs FINANCE network `i161`) is the two-market lesson jobs already taught.
+
+### DISCOVERED THROUGH IMPLEMENTATION
+
+Live factory did not need these IDs. Apartment slots (`property-type, urgency, budget, trust`) and rideshare (`origin, destination, departure, travelers`) are already attributes. Doctor/restaurant deep keys are constraint *hints*. Catalog `status` (verified/fragmented/estimated/untagged) is hygiene, not `trust.evidence`.
+
+### SHARED DERIVATION
+
+Catalog helps humans express (`DOCTOR who else?`, DATE synonyms). Protocol lets machines exchange (`whoelse.find` + register/invoke/delegate/feedback). Complementary. Do not unify them by shipping 505 enums. Final N and DATE/AIRBNB/LAWYER/AI TOOLS wait for Parts 2–3.
