@@ -206,7 +206,7 @@ export class WhoElseEngine {
     const sliced = top.slice(0, limit);
     if (sliced.length === 0) this.store.recordMissing(request.context, universal.view);
     const pairs = collectPairs(sliced);
-    this.persistHighConfidencePairs(request.context, inferredConstraints.side, pairs);
+    // Find is side-effect free. Durable MatchRecords / receipts are a follow-up.
     return finish(
       request.context,
       inferredMode,
@@ -245,23 +245,6 @@ export class WhoElseEngine {
     );
   }
 
-  private persistHighConfidencePairs(query: string, side: MatchSide | undefined, pairs: PublicationPair[]) {
-    for (const pair of pairs) {
-      if (pair.offer.entityId === "query" || pair.seek.entityId === "query") continue;
-      if (this.store.hasPublicationPair(pair.offer.id, pair.seek.id)) continue;
-      this.store.recordMatch({
-        query,
-        offerEntityId: pair.offerEntityId,
-        seekEntityId: pair.seekEntityId,
-        offerPublicationId: pair.offer.id,
-        seekPublicationId: pair.seek.id,
-        side,
-        status: "proposed",
-        evidence: {},
-      });
-    }
-  }
-
   parse(text: string): UniversalQuery {
     return parseUniversal(text, this.store.cities(), undefined, this.store.places());
   }
@@ -272,76 +255,69 @@ export class WhoElseEngine {
       ...parsePublicationInputs("seek", spec.seeks),
       ...(spec.publications ?? []),
     ].filter((p) => p.capability?.trim());
-    const existing = spec.id ? this.store.get(spec.id) : undefined;
-    if (!incomingSpecs.length && !existing) {
+    if (spec.id && this.store.get(spec.id)) {
+      throw new Error("cannot register over existing id");
+    }
+    if (!incomingSpecs.length) {
       throw new Error("register requires at least one offer or seek");
     }
     const slug = spec.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "agent";
-    const id = spec.id ?? existing?.id ?? `agent-reg-${slug}-${Math.random().toString(36).slice(2, 7)}`;
+    const id = spec.id ?? `agent-reg-${slug}-${Math.random().toString(36).slice(2, 7)}`;
     const now = new Date().toISOString();
     const incoming = incomingSpecs.map((p) => normalizePublication({ ...p, entityId: id }, now));
-    const publications = upsertPublications(existing?.publications ?? [], incoming);
+    const publications = upsertPublications([], incoming);
     const bags = bagsFromPublications(publications);
-    const offers = bags.offers.length ? bags.offers : existing?.offers ?? [];
-    const seeks = bags.seeks.length
-      ? bags.seeks
-      : existing?.seeks ?? ["work", "who else can use this capability"];
+    const offers = bags.offers;
+    const seeks = bags.seeks.length ? bags.seeks : ["work", "who else can use this capability"];
     if (!offers.length && !seeks.length) {
       throw new Error("register requires at least one offer or seek");
     }
-    const endpoint = spec.endpoint?.url ?? existing?.attributes?.apiEndpoint ?? `/api/agents/${id}/invoke`;
+    const endpoint = spec.endpoint?.url ?? `/api/agents/${id}/invoke`;
     const entity: Entity = {
       id,
-      type: spec.type ?? existing?.type ?? "agent",
-      name: spec.name || existing?.name || slug,
-      description: spec.description || existing?.description || "",
+      type: spec.type ?? "agent",
+      name: spec.name || slug,
+      description: spec.description || "",
       publications,
       offers,
       seeks,
       capabilities: offers,
       attributes: {
-        ...(existing?.attributes ?? {}),
-        role:
-          spec.type === "human"
-            ? undefined
-            : (existing?.attributes?.role as string | undefined) ?? "worker",
-        owner: spec.owner ?? existing?.attributes?.owner,
-        version: spec.version ?? existing?.attributes?.version ?? "0.1.0",
-        status: spec.status ?? existing?.attributes?.status ?? "available",
-        protocol: spec.protocol ?? spec.endpoint?.protocol ?? existing?.attributes?.protocol ?? "http",
-        requirements: spec.requirements ?? existing?.attributes?.requirements,
-        permissions: spec.permissions ?? existing?.attributes?.permissions,
-        priceUsd: typeof spec.cost === "number" ? spec.cost : existing?.attributes?.priceUsd,
-        pricing: spec.cost ?? existing?.attributes?.pricing,
-        latencyMs: typeof spec.latency === "number" ? spec.latency : existing?.attributes?.latencyMs,
-        latency: spec.latency ?? existing?.attributes?.latency,
+        role: spec.type === "human" ? undefined : "worker",
+        owner: spec.owner,
+        version: spec.version ?? "0.1.0",
+        status: spec.status ?? "available",
+        protocol: spec.protocol ?? spec.endpoint?.protocol ?? "http",
+        requirements: spec.requirements,
+        permissions: spec.permissions,
+        priceUsd: typeof spec.cost === "number" ? spec.cost : undefined,
+        pricing: spec.cost,
+        latencyMs: typeof spec.latency === "number" ? spec.latency : undefined,
+        latency: spec.latency,
         apiEndpoint: endpoint,
         mcpEndpoint: "/api/mcp",
         endpoint,
-        authRequirements: spec.endpoint?.auth ?? existing?.attributes?.authRequirements ?? "none-demo",
+        authRequirements: spec.endpoint?.auth ?? "none-demo",
         registered: true,
       },
-      preferences: existing?.preferences ?? {},
-      availability: spec.availability ?? existing?.availability ?? "on request",
-      location: spec.location ?? existing?.location,
+      preferences: {},
+      availability: spec.availability ?? "on request",
+      location: spec.location,
       metadata: {
-        ...(existing?.metadata ?? {}),
         demo: true,
-        demoLabel: existing?.metadata?.demoLabel ?? "DEMO registered agent — not a production worker",
+        demoLabel: "DEMO registered agent — not a production worker",
         aiDisclosure:
-          spec.type === "human"
-            ? undefined
-            : existing?.metadata?.aiDisclosure ?? `${spec.name || existing?.name} is a registered agent, not a human.`,
-        vertical: existing?.metadata?.vertical ?? "capability",
+          spec.type === "human" ? undefined : `${spec.name || slug} is a registered agent, not a human.`,
+        vertical: "capability",
       },
-      provenance: spec.type === "human" ? "user" : existing?.provenance ?? "ai_generated",
+      provenance: spec.type === "human" ? "user" : "ai_generated",
       trust: {
-        status: spec.evidence || existing?.trust?.evidence ? "evidence" : existing?.trust?.status ?? "stub",
+        status: spec.evidence ? "evidence" : "stub",
         provenance: "user",
-        notes: existing?.trust?.notes ?? "Registration evidence is self-asserted.",
-        evidence: spec.evidence ?? existing?.trust?.evidence,
+        notes: "Registration evidence is self-asserted.",
+        evidence: spec.evidence,
       },
-      created_at: existing?.created_at ?? now,
+      created_at: now,
     };
     const stored = this.store.add(entity);
     this.index.add(stored.id, entityText(stored));

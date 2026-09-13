@@ -18,6 +18,12 @@ type DelegatePayload = {
 const TASK = "Verify the claim that Georgetown to Dupont is 12 minutes by car";
 const INTENT = "Who else can verify this result?";
 const FROM = "agent-claim-writer";
+/** Labeled synthetic. Installed only when the demo seed is loaded — fails closed in production-empty. */
+const SYNTHETIC_DEMO_KEY = "wek_seedowner_synthetic-demo-owner-key-not-for-prod";
+const DEMO_HEADERS: HeadersInit = {
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${SYNTHETIC_DEMO_KEY}`,
+};
 
 export function AgentDemo() {
   const [step, setStep] = useState<"idle" | "draft" | "found" | "done" | "error">("idle");
@@ -36,7 +42,7 @@ export function AgentDemo() {
     try {
       const a = await fetch(`/api/agents/${FROM}/invoke`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: DEMO_HEADERS,
         body: JSON.stringify({ task: TASK }),
       });
       const draftBody = await a.json();
@@ -45,7 +51,7 @@ export function AgentDemo() {
 
       const find = await fetch("/api/whoelse", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: DEMO_HEADERS,
         body: JSON.stringify({ context: INTENT, requester: FROM, limit: 5 }),
       });
       const foundBody = await find.json();
@@ -67,7 +73,7 @@ export function AgentDemo() {
 
       const del = await fetch("/api/delegate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: DEMO_HEADERS,
         body: JSON.stringify({ task: TASK, intent: INTENT, from: FROM, select: "evidence" }),
       });
       const delBody = (await del.json()) as DelegatePayload;
@@ -88,7 +94,7 @@ export function AgentDemo() {
     try {
       const find = await fetch("/api/whoelse", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: DEMO_HEADERS,
         body: JSON.stringify({
           context: "Who else can do calendar hold resolution?",
           requester: "agent-inbox-clerk",
@@ -113,7 +119,7 @@ export function AgentDemo() {
       setStep("found");
       const del = await fetch("/api/delegate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: DEMO_HEADERS,
         body: JSON.stringify({
           task: "Resolve the Tuesday 3pm hold",
           intent: "Who else can do calendar hold resolution?",
@@ -137,7 +143,7 @@ export function AgentDemo() {
     try {
       const res = await fetch("/api/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: DEMO_HEADERS,
         body: JSON.stringify({
           name: "WebCheck Live",
           description: "Registered on this isolate. Verifies web claims.",

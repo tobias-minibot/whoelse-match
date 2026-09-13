@@ -1,38 +1,22 @@
-import { NextResponse } from "next/server";
-import { getEngine } from "@/lib/engine";
+import { gatewayRegister } from "@whoelse/core";
+import { resolveCaller } from "@/lib/auth";
+import { getNetwork } from "@/lib/engine";
+import { gatewayResponse } from "@/lib/respond";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
+  const network = await getNetwork();
+  const caller = await resolveCaller(req, network);
   const body = await req.json().catch(() => ({}));
   const hasOffers = Array.isArray(body.offers) && body.offers.length > 0;
   const hasSeeks = Array.isArray(body.seeks) && body.seeks.length > 0;
   const hasPubs = Array.isArray(body.publications) && body.publications.length > 0;
   if (!body.name || !body.description) {
-    return NextResponse.json({ error: "name and description required" }, { status: 400 });
+    return Response.json({ error: "name and description required", status: 400 }, { status: 400 });
   }
   if (!hasOffers && !hasSeeks && !hasPubs) {
-    return NextResponse.json({ error: "at least one offer or seek required" }, { status: 400 });
+    return Response.json({ error: "at least one offer or seek required", status: 400 }, { status: 400 });
   }
-  try {
-    const entity = getEngine().register(body);
-    return NextResponse.json({
-      ok: true,
-      entity: {
-        id: entity.id,
-        type: entity.type,
-        name: entity.name,
-        offers: entity.offers,
-        seeks: entity.seeks,
-        publications: entity.publications?.map((p) => ({
-          id: p.id,
-          kind: p.kind,
-          capability: p.capability,
-        })),
-        endpoint: entity.attributes.apiEndpoint,
-      },
-    });
-  } catch (err) {
-    return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 400 });
-  }
+  return gatewayResponse(await gatewayRegister(network, body, caller));
 }

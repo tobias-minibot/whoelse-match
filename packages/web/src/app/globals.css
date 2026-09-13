@@ -65,6 +65,23 @@ button, input { font: inherit; }
 }
 .nav-links a.ghost.current { color: var(--ink); }
 
+.auth-slot { display: inline-flex; align-items: center; }
+.auth-btn.ghost,
+button.auth-btn {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.auth-page { max-width: 420px; }
+.auth-page h1 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  margin-bottom: 8px;
+}
+
 .doctrine {
   font-size: 0.95rem;
   margin-bottom: 14px;

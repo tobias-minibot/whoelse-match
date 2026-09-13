@@ -58,9 +58,10 @@ describe("OFFER / SEEK as first-class network objects", () => {
     const pair = found.pairs.find((p) => p.offer.id === holdOffer.id && p.seek.id === clerkSeek.id);
     assert.ok(pair, `pairs: ${found.pairs.map((p) => `${p.seek.id}↔${p.offer.id}`).join(", ")}`);
     assert.ok(pair.score >= 0.85);
-    assert.ok(
+    assert.equal(
       engine.store.hasPublicationPair(holdOffer.id, clerkSeek.id),
-      "high-confidence durable pair should persist as a proposed MatchRecord",
+      false,
+      "find must not persist MatchRecords when a score crosses a threshold",
     );
   });
 
@@ -121,12 +122,19 @@ describe("OFFER / SEEK as first-class network objects", () => {
       description: "Test agent that offers ics conflict resolution.",
       offers: [{ capability: "ics conflict resolution", phrases: ["resolve ics conflicts"] }],
     });
-    const again = isolated.register({
-      id: "agent-reg-offer-demo",
-      name: "Conflictwright",
-      description: "Updated copy. Still the same offer.",
-      offers: [{ capability: "ics conflict resolution", phrases: ["resolve ics conflicts", "calendar ics repair"] }],
-    });
+    assert.throws(
+      () =>
+        isolated.register({
+          id: "agent-reg-offer-demo",
+          name: "Conflictwright",
+          description: "Updated copy. Still the same offer.",
+          offers: [{ capability: "ics conflict resolution", phrases: ["resolve ics conflicts", "calendar ics repair"] }],
+        }),
+      /existing id/i,
+    );
+    const again = isolated.publish(b.id, [
+      { kind: "offer", capability: "ics conflict resolution", phrases: ["resolve ics conflicts", "calendar ics repair"] },
+    ]);
     assert.equal(again.id, b.id);
     assert.equal(isolated.store.all().filter((e) => e.id === b.id).length, 1);
     assert.ok(publicationsOf(again).some((p) => /calendar ics repair/i.test(p.phrases?.join(" ") ?? "")));

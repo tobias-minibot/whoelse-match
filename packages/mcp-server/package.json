@@ -15,7 +15,7 @@
     "dev": "tsx watch src/index.ts",
     "tools": "tsx src/list-tools.ts",
     "smoke": "tsx src/smoke.ts",
-    "test": "tsx --test src/mcp.test.ts src/http.test.ts",
+    "test": "tsx --test src/mcp.test.ts src/http.test.ts src/tenant.test.ts",
     "http-dogfood": "tsx src/http-dogfood.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },

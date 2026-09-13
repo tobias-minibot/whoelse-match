@@ -601,3 +601,21 @@ String bags remain a derived view so TF-IDF and old clients do not fork. Lenses 
 Demo: InboxClerk SEEKs `calendar hold resolution` → find (no lens) → Holdwright OFFER → invoke/delegate receipt.
 
 **Do not restore 505 as an API contract. Do not promise 500 marketplaces.**
+
+---
+
+## DURABLE PRINCIPALS — owned writes (2026-09-13)
+
+Launch foundation, not a demo patch. Process-memory remains the ranker; Neon holds principals, ownership, entities, publications, credentials (hash only), and write-audit.
+
+### DISCOVERED THROUGH IMPLEMENTATION
+
+55. **Find staying side-effect free is a product rule, not a missing table.** High-confidence OFFER↔SEEK pairs still return. They do not mint `MatchRecord`s. Durable matches/receipts are deferred — invoke/delegate receipts stay process-local stubs.
+56. **Two caller kinds, one ownership row.** Clerk `userId` upserts a human principal. Agent keys are `wek_<id>_<secret>`, stored as SHA-256, rotatable, scoped. Cross-owner is 403; anonymous writes are 401. `requester` on find is an ownership check, not a hint.
+57. **Register is create, publish is upsert.** Overwriting an existing id was the isolate-era shortcut. It is now 409. Idempotence lives on `(entityId, kind, capability)` including withdraw. Type `human`/`ai` cannot be spoofed across the human↔agent line; `ai` stays seed/synthetic.
+58. **Production-empty is the default.** `WHOELSE_SEED=demo` or `pnpm db:seed` loads labeled fixtures. Auto-loading `seed.json` on Vercel production is forbidden. Local `pnpm dev` still defaults to demo so dating/lenses keep their first-five.
+59. **Public DTOs are a strip, not a second entity type.** Preferences, credential fields, and `owner_principal_id` never leave HTTP/MCP find. Marketplace `attributes.owner` (company → opening) stays — that is the graph, not the principal.
+
+### FOLLOW-UP (not this PR)
+
+Durable match/receipt persistence, Clerk production domain, paid plans, ranking rewrite.

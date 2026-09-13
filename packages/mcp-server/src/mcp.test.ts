@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { after, before, describe, it } from "node:test";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { DEMO_OWNER_KEY } from "@whoelse/core";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -42,6 +43,7 @@ describe("MCP whoelse.find", () => {
     const transport = new StdioClientTransport({
       command: "tsx",
       args: [path.join(here, "index.ts")],
+      env: { ...process.env, WHOELSE_SEED: "demo", WHOELSE_AGENT_KEY: DEMO_OWNER_KEY },
     });
     client = new Client({ name: "whoelse-mcp-test", version: "0.1.0" });
     await client.connect(transport);

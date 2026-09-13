@@ -1,3 +1,5 @@
+import { AuthButtons } from "@/components/AuthButtons";
+
 export function SiteNav({ current }: { current?: "home" | "ais" | "box" }) {
   return (
     <nav className="nav">
@@ -17,6 +19,7 @@ export function SiteNav({ current }: { current?: "home" | "ais" | "box" }) {
         <a className="ghost" href="/landing/index.html#story">
           Story
         </a>
+        <AuthButtons />
       </div>
     </nav>
   );

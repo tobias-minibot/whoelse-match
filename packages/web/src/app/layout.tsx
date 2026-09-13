@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
 const dm = DM_Sans({
@@ -18,9 +19,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
+  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  const inner = (
     <html lang="en">
       <body className={`${dm.variable} ${fraunces.variable}`}>{children}</body>
     </html>
   );
+  if (!publishableKey) return inner;
+  return <ClerkProvider publishableKey={publishableKey}>{inner}</ClerkProvider>;
 }
