@@ -95,7 +95,7 @@ export function DiscoverApp() {
 
   function flash(message: string) {
     setToast(message);
-    window.setTimeout(() => setToast(null), 2800);
+    window.setTimeout(() => setToast(null), 4000);
   }
 
   function switchVertical(next: Vertical) {
