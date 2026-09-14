@@ -110,8 +110,10 @@ Reconcile returns **one** `WhoElseResult` plus `composedFrom` and `composition.e
 
 | Surface | Behavior |
 | --- | --- |
-| Human Who else? box | Compound NL → compile+dispatch when there is no exemplar. Quiet line: `composed from DATE + TENNIS`. Recursive **Who else like this?** stays atomic find. |
-| `whoelse.compile` | Compound IR always. `find: true` dispatches when `intents.length > 1`. |
+| Human Who else? box | Typeahead against the shared vocab (label, aliases, questions, categories). Pick inserts/refines the sentence and a chip — not a schema UI. Compound NL → compile+dispatch when there is no exemplar. Quiet line: `composed from DATE + TENNIS`. Recursive **Who else like this?** stays atomic find. |
+| `/universe` (`/intents`) | Full-text filter + `?q=` deep link. Coverage A–E is still the index; search is how you find a row. |
+| `whoelse.compile` | Compound IR always. `find: true` dispatches when `intents.length > 1`. Also returns `vocabHits` for discovery. |
+| `whoelse.intents` | Vocab search for agents. Same catalog as the box / universe. |
 | `whoelse.dispatch` | Compile → plan → parallel find → reconciled result. |
 | `whoelse.find` | **Atomic.** Agents who already know a single intent skip the graph. |
 

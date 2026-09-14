@@ -4,6 +4,7 @@ import { hasOpenAi } from "./openai.js";
 import { parseUniversal } from "./parse.js";
 import type { WhoElseEngine } from "./engine.js";
 import type { PublicationSpec, UniversalQuery, WhoElseResult } from "./types.js";
+import { searchVocab, type IntentSearchHit } from "./vocab.js";
 
 export type CompileClass = "WHOELSE_COMPILABLE" | "PARTIALLY_COMPILABLE" | "NOT_WHOELSE";
 
@@ -28,6 +29,8 @@ export interface CompileResult {
   find?: WhoElseResult;
   plan?: DispatchPlan;
   dispatch?: DispatchOutcome;
+  /** Ranked vocab discovery hits — not the compiled graph. Use ir.intents for dispatch. */
+  vocabHits?: IntentSearchHit[];
 }
 
 const WHOELSE_ASK =
@@ -321,13 +324,15 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
 
   if (locked) {
     const intent = locked.intent ?? (locked.classification === "NOT_WHOELSE" ? raw : `Who else ${raw}?`);
+    const ir = compileIr(raw, intent, exclusions, cities, places);
     return {
       classification: locked.classification,
       reason: locked.reason,
       confidence: 1,
       locked: true,
       usedLlm: false,
-      ir: compileIr(raw, intent, exclusions, cities, places),
+      ir,
+      vocabHits: searchVocab(raw, { limit: 8, minLength: 2 }),
       seekDraft:
         locked.classification === "NOT_WHOELSE"
           ? undefined
@@ -347,17 +352,28 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
         ? raw
         : `Who else ${raw.replace(/^[.!\s]+/, "")}`.replace(/\s+/g, " ");
   const ir = compileIr(raw, intent, exclusions, cities, places);
+  const vocabHits = searchVocab(raw, { limit: 8, minLength: 2 });
   const compound = ir.intents.length > 1;
-  const classification =
-    compound && guessed.classification === "NOT_WHOELSE"
-      ? "WHOELSE_COMPILABLE"
-      : compound && guessed.classification === "PARTIALLY_COMPILABLE" && !FULFILL.test(raw)
-        ? "WHOELSE_COMPILABLE"
-        : guessed.classification;
+  const labeled = ir.intents.length >= 1;
+  let classification = guessed.classification;
+  if (compound && guessed.classification === "NOT_WHOELSE") classification = "WHOELSE_COMPILABLE";
+  else if (compound && guessed.classification === "PARTIALLY_COMPILABLE" && !FULFILL.test(raw)) {
+    classification = "WHOELSE_COMPILABLE";
+  } else if (
+    labeled &&
+    guessed.classification === "NOT_WHOELSE" &&
+    !DEVICE.test(raw) &&
+    !FACT.test(raw) &&
+    !CHITCHAT.test(raw.trim())
+  ) {
+    classification = "WHOELSE_COMPILABLE";
+  }
   const reason = compound
     ? `Compound ${ir.intents.map((i) => i.label).join(" + ")}. One graph on whoelse.find — not a vertical app per label.`
-    : guessed.reason;
-  const confidence = compound ? Math.max(guessed.confidence, 0.86) : guessed.confidence;
+    : labeled && classification === "WHOELSE_COMPILABLE" && guessed.classification === "NOT_WHOELSE"
+      ? `Language maps to vocab ${ir.intents.map((i) => i.label).join(" + ")} on whoelse.find.`
+      : guessed.reason;
+  const confidence = compound ? Math.max(guessed.confidence, 0.86) : labeled ? Math.max(guessed.confidence, 0.72) : guessed.confidence;
 
   return {
     classification,
@@ -366,6 +382,7 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
     locked: false,
     usedLlm: false,
     ir,
+    vocabHits,
     seekDraft:
       classification === "NOT_WHOELSE"
         ? undefined

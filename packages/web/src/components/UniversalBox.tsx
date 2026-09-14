@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { CompilePanel, type CompilePayload } from "@/components/CompilePanel";
+import { IntentChips, IntentSuggest } from "@/components/IntentSuggest";
 import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
 import { fetchMe, type MePayload } from "@/lib/me";
+import { refineWhoElseQuery, useIntentSuggest } from "@/lib/use-intent-suggest";
+import type { IntentSearchHit } from "@whoelse/core/vocab-search";
 import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
 
 const EXAMPLES = [
@@ -27,6 +30,8 @@ export function UniversalBox() {
   const [toast, setToast] = useState<string | null>(null);
   const [compiled, setCompiled] = useState<CompilePayload | null>(null);
   const [compiling, setCompiling] = useState(false);
+  const [picked, setPicked] = useState<{ id: string; label: string }[]>([]);
+  const suggest = useIntentSuggest(query);
 
   useEffect(() => {
     void fetchMe().then(setMe);
@@ -74,6 +79,18 @@ export function UniversalBox() {
     } finally {
       setCompiling(false);
     }
+  }
+
+  function pickIntent(hit: IntentSearchHit) {
+    const next = refineWhoElseQuery(query, hit);
+    const appending = /\bwho else\b/i.test(query.trim()) && next !== query.trim() && / and /i.test(next);
+    setQuery(next);
+    setPicked((prev) => {
+      const row = { id: hit.id, label: hit.label };
+      if (appending) return prev.some((p) => p.id === hit.id) ? prev : [...prev, row];
+      return [row];
+    });
+    suggest.setOpen(false);
   }
 
   async function reverse(entityId: string) {
@@ -138,17 +155,36 @@ export function UniversalBox() {
         <div className="eyebrow">Universal Who else?</div>
         <h1>What do you have — or need?</h1>
         <div className="search-row">
-          <textarea
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                void ask();
-              }
-            }}
-            aria-label="Universal who else"
-          />
+          <div className="intent-box">
+            <textarea
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                suggest.setOpen(true);
+                if (!e.target.value.trim()) setPicked([]);
+              }}
+              onFocus={() => suggest.setOpen(true)}
+              onBlur={() => window.setTimeout(() => suggest.setOpen(false), 120)}
+              onKeyDown={(e) => {
+                const handled = suggest.onKeyDown(e, () => void ask());
+                if (handled && typeof handled === "object") pickIntent(handled);
+              }}
+              aria-label="Universal who else"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-expanded={suggest.visible}
+              aria-controls="intent-suggest-universal"
+            />
+            <div id="intent-suggest-universal">
+              <IntentSuggest
+                hits={suggest.hits}
+                active={suggest.active}
+                visible={suggest.visible}
+                onHover={suggest.setActive}
+                onPick={pickIntent}
+              />
+            </div>
+          </div>
           <button className="btn btn-coral" type="button" onClick={() => void ask()} disabled={loading}>
             {loading ? "Looking…" : "Who else?"}
           </button>
@@ -156,6 +192,10 @@ export function UniversalBox() {
             {compiling ? "Compiling…" : "Compile"}
           </button>
         </div>
+        <IntentChips items={picked} onRemove={(id) => setPicked((prev) => prev.filter((p) => p.id !== id))} />
+        <p className="intent-browse">
+          <a href="/universe">All intents</a>
+        </p>
         <CompilePanel
           result={compiled}
           onUseIntent={(intent) => {

@@ -1,6 +1,27 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  SPEECH_ALIASES,
+  aliasesFor,
+  prettyLabel,
+  searchIntents,
+  speechForms,
+  type IntentSearchHit,
+  type IntentSearchOptions,
+  type SearchableIntent,
+} from "./vocab-search.js";
+
+export type { IntentSearchHit, IntentSearchOptions, SearchableIntent } from "./vocab-search.js";
+export {
+  SPEECH_ALIASES,
+  aliasesFor,
+  intentQuestion,
+  prettyLabel,
+  refineWhoElseQuery,
+  searchIntents,
+  speechForms,
+} from "./vocab-search.js";
 
 export type IntentKind = "atomic" | "entity" | "activity" | "need" | "service";
 
@@ -27,36 +48,6 @@ export interface IntentVocab {
   kinds: IntentKind[];
   intents: VocabIntent[];
 }
-
-/** Speech patterns that are not the catalog label itself. */
-export const SPEECH_ALIASES: Record<string, string[]> = {
-  DATE: [
-    "romantically",
-    "romantic",
-    "romance",
-    "someone i might like",
-    "someone i like",
-    "might like",
-    "go out with",
-    "go on a date",
-    "dating",
-    "a date",
-    "date me",
-    "who to date",
-    "should i date",
-  ],
-  TENNIS: ["play tennis", "tennis partner", "hit tennis", "tennis tonight", "a tennis"],
-  APARTMENT: ["1-bedroom", "one-bedroom", "one bedroom", "a flat", "a place to rent", "rent an apartment"],
-  SCHOOL: ["good school", "nearby school", "near a school", "elementary school", "the school"],
-  FLIGHT: ["fly to", "a flight", "plane ticket", "flights to"],
-  HOTEL: ["a hotel", "place to stay", "a room tonight", "hotel room"],
-  JOB: ["a job", "looking for work", "looking for a role", "is hiring", "job opening"],
-  "REMOTE WORK": ["work remotely", "remote work", "remote job", "work from home", "wfh"],
-  RESTAURANT: ["a restaurant", "a table", "dinner reservation"],
-  DOCTOR: ["a doctor", "see a doctor", "physician"],
-  PLUMBER: ["a plumber", "fix a leak", "leak under my sink"],
-  RIDE: ["a ride", "ride-share", "rideshare", "give me a ride"],
-};
 
 const STOP_LABELS = new Set([
   "THE",
@@ -93,8 +84,13 @@ const STOP_LABELS = new Set([
   "AI",
 ]);
 
+const STOP_TOKENS = new Set(
+  [...STOP_LABELS].map((s) => s.toLowerCase()).concat(["the", "and", "for", "with", "near", "good"]),
+);
+
 let cached: IntentVocab | undefined;
 let byLabelCache: Map<string, VocabIntent> | undefined;
+let uniqueTokenCache: Map<string, VocabIntent> | undefined;
 
 function findVocabPath(): string | undefined {
   if (process.env.WHOELSE_VOCAB_PATH && existsSync(process.env.WHOELSE_VOCAB_PATH)) {
@@ -160,17 +156,62 @@ function escapeReg(value: string): string {
 }
 
 function asPhrase(label: string): string {
-  return label.toLowerCase().replace(/\s+/g, " ");
+  return prettyLabel(label);
+}
+
+function asSearchable(intent: VocabIntent): SearchableIntent {
+  return {
+    id: intent.id,
+    label: intent.label,
+    category: intent.category,
+    kind: intent.kind,
+    coverage: intent.coverage,
+    canonical: intent.canonical,
+    aliases: aliasesFor(intent.label),
+  };
+}
+
+export function searchableCatalog(opts: { canonicalOnly?: boolean } = {}): SearchableIntent[] {
+  const rows = opts.canonicalOnly === false ? loadIntentVocab().intents : canonicalVocab();
+  return rows.map(asSearchable);
+}
+
+export function searchVocab(query: string, opts: IntentSearchOptions = {}): IntentSearchHit[] {
+  return searchIntents(searchableCatalog({ canonicalOnly: true }), query, {
+    uniqueLabels: true,
+    limit: opts.limit ?? 12,
+    minLength: opts.minLength ?? 1,
+  });
+}
+
+function uniqueTokenIndex(): Map<string, VocabIntent> {
+  if (uniqueTokenCache) return uniqueTokenCache;
+  const counts = new Map<string, VocabIntent[]>();
+  for (const intent of canonicalVocab()) {
+    const tokens = asPhrase(intent.label)
+      .split(" ")
+      .filter((t) => t.length >= 3 && !STOP_TOKENS.has(t) && !STOP_LABELS.has(t.toUpperCase()));
+    for (const token of tokens) {
+      const list = counts.get(token) ?? [];
+      list.push(intent);
+      counts.set(token, list);
+    }
+  }
+  uniqueTokenCache = new Map();
+  for (const [token, intents] of counts) {
+    if (intents.length === 1) uniqueTokenCache.set(token, intents[0]);
+  }
+  return uniqueTokenCache;
 }
 
 /**
  * Multi-label against the shared vocab. Not a product picker.
- * Longest / alias hits win. Caps at 5. Single-intent is a degenerate compound.
+ * Longest / alias / distinctive-token hits win. Caps at 5. Single-intent is a degenerate compound.
  */
 export function matchVocabLabels(text: string, limit = 5): VocabHit[] {
   const raw = text.trim();
   if (!raw) return [];
-  const lower = raw.toLowerCase();
+  const lower = raw.toLowerCase().replace(/[-_]+/g, " ").replace(/\s+/g, " ");
   const hits = new Map<string, VocabHit>();
 
   const consider = (intent: VocabIntent, matched: string, confidence: number) => {
@@ -187,11 +228,15 @@ export function matchVocabLabels(text: string, limit = 5): VocabHit[] {
     }
   };
 
-  for (const [label, aliases] of Object.entries(SPEECH_ALIASES)) {
-    const intent = vocabByLabel(label);
-    if (!intent) continue;
+  for (const intent of canonicalVocab()) {
+    if (STOP_LABELS.has(intent.label)) continue;
+    const aliases = aliasesFor(intent.label);
     for (const alias of aliases) {
-      if (lower.includes(alias)) consider(intent, alias, alias.length >= 12 ? 0.95 : 0.9);
+      const needle = alias.toLowerCase();
+      if (needle.length < 3) continue;
+      if (lower.includes(needle)) {
+        consider(intent, alias, alias.length >= 12 ? 0.95 : 0.9);
+      }
     }
   }
 
@@ -203,10 +248,25 @@ export function matchVocabLabels(text: string, limit = 5): VocabHit[] {
     const tokens = phrase.split(" ");
     if (tokens.length === 1 && phrase.length < 4 && !SPEECH_ALIASES[intent.label]) continue;
     const re = new RegExp(`\\b${escapeReg(phrase)}\\b`, "i");
-    if (re.test(raw)) {
+    if (re.test(raw) || re.test(lower)) {
       const confidence = Math.min(0.88, 0.55 + phrase.length / 40);
       consider(intent, phrase, confidence);
     }
+  }
+
+  for (const intent of canonicalVocab()) {
+    if (STOP_LABELS.has(intent.label)) continue;
+    for (const form of speechForms(intent.label)) {
+      if (form.length < 10) continue;
+      if (lower.includes(form)) consider(intent, form, 0.86);
+    }
+  }
+
+  const unique = uniqueTokenIndex();
+  for (const [token, intent] of unique) {
+    if (STOP_LABELS.has(intent.label)) continue;
+    const re = new RegExp(`\\b${escapeReg(token)}\\b`, "i");
+    if (re.test(lower)) consider(intent, token, token.length >= 6 ? 0.8 : 0.72);
   }
 
   // Romance without the word "date" (canonical tennis-date sentence).
@@ -223,4 +283,5 @@ export function matchVocabLabels(text: string, limit = 5): VocabHit[] {
 export function resetVocabForTests(): void {
   cached = undefined;
   byLabelCache = undefined;
+  uniqueTokenCache = undefined;
 }

@@ -198,7 +198,7 @@ Other remaps: `1ST AID` → first aid; `PAINTER ART` ≠ home PAINTER; RESUME / 
 - Not a production seed of 505 fake entities.
 - Not a claim that the live demo pool contains doctors, concerts, or banks. Seed-miss is expected.
 - Not fulfillment: “book the 5:30” / “file my taxes” stay `PARTIALLY_COMPILABLE` at Sentinel (find who; do not complete the transaction).
-- Not a reason to grow the three-lens UI. `/universe` lists **concepts**, generated from this catalog + status.
+- Not a reason to grow the three-lens UI. `/universe` lists **concepts**, generated from this catalog + status. Filter with `?q=` (labels, questions, categories, class).
 
 ---
 

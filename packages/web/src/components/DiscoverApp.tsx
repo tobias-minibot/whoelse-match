@@ -6,6 +6,9 @@ import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
 import { fetchMe, type MePayload } from "@/lib/me";
 import { CompilePanel, type CompilePayload } from "@/components/CompilePanel";
+import { IntentChips, IntentSuggest } from "@/components/IntentSuggest";
+import { refineWhoElseQuery, useIntentSuggest } from "@/lib/use-intent-suggest";
+import type { IntentSearchHit } from "@whoelse/core/vocab-search";
 import { AMAZE_PROMPTS, amazeBySlug, parseShareParams, sharePath } from "@/lib/share";
 import {
   examplesFor,
@@ -61,7 +64,9 @@ export function DiscoverApp() {
   const [compiled, setCompiled] = useState<CompilePayload | null>(null);
   const [compiling, setCompiling] = useState(false);
   const [liveEmpty, setLiveEmpty] = useState(false);
+  const [picked, setPicked] = useState<{ id: string; label: string }[]>([]);
   const hydrated = useRef(false);
+  const suggest = useIntentSuggest(query);
 
   useEffect(() => {
     void fetchMe().then((payload) => setMe(payload));
@@ -136,6 +141,7 @@ export function DiscoverApp() {
     setActiveChip(0);
     setSide("seek");
     setCompiled(null);
+    setPicked([]);
     if (next === "any") {
       setQuery(AMAZE_PROMPTS[0].query);
     } else {
@@ -217,10 +223,24 @@ export function DiscoverApp() {
     const q = nextQuery.trim();
     if (!q) return;
     setQuery(q);
+    suggest.setOpen(false);
     const constraints = marketConstraints();
     const next: TrailItem = { label: q, context: q, exclude: seen, constraints };
     setTrail((t) => [...t, next]);
     void runFind(q, { constraints });
+  }
+
+  function pickIntent(hit: IntentSearchHit) {
+    const next = refineWhoElseQuery(query, hit);
+    const appending = /\bwho else\b/i.test(query.trim()) && next !== query.trim() && / and /i.test(next);
+    setQuery(next);
+    setActiveChip(-1);
+    setPicked((prev) => {
+      const row = { id: hit.id, label: hit.label };
+      if (appending) return prev.some((p) => p.id === hit.id) ? prev : [...prev, row];
+      return [row];
+    });
+    suggest.setOpen(false);
   }
 
   function recursiveWhoElse(candidate: Candidate) {
@@ -438,23 +458,40 @@ export function DiscoverApp() {
           Who <em>else?</em>
         </h1>
         <div className="search-row magic-row">
-          <textarea
-            value={query}
-            placeholder="Who else can do this? Who else wants this?"
-            rows={2}
-            autoComplete="off"
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setActiveChip(-1);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                askWhoElse();
-              }
-            }}
-            aria-label="Who else?"
-          />
+          <div className="intent-box">
+            <textarea
+              value={query}
+              placeholder="Who else can do this? Who else wants this?"
+              rows={2}
+              autoComplete="off"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-expanded={suggest.visible}
+              aria-controls="intent-suggest-home"
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setActiveChip(-1);
+                suggest.setOpen(true);
+                if (!e.target.value.trim()) setPicked([]);
+              }}
+              onFocus={() => suggest.setOpen(true)}
+              onBlur={() => window.setTimeout(() => suggest.setOpen(false), 120)}
+              onKeyDown={(e) => {
+                const handled = suggest.onKeyDown(e, () => askWhoElse());
+                if (handled && typeof handled === "object") pickIntent(handled);
+              }}
+              aria-label="Who else?"
+            />
+            <div id="intent-suggest-home">
+              <IntentSuggest
+                hits={suggest.hits}
+                active={suggest.active}
+                visible={suggest.visible}
+                onHover={suggest.setActive}
+                onPick={pickIntent}
+              />
+            </div>
+          </div>
           <div className="magic-actions">
             <button className="btn btn-coral" type="button" onClick={() => askWhoElse()} disabled={loading}>
               {cta}
@@ -464,6 +501,17 @@ export function DiscoverApp() {
             </button>
           </div>
         </div>
+        <IntentChips
+          items={picked}
+          onRemove={(id) => setPicked((prev) => prev.filter((p) => p.id !== id))}
+        />
+        {!suggest.visible && (
+          <p className="intent-browse">
+            <a href="/universe">All intents</a>
+            <span aria-hidden="true"> · </span>
+            type to search the vocab
+          </p>
+        )}
         <div className="chips amaze-chips">
           {examples.map((example, i) => (
             <button

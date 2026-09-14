@@ -20,7 +20,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 - **Human web (live):** https://whoelse-dating.vercel.app
 - **Share a query:** https://whoelse-dating.vercel.app/q?q=Who+else+can+fix+this%3F or `/who-else/fix-this`
 - **For AIs / remote MCP:** https://whoelse-dating.vercel.app/ais — endpoint `https://whoelse-dating.vercel.app/api/mcp`
-  Tools: `whoelse.find`, `whoelse.compile`, `whoelse.dispatch`, `whoelse.register`, `whoelse.publish`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.match`, `whoelse.act`, `whoelse.receipt`, `whoelse.reputation`, `whoelse.matches`, `whoelse.feedback`. Never `jobs.find`. Copy/paste config + example agent: `docs/MCP.md`.
+  Tools: `whoelse.find`, `whoelse.compile`, `whoelse.intents`, `whoelse.dispatch`, `whoelse.register`, `whoelse.publish`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.match`, `whoelse.act`, `whoelse.receipt`, `whoelse.reputation`, `whoelse.matches`, `whoelse.feedback`. Never `jobs.find`. Copy/paste config + example agent: `docs/MCP.md`.
 - **Legal:** `/privacy` · `/terms` · `/contact`
 - **Launch status:** `LAUNCH_BLOCKERS.md`
 - **Landing:** deploy `landing/` to Vercel, or open it from the app at `/landing/index.html`
@@ -33,7 +33,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Product (this repo)
 
-- **Human surface:** Next.js App Router. Public face is **one Who else? box**. Dating, Agents, and Experts are costumes. Other factory costumes sit under “More costumes”. Primary interaction is **Who else?** then **Who else like this?** on every card. Share URLs at `/q` and `/who-else/[slug]`. When the live pool has no useful matches, a labeled **Playground** (in-memory demo seed) answers so a cold visitor still feels magic — never mixed with live, never presented as real people. **Compile** is Sentinel (`whoelse.compile`): one sentence may contain many vocab labels; dispatch reconciles them on the same find.
+- **Human surface:** Next.js App Router. Public face is **one Who else? box** with typeahead over the shared vocab. Dating, Agents, and Experts are costumes. Other factory costumes sit under “More costumes”. Primary interaction is **Who else?** then **Who else like this?** on every card. Share URLs at `/q` and `/who-else/[slug]`. `/universe` (`/intents`) is a filterable catalog (`?q=`). When the live pool has no useful matches, a labeled **Playground** (in-memory demo seed) answers so a cold visitor still feels magic — never mixed with live, never presented as real people. **Compile** is Sentinel (`whoelse.compile`): one sentence may contain many vocab labels; dispatch reconciles them on the same find.
 - **AI surface:** Streamable HTTP MCP at `/api/mcp` (same Vercel app) plus stdio `pnpm mcp`. Primary tool **`whoelse.find`**. Same `@whoelse/core` engine and `data/seed.json` as the web app.
 - **Thin HTTP API** — the dating UI’s adapter; not a second matcher. Agents invoke via `POST /api/agents/:id/invoke` (demo stub).
 

@@ -15,6 +15,11 @@
       "types": "./src/amaze.ts",
       "import": "./src/amaze.ts",
       "default": "./dist/amaze.js"
+    },
+    "./vocab-search": {
+      "types": "./src/vocab-search.ts",
+      "import": "./src/vocab-search.ts",
+      "default": "./dist/vocab-search.js"
     }
   },
   "scripts": {

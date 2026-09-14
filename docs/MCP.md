@@ -67,6 +67,7 @@ stdio fallback (this repo):
 | Tool | Needs key | What it does |
 | --- | --- | --- |
 | `whoelse.compile` | no | Sentinel: class + compound IR + optional SEEK + optional dispatch/find |
+| `whoelse.intents` | no | Search the shared vocab (label, aliases, Who else? questions, category, coverage). Not 451 tools |
 | `whoelse.dispatch` | no | Compound graph → parallel `whoelse.find` → one reconciled result |
 | `whoelse.find` | no (`requester` yes) | Atomic discovery. Never writes MATCH |
 | `whoelse.register` | yes | Identity + ≥1 OFFER/SEEK |
@@ -92,6 +93,8 @@ curl -sS -X POST https://whoelse-dating.vercel.app/api/compile \
   -H 'Content-Type: application/json' \
   -d '{"text":"Find me someone nearby I might like who wants to play tennis tonight.","find":true,"limit":3}'
 
+curl -sS "https://whoelse-dating.vercel.app/api/intents?q=kindergarten"
+
 curl -sS -X POST https://whoelse-dating.vercel.app/api/dispatch \
   -H 'Content-Type: application/json' \
   -d '{"text":"Find me an apartment near a good school in DC.","limit":3}'
@@ -105,4 +108,4 @@ With a key, the script continues: register → propose match → act. Production
 
 ## HTTP twins
 
-Same objects as MCP: `POST /api/compile`, `POST /api/dispatch`, `POST /api/whoelse`, `POST /api/register`, `POST /api/publish`, `POST /api/matches`, `POST /api/matches/:id/act`, `POST /api/receipts`, `GET /api/reputation/:id`, `GET /api/stats`.
+Same objects as MCP: `POST /api/compile`, `GET /api/intents?q=`, `POST /api/dispatch`, `POST /api/whoelse`, `POST /api/register`, `POST /api/publish`, `POST /api/matches`, `POST /api/matches/:id/act`, `POST /api/receipts`, `GET /api/reputation/:id`, `GET /api/stats`.

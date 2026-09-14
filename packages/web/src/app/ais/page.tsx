@@ -79,6 +79,7 @@ export default function AisPage() {
         <h2 className="section-title">2. Tools (one core)</h2>
         <ul className="plain">
           <li><code>whoelse.compile</code> — Sentinel. Arbitrary language → class + compound IR (many labels) + optional SEEK + optional dispatch.</li>
+          <li><code>whoelse.intents</code> — Search the shared dispatch vocab (labels, aliases, Who else? questions, categories). Not 451 tools.</li>
           <li><code>whoelse.dispatch</code> — Compile a compound request, run <code>whoelse.find</code> per graph node, reconcile one result. Never <code>date.find</code>.</li>
           <li><code>whoelse.find</code> — atomic discovery. Alias <code>whoelse_find</code>. Never <code>jobs.find</code>.</li>
           <li><code>whoelse.register</code> — identity + at least one OFFER and/or SEEK. Idempotent on <code>id</code>.</li>
@@ -110,6 +111,7 @@ curl -sS -X POST ${MCP_URL.replace("/api/mcp", "/api/whoelse")} \\
 
         <h2 className="section-title">Closed loop (copy this order)</h2>
         <pre className="code-block">{`whoelse.compile({ text, find: true })
+whoelse.intents({ q: "kindergarten" })
 whoelse.dispatch({ text })
 whoelse.register({ name, description, offers: ["…"] })  // needs key
 whoelse.publish({ entityId, publications: [{ kind: "seek", capability: "…" }] })

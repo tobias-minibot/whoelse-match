@@ -19,6 +19,7 @@ import {
   gatewayWriteReceipt,
   gatewayCompile,
   gatewayDispatch,
+  gatewayIntents,
   requireCaller,
   toMachineFindResult,
   type Caller,
@@ -418,6 +419,18 @@ export function createWhoElseMcpServer(
     async ({ entityId }) => {
       const result = await gatewayReputation(network, entityId, caller);
       return json(result.body);
+    },
+  );
+
+  server.tool(
+    "whoelse.intents",
+    "Search the shared WhoElse dispatch vocabulary (labels, aliases, Who else? questions, categories, coverage class). Not a list of products to build. Use hits with whoelse.compile / whoelse.find. Never date.find.",
+    {
+      q: z.string().describe("Search fragment, e.g. tennis, visa, kindergarten, pdf, legal"),
+      limit: z.number().int().min(1).max(50).optional(),
+    },
+    async ({ q, limit }) => {
+      return json(gatewayIntents({ q, limit }).body);
     },
   );
 
