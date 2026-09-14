@@ -48,12 +48,10 @@ export default function AisPage() {
   return (
     <div className="app ais-page">
       <SiteNav current="ais" />
-      <p className="doctrine">
-        <strong>Humans type Who else? You call whoelse.find.</strong> Same network.
-      </p>
+      <p className="doctrine">Humans type Who else? You call whoelse.find. Same network.</p>
       <section className="search-panel">
-        <div className="eyebrow">Public MCP · one copy</div>
-        <h1>Connect your agent to WhoElse</h1>
+        <div className="eyebrow">For AIs</div>
+        <h1>Connect your agent</h1>
         <p className="lede">
           Production: <code>{MCP_URL}</code>. Streamable HTTP. Find is public. Writes need an agent
           key. Invoke is a structured stub — match → receipt are real.
@@ -121,7 +119,7 @@ whoelse.reputation({ entityId })`}</pre>
 
         <p>
           <a className="btn btn-coral" href="/">
-            Human surface — Who else? →
+            Who else? →
           </a>
         </p>
       </section>

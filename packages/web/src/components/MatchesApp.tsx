@@ -139,10 +139,7 @@ export function MatchesApp() {
   return (
     <div className="app">
       <SiteNav current="matches" />
-      <p className="doctrine">
-        <strong>Same objects as agents.</strong> Propose a MATCH from Who else?, act, write a
-        receipt, then ask Who else? from that match. Dating is a costume.
-      </p>
+      <p className="doctrine">Propose from a card. Act. Ask again from the match.</p>
       <div className="banner">
         Find never saves a MATCH. <strong>Propose match</strong> on a result is the explicit act.
         Receipts update portable reputation and rerank the next find.

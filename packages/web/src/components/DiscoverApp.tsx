@@ -402,42 +402,26 @@ export function DiscoverApp() {
   const cta = loading ? "Looking…" : HAS_SIDES.includes(vertical) && costume !== "any" && side === "offer" ? "Who else needs this?" : "Who else?";
 
   return (
-    <div className="app">
-      <SiteNav current="home" />
-
-      <p className="doctrine">
-        Type it like a text. Ask again from any card.{" "}
-        <a href="/ais">For AIs →</a>
-        {" · "}
-        <a href="/onboarding">Join as a human</a>
-      </p>
+    <div className={`app app-stage${result ? " has-results" : ""}`}>
+      <SiteNav current="home" sparse />
 
       <JoinHint />
 
       {playground && (
         <div className="banner banner-playground" role="status">
-          <strong>Playground — not the live network yet.</strong> These cards are labeled demo so
-          you can feel Who else? before people show up. Live matches, when they exist, come first.
-          Never mixed in.
-        </div>
-      )}
-      {!playground && result?.pool === "live" && (
-        <div className="banner">
-          Live network. Type is on the badge. Recursive Who else? is the product.
+          <strong>Playground.</strong> A preview, so you can feel the question before the room
+          fills. Live matches, when they exist, come first — never mixed in.
         </div>
       )}
 
       <section className="search-panel magic-panel">
-        <div className="eyebrow">Who else?</div>
-        <h1>Who else can do this — or wants this?</h1>
-        <p className="lede magic-lede">
-          One box. No categories required. Dating, agents, and experts are costumes on the same
-          question.
-        </p>
+        <h1 className="hero-question">
+          Who <em>else?</em>
+        </h1>
         <div className="search-row magic-row">
           <textarea
             value={query}
-            placeholder="Who else can fix this? Who else wants to meet tonight?"
+            placeholder="Who else can do this? Who else wants this?"
             onChange={(e) => {
               setQuery(e.target.value);
               setActiveChip(-1);
@@ -476,52 +460,54 @@ export function DiscoverApp() {
           ))}
         </div>
 
-        <div className="costume-row">
-          <span className="costume-label">Costume</span>
-          <div className="mode-tabs lens-primary" role="tablist" aria-label="Costumes">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={costume === "any"}
-              className={costume === "any" ? "active" : ""}
-              onClick={() => switchCostume("any")}
-            >
-              Any
-            </button>
-            {PRIMARY_LENSES.map((id) => {
-              const v = lensById(id);
-              return (
-                <button
-                  key={v.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={costume === v.id}
-                  className={costume === v.id ? "active" : ""}
-                  onClick={() => switchCostume(v.id)}
-                >
-                  {v.label}
-                </button>
-              );
-            })}
-          </div>
-          <details className="lens-more" open={costume !== "any" && !isPrimaryLens(vertical)}>
-            <summary>More costumes</summary>
-            <div className="mode-tabs" role="tablist" aria-label="More costumes">
-              {moreLenses.map((v) => (
-                <button
-                  key={v.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={costume === v.id}
-                  className={costume === v.id ? "active" : ""}
-                  onClick={() => switchCostume(v.id)}
-                >
-                  {v.label}
-                </button>
-              ))}
+        <details className="costume-details" open={costume !== "any"}>
+          <summary>Costumes</summary>
+          <div className="costume-row">
+            <div className="mode-tabs lens-primary" role="tablist" aria-label="Costumes">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={costume === "any"}
+                className={costume === "any" ? "active" : ""}
+                onClick={() => switchCostume("any")}
+              >
+                Any
+              </button>
+              {PRIMARY_LENSES.map((id) => {
+                const v = lensById(id);
+                return (
+                  <button
+                    key={v.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={costume === v.id}
+                    className={costume === v.id ? "active" : ""}
+                    onClick={() => switchCostume(v.id)}
+                  >
+                    {v.label}
+                  </button>
+                );
+              })}
             </div>
-          </details>
-        </div>
+            <details className="lens-more" open={costume !== "any" && !isPrimaryLens(vertical)}>
+              <summary>More costumes</summary>
+              <div className="mode-tabs" role="tablist" aria-label="More costumes">
+                {moreLenses.map((v) => (
+                  <button
+                    key={v.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={costume === v.id}
+                    className={costume === v.id ? "active" : ""}
+                    onClick={() => switchCostume(v.id)}
+                  >
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            </details>
+          </div>
+        </details>
 
         {HAS_SIDES.includes(vertical) && costume !== "any" && (
           <div className="mode-tabs side-tabs" role="tablist" aria-label="Offer or seek">
@@ -581,17 +567,14 @@ export function DiscoverApp() {
       )}
 
       {!result && (
-        <p className="empty magic-empty">
-          Press Who else? or tap a spark. Every card has <strong>Who else like this?</strong> — that is
-          how it gets addictive.
-        </p>
+        <p className="empty magic-empty">Tap a spark. Then ask again from any card.</p>
       )}
 
       {result && dating && (
         <Sectioned
           blocks={[
-            { title: "Humans", items: datingHumans, empty: "No human matches in this slice." },
-            { title: "AIs", items: datingAis, empty: "No AI matches in this slice." },
+            { title: "Humans", items: datingHumans, empty: "No one else like that — yet." },
+            { title: "AIs", items: datingAis, empty: "No labeled AIs in this slice." },
             others.length
               ? {
                   title: "Also in the network",
@@ -618,7 +601,7 @@ export function DiscoverApp() {
             {
               title: "Who else",
               items: visible,
-              empty: "No matches in this slice.",
+              empty: "No one else like that — yet.",
             },
           ]}
           playground={result.pool === "playground"}
@@ -638,7 +621,7 @@ export function DiscoverApp() {
             {
               title: side === "offer" ? "Who else needs this" : "Who else has this",
               items: side === "offer" ? seekCards : offerCards,
-              empty: "No matches in this slice.",
+              empty: "No one else like that — yet.",
             },
             (side === "offer" ? offerCards : seekCards).length
               ? {
@@ -733,7 +716,7 @@ function Sectioned({
             <h2 className="section-title">{block.title}</h2>
             {block.note && <p className="empty">{block.note}</p>}
             <div className="cards">
-              {block.items.length === 0 && block.empty && <p className="empty">{block.empty}</p>}
+              {block.items.length === 0 && block.empty && <p className="empty section-empty">{block.empty}</p>}
               {block.items.map((c) => (
                 <ResultCard
                   key={c.entity.id}
@@ -793,15 +776,15 @@ function ResultCard({
   const showReverse = Boolean(onReverse);
 
   return (
-    <article className="card">
+    <article className="card person-card">
       <div className="card-top">
         <div className="identity">
           <div className={`av ${avatarClass(e)}`}>{initials}</div>
           <div>
             <h3>{e.name}</h3>
-            <p>
-              {loc || (e.type === "ai" || e.type === "agent" ? "not geo-bound" : "location unset")} ·{" "}
-              {playground || e.provenance !== "user" ? demo : "live"}
+            <p className="card-meta">
+              {loc || (e.type === "ai" || e.type === "agent" ? "not geo-bound" : "location unset")}
+              {playground || e.provenance !== "user" ? ` · ${demo}` : ""}
             </p>
           </div>
         </div>
@@ -820,19 +803,19 @@ function ResultCard({
       {candidate.explanation.surprisingDifference && (
         <p className="diff">{candidate.explanation.surprisingDifference}</p>
       )}
-      <div className="actions">
-        <button className="btn btn-coral btn-sm" type="button" onClick={onWhoElse}>
-          Who else like this?
-        </button>
+      <button className="btn btn-coral btn-whoelse" type="button" onClick={onWhoElse}>
+        Who else like this?
+      </button>
+      <div className="actions actions-quiet">
         <button className="btn btn-soft btn-sm" type="button" onClick={onShare}>
           Share
         </button>
         {showReverse && (
-          <button className="btn btn-ink btn-sm" type="button" onClick={onReverse}>
+          <button className="btn btn-soft btn-sm" type="button" onClick={onReverse}>
             {OFFER_SIDE_ROLES.includes(roleOf(e)) ? "Who else needs this?" : "Who else has this?"}
           </button>
         )}
-        <button className="btn btn-ink btn-sm" type="button" onClick={onPropose}>
+        <button className="btn btn-soft btn-sm" type="button" onClick={onPropose}>
           Propose match
         </button>
         <button className="btn btn-soft btn-sm" type="button" onClick={onMore}>
@@ -842,8 +825,8 @@ function ResultCard({
           Less like this
         </button>
         {(e.type === "human" || e.type === "ai" || e.type === "agent") && (
-          <button className={`btn btn-sm ${e.type === "human" ? "btn-ink" : "btn-ai"}`} type="button" onClick={onChat}>
-            {e.type === "human" ? "Chat (interest)" : "Chat"}
+          <button className="btn btn-soft btn-sm" type="button" onClick={onChat}>
+            {e.type === "human" ? "Chat" : "Chat"}
           </button>
         )}
       </div>

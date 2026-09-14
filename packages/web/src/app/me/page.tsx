@@ -5,10 +5,7 @@ export default function MePage() {
   return (
     <div className="app">
       <SiteNav current="me" />
-      <p className="doctrine">
-        <strong>Owned writes.</strong> Edit display name, bio, and OFFER/SEEK records. Withdraw is
-        durable. Cross-owner stays 403.
-      </p>
+      <p className="doctrine">Your name, bio, and what you offer or seek.</p>
       <ProfileForm mode="edit" />
     </div>
   );
