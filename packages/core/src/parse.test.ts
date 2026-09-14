@@ -134,6 +134,34 @@ describe("generic constraint parsing", () => {
     assert.ok(local.hard.some((a) => a.key === "openNow"));
   });
 
+  it("parses eligibility, reservation, remaining, and radius as generic keys", () => {
+    const loan = parseAttributeConstraints("Who else has a loan I qualify for with credit score 720?", "offer");
+    assert.ok(loan.some((a) => a.key === "eligible" && a.op === "truthy"));
+    assert.ok(loan.some((a) => a.key === "creditScore" && a.op === "lte" && a.value === 720));
+    const income = parseAttributeConstraints("Who else has social housing I qualify for with income under $50,000?", "offer");
+    assert.ok(income.some((a) => a.key === "eligible"));
+    assert.ok(income.some((a) => a.key === "income" && a.op === "lte" && a.value === 50000));
+    assert.ok(!income.some((a) => a.key === "rent" || a.key === "budget"));
+    const table = parseAttributeConstraints("Who else has a restaurant table Friday?", "offer");
+    assert.ok(table.some((a) => a.key === "reservation" && a.op === "truthy"));
+    assert.ok(table.some((a) => a.key === "when" && a.value === "friday"));
+    const bookable = parseAttributeConstraints("Who else has a bookable hotel?", "offer");
+    assert.ok(bookable.some((a) => a.key === "reservation"));
+    const parking = parseAttributeConstraints("Who else has parking with spots remaining?", "offer");
+    assert.ok(parking.some((a) => a.key === "remaining" && a.op === "gte" && Number(a.value) >= 1));
+    const counted = parseAttributeConstraints("Who else has parking with 3 spots remaining?", "offer");
+    assert.ok(counted.some((a) => a.key === "remaining" && a.value === 3));
+    const radius = inferConstraints("Who else is an ambulance within 5 km?", cities);
+    assert.equal(radius.radiusKm, 5);
+    assert.ok(radius.attributes?.some((a) => a.key === "radiusKm"));
+    assert.notEqual(radius.city, "Washington");
+    const miles = inferConstraints("Who else has food delivery within 5 miles?", cities);
+    assert.ok(miles.radiusKm != null && miles.radiusKm > 7);
+    const nearMe = inferConstraints("Who else near me is into mountain biking?", cities);
+    assert.equal(nearMe.city, "Washington");
+    assert.equal(nearMe.radiusKm, undefined);
+  });
+
   it("parses ride origin/destination and service license", () => {
     const ride = parseAttributeConstraints("Who else has a ride from Georgetown to Dupont?", "offer");
     assert.ok(ride.some((a) => a.key === "origin" && String(a.value).includes("Georgetown")));

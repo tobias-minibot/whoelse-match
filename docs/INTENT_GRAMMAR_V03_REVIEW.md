@@ -292,21 +292,22 @@ Live dating already had humans+AIs, sectioned UI, offer↔seek, recursive Who el
 
 | Family | v0.3 examples | Universal |
 | --- | --- | --- |
-| geo | location, origin, destination, airport | `city`, `neighborhood`, ride `origin`/`destination` |
-| time | availability, schedule, hours, dates, departure | `availability`, `availableFrom`, soft “next week” |
+| geo | location, origin, destination, airport | `city`, `neighborhood`, ride `origin`/`destination`, `radiusKm` |
+| time | availability, schedule, hours, dates, departure | `availability`, `availableFrom`, soft “next week”, reservation `when` |
 | money | budget, price, fees, amount, rate, payment | existing price-key parser |
 | party | party-size, travelers, guests, passengers | `seats` / `partySize` |
 | diet/item | cuisine, diet, item | attributes + seed vocab |
 | property | property-type, amenities | apartment/travel attributes |
-| urgency / state | urgency, openNow | `urgency`, `state`, `neq` |
+| urgency / state | urgency, openNow | `urgency`, `state`, `neq`, `remaining` (count) |
 | evidence | trust, licensed, safety, data-policy | `trust.evidence` + attribute |
+| eligibility | income, credit, membership, status | CONSTRAINT `eligible` / `income` / `creditScore` / `membership` |
 | skill/specialty | specialty, procedure, matter, use-case | `intent` / `offers` |
 | type | provider-type, user-type | `type` |
 | vibe / format | occasion, format, date-type, preference | **stay in the sentence** |
-| reservation / visit | reservation, visit | **ACTION, not find** |
+| reservation / visit | reservation, visit | CONSTRAINT `reservation` / `when` for inventory-at-time; ACTION `book` still not find |
 | leaked vehicle/style | trainer origin, wheelchair style | **do not keep** |
 
-Smallest useful set that actually changes candidates: **geo, time, money, party, type, side/roles, evidence, state.** Everything else can ride in `intent` until a vertical forces a key (apartment already forced bedrooms/pets; rides forced origin/dest).
+Smallest useful set that actually changes candidates: **geo (incl. radiusKm), time, money, party, type, side/roles, evidence, state, eligibility, reservation, remaining.** Everything else can ride in `intent` until a vertical forces a key (apartment already forced bedrooms/pets; rides forced origin/dest).
 
 ---
 

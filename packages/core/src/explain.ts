@@ -95,6 +95,9 @@ function resourceBits(entity: Entity): string | undefined {
   }
   if (typeof a.seats === "number") bits.push(`${a.seats} seats`);
   if (a.licensed === true) bits.push("licensed");
+  if (a.eligible === true) bits.push("eligible");
+  if (a.reservation === true || a.bookable === true) bits.push("bookable");
+  if (typeof a.remaining === "number") bits.push(`${a.remaining} remaining`);
   if (a.furnished === true) bits.push("furnished");
   if (a.pets === true) bits.push("pets ok");
   if (typeof a.neighborhood === "string") bits.push(a.neighborhood);

@@ -61,6 +61,8 @@ export const LOCKED_COMPILE_EXAMPLES: { text: string; expected: CompileClass }[]
   { text: "Who else can give me a ride from Georgetown to Dupont?", expected: "WHOELSE_COMPILABLE" },
   { text: "Who else knows about European patent law?", expected: "WHOELSE_COMPILABLE" },
   { text: "Who else is hiring AI people in Washington?", expected: "WHOELSE_COMPILABLE" },
+  { text: "Who else has a loan I qualify for?", expected: "WHOELSE_COMPILABLE" },
+  { text: "Who else has a restaurant table Friday?", expected: "WHOELSE_COMPILABLE" },
   { text: "I want to file my taxes!", expected: "PARTIALLY_COMPILABLE" },
   { text: "Book me a restaurant Friday", expected: "PARTIALLY_COMPILABLE" },
   { text: "Send this email for me", expected: "PARTIALLY_COMPILABLE" },
@@ -145,6 +147,24 @@ const LOCKED = new Map<string, Locked>([
     },
   ],
   [
+    norm("Who else has a loan I qualify for?"),
+    {
+      classification: "WHOELSE_COMPILABLE",
+      reason: "Eligibility is a CONSTRAINT on the same find — not bank.find.",
+      intent: "Who else has a loan I qualify for?",
+      capability: "loan",
+    },
+  ],
+  [
+    norm("Who else has a restaurant table Friday?"),
+    {
+      classification: "WHOELSE_COMPILABLE",
+      reason: "Bookable slot is a reservation CONSTRAINT. WhoElse finds who has it; it does not book.",
+      intent: "Who else has a restaurant table Friday?",
+      capability: "restaurant reservation",
+    },
+  ],
+  [
     norm("I want to file my taxes!"),
     {
       classification: "PARTIALLY_COMPILABLE",
@@ -189,6 +209,23 @@ const LOCKED = new Map<string, Locked>([
     { classification: "NOT_WHOELSE", reason: "Player command. Not who-else." },
   ],
 ]);
+
+function compileIr(intent: string, q: UniversalQuery, exclusions: string[]): CompileIR {
+  return {
+    intent,
+    constraints: {
+      type: q.entityType,
+      city: q.soft.city,
+      region: q.soft.region,
+      neighborhood: q.soft.neighborhood,
+      side: q.side,
+      roles: q.roles,
+      radiusKm: q.soft.radiusKm,
+      attributes: q.hard.length ? q.hard : undefined,
+    },
+    exclusions,
+  };
+}
 
 function norm(text: string): string {
   return text.trim().toLowerCase().replace(/[.!?]+$/g, "").replace(/\s+/g, " ");
@@ -267,28 +304,13 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
 
   if (locked) {
     const intent = locked.intent ?? (locked.classification === "NOT_WHOELSE" ? raw : `Who else ${raw}?`);
-    const ir: CompileIR = {
-      intent,
-      constraints: q.side || q.roles || q.hard.length || q.soft.city
-        ? {
-            type: q.entityType,
-            city: q.soft.city,
-            region: q.soft.region,
-            neighborhood: q.soft.neighborhood,
-            side: q.side,
-            roles: q.roles,
-            attributes: q.hard.length ? q.hard : undefined,
-          }
-        : {},
-      exclusions,
-    };
     return {
       classification: locked.classification,
       reason: locked.reason,
       confidence: 1,
       locked: true,
       usedLlm: false,
-      ir,
+      ir: compileIr(intent, q, exclusions),
       seekDraft:
         locked.classification === "NOT_WHOELSE"
           ? undefined
@@ -307,19 +329,6 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
       : WHOELSE_ASK.test(raw)
         ? raw
         : `Who else ${raw.replace(/^[.!\s]+/, "")}`.replace(/\s+/g, " ");
-  const ir: CompileIR = {
-    intent,
-    constraints: {
-      type: q.entityType,
-      city: q.soft.city,
-      region: q.soft.region,
-      neighborhood: q.soft.neighborhood,
-      side: q.side,
-      roles: q.roles,
-      attributes: q.hard.length ? q.hard : undefined,
-    },
-    exclusions,
-  };
 
   return {
     classification: guessed.classification,
@@ -327,7 +336,7 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
     confidence: guessed.confidence,
     locked: false,
     usedLlm: false,
-    ir,
+    ir: compileIr(intent, q, exclusions),
     seekDraft:
       guessed.classification === "NOT_WHOELSE"
         ? undefined

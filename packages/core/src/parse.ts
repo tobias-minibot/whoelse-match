@@ -219,12 +219,20 @@ export function inferConstraints(
     if (roles) constraints.roles = roles;
   }
 
+  const parsed = parseAttributeConstraints(text, constraints.side);
+  const radius = parsed.find((a) => a.key === "radiusKm");
+  if (radius && typeof radius.value === "number") constraints.radiusKm = radius.value;
+
   const cityHit = knownCities.find((city) => new RegExp(`\\b${escapeReg(city)}\\b`, "i").test(text));
   if (!constraints.city && cityHit) constraints.city = cityHit;
   if (!constraints.city && /\bnyc\b|\bnew york\b/i.test(text)) constraints.city = "New York";
   if (!constraints.city && /\blisbon\b|\blisboa\b/i.test(text)) constraints.city = "Lisbon";
   if (!constraints.city && /\bberlin\b/i.test(text)) constraints.city = "Berlin";
-  if (!constraints.city && (/\bdc\b|\bwashington\b/i.test(text) || NEAR_ME.test(text))) {
+  // Explicit radius is distance, not the dating “near me” → Washington default.
+  if (
+    !constraints.city &&
+    (/\bdc\b|\bwashington\b/i.test(text) || (NEAR_ME.test(text) && constraints.radiusKm == null))
+  ) {
     constraints.city = DEFAULT_CITY;
     constraints.region = constraints.region ?? DEFAULT_REGION;
   }
@@ -238,7 +246,6 @@ export function inferConstraints(
     if (!constraints.region && placeHit.region) constraints.region = placeHit.region;
   }
 
-  const parsed = parseAttributeConstraints(text, constraints.side);
   for (const next of parsed) {
     if (!constraints.attributes!.some((a) => a.key === next.key && a.op === next.op)) {
       constraints.attributes!.push(next);
@@ -341,8 +348,14 @@ export function parseAttributeConstraints(text: string, side?: MatchSide): Attri
     out.push({ key: "kind", op: "eq", value: "drill" });
   }
 
+  parseEligibilityConstraints(text, out);
+  parseReservationConstraints(text, lower, out);
+  parseInventoryConstraints(lower, out);
+  parseRadiusConstraints(text, out);
+
   const price = parsePrice(text);
-  if (price) {
+  // Dollar amounts next to “income” are eligibility, not rent/budget.
+  if (price && !/\bincome\b/i.test(lower)) {
     if (price.currency) out.push({ key: "currency", op: "eq", value: price.currency });
     const key = priceKey(lower, side);
     if (price.under || side !== "seek") {
@@ -354,6 +367,98 @@ export function parseAttributeConstraints(text: string, side?: MatchSide): Attri
   }
 
   return out;
+}
+
+const ELIGIBLE_LANG =
+  /\b(eligib(?:le|ility)|qualif(?:y|ies|ied|ication)|i qualify|means[-\s]?tested|income[-\s]?qualified)\b/i;
+const RESERVE_LANG =
+  /\b(reserv(?:e|ation|ed)|bookable|hold(?:s|ing)? (?:me )?(?:a )?(?:table|room|spot|seat))\b/i;
+const TABLE_AT_TIME = /\btable\b/i;
+const WEEKDAY =
+  /\b(sunday|monday|tuesday|wednesday|thursday|friday|saturday|tonight|tomorrow|today)\b/i;
+
+function parseEligibilityConstraints(text: string, out: AttributeConstraint[]): void {
+  if (!ELIGIBLE_LANG.test(text)) return;
+  if (!out.some((a) => a.key === "eligible")) {
+    out.push({ key: "eligible", op: "truthy", value: true });
+  }
+
+  const credit = text.match(/\bcredit(?:\s+score)?\s*(?:of|over|above|at least|>=)?\s*(\d{3})\b/i);
+  if (credit && !out.some((a) => a.key === "creditScore")) {
+    // Published requirement on the OFFER: keep products whose min credit is ≤ the stated score.
+    out.push({ key: "creditScore", op: "lte", value: Number(credit[1]) });
+  }
+
+  const incomeUnder =
+    text.match(/\bincome\b.{0,28}\b(?:under|below|less than|up to|max(?:imum)?)\s*\$?\s*([0-9][0-9,]*(?:k)?)\b/i) ??
+    text.match(/\b(?:under|below|less than|up to)\s*\$?\s*([0-9][0-9,]*(?:k)?)\b.{0,20}\bincome\b/i);
+  if (incomeUnder && !out.some((a) => a.key === "income")) {
+    out.push({ key: "income", op: "lte", value: parseAmount(incomeUnder[1]) });
+  }
+
+  if (/\b(member(?:ship)?|credit union)\b/i.test(text) && !out.some((a) => a.key === "membership")) {
+    const named = text.match(/\b(?:member(?:ship)? (?:of|at)\s+)([A-Za-z][A-Za-z0-9' -]{1,32})/i);
+    if (named) {
+      out.push({ key: "membership", op: "includes", value: named[1].trim() });
+    } else {
+      out.push({ key: "membership", op: "truthy", value: true });
+    }
+  }
+}
+
+function parseReservationConstraints(text: string, lower: string, out: AttributeConstraint[]): void {
+  const tableAtTime = TABLE_AT_TIME.test(lower) && WEEKDAY.test(lower);
+  const ticketAtTime = /\b(tickets?|seats?)\b/.test(lower) && WEEKDAY.test(lower) && RESERVE_LANG.test(text);
+  if (!RESERVE_LANG.test(text) && !tableAtTime && !ticketAtTime) return;
+  if (!out.some((a) => a.key === "reservation")) {
+    out.push({ key: "reservation", op: "truthy", value: true });
+  }
+  const day = lower.match(WEEKDAY);
+  if (day && !out.some((a) => a.key === "when")) {
+    out.push({ key: "when", op: "eq", value: day[1] });
+  }
+  const party = lower.match(/\btable for\s+(\d+)\b/);
+  if (party && !out.some((a) => a.key === "seats")) {
+    out.push({ key: "seats", op: "gte", value: Number(party[1]) });
+  }
+}
+
+function parseInventoryConstraints(lower: string, out: AttributeConstraint[]): void {
+  const counted = lower.match(
+    /\b(\d+)\s+(?:spots?|spaces?|opens?|openings?)\s+(?:left|remaining|available)\b/,
+  );
+  if (counted) {
+    if (!out.some((a) => a.key === "remaining")) {
+      out.push({ key: "remaining", op: "gte", value: Number(counted[1]) });
+    }
+    return;
+  }
+  if (
+    /\b(?:spots?|spaces?|capacity|inventory)\s+(?:left|remaining|available)\b/.test(lower) ||
+    /\bremaining\s+(?:spots?|spaces?|capacity|count|inventory)\b/.test(lower) ||
+    /\bwith spots remaining\b/.test(lower)
+  ) {
+    if (!out.some((a) => a.key === "remaining")) {
+      out.push({ key: "remaining", op: "gte", value: 1 });
+    }
+  }
+}
+
+function parseRadiusConstraints(text: string, out: AttributeConstraint[]): void {
+  const km =
+    text.match(/\bwithin\s+(\d+(?:\.\d+)?)\s*(km|kilometers?|mi|miles?)\b/i) ??
+    text.match(/\b(\d+(?:\.\d+)?)\s*(km|kilometers?|mi|miles?)\s+(?:of me|away|radius)\b/i);
+  if (!km || out.some((a) => a.key === "radiusKm")) return;
+  const n = Number(km[1]);
+  const unit = km[2].toLowerCase();
+  const radiusKm = unit.startsWith("mi") ? n * 1.60934 : n;
+  out.push({ key: "radiusKm", op: "gte", value: Math.round(radiusKm * 10) / 10 });
+}
+
+function parseAmount(raw: string): number {
+  const k = /k$/i.test(raw);
+  const n = Number(raw.replace(/,/g, "").replace(/k$/i, ""));
+  return k ? n * 1000 : n;
 }
 
 export function priceKey(lower: string, side?: MatchSide): string {
@@ -434,6 +539,7 @@ export function parseUniversal(
       region: constraints.region,
       neighborhood: constraints.neighborhood,
       cheaper: wantsCheaper(text),
+      radiusKm: constraints.radiusKm,
       ...( /\bnext week\b/i.test(text) ? { labels: ["next week"] } : {}),
     },
     evidenceNeeds,
@@ -455,6 +561,7 @@ export function constraintsFromUniversal(q: UniversalQuery): WhoElseConstraints 
     roles: q.roles,
     attributes: q.hard.length ? q.hard : undefined,
     state: q.state && q.state.op === "eq" ? q.state.value : undefined,
+    radiusKm: q.soft.radiusKm,
   };
 }
 

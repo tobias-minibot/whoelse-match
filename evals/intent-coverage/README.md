@@ -27,7 +27,7 @@ pnpm coverage:505:probe   # optional; polite sample of production /api/compile
 | --- | --- |
 | **A** | Generic core already represents the useful request (ENTITY + OFFER/SEEK + constraints + MATCH). |
 | **B** | Same engine; needs alias / slot remap / Sentinel compilation. No new primitive. |
-| **C** | Same op; missing one reusable concept (eligibility, reservation, inventory, geo-radius). |
+| **C** | Same op; missing one reusable concept. Empty after eligibility/reservation/remaining/radiusKm shipped. |
 | **D** | Model cannot express cleanly. |
 | **E** | Duplicate / obsolete catalog row. Deprecate. Do not distort architecture. |
 

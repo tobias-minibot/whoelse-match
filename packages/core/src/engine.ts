@@ -945,7 +945,17 @@ const ATTR_ALIASES: Record<string, string[]> = {
   budget: ["budget", "salary"],
   price: ["price", "priceUsd", "rate"],
   salary: ["salary", "budget"],
+  eligible: ["eligible", "eligibility"],
+  remaining: ["remaining", "remainingCount", "spots", "capacity", "inventory"],
+  reservation: ["reservation", "bookable", "holds"],
+  creditScore: ["creditScore", "credit"],
+  radiusKm: ["radiusKm", "radius", "coverageKm"],
+  income: ["income", "incomeMax", "maxIncome"],
+  membership: ["membership", "member"],
 };
+
+/** Missing value is not a mismatch — compare only when the entity published the key. */
+const SOFT_IF_MISSING = new Set(["currency", "when", "radiusKm", "membership", "income", "creditScore"]);
 
 function readAttr(entity: Entity, key: string): unknown {
   const keys = ATTR_ALIASES[key] ?? [key];
@@ -953,17 +963,27 @@ function readAttr(entity: Entity, key: string): unknown {
     const have = entity.attributes?.[k] ?? entity.preferences?.[k];
     if (have != null && have !== "") return have;
   }
+  for (const pub of entity.publications ?? []) {
+    for (const c of pub.constraints ?? []) {
+      if (keys.includes(c.key) && c.value != null && c.value !== "") return c.value;
+    }
+  }
   return entity.attributes?.[key] ?? entity.preferences?.[key];
 }
 
 function matchAttribute(have: unknown, constraint: AttributeConstraint): boolean {
-  // Query currency is a unit, not a required field. Missing ≠ mismatch.
-  if (constraint.key === "currency" && (have == null || have === "")) return true;
+  if ((constraint.key === "currency" || SOFT_IF_MISSING.has(constraint.key)) && (have == null || have === "")) {
+    return true;
+  }
   if (constraint.op === "neq") {
     if (have == null || have === "") return true;
     return String(have).toLowerCase() !== String(constraint.value).toLowerCase();
   }
   if (constraint.op === "truthy") {
+    if (constraint.key === "reservation") {
+      const n = asNumber(have);
+      if (n != null) return n > 0;
+    }
     return have === true || have === "true" || have === "yes";
   }
   if (have == null || have === "") return false;
@@ -1013,8 +1033,19 @@ function softAvail(have: string, want: string): boolean {
 
 function passesGeo(
   entity: Entity,
-  constraints: { city?: string; region?: string; country?: string },
+  constraints: { city?: string; region?: string; country?: string; radiusKm?: number; attributes?: AttributeConstraint[] },
 ): boolean {
+  const radiusKm =
+    constraints.radiusKm ??
+    asNumber(constraints.attributes?.find((a) => a.key === "radiusKm")?.value);
+  if (radiusKm != null) {
+    const have = asNumber(readAttr(entity, "radiusKm"));
+    if (have != null && have < radiusKm) return false;
+    if (constraints.country && entity.location?.country && !eq(entity.location.country, constraints.country)) {
+      return isMachineType(entity.type);
+    }
+    return true;
+  }
   if (constraints.city && entity.location?.city && !eq(entity.location.city, constraints.city)) {
     if (isMachineType(entity.type) || entity.attributes.remote === true) return true;
     return false;

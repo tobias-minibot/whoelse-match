@@ -59,6 +59,13 @@ export interface MachineMatch {
     licensed?: unknown;
     urgency?: unknown;
     trade?: unknown;
+    eligible?: unknown;
+    income?: unknown;
+    creditScore?: unknown;
+    membership?: unknown;
+    reservation?: unknown;
+    remaining?: unknown;
+    radiusKm?: unknown;
     fallbackTo?: unknown;
     latencyMs?: unknown;
     priceUsd?: unknown;
@@ -136,6 +143,13 @@ export function toMachineMatch(candidate: Candidate): MachineMatch {
       licensed: attrs.licensed,
       urgency: attrs.urgency,
       trade: attrs.trade,
+      eligible: attrs.eligible ?? attrs.eligibility,
+      income: attrs.income,
+      creditScore: attrs.creditScore ?? attrs.credit,
+      membership: attrs.membership,
+      reservation: attrs.reservation ?? attrs.bookable,
+      remaining: attrs.remaining ?? attrs.remainingCount ?? attrs.spots,
+      radiusKm: attrs.radiusKm ?? attrs.coverageKm,
       fallbackTo: attrs.fallbackTo,
       latencyMs: attrs.latencyMs,
       priceUsd: attrs.priceUsd,

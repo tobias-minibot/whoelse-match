@@ -637,3 +637,23 @@ Auth/ownership shipped. Production was still an empty postgres pool with no cohe
 ### SHARED DERIVATION
 
 A human joins: Clerk → principal → entity + publication → 18+ affirmation → public find. Dating is the default sentence, not a vertical engine. Moderation queue, messaging, and Clerk production-domain setup stay follow-ups.
+
+---
+
+## ELIGIBILITY + RESERVATION CONSTRAINTS (2026-09-14)
+
+The 505 audit’s top C unlocks were **eligibility** (~18) and **reservation** (~16), plus cheap **geo-radius** (3) and **inventory** (1). Shipped as reusable CONSTRAINT keys, not vertical engines.
+
+### DISCOVERED THROUGH IMPLEMENTATION
+
+65. **C was a missing *key*, not a missing matcher.** BANK and RESTAURANT failed representability because the useful request needed a qualifier or a bookable slot. Adding `{ key: "eligible" }` / `{ key: "reservation" }` on the existing `AttributeConstraint` object moved 38 rows C→A. `whoelse.find` did not grow a method. There is still no `bank.find` or `restaurant.find`.
+66. **Fulfillment stays PARTIALLY_COMPILABLE.** “Book me a restaurant Friday” still does not complete a reservation. “Who else has a restaurant table Friday?” compiles to `reservation=true` + optional `when=friday`. ACTION `book` may follow; find only matches inventory-at-time.
+67. **Credit is a published requirement, compared in the same direction as rent.** “I qualify with credit score 720” emits `creditScore lte 720` so an offer that publishes min-credit 620 matches and min-credit 800 does not. Do not invert into an underwriting engine.
+68. **Radius is the anti-default.** “Near me” still means Washington for the dating seed. `within 5 km` sets `radiusKm` and **does not** hard-default city. City equality is not a hard gate when a radius is stated. Entities may publish `radiusKm` as coverage; missing is soft.
+69. **`remaining` is not `inStock`.** Boolean stock was already a STATE key. Parking needed a count. Same `gte` as seats.
+70. **Publication constraints are readable.** If the entity attribute is sparse, find reads `Publication.constraints` for the same keys. That is how a hotel OFFER can publish `reservation` without a second schema.
+71. **Do not seed production.** Representable ≠ seeded. Tests use a tiny synthetic pool. Live seed-miss for banks and Friday tables is expected.
+
+### SHARED DERIVATION
+
+Well-known families live in `CONSTRAINT_KEY_FAMILIES`. Open strings — verticals add values, not matchers. Coverage after this: **A 409 / B 31 / C 0 / D 6 / E 59; A+B = 440/505 = 87.1%** (was 402/505 = 79.6%). D and E still must not distort architecture.
