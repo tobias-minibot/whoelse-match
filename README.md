@@ -224,6 +224,7 @@ pnpm mcp:smoke          # capability + dating via whoelse.find
 pnpm mcp:http-dogfood   # real HTTP SDK client (needs WHOELSE_MCP_URL or local :3000)
 pnpm example:agent      # compile + find (+ writes if WHOELSE_AGENT_KEY)
 pnpm test               # core + MCP stdio + Streamable HTTP client tests
+pnpm coverage:505       # 505-intent A–E audit (UI lenses ≠ semantic coverage)
 pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfood queries
 ```
 

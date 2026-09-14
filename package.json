@@ -16,7 +16,7 @@
     "mcp:smoke": "pnpm --filter @whoelse/mcp-server smoke",
     "mcp:http-dogfood": "pnpm --filter @whoelse/mcp-server http-dogfood",
     "example:agent": "npx tsx scripts/example-agent.ts",
-    "test": "pnpm --filter @whoelse/core test && pnpm --filter @whoelse/mcp-server test",
+    "test": "pnpm --filter @whoelse/core test && pnpm --filter @whoelse/mcp-server test && pnpm coverage:505:test",
     "db:migrate": "pnpm --filter @whoelse/core migrate",
     "db:seed": "pnpm --filter @whoelse/core seed",
     "dogfood": "pnpm --filter @whoelse/core exec tsx scripts/dogfood.ts",
@@ -24,6 +24,9 @@
     "legacy:probe": "node --experimental-strip-types --no-warnings scripts/legacy-live-probe.ts",
     "legacy:collapse": "npx tsx scripts/universal-collapse.ts",
     "seed:verticals": "npx tsx scripts/generate-vertical-seeds.ts",
+    "coverage:505": "packages/core/node_modules/.bin/tsx evals/intent-coverage/run.ts",
+    "coverage:505:test": "packages/core/node_modules/.bin/tsx --test evals/intent-coverage/coverage.test.ts",
+    "coverage:505:probe": "packages/core/node_modules/.bin/tsx evals/intent-coverage/probe.ts",
     "typecheck": "pnpm -r typecheck"
   }
 }
