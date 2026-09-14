@@ -136,9 +136,15 @@ export function articleFor(label: string): "a" | "an" {
   return /^[aeiou]/i.test(prettyLabel(label)) ? "an" : "a";
 }
 
-export function intentQuestion(intent: Pick<SearchableIntent, "label" | "question">): string {
-  if (intent.question?.trim()) return intent.question.trim();
+export function intentQuestion(intent: Pick<SearchableIntent, "label" | "question" | "kind" | "category">): string {
   const p = prettyLabel(intent.label);
+  if (intent.label === "DATE") return "Who else should I date?";
+  if (intent.label === "TENNIS") return "Who else wants to play tennis?";
+  if (intent.label === "PRESCHOOL") return "Who else has a preschool or kindergarten?";
+  if (intent.label === "IMMIGRATION") return "Who else can help with a visa?";
+  if (intent.label === "PDF SUMMARIZER") return "Who else can summarize this PDF?";
+  if (intent.label === "RIDESHARE") return "Who else can give me a ride?";
+  if (intent.question?.trim()) return intent.question.trim();
   return `Who else is ${articleFor(intent.label)} ${p}?`;
 }
 
@@ -326,7 +332,14 @@ export function refineWhoElseQuery(current: string, intent: SearchableIntent): s
       (intent.category ?? "").toLowerCase().includes(lower) ||
       lower.split(/\s+/).length <= 3);
 
-  if (looksLikeSearch && !/\bwho else\b/i.test(trimmed)) return question;
+  if (looksLikeSearch && !/\bwho else\b/i.test(trimmed)) {
+    const aliases = aliasesFor(intent.label, intent.aliases).map((a) => a.toLowerCase());
+    if (lower !== pretty && lower !== intent.label.toLowerCase() && aliases.includes(lower)) {
+      const spoken = prettyLabel(trimmed);
+      return `Who else can help with ${articleFor(spoken)} ${spoken}?`;
+    }
+    return question;
+  }
   if (lower.includes(pretty) || lower.includes(intent.label.toLowerCase())) {
     return /[?]$/.test(trimmed) ? trimmed : question;
   }
