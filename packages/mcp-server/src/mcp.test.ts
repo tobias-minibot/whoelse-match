@@ -66,6 +66,7 @@ describe("MCP whoelse.find", () => {
     assert.ok(names.includes("whoelse.reputation"));
     assert.ok(names.includes("whoelse.compile"));
     assert.ok(names.includes("whoelse.dispatch"));
+    assert.ok(names.includes("whoelse.intents"));
     assert.ok(!names.some((n) => /apartment|jobs\.|rides\.|services\.|date\.|tennis\./i.test(n)), `no vertical tool: ${names.join(", ")}`);
   });
 
@@ -254,6 +255,21 @@ describe("MCP whoelse.find", () => {
     const compiled = JSON.parse(yesText) as { classification: string; find?: { candidates?: unknown[] } };
     assert.equal(compiled.classification, "WHOELSE_COMPILABLE");
     assert.ok((compiled.find?.candidates?.length ?? 0) > 0);
+  });
+
+  it("searches the shared vocab without inventing vertical tools", async () => {
+    const result = await client.callTool({
+      name: "whoelse.intents",
+      arguments: { q: "kindergarten", limit: 8 },
+    });
+    const text = (result.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const body = JSON.parse(text) as { hits: { label: string }[] };
+    assert.ok(body.hits.some((h) => h.label === "PRESCHOOL"), text);
+    const { tools } = await client.listTools();
+    assert.ok(!tools.some((t) => /preschool\.|visa\.|pdf\./i.test(t.name)));
   });
 
   it("dispatches DATE ∩ TENNIS as one reconciled result, not two engines", async () => {

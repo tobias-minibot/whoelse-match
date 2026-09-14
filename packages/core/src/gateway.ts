@@ -32,6 +32,7 @@ import { dispatchCompound } from "./dispatch.js";
 import type { CompoundIR } from "./compound.js";
 import type { DispatchPlan, Reconciliation } from "./dispatch.js";
 import { findPreferLive } from "./playground.js";
+import { searchVocab, type IntentSearchHit } from "./vocab.js";
 import type { ActionType, PublicationSpec, ReceiptStatus, RegistrationSpec, WhoElseRequest } from "./types.js";
 import type { UsageEvent, UsageName } from "./usage.js";
 import {
@@ -844,6 +845,7 @@ export async function gatewayCompile(
         usedLlm: compiled.usedLlm,
         ir: compiled.ir,
         seekDraft: compiled.seekDraft,
+        vocabHits: compiled.vocabHits,
         plan,
         find: find ? toPublicWhoElseResult(find) : undefined,
       },
@@ -851,6 +853,28 @@ export async function gatewayCompile(
   } catch (err) {
     return fromError(err);
   }
+}
+
+export function gatewayIntents(input: { q?: string; query?: string; text?: string; limit?: number }): GatewayResult<{
+  query: string;
+  count: number;
+  hits: IntentSearchHit[];
+  note: string;
+}> {
+  const query = String(input.q ?? input.query ?? input.text ?? "").trim();
+  if (!query) return fail(400, "q required");
+  const limit = Math.min(50, Math.max(1, Number(input.limit ?? 20) || 20));
+  const hits = searchVocab(query, { limit, minLength: 1, uniqueLabels: true });
+  return {
+    ok: true as const,
+    status: 200 as const,
+    body: {
+      query,
+      count: hits.length,
+      hits,
+      note: "Shared dispatch vocabulary — not a list of products to build. Compose with whoelse.compile / whoelse.find.",
+    },
+  };
 }
 
 export async function gatewayDispatch(

@@ -20,6 +20,7 @@ export type CompilePayload = {
   seekDraft?: { kind: string; capability: string; phrases?: string[] };
   plan?: { strategy?: string; waves?: string[][]; nodes?: { label: string; concurrent?: boolean }[] };
   find?: WhoElsePayload;
+  vocabHits?: { id: string; label: string; question?: string }[];
   error?: string;
 };
 

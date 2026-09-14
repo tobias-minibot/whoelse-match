@@ -36,15 +36,13 @@ export function SiteNav({
         >
           Matches
         </a>
-        {!sparse && (
-          <a
-            className={current === "universe" ? "ghost current" : "ghost"}
-            href="/universe"
-            aria-current={current === "universe" ? "page" : undefined}
-          >
-            Universe
-          </a>
-        )}
+        <a
+          className={current === "universe" ? "ghost current" : "ghost"}
+          href="/universe"
+          aria-current={current === "universe" ? "page" : undefined}
+        >
+          Universe
+        </a>
         <a
           className={current === "ais" ? "ghost current" : "ghost"}
           href="/ais"

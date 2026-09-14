@@ -5,6 +5,7 @@ export function SiteFooter() {
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
       <a href="/contact">Contact</a>
+      <a href="/universe">Universe</a>
       <a href="/ais">For AIs</a>
     </footer>
   );
