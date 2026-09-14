@@ -60,6 +60,10 @@ describe("MCP whoelse.find", () => {
     assert.ok(names.includes("whoelse.register"));
     assert.ok(names.includes("whoelse.publish"));
     assert.ok(names.includes("whoelse.delegate"));
+    assert.ok(names.includes("whoelse.match"));
+    assert.ok(names.includes("whoelse.act"));
+    assert.ok(names.includes("whoelse.receipt"));
+    assert.ok(names.includes("whoelse.reputation"));
     assert.ok(!names.some((n) => /apartment|jobs\.|rides\.|services\./i.test(n)), `no vertical tool: ${names.join(", ")}`);
   });
 
@@ -171,5 +175,58 @@ describe("MCP whoelse.find", () => {
       ),
       JSON.stringify(body.pairs),
     );
+  });
+
+  it("closes the loop: match → act → receipt → reputation → find from match", async () => {
+    const proposed = await client.callTool({
+      name: "whoelse.match",
+      arguments: {
+        requesterEntityId: "agent-inbox-clerk",
+        candidateEntityId: "agent-holdwright",
+        query: "Who else can do calendar hold resolution?",
+      },
+    });
+    const proposedText = (proposed.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const matchBody = JSON.parse(proposedText) as { match?: { id: string }; error?: string };
+    assert.ok(matchBody.match?.id, proposedText);
+
+    const acted = await client.callTool({
+      name: "whoelse.act",
+      arguments: { matchId: matchBody.match.id, action: "accept", actorEntityId: "agent-holdwright" },
+    });
+    const actText = (acted.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const actBody = JSON.parse(actText) as { match?: { status: string } };
+    assert.equal(actBody.match?.status, "accepted");
+
+    const rec = await client.callTool({
+      name: "whoelse.reputation",
+      arguments: { entityId: "agent-holdwright" },
+    });
+    const recText = (rec.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const rep = JSON.parse(recText) as { evidenceReceiptIds?: string[]; issuer?: string };
+    assert.equal(rep.issuer, "whoelse-network");
+    assert.ok((rep.evidenceReceiptIds?.length ?? 0) >= 1);
+
+    const again = await client.callTool({
+      name: "whoelse.find",
+      arguments: { matchId: matchBody.match.id, limit: 5 },
+    });
+    const againText = (again.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const found = JSON.parse(againText) as { matches: { id: string }[] };
+    const ids = found.matches.map((m) => m.id);
+    assert.ok(!ids.includes("agent-inbox-clerk"));
+    assert.ok(!ids.includes("agent-holdwright"));
   });
 });

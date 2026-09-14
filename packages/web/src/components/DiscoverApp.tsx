@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
+import { fetchMe, type MePayload } from "@/lib/me";
 import {
   examplesFor,
   FORCE_SIDE,
@@ -47,6 +48,11 @@ export function DiscoverApp() {
   const [chatLog, setChatLog] = useState<{ role: "user" | "assistant"; content: string }[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [hidden, setHidden] = useState<Set<string>>(new Set());
+  const [me, setMe] = useState<MePayload | null>(null);
+
+  useEffect(() => {
+    void fetchMe().then((payload) => setMe(payload));
+  }, []);
 
   const examples = examplesFor(vertical, side);
 
@@ -89,7 +95,7 @@ export function DiscoverApp() {
 
   function flash(message: string) {
     setToast(message);
-    window.setTimeout(() => setToast(null), 2800);
+    window.setTimeout(() => setToast(null), 4000);
   }
 
   function switchVertical(next: Vertical) {
@@ -217,6 +223,35 @@ export function DiscoverApp() {
       exclude: [candidate.entity.id],
       mode: "peers",
     });
+  }
+
+  async function proposeMatch(candidate: Candidate) {
+    if (!me?.entity?.id) {
+      flash(me === null ? "Sign in to propose a match." : "Finish joining before you can propose.");
+      return;
+    }
+    const res = await fetch("/api/matches", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        requesterEntityId: me.entity.id,
+        candidateEntityId: candidate.entity.id,
+        seekPublicationId: candidate.matched?.seek?.id,
+        offerPublicationId: candidate.matched?.offer?.id,
+        query,
+        score: candidate.score,
+        explanation: { why: candidate.explanation.why, commonalities: candidate.explanation.commonalities },
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      flash(data.error ?? `propose ${res.status}`);
+      return;
+    }
+    flash(`Match proposed with ${candidate.entity.name}.`);
+    window.setTimeout(() => {
+      window.location.href = "/matches";
+    }, 700);
   }
 
   async function lessLikeThis(candidate: Candidate) {
@@ -461,6 +496,7 @@ export function DiscoverApp() {
           onMore={moreLikeThis}
           onLess={(c) => void lessLikeThis(c)}
           onChat={(c) => void chatOrInterest(c)}
+          onPropose={(c) => void proposeMatch(c)}
         />
       )}
 
@@ -480,6 +516,7 @@ export function DiscoverApp() {
           onMore={moreLikeThis}
           onLess={(c) => void lessLikeThis(c)}
           onChat={(c) => void chatOrInterest(c)}
+          onPropose={(c) => void proposeMatch(c)}
         />
       )}
 
@@ -506,6 +543,7 @@ export function DiscoverApp() {
           onMore={moreLikeThis}
           onLess={(c) => void lessLikeThis(c)}
           onChat={(c) => void chatOrInterest(c)}
+          onPropose={(c) => void proposeMatch(c)}
         />
       )}
 
@@ -548,6 +586,7 @@ function Sectioned({
   onMore,
   onLess,
   onChat,
+  onPropose,
 }: {
   blocks: ({ title: string; items: Candidate[]; empty: string; note?: string } | null)[];
   vertical: Vertical;
@@ -556,6 +595,7 @@ function Sectioned({
   onMore: (c: Candidate) => void;
   onLess: (c: Candidate) => void;
   onChat: (c: Candidate) => void;
+  onPropose: (c: Candidate) => void;
 }) {
   return (
     <>
@@ -577,6 +617,7 @@ function Sectioned({
                   onMore={() => onMore(c)}
                   onLess={() => onLess(c)}
                   onChat={() => onChat(c)}
+                  onPropose={() => onPropose(c)}
                 />
               ))}
             </div>
@@ -595,6 +636,7 @@ function ResultCard({
   onMore,
   onLess,
   onChat,
+  onPropose,
 }: {
   candidate: Candidate;
   vertical: Vertical;
@@ -603,6 +645,7 @@ function ResultCard({
   onMore: () => void;
   onLess: () => void;
   onChat: () => void;
+  onPropose: () => void;
 }) {
   const e = candidate.entity;
   const initials = e.name
@@ -647,6 +690,9 @@ function ResultCard({
         <p className="diff">{candidate.explanation.surprisingDifference}</p>
       )}
       <div className="actions">
+        <button className="btn btn-ink btn-sm" type="button" onClick={onPropose}>
+          Propose match
+        </button>
         <button className="btn btn-coral btn-sm" type="button" onClick={onWhoElse}>
           Who else?
         </button>

@@ -20,7 +20,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 - **Human web (live):** https://whoelse-dating.vercel.app
 - **One box (no category):** https://whoelse-dating.vercel.app/universal
 - **For AIs / remote MCP:** https://whoelse-dating.vercel.app/ais — endpoint `https://whoelse-dating.vercel.app/api/mcp`
-  Tools: `whoelse.find`, `whoelse.register`, `whoelse.publish`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.feedback`. Never `jobs.find`.
+  Tools: `whoelse.find`, `whoelse.register`, `whoelse.publish`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.match`, `whoelse.act`, `whoelse.receipt`, `whoelse.reputation`, `whoelse.matches`, `whoelse.feedback`. Never `jobs.find`.
 - **Landing:** deploy `landing/` to Vercel, or open it from the app at `/landing/index.html`
 - **Pitch deck:** `pitch/whoelse-match-pitch.pptx`
 - **Brand clip (10s):** `brand/brand-clip-10s.mp4`
@@ -71,7 +71,9 @@ Documented so they can be undone without a rewrite:
 | In-memory feedback | Honest about MVP scope | Persist later; the signal shape is stable |
 | Durable owned writes in Neon | Launch identity + publications | Ranker stays in-memory TF-IDF; swap the Neon driver, keep the schema |
 | Clerk humans + hashed agent keys | Two caller kinds, one ownership table | Swap Clerk; keep `principals` / `accounts` |
-| Find does not persist MatchRecords | Threshold scores are not receipts | Durable matches/receipts are a follow-up |
+| Find does not persist MatchRecords | Threshold scores are not receipts | Propose/save via `whoelse.match` or UI “Propose match” |
+| One MATCH row per SEEK↔OFFER pair | Status, receipt, and reputation stay per pair | A match-set table can wrap pairs later |
+| Reputation from receipts | Portable across costumes; reranks `whoelse.find` | Swap the boost formula, keep aggregates |
 
 ### Core operation
 
@@ -98,7 +100,7 @@ Hypothesis under test (do not force if it breaks dating — it did not, on this 
 | trust (later) | trust (later) | `trust` stub |
 | interaction (chat / interest stubs) | execution (not built) | client-specific |
 
-Not built now: negotiation, payments, reputation graph, multi-agent execution. Do not add required top-level fields like `lookingForRelationship`.
+Closed loop now: OFFER/SEEK → explicit MATCH → ACT → RECEIPT → REPUTATION → RERANK, plus recursive Who else? from a MATCH. Payments and live external execution are still stubs (structured action + optional webhook). Do not add required top-level fields like `lookingForRelationship`.
 
 ---
 
@@ -190,7 +192,7 @@ Agent:  whoelse.find({ intent: "Who else can summarize this PDF?" })
 
 ## MCP tools
 
-Primary primitive: **`whoelse.find`**. more_like / explain collapsed into it (`entityId` + per-match `why`). Optional `whoelse.feedback`. Network verbs: `whoelse.register` (identity + OFFER/SEEK), `whoelse.publish` (records on an existing entity), `whoelse.invoke`, `whoelse.delegate` (A cannot → find B → receipt). Underscore alias `whoelse_find` exists for picky clients. Never `jobs.find`.
+Primary primitive: **`whoelse.find`**. more_like / explain collapsed into it (`entityId` + per-match `why`). Optional `whoelse.feedback`. Network verbs: `whoelse.register` (identity + OFFER/SEEK), `whoelse.publish` (records on an existing entity), `whoelse.match` (explicit propose/save — find never writes MATCH), `whoelse.act` (connect / message / accept / invoke / …), `whoelse.receipt`, `whoelse.reputation`, `whoelse.matches`, `whoelse.invoke`, `whoelse.delegate` (A cannot → find B → receipt). Recursive Who else?: `whoelse.find({ matchId })`. Underscore alias `whoelse_find` exists for picky clients. Never `jobs.find`.
 
 A→B demo (stdio or HTTP):
 
@@ -222,7 +224,7 @@ pnpm test               # core + MCP stdio + Streamable HTTP client tests
 pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfood queries
 ```
 
-**Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `side`, `roles`, `exclude`, `knownEntities`, `entityId`, `limit`, `mode`, `ranking`, `minTrust`.
+**Inputs (small):** `intent` (or `context`), `requester`, `predicate`, `type`, `city`/`location`, `availability`, `side`, `roles`, `exclude`, `knownEntities`, `entityId`, `matchId`, `limit`, `mode`, `ranking`, `minTrust`.
 
 **Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, publications, matched, next }], pairs: [{ offerId, seekId, offerEntityId, seekEntityId, capability, score }] }`
 
@@ -260,7 +262,7 @@ Same engine. Used by the web app.
 
 | Method | Path | Body |
 | --- | --- | --- |
-| POST | `/api/whoelse` | `{ context, predicate?, constraints?, exclude?, mode?, entityId?, limit? }` |
+| POST | `/api/whoelse` | `{ context, predicate?, constraints?, exclude?, mode?, entityId?, matchId?, limit? }` |
 | POST | `/api/whoelse/more-like` | `{ entityId, context?, exclude?, mode?, limit? }` |
 | POST | `/api/whoelse/explain` | `{ entityId, context, entityContextId? }` |
 | POST | `/api/whoelse/feedback` | `{ entityId, signal: "more"\|"less", query? }` |
@@ -268,7 +270,12 @@ Same engine. Used by the web app.
 | POST | `/api/interest` | Human interest recorded (stub — no message sent) |
 | GET | `/api/entities/:id` | One entity |
 | GET | `/api/health` | Seed counts + whether OpenAI is configured |
-| POST | `/api/mcp` | Streamable HTTP MCP (stateless). `whoelse.find` + register/publish/invoke/delegate. |
+| POST | `/api/mcp` | Streamable HTTP MCP (stateless). find / register / publish / match / act / receipt / reputation / invoke / delegate. |
+| GET / POST | `/api/matches` | Auth. List party matches, or explicitly propose/save a MATCH (find never writes this). |
+| GET | `/api/matches/:id` | Auth. One MATCH + receipts + thread. Party only. |
+| POST | `/api/matches/:id/act` | Auth. connect / intro / message / accept / decline / invoke / delegate / negotiate / handoff. Writes a receipt. |
+| POST | `/api/receipts` | Auth. Structured receipt. Updates portable reputation. |
+| GET | `/api/reputation/:id` | Receipt-backed aggregates + evidence receipt ids. |
 | GET | `/api/me` | Clerk session. Principal + owned human entity + onboarding/affirmation state. 401 if signed out. |
 | POST | `/api/me` or `/api/onboarding` | Clerk human. Create/update owned human + publications. `affirmAge: true` stores 18+ and publishes. |
 | POST | `/api/me/affirm` | Clerk human. Persist affirmation version + timestamp; activate dating-relevant SEEKs; set visibility public. |
@@ -288,6 +295,7 @@ Same engine. Used by the web app.
 - Doctrine on home + `/ais`: **Humans ask Who Else. Agents call WhoElse. Same network.**
 - `/onboarding` — signed-in human path: name, bio, HUMAN label, OFFER/SEEK, 18+ affirmation
 - `/me` — edit publications; withdraw is durable
+- `/matches` — durable MATCH list, act, receipts, thread, recursive Who else? from a match
 - `/ais` — MCP URL, Cursor config, tools, example call/result
 - Tabs: **15 lenses** (Dating, Apt, Jobs, Rides, Services, Products, Experts, Capital, Travel, Events, Childcare, Collab, Compute, Data, Local). Dating home is unchanged. Tabs are costumes; `/universal` is the no-category box. Jobs + factory mixed lenses do **not** force `side` — NL infers it. Travel reuses apartment listing/seeker.
 - Apartment SEEK: **What are you looking for?** + **Who else?**
@@ -295,7 +303,7 @@ Same engine. Used by the web app.
 - Apartment results stay cards-with-why, plus reverse **Who else needs this?** / **Who else has this?**
 - Loud **DEMO data** banner on every non-dating tab. No Zillow / LinkedIn / Uber clone.
 - Cards: HUMAN / AI badge, why, commonalities, surprising difference
-- Actions: **Who else?** (recursive exemplar) · **More like this** (peers mode) · **Less like this** · **Chat**
+- Actions: **Propose match** (explicit save) · **Who else?** (recursive exemplar) · **More like this** (peers mode) · **Less like this** · **Chat**
   - AI chat = labeled stub (or OpenAI persona if keyed)
   - Human chat = interest recorded stub
 - Default layout: **Humans** section, then **AIs** section (trust)
@@ -374,10 +382,11 @@ Do **not** set `WHOELSE_SEED=demo` on production to fake a crowd.
 2. Account B (incognito): sign up → same path with a complementary OFFER or a dating query.
 3. From B (or logged out): `/` dating tab or `/universal` → “Who else seeks romantic compatibility?” / “Who else should I meet?”
 4. A should appear as **HUMAN**. B’s unaffirmed draft must not.
+5. From B (signed in): press **Propose match** on A’s card → `/matches` → message / accept (from A) / **Who else? from this match**.
 
 ### Authorization
 
-| Caller | Find / read public-active records | register / publish / withdraw / onboard / feedback |
+| Caller | Find / read public-active records | register / publish / withdraw / onboard / feedback / match / act / receipt |
 | --- | --- | --- |
 | Anonymous | yes (`requester` forbidden); cheap per-IP read budget | 401 |
 | Human or agent | yes; `requester` only if they own that entity | own entities only → 403 cross-owner; 429 if the write budget trips |
@@ -394,9 +403,9 @@ Callers cannot overwrite an existing entity id (409) or spoof `human` / `ai` typ
 
 ### Schema + migrations
 
-Drizzle schema: `packages/core/src/persist/schema.ts`. SQL: `packages/core/drizzle/0000_init.sql` + `0001_onboarding.sql`.
+Drizzle schema: `packages/core/src/persist/schema.ts`. SQL: `packages/core/drizzle/0000_init.sql` + `0001_onboarding.sql` + `0002_loop.sql`.
 
-Tables: `principals` (plus `age_affirmed_at` / `age_affirmation_version`), `accounts`, `agent_credentials`, `entities` (`owner_principal_id`), `ownership`, `publications` (OFFER/SEEK + lifecycle), `write_audit`, `rate_counters` (Postgres-backed write budgets — no extra paid infra).
+Tables: `principals` (plus `age_affirmed_at` / `age_affirmation_version`), `accounts`, `agent_credentials`, `entities` (`owner_principal_id`), `ownership`, `publications` (OFFER/SEEK + lifecycle), `matches` (one row per SEEK↔OFFER pair), `receipts`, `match_messages`, `reputations`, `write_audit`, `rate_counters` (Postgres-backed write budgets — no extra paid infra).
 
 ```bash
 # from repo root after vercel env pull / sourcing .env.local

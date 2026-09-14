@@ -5,7 +5,7 @@
  * Same primitive, two timescales:
  *   Human dating:     identity + offers + seeks + matching + trust + interaction
  *   Agent coordination: identity + offers + seeks + matching + trust + execution
- * Trust / execution / reputation / payments are not implemented — fields are left open.
+ * Trust / reputation are receipt-backed aggregates. Payments are not implemented.
  */
 
 /**
@@ -122,7 +122,37 @@ export type InferredVertical =
   | "local";
 export type InferredView = InferredVertical;
 export type TrustStatus = "unscored" | "stub" | "evidence";
-export type MatchStatus = "proposed" | "accepted" | "invoked" | "verified" | "declined" | "expired";
+/** MATCH lifecycle. One row per SEEK↔OFFER pair (or requester↔candidate when pubs are omitted). */
+export type MatchStatus =
+  | "proposed"
+  | "accepted"
+  | "declined"
+  | "invoked"
+  | "completed"
+  | "cancelled"
+  | "expired"
+  | "verified";
+/** RECEIPT lifecycle — every attempted interaction, not dating-specific. */
+export type ReceiptStatus =
+  | "proposed"
+  | "accepted"
+  | "declined"
+  | "started"
+  | "completed"
+  | "failed"
+  | "cancelled";
+/** Structured ACT kinds. Same objects for humans and agents. */
+export type ActionType =
+  | "connect"
+  | "intro"
+  | "message"
+  | "accept"
+  | "decline"
+  | "cancel"
+  | "invoke"
+  | "delegate"
+  | "negotiate"
+  | "handoff";
 export type EvidenceKind = "verified" | "portfolio" | "outcome" | "license" | "reference" | "receipt" | "disclosure";
 /** First-class network object kind. String bags on ENTITY are derived views. */
 export type PublicationKind = "offer" | "seek";
@@ -308,7 +338,7 @@ export interface WhoElseConstraints {
 
 export interface WhoElseRequest {
   /** Natural-language intent, or free text plus an optional exemplar. Not dating-specific. */
-  context: string;
+  context?: string;
   /** Extra predicate / relation on the intent (role, capability, …). */
   predicate?: string;
   constraints?: WhoElseConstraints;
@@ -320,6 +350,12 @@ export interface WhoElseRequest {
   requester?: string;
   /** When set, treat this entity as the exemplar (recursive WhoElse). */
   entityId?: string;
+  /**
+   * Recursive Who else? from an existing MATCH.
+   * Excludes both parties and carries the match query / publication constraints.
+   * Find still does not persist a MATCH.
+   */
+  matchId?: string;
   limit?: number;
   /** Soft availability phrase, e.g. "always on". */
   availability?: string;
@@ -334,6 +370,8 @@ export interface ScoreBreakdown {
   location: number;
   feedback: number;
   rerank?: number;
+  /** Network history. 0 when the entity has no receipts. */
+  reputation?: number;
   total: number;
 }
 
@@ -406,15 +444,26 @@ export interface RegistrationSpec {
   location?: GeoLocation;
 }
 
+/**
+ * Durable MATCH. One row per SEEK↔OFFER pair (or requester↔candidate when
+ * publication ids are omitted). Find scoring never writes this — propose is
+ * an explicit act (`whoelse.match` / POST /api/matches / UI “Propose match”).
+ */
 export interface MatchRecord {
   id: string;
   query: string;
+  /** Party who proposed / is asking. */
+  requesterEntityId: string;
+  /** Counterparty being proposed. */
+  candidateEntityId: string;
   seekEntityId?: string;
   offerEntityId?: string;
   /** First-class publication ids when the match is an OFFER↔SEEK pair. */
   offerPublicationId?: string;
   seekPublicationId?: string;
   side?: MatchSide;
+  score?: number;
+  explanation?: { why: string; commonalities?: string[] };
   evidence: TrustEvidence;
   status: MatchStatus;
   created_at: string;
@@ -422,15 +471,58 @@ export interface MatchRecord {
   receiptId?: string;
 }
 
+/**
+ * Structured RECEIPT for every attempted interaction.
+ * Extends the older invoke stub: `fromAgentId`/`toAgentId`/`task`/`would`/`result`/`at`
+ * stay as aliases so existing MCP clients keep working.
+ */
 export interface InvokeReceipt {
   id: string;
+  matchId?: string;
+  actorEntityId: string;
+  counterpartyEntityId: string;
+  actionType: ActionType;
+  status: ReceiptStatus;
+  outcome: Record<string, unknown>;
+  /** @deprecated Alias of actorEntityId — agent invoke/delegate. */
   fromAgentId?: string;
+  /** @deprecated Alias of counterpartyEntityId. */
   toAgentId: string;
   task: string;
   would: string;
   result: Record<string, unknown>;
   evidence: TrustEvidence;
   at: string;
+  updated_at: string;
+}
+
+export type Receipt = InvokeReceipt;
+
+/** Portable network reputation — aggregates + receipt ids, not self-asserted verified. */
+export interface ReputationRecord {
+  entityId: string;
+  completionReliability: number;
+  responseRate: number;
+  acceptanceRate: number;
+  failureRate: number;
+  verifiedSuccesses: number;
+  proposed: number;
+  accepted: number;
+  declined: number;
+  started: number;
+  completed: number;
+  failed: number;
+  cancelled: number;
+  evidenceReceiptIds: string[];
+  updated_at: string;
+}
+
+export interface ThreadMessage {
+  id: string;
+  matchId: string;
+  fromEntityId: string;
+  body: string;
+  created_at: string;
 }
 
 export interface DelegationResult {

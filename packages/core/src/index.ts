@@ -23,4 +23,12 @@ export type { MachineFindResult, MachineMatch, MachineNextStep, MachinePublicati
 export { PostgresRepository } from "./persist/repository.js";
 export { getNeonClient, neonClient, applyMigrations, resetNeonClient } from "./persist/client.js";
 export type { SqlClient } from "./persist/client.js";
-export { INIT_SQL, ONBOARDING_SQL, MIGRATION_FILES } from "./persist/sql.js";
+export { INIT_SQL, ONBOARDING_SQL, LOOP_SQL, MIGRATION_FILES } from "./persist/sql.js";
+export {
+  computeReputation,
+  reputationBoost,
+  publicReputation,
+  emptyReputation,
+  NETWORK_REPUTATION_ISSUER,
+  REPUTATION_BOOST_MAX,
+} from "./reputation.js";

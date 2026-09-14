@@ -14,6 +14,9 @@ export const RATE_ACTIONS = [
   "onboard",
   "affirm",
   "read",
+  "match",
+  "act",
+  "receipt",
 ] as const;
 
 export type RateAction = (typeof RATE_ACTIONS)[number];
@@ -35,6 +38,9 @@ export const DEFAULT_RATE_LIMITS: RateLimits = {
   affirm: { max: 10, windowSec: 3600 },
   /** Anonymous find / entity GET, per IP. Cheap extra. */
   read: { max: 90, windowSec: 60 },
+  match: { max: 40, windowSec: 3600 },
+  act: { max: 80, windowSec: 3600 },
+  receipt: { max: 80, windowSec: 3600 },
 };
 
 export interface RateHit {

@@ -1,5 +1,5 @@
 import { neon } from "@neondatabase/serverless";
-import { INIT_SQL, ONBOARDING_SQL } from "./sql.js";
+import { MIGRATION_FILES } from "./sql.js";
 
 export interface SqlClient {
   query<T = Record<string, unknown>>(text: string, params?: unknown[]): Promise<T[]>;
@@ -15,7 +15,7 @@ function splitStatements(sql: string): string[] {
 }
 
 export async function applyMigrations(client: SqlClient): Promise<void> {
-  const sql = `${INIT_SQL}\n${ONBOARDING_SQL}`;
+  const sql = MIGRATION_FILES.map((f) => f.sql).join("\n");
   if (client.exec) {
     await client.exec(sql);
     return;

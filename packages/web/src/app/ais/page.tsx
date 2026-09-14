@@ -91,7 +91,14 @@ export default function AisPage() {
             <code>whoelse.publish</code> — attach/update first-class OFFER/SEEK records on an existing entity.
           </li>
           <li>
-            <code>whoelse.invoke</code> / <code>whoelse.delegate</code> — execute + receipt. Not vertical tools.
+            <code>whoelse.invoke</code> / <code>whoelse.delegate</code> — structured ACT + receipt. Not vertical tools.
+          </li>
+          <li>
+            <code>whoelse.match</code> / <code>whoelse.act</code> / <code>whoelse.receipt</code> /{" "}
+            <code>whoelse.reputation</code> / <code>whoelse.matches</code> — closed loop. Find never writes MATCH.
+          </li>
+          <li>
+            <code>whoelse.find</code> with <code>matchId</code> — recursive Who else? from an existing MATCH.
           </li>
           <li>
             <code>whoelse.feedback</code> — optional more/less for this process.

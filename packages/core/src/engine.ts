@@ -9,22 +9,27 @@ import {
   parsePublicationInputs,
   upsertPublications,
 } from "./publications.js";
-import { entityText, EntityStore, offersOf, seeksOf, stringList } from "./store.js";
+import { reputationBoost } from "./reputation.js";
+import { endpointOf, entityText, EntityStore, offersOf, seeksOf, stringList } from "./store.js";
 import { jaccard } from "./text.js";
 import { TfidfIndex } from "./tfidf.js";
 import { explainTrust } from "./trust.js";
 import type {
+  ActionType,
   AttributeConstraint,
   Candidate,
   ChatMessage,
   DelegationResult,
   Entity,
+  InvokeReceipt,
   MatchRecord,
   MatchSide,
   PublicationPair,
   PublicationSpec,
+  ReceiptStatus,
   RegistrationSpec,
   ScoreBreakdown,
+  ThreadMessage,
   UniversalQuery,
   WhoElseConstraints,
   WhoElseMode,
@@ -62,12 +67,13 @@ export class WhoElseEngine {
   }
 
   whoelse(request: WhoElseRequest): WhoElseResult {
+    request = this.withMatchContext(request);
     const contextEntity = request.entityId ? this.store.get(request.entityId) : undefined;
     const requesterEntity = request.requester ? this.store.get(request.requester) : undefined;
     const counterparts = [contextEntity, requesterEntity].filter((e): e is Entity => Boolean(e));
-    const userText = [request.context, request.predicate ?? ""].filter(Boolean).join(" ");
+    const userText = [request.context ?? "", request.predicate ?? ""].filter(Boolean).join(" ");
     const rawQuery = queryText({
-      context: request.context,
+      context: request.context ?? "",
       predicate: request.predicate,
       entity: contextEntity,
     });
@@ -100,7 +106,7 @@ export class WhoElseEngine {
       ...(inferredConstraints.capabilities ?? []),
       ...(inferredConstraints.offers ?? []),
       ...(inferredConstraints.seeks ?? []),
-      ...labelsOf(contextEntity ?? emptyEntity(request.context, inferredConstraints.side)),
+      ...labelsOf(contextEntity ?? emptyEntity(request.context ?? "", inferredConstraints.side)),
     ];
 
     const scored: Candidate[] = [];
@@ -150,8 +156,9 @@ export class WhoElseEngine {
       const structured = pubMatch.score >= 0.85 ? Math.max(bags, pubMatch.score) : bags;
       const location = locationScore(entity, inferredConstraints, contextEntity);
       const typeAffinity = typeScore(entity, inferredMode, contextEntity);
-      const feedback = this.store.feedbackScore(entity.id, request.context);
+      const feedback = this.store.feedbackScore(entity.id, request.context ?? "");
       const evidence = evidenceScore(entity, rawQuery);
+      const reputation = reputationBoost(this.store.reputations.get(entity.id));
       // Kill the 0.04 type-only floor that filled first-five with random humans.
       // Attribute hits are already relevant — "accepts pets" should not die on TF-IDF.
       const constrained = Boolean(inferredConstraints.attributes?.length);
@@ -162,7 +169,8 @@ export class WhoElseEngine {
         structured < 0.05 &&
         location === 0 &&
         feedback === 0 &&
-        evidence === 0
+        evidence === 0 &&
+        reputation === 0
       ) {
         continue;
       }
@@ -174,7 +182,8 @@ export class WhoElseEngine {
         LOC_W * location +
         TYPE_W * typeAffinity +
         feedback +
-        evidence;
+        evidence +
+        reputation;
 
       const sharedTerms = this.index.topTerms(entity.id, rawQuery);
       const breakdown: ScoreBreakdown = {
@@ -182,6 +191,7 @@ export class WhoElseEngine {
         structured,
         location,
         feedback,
+        reputation,
         total,
       };
       const narrative = buildExplanation({
@@ -206,11 +216,11 @@ export class WhoElseEngine {
     const limit = request.limit ?? request.constraints?.limit ?? 8;
     const top = scored.slice(0, Math.max(limit, 8));
     const sliced = top.slice(0, limit);
-    if (sliced.length === 0) this.store.recordMissing(request.context, universal.view);
+    if (sliced.length === 0) this.store.recordMissing(request.context ?? "", universal.view);
     const pairs = collectPairs(sliced);
-    // Find is side-effect free. Durable MatchRecords / receipts are a follow-up.
+    // Find is side-effect free. MATCH creation is an explicit propose/save.
     return finish(
-      request.context,
+      request.context ?? "",
       inferredMode,
       inferredConstraints,
       inferVertical(userText),
@@ -223,7 +233,7 @@ export class WhoElseEngine {
 
   async whoelseAsync(request: WhoElseRequest): Promise<WhoElseResult> {
     const local = this.whoelse({ ...request, limit: Math.max(request.limit ?? 8, 12) });
-    const reranked = await maybeRerankAndExplain(request.context, local.candidates);
+    const reranked = await maybeRerankAndExplain(request.context ?? "", local.candidates);
     const limit = request.limit ?? request.constraints?.limit ?? 8;
     const candidates = reranked.candidates.slice(0, limit);
     const keep = new Set(candidates.map((c) => c.entity.id));
@@ -236,7 +246,7 @@ export class WhoElseEngine {
         p.seekEntityId === "query",
     );
     return finish(
-      request.context,
+      request.context ?? "",
       local.inferredMode,
       local.inferredConstraints,
       local.inferredVertical,
@@ -406,22 +416,57 @@ export class WhoElseEngine {
 
   proposeMatch(opts: {
     query: string;
+    requesterEntityId: string;
+    candidateEntityId: string;
     offerEntityId?: string;
     seekEntityId?: string;
     offerPublicationId?: string;
     seekPublicationId?: string;
     side?: MatchSide;
+    score?: number;
+    explanation?: { why: string; commonalities?: string[] };
   }): MatchRecord {
+    if (!this.store.get(opts.requesterEntityId)) throw new Error(`Unknown entity ${opts.requesterEntityId}`);
+    if (!this.store.get(opts.candidateEntityId)) throw new Error(`Unknown entity ${opts.candidateEntityId}`);
+    if (opts.requesterEntityId === opts.candidateEntityId) {
+      throw new Error("cannot match an entity to itself");
+    }
     return this.store.recordMatch({
       query: opts.query,
-      offerEntityId: opts.offerEntityId,
-      seekEntityId: opts.seekEntityId,
+      requesterEntityId: opts.requesterEntityId,
+      candidateEntityId: opts.candidateEntityId,
+      offerEntityId: opts.offerEntityId ?? opts.candidateEntityId,
+      seekEntityId: opts.seekEntityId ?? opts.requesterEntityId,
       offerPublicationId: opts.offerPublicationId,
       seekPublicationId: opts.seekPublicationId,
       side: opts.side,
+      score: opts.score,
+      explanation: opts.explanation,
       status: "proposed",
       evidence: {},
     });
+  }
+
+  private withMatchContext(request: WhoElseRequest): WhoElseRequest {
+    if (!request.matchId) return request;
+    const match = this.store.match(request.matchId);
+    if (!match) throw new Error(`Unknown match ${request.matchId}`);
+    const parties = [match.requesterEntityId, match.candidateEntityId].filter(Boolean);
+    const exclude = [...new Set([...(request.exclude ?? []), ...(request.knownEntities ?? []), ...parties])];
+    const pubs = [match.seekPublicationId, match.offerPublicationId]
+      .map((id) => (id ? this.store.publication(id) : undefined))
+      .filter((p): p is NonNullable<typeof p> => Boolean(p));
+    const labels = pubs.map((p) => p.capability);
+    return {
+      ...request,
+      context: request.context?.trim() || match.query || "Who else?",
+      exclude,
+      knownEntities: exclude,
+      constraints: {
+        ...request.constraints,
+        offers: uniqueLabels([...(request.constraints?.offers ?? []), ...labels]),
+      },
+    };
   }
 
   trustWhy(entityId: string) {
@@ -430,30 +475,82 @@ export class WhoElseEngine {
     return explainTrust(entity);
   }
 
-  invoke(entityId: string, body: { task?: string; input?: string; context?: string } = {}) {
+  invoke(
+    entityId: string,
+    body: { task?: string; input?: string; context?: string } = {},
+    opts: { from?: string; matchId?: string } = {},
+  ) {
     const entity = this.store.get(entityId);
     if (!entity) throw new Error(`Unknown entity ${entityId}`);
     if (entity.type !== "agent") throw new Error("invoke is only stubbed for type=agent");
     const invoked = invokeAgent(entity, body);
+    return this.finishInvoke(entity, body, invoked, opts);
+  }
+
+  async invokeAsync(
+    entityId: string,
+    body: { task?: string; input?: string; context?: string } = {},
+    opts: { from?: string; matchId?: string } = {},
+  ) {
+    const entity = this.store.get(entityId);
+    if (!entity) throw new Error(`Unknown entity ${entityId}`);
+    if (entity.type !== "agent") throw new Error("invoke is only stubbed for type=agent");
+    const invoked = invokeAgent(entity, body);
+    const webhook = await maybeCallEndpoint(entity, {
+      task: body.task ?? body.input ?? body.context ?? "this task",
+      from: opts.from,
+      matchId: opts.matchId,
+    });
+    return this.finishInvoke(entity, body, invoked, opts, webhook);
+  }
+
+  private finishInvoke(
+    entity: Entity,
+    body: { task?: string; input?: string; context?: string },
+    invoked: ReturnType<typeof invokeAgent>,
+    opts: { from?: string; matchId?: string },
+    webhook?: { attempted: boolean; ok?: boolean; status?: number; error?: string },
+  ) {
     const ev = (invoked.result.evidence as {
       verified?: boolean;
       verifiedBy?: string;
       outcomes?: { label: string; result?: string }[];
       receipts?: string[];
     } | undefined) ?? entity.trust?.evidence;
+    const issuer = ev?.verifiedBy ?? (ev?.verified ? entity.name : undefined);
+    const match =
+      (opts.matchId ? this.store.match(opts.matchId) : undefined) ??
+      (opts.from
+        ? this.store.recordMatch({
+            query: body.task ?? body.input ?? body.context ?? "invoke",
+            requesterEntityId: opts.from,
+            candidateEntityId: entity.id,
+            seekEntityId: opts.from,
+            offerEntityId: entity.id,
+            status: "proposed",
+          })
+        : undefined);
+    const failed = webhook?.attempted && webhook.ok === false;
     const receipt = this.store.recordReceipt({
+      matchId: match?.id,
+      actorEntityId: opts.from ?? entity.id,
+      counterpartyEntityId: entity.id,
+      fromAgentId: opts.from,
       toAgentId: entity.id,
+      actionType: "invoke",
+      status: failed ? "failed" : "completed",
       task: body.task ?? body.input ?? body.context ?? "this task",
       would: invoked.would,
-      result: invoked.result,
+      result: { ...invoked.result, webhook },
+      outcome: { ...invoked.result, webhook },
       evidence: {
-        verified: Boolean(ev?.verified),
-        verifiedBy: ev?.verifiedBy ?? entity.name,
+        verified: Boolean(ev?.verified && issuer),
+        verifiedBy: issuer,
         outcomes: ev?.outcomes,
         receipts: ev?.receipts,
       },
     });
-    return { ...invoked, receipt };
+    return { ...invoked, receipt, match: match ? this.store.match(match.id) : undefined, webhook };
   }
 
   delegate(opts: {
@@ -483,31 +580,41 @@ export class WhoElseEngine {
       outcomes?: { label: string; result?: string }[];
       receipts?: string[];
     } | undefined) ?? selected.entity.trust?.evidence;
+    const pair =
+      found.pairs.find((p) => p.offerEntityId === selected.entity.id) ?? found.pairs[0];
+    const match = opts.from
+      ? this.store.recordMatch({
+          query: intent,
+          requesterEntityId: opts.from,
+          candidateEntityId: selected.entity.id,
+          seekEntityId: opts.from,
+          offerEntityId: selected.entity.id,
+          offerPublicationId: pair?.offer.entityId === "query" ? undefined : pair?.offer.id,
+          seekPublicationId: pair?.seek.entityId === "query" ? undefined : pair?.seek.id,
+          side: "offer",
+          status: "proposed",
+          evidence: {},
+        })
+      : undefined;
+    const issuer = ev?.verifiedBy ?? (ev?.verified ? selected.entity.name : undefined);
     const receipt = this.store.recordReceipt({
+      matchId: match?.id,
+      actorEntityId: opts.from ?? selected.entity.id,
+      counterpartyEntityId: selected.entity.id,
       fromAgentId: opts.from,
       toAgentId: selected.entity.id,
+      actionType: "delegate",
+      status: "completed",
       task: opts.task,
       would: invoked.would,
       result: invoked.result,
+      outcome: invoked.result,
       evidence: {
-        verified: Boolean(ev?.verified),
-        verifiedBy: ev?.verifiedBy ?? selected.entity.name,
+        verified: Boolean(ev?.verified && issuer),
+        verifiedBy: issuer,
         outcomes: ev?.outcomes,
         receipts: ev?.receipts,
       },
-    });
-    const pair =
-      found.pairs.find((p) => p.offerEntityId === selected.entity.id) ?? found.pairs[0];
-    const match = this.store.recordMatch({
-      query: intent,
-      seekEntityId: opts.from,
-      offerEntityId: selected.entity.id,
-      offerPublicationId: pair?.offer.entityId === "query" ? undefined : pair?.offer.id,
-      seekPublicationId: pair?.seek.entityId === "query" ? undefined : pair?.seek.id,
-      side: "offer",
-      status: invoked.result.kind === "verify" ? "verified" : "invoked",
-      evidence: receipt.evidence,
-      receiptId: receipt.id,
     });
     return {
       ok: true,
@@ -520,6 +627,97 @@ export class WhoElseEngine {
       receipt,
       match,
     };
+  }
+
+  act(opts: {
+    matchId: string;
+    action: ActionType;
+    actorEntityId: string;
+    message?: string;
+    task?: string;
+    status?: ReceiptStatus;
+    outcome?: Record<string, unknown>;
+  }): { match: MatchRecord; receipt: InvokeReceipt; message?: ThreadMessage; invoked?: ReturnType<typeof invokeAgent> } {
+    const match = this.store.match(opts.matchId);
+    if (!match) throw new Error(`Unknown match ${opts.matchId}`);
+    const partyIds = [match.requesterEntityId, match.candidateEntityId];
+    if (!partyIds.includes(opts.actorEntityId)) {
+      throw new Error("actor is not a party to this match");
+    }
+    const counterpartyEntityId =
+      opts.actorEntityId === match.requesterEntityId ? match.candidateEntityId : match.requesterEntityId;
+    const action = opts.action;
+    if (action === "message") {
+      const body = (opts.message ?? "").trim();
+      if (!body) throw new Error("message body required");
+      const message = this.store.recordMessage({
+        matchId: match.id,
+        fromEntityId: opts.actorEntityId,
+        body,
+      });
+      const receipt = this.store.recordReceipt({
+        matchId: match.id,
+        actorEntityId: opts.actorEntityId,
+        counterpartyEntityId,
+        actionType: "message",
+        status: "started",
+        task: "message",
+        would: "thread a message between principals",
+        outcome: { messageId: message.id, body },
+        result: { messageId: message.id },
+        evidence: {},
+      });
+      return { match: this.store.match(match.id)!, receipt, message };
+    }
+    if (action === "invoke") {
+      const invoked = this.invoke(counterpartyEntityId, { task: opts.task ?? match.query }, {
+        from: opts.actorEntityId,
+        matchId: match.id,
+      });
+      return {
+        match: invoked.match ?? this.store.match(match.id)!,
+        receipt: invoked.receipt,
+        invoked,
+      };
+    }
+    if (action === "delegate") {
+      const delegated = this.delegate({
+        task: opts.task ?? match.query,
+        from: opts.actorEntityId,
+      });
+      if (!delegated.ok || !delegated.receipt) {
+        throw new Error(delegated.reason ?? "delegate failed");
+      }
+      return {
+        match: delegated.match ?? this.store.match(match.id)!,
+        receipt: delegated.receipt,
+        invoked: delegated.invoked,
+      };
+    }
+    const status: ReceiptStatus =
+      opts.status ??
+      (action === "accept"
+        ? "accepted"
+        : action === "decline"
+          ? "declined"
+          : action === "cancel"
+            ? "cancelled"
+            : action === "connect" || action === "intro" || action === "negotiate" || action === "handoff"
+              ? "started"
+              : "proposed");
+    const receipt = this.store.recordReceipt({
+      matchId: match.id,
+      actorEntityId: opts.actorEntityId,
+      counterpartyEntityId,
+      actionType: action,
+      status,
+      task: opts.task ?? action,
+      would: `${action} on match ${match.id}`,
+      outcome: opts.outcome ?? { action },
+      result: opts.outcome ?? { action },
+      evidence: {},
+    });
+    return { match: this.store.match(match.id)!, receipt };
   }
 
   explain(entityId: string, context: string, entityContextId?: string): Candidate | undefined {
@@ -957,4 +1155,29 @@ function stubChat(entity: Entity, last: string): string {
 
 function trim(text: string): string {
   return text.length > 120 ? `${text.slice(0, 117)}…` : text;
+}
+
+function uniqueLabels(values: string[]): string[] {
+  return [...new Set(values.map((s) => s.trim()).filter(Boolean))];
+}
+
+async function maybeCallEndpoint(
+  entity: Entity,
+  payload: Record<string, unknown>,
+): Promise<{ attempted: boolean; ok?: boolean; status?: number; error?: string }> {
+  const endpoint = endpointOf(entity);
+  if (!endpoint || endpoint.protocol !== "http" || !/^https?:\/\//i.test(endpoint.url)) {
+    return { attempted: false };
+  }
+  try {
+    const res = await fetch(endpoint.url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(2500),
+    });
+    return { attempted: true, ok: res.ok, status: res.status };
+  } catch (err) {
+    return { attempted: true, ok: false, error: err instanceof Error ? err.message : String(err) };
+  }
 }

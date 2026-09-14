@@ -1,5 +1,6 @@
 import { WhoElseEngine } from "./engine.js";
-import { IdentityLedger } from "./identity.js";
+import { AGENT_SCOPES } from "./authz.js";
+import { DEMO_INTRUDER_KEY_ID, DEMO_OWNER_KEY_ID, IdentityLedger } from "./identity.js";
 import { WhoElseNetwork } from "./network.js";
 import { getNeonClient } from "./persist/client.js";
 import { PostgresRepository } from "./persist/repository.js";
@@ -54,7 +55,17 @@ export async function bootNetwork(opts: BootOptions = {}): Promise<WhoElseNetwor
     }
     const entities = await persist.loadEntities();
     const identity = IdentityLedger.fromSnapshot(await persist.loadIdentity());
-    const engine = WhoElseEngine.fromStore(new EntityStore(entities));
+    for (const keyId of [DEMO_OWNER_KEY_ID, DEMO_INTRUDER_KEY_ID]) {
+      const cred = identity.credentials.get(keyId);
+      if (cred) cred.scopes = [...AGENT_SCOPES];
+    }
+    const store = new EntityStore(entities);
+    try {
+      store.hydrateLoop(await persist.loadLoop());
+    } catch {
+      // Pre-loop DBs get tables on migrate(); empty loop is fine.
+    }
+    const engine = WhoElseEngine.fromStore(store);
     if (seedMode === "demo") engine.ensureDemoAgents();
     return new WhoElseNetwork(engine, identity, persist, seedMode);
   }

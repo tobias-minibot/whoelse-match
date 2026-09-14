@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
+import { fetchMe, type MePayload } from "@/lib/me";
 import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
 
 const EXAMPLES = [
@@ -21,6 +22,12 @@ export function UniversalBox() {
   const [result, setResult] = useState<WhoElsePayload | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [asClerk, setAsClerk] = useState(false);
+  const [me, setMe] = useState<MePayload | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    void fetchMe().then(setMe);
+  }, []);
 
   async function ask() {
     setLoading(true);
@@ -57,6 +64,34 @@ export function UniversalBox() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function propose(candidate: Candidate) {
+    if (!me?.entity?.id) {
+      setToast(me === null ? "Sign in to propose a match." : "Finish joining before you can propose.");
+      window.setTimeout(() => setToast(null), 2800);
+      return;
+    }
+    const res = await fetch("/api/matches", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        requesterEntityId: me.entity.id,
+        candidateEntityId: candidate.entity.id,
+        seekPublicationId: candidate.matched?.seek?.id,
+        offerPublicationId: candidate.matched?.offer?.id,
+        query,
+        score: candidate.score,
+        explanation: { why: candidate.explanation.why },
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setToast(data.error ?? `propose ${res.status}`);
+      window.setTimeout(() => setToast(null), 2800);
+      return;
+    }
+    window.location.href = "/matches";
   }
 
   const dating = result?.inferredView === "dating" || result?.inferredVertical === "dating";
@@ -150,34 +185,56 @@ export function UniversalBox() {
       {result && dating && (
         <>
           <h2 className="section-title">Humans</h2>
-          <CardList items={result.humans} onReverse={reverse} />
+          <CardList items={result.humans} onReverse={reverse} onPropose={propose} />
           <h2 className="section-title">AIs</h2>
-          <CardList items={result.ais} onReverse={reverse} />
+          <CardList items={result.ais} onReverse={reverse} onPropose={propose} />
         </>
       )}
       {result && !dating && (
         <>
           <h2 className="section-title">Who else — mixed types</h2>
           <p className="empty">Type stays on the badge. No category was selected.</p>
-          <CardList items={result.candidates} onReverse={reverse} />
+          <CardList items={result.candidates} onReverse={reverse} onPropose={propose} />
         </>
       )}
+      {toast && <div className="toast">{toast}</div>}
     </div>
   );
 }
 
-function CardList({ items, onReverse }: { items: Candidate[]; onReverse: (id: string) => void }) {
+function CardList({
+  items,
+  onReverse,
+  onPropose,
+}: {
+  items: Candidate[];
+  onReverse: (id: string) => void;
+  onPropose: (c: Candidate) => void;
+}) {
   if (!items.length) return <p className="empty">No matches in this slice.</p>;
   return (
     <div className="cards">
       {items.map((c) => (
-        <OneCard key={c.entity.id} candidate={c} onReverse={() => onReverse(c.entity.id)} />
+        <OneCard
+          key={c.entity.id}
+          candidate={c}
+          onReverse={() => onReverse(c.entity.id)}
+          onPropose={() => onPropose(c)}
+        />
       ))}
     </div>
   );
 }
 
-function OneCard({ candidate, onReverse }: { candidate: Candidate; onReverse: () => void }) {
+function OneCard({
+  candidate,
+  onReverse,
+  onPropose,
+}: {
+  candidate: Candidate;
+  onReverse: () => void;
+  onPropose: () => void;
+}) {
   const e = candidate.entity;
   const initials = e.name
     .split(/\s+/)
@@ -204,7 +261,10 @@ function OneCard({ candidate, onReverse }: { candidate: Candidate; onReverse: ()
       {pubLine(candidate) && <p className="facts">Network object · {pubLine(candidate)}</p>}
       {trust && <p className="facts evidence">Why trust this? {trust}</p>}
       <div className="actions">
-        <button className="btn btn-ink btn-sm" type="button" onClick={onReverse}>
+        <button className="btn btn-ink btn-sm" type="button" onClick={onPropose}>
+          Propose match
+        </button>
+        <button className="btn btn-coral btn-sm" type="button" onClick={onReverse}>
           Who else needs / has this?
         </button>
       </div>

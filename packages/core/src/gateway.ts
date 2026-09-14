@@ -17,9 +17,17 @@ import {
   stampHumanLabels,
   type OnboardSpec,
 } from "./onboarding.js";
-import { toOwnerEntity, toPublicEntity, toPublicWhoElseResult } from "./public-dto.js";
+import {
+  toOwnerEntity,
+  toPublicEntity,
+  toPublicMatch,
+  toPublicMessage,
+  toPublicReceipt,
+  toPublicReputation,
+  toPublicWhoElseResult,
+} from "./public-dto.js";
 import { ipBucket, principalBucket, type RateAction } from "./rate-limit.js";
-import type { PublicationSpec, RegistrationSpec, WhoElseRequest } from "./types.js";
+import type { ActionType, PublicationSpec, ReceiptStatus, RegistrationSpec, WhoElseRequest } from "./types.js";
 import {
   AGE_AFFIRMATION_TEXT,
   AGE_AFFIRMATION_VERSION,
@@ -228,8 +236,9 @@ export async function gatewayInvoke(
   try {
     const who = requireCaller(caller);
     requireScope(who, "invoke");
-    const invoked = network.engine.invoke(entityId, body);
-    audit(network, who, "invoke", entityId, { task: body.task });
+    const invoked = await network.engine.invokeAsync(entityId, body);
+    audit(network, who, "invoke", entityId, { task: body.task, receiptId: invoked.receipt.id });
+    await persistLoopObjects(network, { receipts: [invoked.receipt], matches: invoked.match ? [invoked.match] : [] });
     return { ok: true as const, status: 200 as const, body: invoked };
   } catch (err) {
     return fromError(err);
@@ -246,7 +255,13 @@ export async function gatewayDelegate(
     requireScope(who, "delegate");
     if (opts.from) network.identity.assertOwns(who, opts.from);
     const result = network.engine.delegate(opts);
-    audit(network, who, "delegate", opts.from, { task: opts.task });
+    audit(network, who, "delegate", opts.from, { task: opts.task, receiptId: result.receipt?.id });
+    if (result.receipt) {
+      await persistLoopObjects(network, {
+        receipts: [result.receipt],
+        matches: result.match ? [result.match] : [],
+      });
+    }
     return { ok: true as const, status: 200 as const, body: result };
   } catch (err) {
     return fromError(err);
@@ -464,6 +479,281 @@ export async function gatewayAffirm(
         entity: stored ? toOwnerEntity(stored) : null,
         findable: stored ? isPubliclyFindable(stored) : false,
       },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+function defaultRequesterId(network: WhoElseNetwork, caller: Caller): string | undefined {
+  if (caller.kind === "human") {
+    const human = ownedHumanEntity(network, caller.principalId);
+    if (human) return human.id;
+  }
+  return network.identity.entitiesOwnedBy(caller.principalId).find((id) => network.engine.store.get(id));
+}
+
+async function persistLoopObjects(
+  network: WhoElseNetwork,
+  input: {
+    matches?: import("./types.js").MatchRecord[];
+    receipts?: import("./types.js").InvokeReceipt[];
+    messages?: import("./types.js").ThreadMessage[];
+  },
+): Promise<void> {
+  if (!network.persist) return;
+  for (const m of input.matches ?? []) await network.persist.upsertMatch(m);
+  for (const r of input.receipts ?? []) {
+    await network.persist.upsertReceipt(r);
+    await network.persist.upsertReputation(network.engine.store.reputationOf(r.actorEntityId));
+    await network.persist.upsertReputation(network.engine.store.reputationOf(r.counterpartyEntityId));
+  }
+  for (const msg of input.messages ?? []) await network.persist.upsertMessage(msg);
+}
+
+function publicEntityOrNull(network: WhoElseNetwork, id: string) {
+  const entity = network.engine.store.get(id);
+  return entity ? toPublicEntity(entity) : null;
+}
+
+export async function gatewayProposeMatch(
+  network: WhoElseNetwork,
+  input: {
+    requesterEntityId?: string;
+    candidateEntityId: string;
+    seekPublicationId?: string;
+    offerPublicationId?: string;
+    query?: string;
+    score?: number;
+    explanation?: { why: string; commonalities?: string[] };
+  },
+  caller: Caller | null,
+) {
+  try {
+    const who = requireCaller(caller);
+    requireScope(who, "match");
+    await enforceWriteRate(network, who, "match");
+    const requesterEntityId = input.requesterEntityId ?? defaultRequesterId(network, who);
+    if (!requesterEntityId) throw new Error("requester entity required — onboard or pass requesterEntityId");
+    network.identity.assertOwns(who, requesterEntityId);
+    if (!network.engine.store.get(input.candidateEntityId)) {
+      throw new Error(`Unknown entity ${input.candidateEntityId}`);
+    }
+    const match = network.engine.proposeMatch({
+      query: input.query ?? "Who else?",
+      requesterEntityId,
+      candidateEntityId: input.candidateEntityId,
+      seekPublicationId: input.seekPublicationId,
+      offerPublicationId: input.offerPublicationId,
+      score: input.score,
+      explanation: input.explanation,
+    });
+    const receipt = network.engine.store.recordReceipt({
+      matchId: match.id,
+      actorEntityId: requesterEntityId,
+      counterpartyEntityId: input.candidateEntityId,
+      actionType: "connect",
+      status: "proposed",
+      task: "propose match",
+      would: "propose a durable SEEK↔OFFER match",
+      outcome: { matchId: match.id },
+      result: { matchId: match.id },
+      evidence: {},
+    });
+    audit(network, who, "match", requesterEntityId, { matchId: match.id, candidateEntityId: input.candidateEntityId });
+    await persistLoopObjects(network, { matches: [network.engine.store.match(match.id)!], receipts: [receipt] });
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: {
+        match: toPublicMatch(network.engine.store.match(match.id)!),
+        receipt: toPublicReceipt(receipt),
+        note: "Find does not persist matches. This propose/save is the explicit act.",
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+export async function gatewayListMatches(network: WhoElseNetwork, caller: Caller | null) {
+  try {
+    const who = requireCaller(caller);
+    const owned = new Set(network.identity.entitiesOwnedBy(who.principalId));
+    const matches = network.engine.store.matches.filter(
+      (m) => owned.has(m.requesterEntityId) || owned.has(m.candidateEntityId),
+    );
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: {
+        matches: matches.map((m) => ({
+          ...toPublicMatch(m),
+          requester: publicEntityOrNull(network, m.requesterEntityId),
+          candidate: publicEntityOrNull(network, m.candidateEntityId),
+          receipts: network.engine.store.receiptsFor({ matchId: m.id }).map(toPublicReceipt),
+          messages: network.engine.store.messagesFor(m.id).map(toPublicMessage),
+        })),
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+export async function gatewayGetMatch(network: WhoElseNetwork, matchId: string, caller: Caller | null) {
+  try {
+    const who = requireCaller(caller);
+    const match = network.engine.store.match(matchId);
+    if (!match) return fail(404, "not found");
+    network.identity.assertParty(who, [match.requesterEntityId, match.candidateEntityId]);
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: {
+        match: toPublicMatch(match),
+        requester: publicEntityOrNull(network, match.requesterEntityId),
+        candidate: publicEntityOrNull(network, match.candidateEntityId),
+        receipts: network.engine.store.receiptsFor({ matchId }).map(toPublicReceipt),
+        messages: network.engine.store.messagesFor(matchId).map(toPublicMessage),
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+export async function gatewayAct(
+  network: WhoElseNetwork,
+  input: {
+    matchId: string;
+    action: ActionType;
+    actorEntityId?: string;
+    message?: string;
+    task?: string;
+    status?: ReceiptStatus;
+    outcome?: Record<string, unknown>;
+  },
+  caller: Caller | null,
+) {
+  try {
+    const who = requireCaller(caller);
+    requireScope(who, input.action === "invoke" ? "invoke" : input.action === "delegate" ? "delegate" : "act");
+    await enforceWriteRate(network, who, "act");
+    const match = network.engine.store.match(input.matchId);
+    if (!match) return fail(404, "not found");
+    network.identity.assertParty(who, [match.requesterEntityId, match.candidateEntityId]);
+    const actorEntityId =
+      input.actorEntityId && network.identity.owns(who.principalId, input.actorEntityId)
+        ? input.actorEntityId
+        : [match.requesterEntityId, match.candidateEntityId].find((id) => network.identity.owns(who.principalId, id));
+    if (!actorEntityId) throw new AuthzError(403, "forbidden: not a party");
+    if ((input.action === "accept" || input.action === "decline") && actorEntityId === match.requesterEntityId) {
+      throw new AuthzError(403, "requester cannot accept/decline their own proposal — candidate acts");
+    }
+    const result = network.engine.act({
+      matchId: input.matchId,
+      action: input.action,
+      actorEntityId,
+      message: input.message,
+      task: input.task,
+      status: input.status,
+      outcome: input.outcome,
+    });
+    audit(network, who, `act:${input.action}`, actorEntityId, { matchId: input.matchId, receiptId: result.receipt.id });
+    await persistLoopObjects(network, {
+      matches: [result.match],
+      receipts: [result.receipt],
+      messages: result.message ? [result.message] : [],
+    });
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: {
+        match: toPublicMatch(result.match),
+        receipt: toPublicReceipt(result.receipt),
+        message: result.message ? toPublicMessage(result.message) : undefined,
+        invoked: result.invoked,
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+export async function gatewayWriteReceipt(
+  network: WhoElseNetwork,
+  input: {
+    matchId?: string;
+    actorEntityId?: string;
+    counterpartyEntityId: string;
+    actionType: ActionType;
+    status: ReceiptStatus;
+    outcome?: Record<string, unknown>;
+    task?: string;
+  },
+  caller: Caller | null,
+) {
+  try {
+    const who = requireCaller(caller);
+    requireScope(who, "receipt");
+    await enforceWriteRate(network, who, "receipt");
+    const actorEntityId = input.actorEntityId ?? defaultRequesterId(network, who);
+    if (!actorEntityId) throw new Error("actorEntityId required");
+    if (input.matchId) {
+      const match = network.engine.store.match(input.matchId);
+      if (!match) return fail(404, "not found");
+      network.identity.assertParty(who, [match.requesterEntityId, match.candidateEntityId]);
+    } else {
+      network.identity.assertOwns(who, actorEntityId);
+    }
+    const receipt = network.engine.store.recordReceipt({
+      matchId: input.matchId,
+      actorEntityId,
+      counterpartyEntityId: input.counterpartyEntityId,
+      actionType: input.actionType,
+      status: input.status,
+      task: input.task ?? input.actionType,
+      would: `${input.actionType} → ${input.status}`,
+      outcome: input.outcome ?? {},
+      result: input.outcome ?? {},
+      evidence:
+        input.status === "completed" && input.outcome?.verifiedBy
+          ? { verified: true, verifiedBy: String(input.outcome.verifiedBy) }
+          : {},
+    });
+    const match = input.matchId ? network.engine.store.match(input.matchId) : undefined;
+    audit(network, who, "receipt", actorEntityId, { receiptId: receipt.id, status: input.status });
+    await persistLoopObjects(network, { receipts: [receipt], matches: match ? [match] : [] });
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: {
+        receipt: toPublicReceipt(receipt),
+        reputation: {
+          actor: toPublicReputation(network.engine.store.reputationOf(actorEntityId)),
+          counterparty: toPublicReputation(network.engine.store.reputationOf(input.counterpartyEntityId)),
+        },
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+export async function gatewayReputation(
+  network: WhoElseNetwork,
+  entityId: string,
+  caller: Caller | null,
+  meta?: RequestMeta,
+) {
+  try {
+    await enforceAnonRead(network, caller, meta);
+    if (!network.engine.store.get(entityId)) return fail(404, "not found");
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: toPublicReputation(network.engine.store.reputationOf(entityId)),
     };
   } catch (err) {
     return fromError(err);
