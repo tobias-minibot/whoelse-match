@@ -77,4 +77,10 @@ export interface WhoElsePayload {
   ais: Candidate[];
   byType?: Record<string, Candidate[]>;
   pool?: "live" | "playground";
+  composedFrom?: string[];
+  composition?: {
+    strategy?: string;
+    explanation?: string;
+    plan?: { strategy?: string; waves?: string[][]; nodes?: { label: string; concurrent?: boolean }[] };
+  };
 }

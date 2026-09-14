@@ -1,20 +1,14 @@
+import { parseCompound, type CompoundIR } from "./compound.js";
+import { dispatchOnEngine, type DispatchOutcome, type DispatchPlan } from "./dispatch.js";
 import { hasOpenAi } from "./openai.js";
 import { parseUniversal } from "./parse.js";
 import type { WhoElseEngine } from "./engine.js";
-import type {
-  PublicationSpec,
-  UniversalQuery,
-  WhoElseConstraints,
-  WhoElseResult,
-} from "./types.js";
+import type { PublicationSpec, UniversalQuery, WhoElseResult } from "./types.js";
 
 export type CompileClass = "WHOELSE_COMPILABLE" | "PARTIALLY_COMPILABLE" | "NOT_WHOELSE";
 
-export interface CompileIR {
-  intent: string;
-  constraints: WhoElseConstraints;
-  exclusions: string[];
-}
+/** Sentinel IR. Compound is the native shape; one intent is a degenerate compound. */
+export type CompileIR = CompoundIR;
 
 export interface CompileOptions {
   find?: boolean;
@@ -32,6 +26,8 @@ export interface CompileResult {
   ir: CompileIR;
   seekDraft?: PublicationSpec;
   find?: WhoElseResult;
+  plan?: DispatchPlan;
+  dispatch?: DispatchOutcome;
 }
 
 const WHOELSE_ASK =
@@ -71,6 +67,14 @@ export const LOCKED_COMPILE_EXAMPLES: { text: string; expected: CompileClass }[]
   { text: "What is 2+2?", expected: "NOT_WHOELSE" },
   { text: "Hello", expected: "NOT_WHOELSE" },
   { text: "Play some music", expected: "NOT_WHOELSE" },
+  {
+    text: "Find me someone nearby I might like who wants to play tennis tonight.",
+    expected: "WHOELSE_COMPILABLE",
+  },
+  {
+    text: "I want to play tennis with someone I might like romantically tonight, somewhere nearby.",
+    expected: "WHOELSE_COMPILABLE",
+  },
 ];
 
 const LOCKED = new Map<string, Locked>([
@@ -208,23 +212,34 @@ const LOCKED = new Map<string, Locked>([
     norm("Play some music"),
     { classification: "NOT_WHOELSE", reason: "Player command. Not who-else." },
   ],
+  [
+    norm("Find me someone nearby I might like who wants to play tennis tonight."),
+    {
+      classification: "WHOELSE_COMPILABLE",
+      reason: "Compound: DATE ∩ TENNIS, nearby, tonight. One graph, not a dating app plus a tennis app.",
+      intent: "Find me someone nearby I might like who wants to play tennis tonight.",
+      capability: "romantic tennis companion",
+    },
+  ],
+  [
+    norm("I want to play tennis with someone I might like romantically tonight, somewhere nearby."),
+    {
+      classification: "WHOELSE_COMPILABLE",
+      reason: "Compound: DATE ∩ TENNIS + nearby + tonight + romantic. Composition is the product.",
+      intent: "I want to play tennis with someone I might like romantically tonight, somewhere nearby.",
+      capability: "romantic tennis companion",
+    },
+  ],
 ]);
 
-function compileIr(intent: string, q: UniversalQuery, exclusions: string[]): CompileIR {
-  return {
-    intent,
-    constraints: {
-      type: q.entityType,
-      city: q.soft.city,
-      region: q.soft.region,
-      neighborhood: q.soft.neighborhood,
-      side: q.side,
-      roles: q.roles,
-      radiusKm: q.soft.radiusKm,
-      attributes: q.hard.length ? q.hard : undefined,
-    },
-    exclusions,
-  };
+function compileIr(
+  text: string,
+  intent: string,
+  exclusions: string[],
+  cities: string[],
+  places: CompileOptions["places"],
+): CompileIR {
+  return parseCompound(text, { cities, places, intent, exclusions });
 }
 
 function norm(text: string): string {
@@ -282,7 +297,7 @@ function classifyHeuristic(text: string, q: UniversalQuery): { classification: C
       confidence: q.view || WHOELSE_ASK.test(text) ? 0.9 : 0.7,
     };
   }
-  if (/\b(i need|looking for|can anyone|help me)\b/i.test(text)) {
+  if (/\b(i need|looking for|can anyone|help me|i want to)\b/i.test(text)) {
     return {
       classification: "PARTIALLY_COMPILABLE",
       reason: "Need-language without a clear who-else. May draft a SEEK; do not force a match.",
@@ -301,6 +316,8 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
   const locked = LOCKED.get(norm(raw));
   const q = parseUniversal(raw || " ", opts.cities ?? [], undefined, opts.places ?? []);
   const exclusions = exclusionsFrom(raw);
+  const cities = opts.cities ?? [];
+  const places = opts.places ?? [];
 
   if (locked) {
     const intent = locked.intent ?? (locked.classification === "NOT_WHOELSE" ? raw : `Who else ${raw}?`);
@@ -310,7 +327,7 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
       confidence: 1,
       locked: true,
       usedLlm: false,
-      ir: compileIr(intent, q, exclusions),
+      ir: compileIr(raw, intent, exclusions, cities, places),
       seekDraft:
         locked.classification === "NOT_WHOELSE"
           ? undefined
@@ -329,16 +346,28 @@ export function compileLanguage(text: string, opts: CompileOptions = {}): Compil
       : WHOELSE_ASK.test(raw)
         ? raw
         : `Who else ${raw.replace(/^[.!\s]+/, "")}`.replace(/\s+/g, " ");
+  const ir = compileIr(raw, intent, exclusions, cities, places);
+  const compound = ir.intents.length > 1;
+  const classification =
+    compound && guessed.classification === "NOT_WHOELSE"
+      ? "WHOELSE_COMPILABLE"
+      : compound && guessed.classification === "PARTIALLY_COMPILABLE" && !FULFILL.test(raw)
+        ? "WHOELSE_COMPILABLE"
+        : guessed.classification;
+  const reason = compound
+    ? `Compound ${ir.intents.map((i) => i.label).join(" + ")}. One graph on whoelse.find — not a vertical app per label.`
+    : guessed.reason;
+  const confidence = compound ? Math.max(guessed.confidence, 0.86) : guessed.confidence;
 
   return {
-    classification: guessed.classification,
-    reason: guessed.reason,
-    confidence: guessed.confidence,
+    classification,
+    reason,
+    confidence,
     locked: false,
     usedLlm: false,
-    ir: compileIr(intent, q, exclusions),
+    ir,
     seekDraft:
-      guessed.classification === "NOT_WHOELSE"
+      classification === "NOT_WHOELSE"
         ? undefined
         : {
             kind: "seek",
@@ -418,15 +447,42 @@ export async function compileAsync(
   let result = compileLanguage(text, { ...opts, cities, places });
   result = await maybeRefineCompile(text, result);
   if (opts.find && engine && result.classification !== "NOT_WHOELSE") {
-    result = {
-      ...result,
-      find: await engine.whoelseAsync({
-        context: result.ir.intent,
-        constraints: result.ir.constraints,
-        exclude: result.ir.exclusions,
+    if (result.ir.intents.length > 1) {
+      const dispatched = await dispatchOnEngine(engine, result.ir, {
         limit: opts.limit ?? 5,
-      }),
-    };
+        exclude: result.ir.exclusions,
+      });
+      result = {
+        ...result,
+        find: dispatched.result,
+        plan: dispatched.plan,
+        dispatch: dispatched,
+      };
+    } else {
+      result = {
+        ...result,
+        find: await engine.whoelseAsync({
+          context: result.ir.intent,
+          constraints: result.ir.constraints,
+          exclude: result.ir.exclusions,
+          limit: opts.limit ?? 5,
+        }),
+        plan: {
+          nodes: result.ir.intents.map((intent) => ({
+            id: intent.id,
+            label: intent.label,
+            query: result.ir.intent,
+            constraints: result.ir.constraints,
+            ready: true,
+            blockedBy: [],
+            concurrent: true,
+          })),
+          edges: result.ir.relations,
+          waves: [result.ir.intents.map((i) => i.id)],
+          strategy: "atomic",
+        },
+      };
+    }
   }
   return result;
 }

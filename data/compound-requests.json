@@ -1,0 +1,997 @@
+{
+  "schema": "whoelse.compound-requests.v1",
+  "note": "Realistic one-sentence human speech with 2\u20135 atomic intents. Vocabulary for dispatch \u2014 not 451 product specs. Canonical first.",
+  "requests": [
+    {
+      "id": "c001",
+      "text": "Find me someone nearby I might like who wants to play tennis tonight.",
+      "intents": [
+        "DATE",
+        "TENNIS"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c002",
+      "text": "I want to play tennis with someone I might like romantically tonight, somewhere nearby.",
+      "intents": [
+        "DATE",
+        "TENNIS"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c003",
+      "text": "Who else wants to hit tennis and maybe grab a drink after, if we like each other?",
+      "intents": [
+        "DATE",
+        "TENNIS"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c004",
+      "text": "Looking for a tennis date in DC tonight, nothing heavy.",
+      "intents": [
+        "DATE",
+        "TENNIS"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c005",
+      "text": "Find me an apartment near a good school in DC.",
+      "intents": [
+        "APARTMENT",
+        "SCHOOL"
+      ],
+      "domain": "home-education"
+    },
+    {
+      "id": "c006",
+      "text": "We need a two-bedroom close to an elementary school before September.",
+      "intents": [
+        "APARTMENT",
+        "SCHOOL"
+      ],
+      "domain": "home-education"
+    },
+    {
+      "id": "c007",
+      "text": "Who else has a flat near a school that actually has spots left?",
+      "intents": [
+        "APARTMENT",
+        "SCHOOL"
+      ],
+      "domain": "home-education"
+    },
+    {
+      "id": "c008",
+      "text": "I need a flight to Berlin and a hotel for tonight.",
+      "intents": [
+        "FLIGHT",
+        "HOTEL"
+      ],
+      "domain": "travel"
+    },
+    {
+      "id": "c009",
+      "text": "Book me a flight and somewhere to stay near the conference.",
+      "intents": [
+        "FLIGHT",
+        "HOTEL"
+      ],
+      "domain": "travel"
+    },
+    {
+      "id": "c010",
+      "text": "Who else can get me to Berlin tonight and has a room?",
+      "intents": [
+        "FLIGHT",
+        "HOTEL"
+      ],
+      "domain": "travel"
+    },
+    {
+      "id": "c011",
+      "text": "I want a job I can do remotely, not another office.",
+      "intents": [
+        "JOB",
+        "REMOTE WORK"
+      ],
+      "domain": "work"
+    },
+    {
+      "id": "c012",
+      "text": "Who else is hiring for remote work in design?",
+      "intents": [
+        "JOB",
+        "REMOTE WORK"
+      ],
+      "domain": "work"
+    },
+    {
+      "id": "c013",
+      "text": "Find me someone to run with in the morning who might want to date.",
+      "intents": [
+        "DATE",
+        "RUNNING"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c014",
+      "text": "Looking for a yoga class and maybe a coffee date after.",
+      "intents": [
+        "YOGA",
+        "DATE"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c015",
+      "text": "Who else wants to climb this weekend and grab dinner if it goes well?",
+      "intents": [
+        "DATE",
+        "CLIMBING"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c016",
+      "text": "I need a plumber tonight and someone to watch the kids.",
+      "intents": [
+        "PLUMBER",
+        "BABYSITTER"
+      ],
+      "domain": "home-family"
+    },
+    {
+      "id": "c017",
+      "text": "Find a dentist near me who takes my insurance this week.",
+      "intents": [
+        "DENTIST",
+        "PHARMACY"
+      ],
+      "domain": "health"
+    },
+    {
+      "id": "c018",
+      "text": "Who else has a restaurant table Friday and a ride home after?",
+      "intents": [
+        "RESTAURANT",
+        "RIDE"
+      ],
+      "domain": "food-mobility"
+    },
+    {
+      "id": "c019",
+      "text": "I want a doctor nearby and a pharmacy that is still open.",
+      "intents": [
+        "DOCTOR",
+        "PHARMACY"
+      ],
+      "domain": "health"
+    },
+    {
+      "id": "c020",
+      "text": "Find me a lawyer who knows patents and an expert I can talk to about this market.",
+      "intents": [
+        "LAWYER",
+        "EXPERT"
+      ],
+      "domain": "legal-expert"
+    },
+    {
+      "id": "c021",
+      "text": "Who else is looking for a roommate and a tennis partner in Shaw?",
+      "intents": [
+        "FLAT SHARE",
+        "TENNIS"
+      ],
+      "domain": "home-sport"
+    },
+    {
+      "id": "c022",
+      "text": "Need a nanny three days a week and an apartment that allows kids.",
+      "intents": [
+        "NANNY",
+        "APARTMENT"
+      ],
+      "domain": "family-home"
+    },
+    {
+      "id": "c023",
+      "text": "Who else wants to start a band and also needs a rehearsal space?",
+      "intents": [
+        "BAND",
+        "REHEARSAL SPACE"
+      ],
+      "domain": "creative"
+    },
+    {
+      "id": "c024",
+      "text": "Find a coworking desk and someone hiring for freelance writing.",
+      "intents": [
+        "COWORKING",
+        "JOB"
+      ],
+      "domain": "work"
+    },
+    {
+      "id": "c025",
+      "text": "I want to learn Spanish and meet people who actually speak it around here.",
+      "intents": [
+        "LANGUAGE LESSON",
+        "FRIEND"
+      ],
+      "domain": "education-social"
+    },
+    {
+      "id": "c026",
+      "text": "Who else is going to the conference and needs a hotel share?",
+      "intents": [
+        "CONFERENCE",
+        "HOTEL"
+      ],
+      "domain": "events-travel"
+    },
+    {
+      "id": "c027",
+      "text": "Find me a used bike and someone to ride with on Saturday.",
+      "intents": [
+        "BIKE",
+        "CYCLING"
+      ],
+      "domain": "sport"
+    },
+    {
+      "id": "c028",
+      "text": "Looking for a therapist and a quiet cafe to meet after if that helps.",
+      "intents": [
+        "THERAPIST",
+        "CAFE"
+      ],
+      "domain": "health"
+    },
+    {
+      "id": "c029",
+      "text": "Who else can fix my sink and paint the hallway this month?",
+      "intents": [
+        "PLUMBER",
+        "PAINTER"
+      ],
+      "domain": "home"
+    },
+    {
+      "id": "c030",
+      "text": "I need childcare tonight and a ride to the airport at 5.",
+      "intents": [
+        "BABYSITTER",
+        "RIDE"
+      ],
+      "domain": "family-mobility"
+    },
+    {
+      "id": "c031",
+      "text": "Find an Airbnb in Lisbon and a surf lesson for the weekend.",
+      "intents": [
+        "AIRBNB",
+        "SURFING"
+      ],
+      "domain": "travel-sport"
+    },
+    {
+      "id": "c032",
+      "text": "Who else has a studio apartment and a parking spot in Brooklyn?",
+      "intents": [
+        "APARTMENT",
+        "PARKING"
+      ],
+      "domain": "home-mobility"
+    },
+    {
+      "id": "c033",
+      "text": "I want a date who already has a dog and likes long walks.",
+      "intents": [
+        "DATE",
+        "DOG"
+      ],
+      "domain": "social-pets"
+    },
+    {
+      "id": "c034",
+      "text": "Find me a vet nearby and a dog walker for Thursdays.",
+      "intents": [
+        "VET",
+        "DOG WALKER"
+      ],
+      "domain": "pets"
+    },
+    {
+      "id": "c035",
+      "text": "Who else is hiring a remote designer and needs a portfolio review?",
+      "intents": [
+        "JOB",
+        "REMOTE WORK"
+      ],
+      "domain": "work"
+    },
+    {
+      "id": "c036",
+      "text": "Looking for a guitar teacher and someone to jam with on Sundays.",
+      "intents": [
+        "GUITAR LESSON",
+        "BAND"
+      ],
+      "domain": "education-creative"
+    },
+    {
+      "id": "c037",
+      "text": "I need a notary today and a lawyer who can look at this lease.",
+      "intents": [
+        "NOTARY",
+        "LAWYER"
+      ],
+      "domain": "legal"
+    },
+    {
+      "id": "c038",
+      "text": "Find a moving van and a storage unit for two months.",
+      "intents": [
+        "MOVING",
+        "STORAGE"
+      ],
+      "domain": "home"
+    },
+    {
+      "id": "c039",
+      "text": "Who else wants brunch and then a museum, maybe as a date?",
+      "intents": [
+        "DATE",
+        "MUSEUM",
+        "BRUNCH"
+      ],
+      "domain": "social-culture"
+    },
+    {
+      "id": "c040",
+      "text": "I want a gym buddy and a nutritionist who will not lecture me.",
+      "intents": [
+        "GYM",
+        "NUTRITIONIST"
+      ],
+      "domain": "fitness-health"
+    },
+    {
+      "id": "c041",
+      "text": "Find me a haircut this afternoon and a place for a drink after.",
+      "intents": [
+        "HAIRCUT",
+        "BAR"
+      ],
+      "domain": "beauty-social"
+    },
+    {
+      "id": "c042",
+      "text": "Who else can summarize this PDF and then verify the citations?",
+      "intents": [
+        "AI TOOLS",
+        "RESEARCH"
+      ],
+      "domain": "agents"
+    },
+    {
+      "id": "c043",
+      "text": "I need an accountant and a loan I actually qualify for.",
+      "intents": [
+        "ACCOUNTANT",
+        "LOAN"
+      ],
+      "domain": "finance"
+    },
+    {
+      "id": "c044",
+      "text": "Find a tutor for SAT math and a quiet library nearby.",
+      "intents": [
+        "TUTOR",
+        "LIBRARY"
+      ],
+      "domain": "education"
+    },
+    {
+      "id": "c045",
+      "text": "Who else is selling a used laptop and can meet in Dupont today?",
+      "intents": [
+        "LAPTOP",
+        "MEETUP"
+      ],
+      "domain": "products"
+    },
+    {
+      "id": "c046",
+      "text": "Looking for a photographer and a venue for a tiny wedding.",
+      "intents": [
+        "PHOTOGRAPHER",
+        "VENUE"
+      ],
+      "domain": "events"
+    },
+    {
+      "id": "c047",
+      "text": "I want to play basketball tonight and maybe get food with the group.",
+      "intents": [
+        "BASKETBALL",
+        "RESTAURANT"
+      ],
+      "domain": "sport-food"
+    },
+    {
+      "id": "c048",
+      "text": "Find me a caterer and a bartender for twenty people Saturday.",
+      "intents": [
+        "CATERER",
+        "BARTENDER"
+      ],
+      "domain": "events"
+    },
+    {
+      "id": "c049",
+      "text": "Who else has concert tickets Friday and wants to split a ride?",
+      "intents": [
+        "CONCERT",
+        "RIDE"
+      ],
+      "domain": "events-mobility"
+    },
+    {
+      "id": "c050",
+      "text": "I need an apartment furnished, pet-friendly, near a park.",
+      "intents": [
+        "APARTMENT",
+        "PARK"
+      ],
+      "domain": "home"
+    },
+    {
+      "id": "c051",
+      "text": "Find a hiking partner this Sunday who might want to keep hanging out.",
+      "intents": [
+        "DATE",
+        "HIKING"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c052",
+      "text": "Who else can host a GPU cheaply and has spare inference capacity?",
+      "intents": [
+        "GPU",
+        "CLOUD"
+      ],
+      "domain": "compute"
+    },
+    {
+      "id": "c053",
+      "text": "I want a dataset with provenance and someone who can verify this claim.",
+      "intents": [
+        "DATASET",
+        "LAWYER"
+      ],
+      "domain": "data"
+    },
+    {
+      "id": "c054",
+      "text": "Find an investor writing $250k checks and a lawyer for the SAFE.",
+      "intents": [
+        "INVESTOR",
+        "LAWYER"
+      ],
+      "domain": "capital-legal"
+    },
+    {
+      "id": "c055",
+      "text": "Who else needs a designer and a writer for this launch?",
+      "intents": [
+        "DESIGNER",
+        "WRITER"
+      ],
+      "domain": "collab"
+    },
+    {
+      "id": "c056",
+      "text": "Looking for a mechanic today and a loaner car if it takes overnight.",
+      "intents": [
+        "MECHANIC",
+        "CAR RENTAL"
+      ],
+      "domain": "mobility"
+    },
+    {
+      "id": "c057",
+      "text": "I need a hotel near the airport and a 6am ride to the terminal.",
+      "intents": [
+        "HOTEL",
+        "RIDE"
+      ],
+      "domain": "travel"
+    },
+    {
+      "id": "c058",
+      "text": "Find me someone who cooks and wants a housemate in Brooklyn.",
+      "intents": [
+        "FLAT SHARE",
+        "COOKING CLASS"
+      ],
+      "domain": "home-social"
+    },
+    {
+      "id": "c059",
+      "text": "Who else is looking for a cofounder and a cheap office this month?",
+      "intents": [
+        "COFOUNDER",
+        "OFFICE"
+      ],
+      "domain": "work"
+    },
+    {
+      "id": "c060",
+      "text": "I want to try pottery and meet people, not take a class alone.",
+      "intents": [
+        "POTTERY",
+        "FRIEND"
+      ],
+      "domain": "culture-social"
+    },
+    {
+      "id": "c061",
+      "text": "Find a piano tuner and a used upright that is not a wreck.",
+      "intents": [
+        "PIANO",
+        "MUSIC LESSON"
+      ],
+      "domain": "creative"
+    },
+    {
+      "id": "c062",
+      "text": "Who else has a spare room tonight in Berlin and speaks English?",
+      "intents": [
+        "HOTEL",
+        "LANGUAGE LESSON"
+      ],
+      "domain": "travel"
+    },
+    {
+      "id": "c063",
+      "text": "Need a visa lawyer and a flight that still has seats next week.",
+      "intents": [
+        "LAWYER",
+        "FLIGHT"
+      ],
+      "domain": "legal-travel"
+    },
+    {
+      "id": "c064",
+      "text": "Find a running club and a physical therapist for this knee.",
+      "intents": [
+        "RUNNING",
+        "PHYSIO"
+      ],
+      "domain": "sport-health"
+    },
+    {
+      "id": "c065",
+      "text": "Who else wants to volunteer Saturday and grab coffee after?",
+      "intents": [
+        "VOLUNTEER",
+        "CAFE"
+      ],
+      "domain": "community"
+    },
+    {
+      "id": "c066",
+      "text": "I need a cleaner this week and someone to assemble the IKEA wreckage.",
+      "intents": [
+        "CLEANER",
+        "HANDYMAN"
+      ],
+      "domain": "home"
+    },
+    {
+      "id": "c067",
+      "text": "Find a sleep doctor and a dentist who can do a night guard.",
+      "intents": [
+        "DOCTOR",
+        "DENTIST"
+      ],
+      "domain": "health"
+    },
+    {
+      "id": "c068",
+      "text": "Who else is free for pickleball tonight and maybe a drink?",
+      "intents": [
+        "DATE",
+        "PICKLEBALL"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c069",
+      "text": "Looking for a wedding photographer and a florist who can do small.",
+      "intents": [
+        "PHOTOGRAPHER",
+        "FLORIST"
+      ],
+      "domain": "events"
+    },
+    {
+      "id": "c070",
+      "text": "I want a mentor in product and a peer group that actually meets.",
+      "intents": [
+        "MENTOR",
+        "JOB"
+      ],
+      "domain": "work"
+    },
+    {
+      "id": "c071",
+      "text": "Find me a scooter to borrow and a lock-up near the metro.",
+      "intents": [
+        "SCOOTER",
+        "PARKING"
+      ],
+      "domain": "mobility"
+    },
+    {
+      "id": "c072",
+      "text": "Who else can teach me to cook and wants a dinner date as the exam?",
+      "intents": [
+        "DATE",
+        "COOKING CLASS"
+      ],
+      "domain": "social-food"
+    },
+    {
+      "id": "c073",
+      "text": "Need a passport photo and a notary before noon.",
+      "intents": [
+        "NOTARY",
+        "PHOTOGRAPHER"
+      ],
+      "domain": "local-legal"
+    },
+    {
+      "id": "c074",
+      "text": "Find an ESL conversation partner and a cheap room near campus.",
+      "intents": [
+        "LANGUAGE LESSON",
+        "STUDENT HOUSING"
+      ],
+      "domain": "education-home"
+    },
+    {
+      "id": "c075",
+      "text": "Who else has extra concert merch and wants to trade posters?",
+      "intents": [
+        "CONCERT",
+        "TRADE"
+      ],
+      "domain": "culture"
+    },
+    {
+      "id": "c076",
+      "text": "I need a financial advisor and a will template someone already used.",
+      "intents": [
+        "FINANCIAL ADVISOR",
+        "WILL"
+      ],
+      "domain": "finance"
+    },
+    {
+      "id": "c077",
+      "text": "Find a climbing gym day pass and a partner who is patient with beginners.",
+      "intents": [
+        "CLIMBING",
+        "GYM"
+      ],
+      "domain": "sport"
+    },
+    {
+      "id": "c078",
+      "text": "Who else is moving to DC in June and needs a two-bedroom?",
+      "intents": [
+        "APARTMENT",
+        "MOVING"
+      ],
+      "domain": "home"
+    },
+    {
+      "id": "c079",
+      "text": "Looking for a rabbi and a venue that can do a small ceremony.",
+      "intents": [
+        "VENUE",
+        "RABBI"
+      ],
+      "domain": "events"
+    },
+    {
+      "id": "c080",
+      "text": "I want a book club and maybe a date if the conversation is good.",
+      "intents": [
+        "DATE",
+        "BOOK CLUB"
+      ],
+      "domain": "social-culture"
+    },
+    {
+      "id": "c081",
+      "text": "Find a dermatologist who takes new patients and a pharmacy nearby.",
+      "intents": [
+        "DERMATOLOGIST",
+        "PHARMACY"
+      ],
+      "domain": "health"
+    },
+    {
+      "id": "c082",
+      "text": "Who else can watch my cat this weekend and water the plants?",
+      "intents": [
+        "PET SITTER",
+        "PLANT SITTER"
+      ],
+      "domain": "pets"
+    },
+    {
+      "id": "c083",
+      "text": "Need a truck, two movers, and a storage unit by Friday.",
+      "intents": [
+        "MOVING",
+        "STORAGE"
+      ],
+      "domain": "home"
+    },
+    {
+      "id": "c084",
+      "text": "Find me a salsa class and someone brave enough to be my partner.",
+      "intents": [
+        "DATE",
+        "DANCE"
+      ],
+      "domain": "social-culture"
+    },
+    {
+      "id": "c085",
+      "text": "Who else is launching a newsletter and needs an editor?",
+      "intents": [
+        "EDITOR",
+        "WRITER"
+      ],
+      "domain": "creative"
+    },
+    {
+      "id": "c086",
+      "text": "I want a quiet hotel and a late checkout plus a car to the airport.",
+      "intents": [
+        "HOTEL",
+        "RIDE"
+      ],
+      "domain": "travel"
+    },
+    {
+      "id": "c087",
+      "text": "Find a math tutor for my kid and an after-school program nearby.",
+      "intents": [
+        "TUTOR",
+        "AFTER SCHOOL"
+      ],
+      "domain": "education-family"
+    },
+    {
+      "id": "c088",
+      "text": "Who else has extra festival tickets and a couch for one night?",
+      "intents": [
+        "FESTIVAL",
+        "HOTEL"
+      ],
+      "domain": "events-travel"
+    },
+    {
+      "id": "c089",
+      "text": "Looking for a tailor and someone who can dye this jacket properly.",
+      "intents": [
+        "TAILOR",
+        "DYER"
+      ],
+      "domain": "fashion"
+    },
+    {
+      "id": "c090",
+      "text": "I need a sleep coach and a white-noise machine that is actually in stock.",
+      "intents": [
+        "DOCTOR",
+        "PRODUCT"
+      ],
+      "domain": "health-products"
+    },
+    {
+      "id": "c091",
+      "text": "Find a sailing lesson and a date who will not get seasick immediately.",
+      "intents": [
+        "DATE",
+        "SAILING"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c092",
+      "text": "Who else wants to split a parking spot and a gym membership in Navy Yard?",
+      "intents": [
+        "PARKING",
+        "GYM"
+      ],
+      "domain": "local"
+    },
+    {
+      "id": "c093",
+      "text": "I want a bakers' kitchen share and someone to sell bread with on Sundays.",
+      "intents": [
+        "KITCHEN",
+        "BAKERY"
+      ],
+      "domain": "food-collab"
+    },
+    {
+      "id": "c094",
+      "text": "Find a immigration lawyer and a translator for the appointment.",
+      "intents": [
+        "LAWYER",
+        "TRANSLATOR"
+      ],
+      "domain": "legal"
+    },
+    {
+      "id": "c095",
+      "text": "Who else can do headshots Thursday and retouch them overnight?",
+      "intents": [
+        "PHOTOGRAPHER",
+        "EDITOR"
+      ],
+      "domain": "creative"
+    },
+    {
+      "id": "c096",
+      "text": "Need a pediatrician who is taking patients and a nearby playground.",
+      "intents": [
+        "PEDIATRICIAN",
+        "PARK"
+      ],
+      "domain": "family-health"
+    },
+    {
+      "id": "c097",
+      "text": "Find me a chess club and a cafe that lets you sit for hours.",
+      "intents": [
+        "CHESS",
+        "CAFE"
+      ],
+      "domain": "culture"
+    },
+    {
+      "id": "c098",
+      "text": "Who else is looking for a bandmate and a cheap rehearsal room?",
+      "intents": [
+        "BAND",
+        "REHEARSAL SPACE"
+      ],
+      "domain": "creative"
+    },
+    {
+      "id": "c099",
+      "text": "I want to try stand-up and meet other comics, not just watch.",
+      "intents": [
+        "COMEDY",
+        "FRIEND"
+      ],
+      "domain": "culture-social"
+    },
+    {
+      "id": "c100",
+      "text": "Find a solar installer and someone who already did this on a row house.",
+      "intents": [
+        "SOLAR",
+        "CONTRACTOR"
+      ],
+      "domain": "home-env"
+    },
+    {
+      "id": "c101",
+      "text": "Who else has a cargo bike I can borrow and a trail that is not terrible?",
+      "intents": [
+        "BIKE",
+        "TRAIL"
+      ],
+      "domain": "mobility-sport"
+    },
+    {
+      "id": "c102",
+      "text": "Looking for a couples therapist and a mediator if we cannot talk.",
+      "intents": [
+        "THERAPIST",
+        "MEDIATOR"
+      ],
+      "domain": "health"
+    },
+    {
+      "id": "c103",
+      "text": "I need a last-minute tuxedo and a barber who can do a fade today.",
+      "intents": [
+        "TAILOR",
+        "BARBER"
+      ],
+      "domain": "fashion-beauty"
+    },
+    {
+      "id": "c104",
+      "text": "Find an overnight coach to New York and a hostel near Penn.",
+      "intents": [
+        "BUS",
+        "HOTEL"
+      ],
+      "domain": "travel"
+    },
+    {
+      "id": "c105",
+      "text": "Who else wants to start a running date club, not a meetup with name tags?",
+      "intents": [
+        "DATE",
+        "RUNNING"
+      ],
+      "domain": "social-sport"
+    },
+    {
+      "id": "c106",
+      "text": "I want an apartment with a backyard and a dog park I can walk to.",
+      "intents": [
+        "APARTMENT",
+        "DOG PARK"
+      ],
+      "domain": "home-pets"
+    },
+    {
+      "id": "c107",
+      "text": "Find a career coach and a remote job that will actually sponsor the visa.",
+      "intents": [
+        "JOB",
+        "REMOTE WORK"
+      ],
+      "domain": "work"
+    },
+    {
+      "id": "c108",
+      "text": "Who else can take this extra sourdough starter and wants to bake together?",
+      "intents": [
+        "BAKING",
+        "FRIEND"
+      ],
+      "domain": "food-social"
+    },
+    {
+      "id": "c109",
+      "text": "Need a locksmith now and a hardware store still open.",
+      "intents": [
+        "LOCKSMITH",
+        "HARDWARE"
+      ],
+      "domain": "home"
+    },
+    {
+      "id": "c110",
+      "text": "Find me someone to see this film with tonight who I might actually like.",
+      "intents": [
+        "DATE",
+        "CINEMA"
+      ],
+      "domain": "social-culture"
+    }
+  ]
+}

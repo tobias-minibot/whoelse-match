@@ -448,6 +448,14 @@ export interface WhoElseResult {
   humans: Candidate[];
   ais: Candidate[];
   byType: Record<string, Candidate[]>;
+  /** Vocab labels this result was composed from. Absent on atomic find. */
+  composedFrom?: string[];
+  /** Dispatch + reconcile metadata. Quiet on the human box; first-class for MCP. */
+  composition?: {
+    strategy: string;
+    explanation: string;
+    plan?: unknown;
+  };
 }
 
 export interface RegistrationSpec {

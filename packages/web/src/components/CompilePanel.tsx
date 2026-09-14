@@ -1,5 +1,7 @@
 "use client";
 
+import type { WhoElsePayload } from "@/lib/types";
+
 export type CompilePayload = {
   classification: "WHOELSE_COMPILABLE" | "PARTIALLY_COMPILABLE" | "NOT_WHOELSE";
   reason: string;
@@ -8,11 +10,16 @@ export type CompilePayload = {
   usedLlm?: boolean;
   ir: {
     intent: string;
+    intents?: { id?: string; label: string; kind?: string }[];
+    relations?: { from: string; to: string; kind: string }[];
     constraints: Record<string, unknown>;
     exclusions: string[];
+    actions?: string[];
+    soft?: { time?: { when?: string }; location?: { nearby?: boolean; city?: string }; relation?: string };
   };
   seekDraft?: { kind: string; capability: string; phrases?: string[] };
-  find?: { candidates?: { entity: { id: string; name: string; type: string } }[] };
+  plan?: { strategy?: string; waves?: string[][]; nodes?: { label: string; concurrent?: boolean }[] };
+  find?: WhoElsePayload;
   error?: string;
 };
 
@@ -48,6 +55,15 @@ export function CompilePanel({
       <p>
         intent <strong>{result.ir.intent}</strong>
       </p>
+      {result.ir.intents && result.ir.intents.length > 0 && (
+        <p className="facts">
+          graph {result.ir.intents.map((i) => i.label).join(" + ")}
+          {result.plan?.strategy ? ` · ${result.plan.strategy}` : ""}
+          {result.ir.relations?.length
+            ? ` · ${result.ir.relations.map((e) => e.kind).join(", ")}`
+            : ""}
+        </p>
+      )}
       {constraints.length > 0 && (
         <p className="facts">
           constraints{" "}

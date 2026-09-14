@@ -62,6 +62,15 @@ describe("whoelse.compile / Sentinel v0", () => {
     assert.doesNotMatch(src, /compileEngine|sentinelEngine/);
   });
 
+  it("canonical tennis-date compiles to a multi-intent graph", () => {
+    const result = compileLanguage("Find me someone nearby I might like who wants to play tennis tonight.");
+    assert.equal(result.classification, "WHOELSE_COMPILABLE");
+    const labels = result.ir.intents.map((i) => i.label);
+    assert.ok(labels.includes("DATE") && labels.includes("TENNIS"), labels.join(","));
+    assert.ok(result.ir.relations.some((e) => e.kind === "intersect"));
+    assert.equal(result.ir.soft.time?.when, "tonight");
+  });
+
   it("partial tax sentence drafts a SEEK but does not claim to file", async () => {
     const result = compileLanguage("I want to file my taxes!");
     assert.equal(result.classification, "PARTIALLY_COMPILABLE");

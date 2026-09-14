@@ -10,6 +10,11 @@ export type AmazePrompt = {
 
 export const AMAZE_PROMPTS: AmazePrompt[] = [
   {
+    slug: "tennis-date",
+    label: "Tennis tonight",
+    query: "Find me someone nearby I might like who wants to play tennis tonight.",
+  },
+  {
     slug: "meet-tonight",
     label: "Meet tonight",
     query: "Who else wants to meet tonight in DC?",

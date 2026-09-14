@@ -233,6 +233,14 @@ export function toPublicWhoElseResult(result: WhoElseResult) {
     humans,
     ais,
     byType,
+    composedFrom: result.composedFrom,
+    composition: result.composition
+      ? {
+          strategy: result.composition.strategy,
+          explanation: result.composition.explanation,
+          plan: result.composition.plan,
+        }
+      : undefined,
   };
 }
 

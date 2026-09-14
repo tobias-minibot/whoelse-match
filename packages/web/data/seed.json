@@ -13760,6 +13760,309 @@
       ],
       "preferences": {},
       "created_at": "2026-09-13T00:00:00.000Z"
+    },
+    {
+      "id": "human-elise-vardy",
+      "type": "human",
+      "name": "Elise Vardy",
+      "description": "DEMO synthetic human \u2014 not a real person. Plays tennis most weeknights in Adams Morgan and wants someone nearby she might like romantically tonight \u2014 a hit, then dinner, not another app.",
+      "attributes": {
+        "age": 32,
+        "occupation": "Sports physio",
+        "interests": [
+          "tennis",
+          "evening matches",
+          "neighborhood walks",
+          "dinner after tennis",
+          "romance"
+        ],
+        "skills": [
+          "tennis",
+          "doubles",
+          "physio"
+        ],
+        "lookingFor": [
+          "tennis partner",
+          "someone I might like",
+          "people to meet tonight"
+        ],
+        "neighborhood": "Adams Morgan",
+        "vibe": "easy, competitive, warm",
+        "funFact": "packs a spare racquet for first matches",
+        "synthetic": true
+      },
+      "capabilities": [
+        "tennis",
+        "doubles"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance",
+          "activity"
+        ],
+        "wantsMoreOf": "someone who wants to play tennis tonight"
+      },
+      "availability": "tonight, weekday evenings",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-14T00:00:00.000Z",
+      "offers": [
+        "tennis",
+        "doubles",
+        "evening match",
+        "play tennis tonight"
+      ],
+      "seeks": [
+        "tennis partner",
+        "someone I might like",
+        "people to meet tonight",
+        "someone who wants to play tennis tonight"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
+    },
+    {
+      "id": "human-marco-bell",
+      "type": "human",
+      "name": "Marco Bell",
+      "description": "DEMO synthetic human \u2014 not a real person. Dupont Circle. Looking for a romantic tennis partner nearby tonight \u2014 rally, then a walk.",
+      "attributes": {
+        "age": 36,
+        "occupation": "City planner",
+        "interests": [
+          "tennis",
+          "Dupont Circle",
+          "walking cities",
+          "romance"
+        ],
+        "skills": [
+          "tennis",
+          "planning"
+        ],
+        "lookingFor": [
+          "tennis partner",
+          "someone I might like"
+        ],
+        "neighborhood": "Dupont Circle",
+        "vibe": "calm, funny, on time",
+        "funFact": "keeps score in a pocket notebook",
+        "synthetic": true
+      },
+      "capabilities": [
+        "tennis"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance"
+        ],
+        "wantsMoreOf": "someone nearby I might like who plays tennis"
+      },
+      "availability": "tonight",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-14T00:00:00.000Z",
+      "offers": [
+        "tennis",
+        "play tennis"
+      ],
+      "seeks": [
+        "tennis partner",
+        "someone I might like"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
+    },
+    {
+      "id": "human-jun-park",
+      "type": "human",
+      "name": "Jun Park",
+      "description": "DEMO synthetic human \u2014 not a real person. Georgetown courts. Wants to play tennis tonight with someone they might like romantically.",
+      "attributes": {
+        "age": 28,
+        "occupation": "UX researcher",
+        "interests": [
+          "tennis",
+          "romance",
+          "Georgetown",
+          "late dinners"
+        ],
+        "skills": [
+          "tennis",
+          "research"
+        ],
+        "lookingFor": [
+          "tennis partner",
+          "someone I might like romantically"
+        ],
+        "neighborhood": "Georgetown",
+        "vibe": "curious, kind, game",
+        "funFact": "lost three racquets to the river breeze",
+        "synthetic": true
+      },
+      "capabilities": [
+        "tennis"
+      ],
+      "preferences": {
+        "datingIntent": [
+          "romance"
+        ],
+        "wantsMoreOf": "someone nearby I might like who plays tennis"
+      },
+      "availability": "tonight",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-14T00:00:00.000Z",
+      "offers": [
+        "tennis",
+        "play tennis tonight"
+      ],
+      "seeks": [
+        "tennis partner",
+        "someone I might like romantically"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
+    },
+    {
+      "id": "human-tess-okoye",
+      "type": "human",
+      "name": "Tess Okoye",
+      "description": "DEMO synthetic human \u2014 not a real person. Looking for a fourth for tennis this evening. Not dating \u2014 just a hitting partner.",
+      "attributes": {
+        "age": 41,
+        "occupation": "Litigation associate",
+        "interests": [
+          "tennis",
+          "league play",
+          "early mornings"
+        ],
+        "skills": [
+          "tennis",
+          "singles"
+        ],
+        "lookingFor": [
+          "tennis partner",
+          "hitting partner",
+          "fourth for tennis"
+        ],
+        "neighborhood": "Shaw",
+        "vibe": "blunt, reliable",
+        "funFact": "owns four identical white visors",
+        "synthetic": true
+      },
+      "capabilities": [
+        "tennis",
+        "league play"
+      ],
+      "preferences": {
+        "wantsMoreOf": "a tennis hitting partner"
+      },
+      "availability": "evenings",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "dating",
+        "demo": true,
+        "demoLabel": "synthetic human"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-14T00:00:00.000Z",
+      "offers": [
+        "tennis",
+        "play tennis",
+        "fourth for tennis"
+      ],
+      "seeks": [
+        "tennis partner",
+        "hitting partner",
+        "fourth for tennis"
+      ],
+      "trust": {
+        "status": "unscored",
+        "provenance": "synthetic"
+      }
+    },
+    {
+      "id": "community-adams-school",
+      "type": "community",
+      "name": "Adams Morgan elementary (demo)",
+      "description": "DEMO synthetic school \u2014 not a real school. Neighborhood elementary in Adams Morgan, Washington DC. Families ask Who else has an apartment near a good school.",
+      "attributes": {
+        "role": "school",
+        "neighborhood": "Adams Morgan",
+        "grades": "K-5",
+        "synthetic": true
+      },
+      "capabilities": [
+        "school"
+      ],
+      "preferences": {},
+      "availability": "school year",
+      "location": {
+        "city": "Washington",
+        "region": "DC",
+        "country": "US"
+      },
+      "metadata": {
+        "vertical": "local",
+        "demo": true,
+        "demoLabel": "DEMO synthetic school \u2014 not a real school"
+      },
+      "provenance": "synthetic",
+      "created_at": "2026-09-14T00:00:00.000Z",
+      "offers": [
+        "school",
+        "elementary school",
+        "good school",
+        "school in Adams Morgan",
+        "neighborhood school"
+      ],
+      "seeks": [
+        "families",
+        "nearby apartment",
+        "enrollment"
+      ],
+      "trust": {
+        "status": "stub",
+        "provenance": "synthetic",
+        "notes": "not a real school"
+      }
     }
   ]
 }
