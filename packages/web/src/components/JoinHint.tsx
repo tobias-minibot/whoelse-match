@@ -15,18 +15,18 @@ export function JoinHint() {
 
   if (me.needsOnboarding) {
     return (
-      <div className="banner">
+      <p className="notice">
         <strong>You're signed in, not in the pool yet.</strong> Write a short human profile and publish
         at least one SEEK or OFFER.{" "}
         <a href="/onboarding">Finish joining →</a>
-      </div>
+      </p>
     );
   }
 
   return (
-    <div className="banner">
+    <p className="notice">
       <strong>Your profile is private.</strong> Affirm that you are 18+ before Who else? can show you.{" "}
       <a href="/me">Open profile →</a>
-    </div>
+    </p>
   );
 }
