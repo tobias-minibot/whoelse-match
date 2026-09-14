@@ -369,12 +369,31 @@ function reconcileParallel(ir: CompoundIR, nodes: NodeFind[], limit: number): {
   return reconcileIntersect(ir, buildDispatchPlan(ir), nodes, limit);
 }
 
+/** Atomic finds explain extras vs one query. Compound IR already asked for those extras. */
+function composeSafeSurprise(text: string | undefined, labels: string[]): string | undefined {
+  if (!text) return undefined;
+  const lower = text.toLowerCase();
+  if (/\b(did not ask|query did not)\b/.test(lower)) return undefined;
+  if (labels.some((l) => l.length >= 3 && lower.includes(l.toLowerCase()))) return undefined;
+  return text;
+}
+
 function finishResult(
   query: string,
   candidates: Candidate[],
   template: WhoElseResult | undefined,
   extra: Partial<WhoElseResult>,
 ): WhoElseResult {
+  const labels = extra.composedFrom ?? [];
+  const cleaned = labels.length
+    ? candidates.map((c) => ({
+        ...c,
+        explanation: {
+          ...c.explanation,
+          surprisingDifference: composeSafeSurprise(c.explanation.surprisingDifference, labels),
+        },
+      }))
+    : candidates;
   return {
     query,
     inferredMode: template?.inferredMode ?? "expand",
@@ -384,11 +403,11 @@ function finishResult(
     universal: template?.universal,
     usedOpenAiRerank: false,
     pool: template?.pool,
-    candidates,
+    candidates: cleaned,
     pairs: template?.pairs ?? [],
-    humans: candidates.filter((c) => c.entity.type === "human"),
-    ais: candidates.filter((c) => c.entity.type === "ai"),
-    byType: group(candidates),
+    humans: cleaned.filter((c) => c.entity.type === "human"),
+    ais: cleaned.filter((c) => c.entity.type === "ai"),
+    byType: group(cleaned),
     ...extra,
   };
 }

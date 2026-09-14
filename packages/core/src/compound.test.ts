@@ -100,6 +100,13 @@ describe("multi-intent dispatch", () => {
     }
     const names = outcome.result.candidates.map((c) => c.entity.name).join(" ");
     assert.doesNotMatch(names, /childcare|Foggy Bottom parent/i);
+    for (const c of outcome.result.candidates) {
+      assert.doesNotMatch(
+        c.explanation.surprisingDifference ?? "",
+        /did not ask|tennis/i,
+        `${c.entity.name}: ${c.explanation.surprisingDifference}`,
+      );
+    }
   });
 
   it("compileAsync(find) uses dispatch, not a second matcher", async () => {
