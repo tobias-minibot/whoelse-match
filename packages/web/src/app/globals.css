@@ -268,7 +268,7 @@ button.auth-btn:hover {
 
 .costume-details,
 .heard-details {
-  margin-top: 18px;
+  margin-top: 12px;
   color: var(--quiet);
   font-size: 0.8125rem;
 }
@@ -496,6 +496,9 @@ h1 {
   .app-stage:not(.has-results) .magic-actions { width: 100%; }
   .app-stage:not(.has-results) .magic-actions .btn-coral { flex: 1; }
   .nav-links a.ghost { padding: 8px 8px; }
+  .app-stage.has-results .hero-question { display: none; }
+  .app-stage.has-results .magic-panel { padding: 10px 0 0; }
+  .app-stage.has-results .notice-playground { margin-bottom: 10px; }
 }
 
 .btn {
@@ -545,12 +548,13 @@ h1 {
 .btn-loop {
   display: inline-flex;
   align-items: center;
-  min-height: var(--tap);
-  margin-top: 6px;
-  padding: 0;
+  gap: 8px;
+  min-height: 40px;
+  margin-top: 10px;
+  padding: 0 2px;
   border: 0;
   background: none;
-  color: var(--ink);
+  color: var(--accent);
   font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 650;
@@ -559,8 +563,19 @@ h1 {
   width: auto;
   border-radius: 0;
 }
+.btn-whoelse::after,
+.btn-loop::after {
+  content: "→";
+  font-weight: 500;
+  transition: transform 0.15s var(--ease);
+}
 .btn-whoelse:hover,
-.btn-loop:hover { color: var(--accent); transform: none; }
+.btn-loop:hover {
+  color: #f0955c;
+  transform: none;
+}
+.btn-whoelse:hover::after,
+.btn-loop:hover::after { transform: translateX(3px); }
 .btn-whoelse:active,
 .btn-loop:active { transform: none; }
 
@@ -663,23 +678,10 @@ h1 {
   border-radius: 16px;
   padding: 18px 18px 14px;
   box-shadow: none;
-  animation: rise 0.34s var(--ease) both;
 }
 
 .card:hover {
   border-color: var(--line-strong);
-}
-
-.cards > .card:nth-child(1) { animation-delay: 0.02s; }
-.cards > .card:nth-child(2) { animation-delay: 0.05s; }
-.cards > .card:nth-child(3) { animation-delay: 0.08s; }
-.cards > .card:nth-child(4) { animation-delay: 0.11s; }
-.cards > .card:nth-child(5) { animation-delay: 0.14s; }
-.cards > .card:nth-child(n + 6) { animation-delay: 0.16s; }
-
-@keyframes rise {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
 }
 
 .card-top {
@@ -1004,5 +1006,5 @@ h1 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card, .btn { animation: none !important; transition: none !important; }
+  .btn { transition: none !important; }
 }
