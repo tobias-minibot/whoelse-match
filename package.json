@@ -24,6 +24,9 @@
     "legacy:probe": "node --experimental-strip-types --no-warnings scripts/legacy-live-probe.ts",
     "legacy:collapse": "npx tsx scripts/universal-collapse.ts",
     "seed:verticals": "npx tsx scripts/generate-vertical-seeds.ts",
+    "coverage:505": "packages/core/node_modules/.bin/tsx evals/intent-coverage/run.ts",
+    "coverage:505:test": "packages/core/node_modules/.bin/tsx --test evals/intent-coverage/coverage.test.ts",
+    "coverage:505:probe": "packages/core/node_modules/.bin/tsx evals/intent-coverage/probe.ts",
     "typecheck": "pnpm -r typecheck"
   }
 }

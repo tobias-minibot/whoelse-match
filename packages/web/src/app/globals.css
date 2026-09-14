@@ -533,3 +533,55 @@ h1 {
 .badge.completed, .badge.started { background: var(--ai-soft); color: var(--ai); }
 .badge.invoked { background: #fff3e0; color: #e65100; }
 .status-pill.proposed { background: var(--sand); color: var(--muted); }
+
+.universe-counts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  gap: 10px;
+  margin: 18px 0 8px;
+}
+.universe-count {
+  background: var(--sand);
+  border-radius: 16px;
+  padding: 12px 10px;
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+}
+.universe-count strong { font-size: 1.35rem; }
+.universe-count span { color: var(--muted); font-size: 0.78rem; }
+.universe-letter {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem !important;
+  text-transform: uppercase;
+}
+.universe-count.class-a { background: #e8f5e9; }
+.universe-count.class-b { background: #e8f0fe; }
+.universe-count.class-c { background: #fff3e0; }
+.universe-count.class-d { background: #fdecea; }
+.universe-count.class-e { background: var(--sand); }
+.universe-count.class-effective { background: var(--coral-soft); }
+.universe-group { margin-top: 28px; }
+.universe-group h2 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.universe-list {
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+.universe-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  font-size: 0.9rem;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+.universe-list code { color: var(--muted); font-size: 0.78rem; }
+.universe-list em { color: var(--coral); font-style: normal; font-size: 0.78rem; }

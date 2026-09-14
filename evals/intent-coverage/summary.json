@@ -1,0 +1,505 @@
+{
+  "generatedAt": "2026-09-14T01:18:32.804Z",
+  "denominator": {
+    "catalog": "legacy/intent-protocol/intent-protocol.production-v0.3.compact.json",
+    "count": 505,
+    "attested": 172,
+    "reconstructed": 333,
+    "uniqueLabels": 452,
+    "duplicateLabelExtraRows": 53,
+    "idSkip": [
+      "i326"
+    ],
+    "idRange": "i001–i325, i327–i506 (505 ids)",
+    "note": "Denominator is the v0.3 compact cabinet (PR #10): 505 IDs (i001–i325, i327–i506; skip i326). 172 attested + 333 reconstructed-to-fill. Same 505 set for every count. Not the July 506 DATING-split snapshot, not protocol-v2 452+54."
+  },
+  "counts": {
+    "A": 371,
+    "B": 31,
+    "C": 38,
+    "D": 6,
+    "E": 59
+  },
+  "effectiveCoverage": {
+    "numerator": 402,
+    "denominator": 505,
+    "percent": 79.6,
+    "formula": "A+B / 505"
+  },
+  "uiLenses": [
+    "dating",
+    "agents",
+    "experts"
+  ],
+  "extensions": [
+    {
+      "extension": "eligibility",
+      "intents": 18,
+      "ids": [
+        "i091-social-housing",
+        "i157-bank",
+        "i159-savings",
+        "i160-loan",
+        "i161-mortgage",
+        "i162-insurance",
+        "i163-investment",
+        "i164-pension",
+        "i168-crypto",
+        "i174-credit-score",
+        "i175-remittance",
+        "i176-wealth",
+        "i213-scholarship",
+        "i250-adoption",
+        "i251-foster-care",
+        "i258-surrogacy",
+        "i287-pet-insurance",
+        "i398-legal-aid"
+      ]
+    },
+    {
+      "extension": "reservation",
+      "intents": 16,
+      "ids": [
+        "i060-restaurant",
+        "i133-car-rental",
+        "i144-flight",
+        "i353-airbnb",
+        "i354-hotel",
+        "i355-hostel",
+        "i356-short-stay",
+        "i360-glamping",
+        "i361-homestay",
+        "i364-resort",
+        "i365-cruise",
+        "i368-eco-lodge",
+        "i420-concert",
+        "i421-movie",
+        "i422-ticket",
+        "i461-room-booking"
+      ]
+    },
+    {
+      "extension": "geo-radius",
+      "intents": 3,
+      "ids": [
+        "i021-ambulance",
+        "i068-food-delivery",
+        "i156-bike-messenger"
+      ]
+    },
+    {
+      "extension": "inventory",
+      "intents": 1,
+      "ids": [
+        "i136-parking"
+      ]
+    }
+  ],
+  "deprecations": [
+    {
+      "id": "i078-wine",
+      "label": "WINE",
+      "reason": "SKU-as-intent overgeneration. Deprecate the noun-as-ID; product find already covers the item."
+    },
+    {
+      "id": "i079-beer",
+      "label": "BEER",
+      "reason": "SKU-as-intent overgeneration. Deprecate the noun-as-ID; product find already covers the item."
+    },
+    {
+      "id": "i080-cocktail",
+      "label": "COCKTAIL",
+      "reason": "SKU-as-intent overgeneration. Deprecate the noun-as-ID; product find already covers the item."
+    },
+    {
+      "id": "i081-water",
+      "label": "WATER",
+      "reason": "SKU-as-intent overgeneration. Deprecate the noun-as-ID; product find already covers the item."
+    },
+    {
+      "id": "i082-coffee",
+      "label": "COFFEE",
+      "reason": "SKU-as-intent overgeneration. Deprecate the noun-as-ID; product find already covers the item."
+    },
+    {
+      "id": "i083-tea",
+      "label": "TEA",
+      "reason": "SKU-as-intent overgeneration. Deprecate the noun-as-ID; product find already covers the item."
+    },
+    {
+      "id": "i084-snack",
+      "label": "SNACK",
+      "reason": "SKU-as-intent overgeneration. Deprecate the noun-as-ID; product find already covers the item."
+    },
+    {
+      "id": "i196-volunteer",
+      "label": "JOB",
+      "aliasOf": "i177-job",
+      "reason": "Duplicate/alias of i177-job. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i208-cooking-class",
+      "label": "COOKING CLASS",
+      "aliasOf": "i072-cooking-class",
+      "reason": "Duplicate/alias of i072-cooking-class. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i259-childminder",
+      "label": "BABYSITTER",
+      "aliasOf": "i245-babysitter",
+      "reason": "Duplicate/alias of i245-babysitter. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i288-kennel",
+      "label": "PET BOARDING",
+      "aliasOf": "i284-pet-boarding",
+      "reason": "Duplicate/alias of i284-pet-boarding. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i363-vacation-rental",
+      "label": "AIRBNB",
+      "aliasOf": "i353-airbnb",
+      "reason": "Duplicate/alias of i353-airbnb. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i399-attorney",
+      "label": "LAWYER",
+      "aliasOf": "i385-lawyer",
+      "reason": "Duplicate/alias of i385-lawyer. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i419-app-builder",
+      "label": "AI TOOLS",
+      "aliasOf": "i400-ai-tools",
+      "reason": "Duplicate/alias of i400-ai-tools. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i462-doctor-alias",
+      "label": "DOCTOR",
+      "aliasOf": "alias:DOCTOR",
+      "reason": "Duplicate/alias of alias:DOCTOR. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i463-dentist-alias",
+      "label": "DENTIST",
+      "aliasOf": "alias:DENTIST",
+      "reason": "Duplicate/alias of alias:DENTIST. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i464-restaurant-alias",
+      "label": "RESTAURANT",
+      "aliasOf": "alias:RESTAURANT",
+      "reason": "Duplicate/alias of alias:RESTAURANT. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i465-apartment-alias",
+      "label": "APARTMENT",
+      "aliasOf": "alias:APARTMENT",
+      "reason": "Duplicate/alias of alias:APARTMENT. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i466-plumber-alias",
+      "label": "PLUMBER",
+      "aliasOf": "alias:PLUMBER",
+      "reason": "Duplicate/alias of alias:PLUMBER. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i467-rideshare-alias",
+      "label": "RIDESHARE",
+      "aliasOf": "alias:RIDESHARE",
+      "reason": "Duplicate/alias of alias:RIDESHARE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i468-date-alias",
+      "label": "DATE",
+      "aliasOf": "alias:DATE",
+      "reason": "Duplicate/alias of alias:DATE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i469-bank-alias",
+      "label": "BANK",
+      "aliasOf": "alias:BANK",
+      "reason": "Duplicate/alias of alias:BANK. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i470-gym-alias",
+      "label": "GYM",
+      "aliasOf": "alias:GYM",
+      "reason": "Duplicate/alias of alias:GYM. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i471-yoga-alias",
+      "label": "YOGA",
+      "aliasOf": "alias:YOGA",
+      "reason": "Duplicate/alias of alias:YOGA. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i472-cafe-alias",
+      "label": "CAFE",
+      "aliasOf": "alias:CAFE",
+      "reason": "Duplicate/alias of alias:CAFE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i473-house-alias",
+      "label": "HOUSE",
+      "aliasOf": "alias:HOUSE",
+      "reason": "Duplicate/alias of alias:HOUSE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i474-taxi-alias",
+      "label": "TAXI",
+      "aliasOf": "alias:TAXI",
+      "reason": "Duplicate/alias of alias:TAXI. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i475-job-alias",
+      "label": "JOB",
+      "aliasOf": "alias:JOB",
+      "reason": "Duplicate/alias of alias:JOB. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i476-nurse-alias",
+      "label": "NURSE",
+      "aliasOf": "alias:NURSE",
+      "reason": "Duplicate/alias of alias:NURSE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i477-pharmacy-alias",
+      "label": "PHARMACY",
+      "aliasOf": "alias:PHARMACY",
+      "reason": "Duplicate/alias of alias:PHARMACY. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i478-hospital-alias",
+      "label": "HOSPITAL",
+      "aliasOf": "alias:HOSPITAL",
+      "reason": "Duplicate/alias of alias:HOSPITAL. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i479-cleaner-alias",
+      "label": "CLEANER",
+      "aliasOf": "alias:CLEANER",
+      "reason": "Duplicate/alias of alias:CLEANER. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i480-electrician-alias",
+      "label": "ELECTRICIAN",
+      "aliasOf": "alias:ELECTRICIAN",
+      "reason": "Duplicate/alias of alias:ELECTRICIAN. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i481-train-alias",
+      "label": "TRAIN",
+      "aliasOf": "alias:TRAIN",
+      "reason": "Duplicate/alias of alias:TRAIN. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i482-bus-alias",
+      "label": "BUS",
+      "aliasOf": "alias:BUS",
+      "reason": "Duplicate/alias of alias:BUS. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i483-flight-alias",
+      "label": "FLIGHT",
+      "aliasOf": "alias:FLIGHT",
+      "reason": "Duplicate/alias of alias:FLIGHT. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i484-coffee-alias",
+      "label": "COFFEE",
+      "aliasOf": "alias:COFFEE",
+      "reason": "Duplicate/alias of alias:COFFEE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i485-wine-alias",
+      "label": "WINE",
+      "aliasOf": "alias:WINE",
+      "reason": "Duplicate/alias of alias:WINE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i486-grocery-alias",
+      "label": "GROCERY",
+      "aliasOf": "alias:GROCERY",
+      "reason": "Duplicate/alias of alias:GROCERY. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i487-rent-alias",
+      "label": "RENT",
+      "aliasOf": "alias:RENT",
+      "reason": "Duplicate/alias of alias:RENT. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i488-landlord-alias",
+      "label": "LANDLORD",
+      "aliasOf": "alias:LANDLORD",
+      "reason": "Duplicate/alias of alias:LANDLORD. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i489-mover-alias",
+      "label": "MOVER",
+      "aliasOf": "alias:MOVER",
+      "reason": "Duplicate/alias of alias:MOVER. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i490-storage-alias",
+      "label": "STORAGE",
+      "aliasOf": "alias:STORAGE",
+      "reason": "Duplicate/alias of alias:STORAGE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i491-internet-alias",
+      "label": "INTERNET",
+      "aliasOf": "alias:INTERNET",
+      "reason": "Duplicate/alias of alias:INTERNET. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i492-car-alias",
+      "label": "CAR",
+      "aliasOf": "alias:CAR",
+      "reason": "Duplicate/alias of alias:CAR. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i493-parking-alias",
+      "label": "PARKING",
+      "aliasOf": "alias:PARKING",
+      "reason": "Duplicate/alias of alias:PARKING. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i494-loan-alias",
+      "label": "LOAN",
+      "aliasOf": "alias:LOAN",
+      "reason": "Duplicate/alias of alias:LOAN. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i495-insurance-alias",
+      "label": "INSURANCE",
+      "aliasOf": "alias:INSURANCE",
+      "reason": "Duplicate/alias of alias:INSURANCE. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i496-tax-alias",
+      "label": "TAX",
+      "aliasOf": "alias:TAX",
+      "reason": "Duplicate/alias of alias:TAX. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i497-tutor-alias",
+      "label": "TUTOR",
+      "aliasOf": "alias:TUTOR",
+      "reason": "Duplicate/alias of alias:TUTOR. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i498-school-alias",
+      "label": "SCHOOL",
+      "aliasOf": "alias:SCHOOL",
+      "reason": "Duplicate/alias of alias:SCHOOL. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i499-museum-alias",
+      "label": "MUSEUM",
+      "aliasOf": "alias:MUSEUM",
+      "reason": "Duplicate/alias of alias:MUSEUM. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i500-friend-alias",
+      "label": "FRIEND",
+      "aliasOf": "alias:FRIEND",
+      "reason": "Duplicate/alias of alias:FRIEND. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i501-vet-alias",
+      "label": "VET",
+      "aliasOf": "alias:VET",
+      "reason": "Duplicate/alias of alias:VET. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i502-hotel-alias",
+      "label": "HOTEL",
+      "aliasOf": "alias:HOTEL",
+      "reason": "Duplicate/alias of alias:HOTEL. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i503-photographer-alias",
+      "label": "PHOTOGRAPHER",
+      "aliasOf": "alias:PHOTOGRAPHER",
+      "reason": "Duplicate/alias of alias:PHOTOGRAPHER. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i504-concert-alias",
+      "label": "CONCERT",
+      "aliasOf": "alias:CONCERT",
+      "reason": "Duplicate/alias of alias:CONCERT. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i505-clothing-alias",
+      "label": "CLOTHING",
+      "aliasOf": "alias:CLOTHING",
+      "reason": "Duplicate/alias of alias:CLOTHING. Deprecate this ID; keep the canonical sentence."
+    },
+    {
+      "id": "i506-notary-alias",
+      "label": "NOTARY",
+      "aliasOf": "alias:NOTARY",
+      "reason": "Duplicate/alias of alias:NOTARY. Deprecate this ID; keep the canonical sentence."
+    }
+  ],
+  "samples": {
+    "a": [
+      {
+        "id": "i001-doctor",
+        "reason": "Noun-find on the generic core: SEEK/OFFER capability “doctor” + existing constraints (geo/price/availability/evidence). No new primitive."
+      },
+      {
+        "id": "i088-apartment",
+        "reason": "Noun-find on the generic core: SEEK/OFFER capability “apartment” + existing constraints (geo/price/availability/evidence). No new primitive."
+      },
+      {
+        "id": "i138-rideshare",
+        "reason": "Noun-find on the generic core: SEEK/OFFER capability “rideshare” + existing constraints (geo/price/availability/evidence). No new primitive."
+      },
+      {
+        "id": "i177-job",
+        "reason": "Noun-find on the generic core: SEEK/OFFER capability “job” + existing constraints (geo/price/availability/evidence). No new primitive."
+      },
+      {
+        "id": "i308-date",
+        "reason": "Noun-find on the generic core: SEEK/OFFER capability “date” + existing constraints (geo/price/availability/evidence). No new primitive."
+      },
+      {
+        "id": "i385-lawyer",
+        "reason": "Noun-find on the generic core: SEEK/OFFER capability “lawyer” + existing constraints (geo/price/availability/evidence). No new primitive."
+      },
+      {
+        "id": "i400-ai-tools",
+        "reason": "Noun-find on the generic core: SEEK/OFFER capability “AI tools” + existing constraints (geo/price/availability/evidence). No new primitive."
+      }
+    ],
+    "d": [
+      {
+        "id": "i073-recipe",
+        "reason": "Content object (instructions), not a counterparty OFFER/SEEK."
+      },
+      {
+        "id": "i243-tradition",
+        "reason": "Abstract cultural category — no entity to publish or match."
+      },
+      {
+        "id": "i252-child-support",
+        "reason": "Enforcement / court process — no clean SEEK↔OFFER pair."
+      },
+      {
+        "id": "i255-kinship",
+        "reason": "Genealogical relation, not a publication on the shared network."
+      },
+      {
+        "id": "i448-lost-and-found",
+        "reason": "Lost-item inventory, not who-else matching."
+      },
+      {
+        "id": "i449-notice-board",
+        "reason": "Bulletin content, not a find(compatible entities) request."
+      }
+    ]
+  }
+}

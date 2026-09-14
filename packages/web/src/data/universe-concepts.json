@@ -1,0 +1,3595 @@
+{
+  "uiLenses": [
+    "dating",
+    "agents",
+    "experts"
+  ],
+  "counts": {
+    "A": 371,
+    "B": 31,
+    "C": 38,
+    "D": 6,
+    "E": 59
+  },
+  "effectiveCoverage": {
+    "numerator": 402,
+    "denominator": 505,
+    "percent": 79.6,
+    "formula": "A+B / 505"
+  },
+  "concepts": [
+    {
+      "id": "i001-doctor",
+      "label": "DOCTOR",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a doctor near me?"
+    },
+    {
+      "id": "i002-dentist",
+      "label": "DENTIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a dentist near me?"
+    },
+    {
+      "id": "i003-nurse",
+      "label": "NURSE",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a nurse near me?"
+    },
+    {
+      "id": "i004-pharmacy",
+      "label": "PHARMACY",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a pharmacy near me?"
+    },
+    {
+      "id": "i005-hospital",
+      "label": "HOSPITAL",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a hospital near me?"
+    },
+    {
+      "id": "i006-surgeon",
+      "label": "SURGEON",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a surgeon near me?"
+    },
+    {
+      "id": "i007-physiotherapist",
+      "label": "PHYSIOTHERAPIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a physiotherapist near me?"
+    },
+    {
+      "id": "i008-chiropractor",
+      "label": "CHIROPRACTOR",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a chiropractor near me?"
+    },
+    {
+      "id": "i009-optician",
+      "label": "OPTICIAN",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is an optician near me?"
+    },
+    {
+      "id": "i010-audiologist",
+      "label": "AUDIOLOGIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is an audiologist near me?"
+    },
+    {
+      "id": "i011-dermatologist",
+      "label": "DERMATOLOGIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a dermatologist near me?"
+    },
+    {
+      "id": "i012-gynaecologist",
+      "label": "GYNAECOLOGIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a gynaecologist near me?"
+    },
+    {
+      "id": "i013-psychiatrist",
+      "label": "PSYCHIATRIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a psychiatrist near me?"
+    },
+    {
+      "id": "i014-psychologist",
+      "label": "PSYCHOLOGIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a psychologist near me?"
+    },
+    {
+      "id": "i015-therapist",
+      "label": "THERAPIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a therapist near me?"
+    },
+    {
+      "id": "i016-counsellor",
+      "label": "COUNSELLOR",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a counsellor near me?"
+    },
+    {
+      "id": "i017-nutritionist",
+      "label": "NUTRITIONIST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a nutritionist near me?"
+    },
+    {
+      "id": "i018-dietician",
+      "label": "DIETICIAN",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a dietician near me?"
+    },
+    {
+      "id": "i019-blood-test",
+      "label": "BLOOD TEST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a blood test near me?"
+    },
+    {
+      "id": "i020-vaccination",
+      "label": "VACCINATION",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a vaccination near me?"
+    },
+    {
+      "id": "i021-ambulance",
+      "label": "AMBULANCE",
+      "subgroup": "BODY & HEALTH",
+      "class": "C",
+      "extension": "geo-radius",
+      "canonicalQuery": "Who else is an ambulance near me?"
+    },
+    {
+      "id": "i022-1st-aid",
+      "label": "1ST AID",
+      "subgroup": "BODY & HEALTH",
+      "class": "B",
+      "canonicalQuery": "Who else is a first aid near me?"
+    },
+    {
+      "id": "i023-rehab",
+      "label": "REHAB",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a rehab near me?"
+    },
+    {
+      "id": "i024-addiction",
+      "label": "ADDICTION",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is an addiction near me?"
+    },
+    {
+      "id": "i025-palliative-care",
+      "label": "PALLIATIVE CARE",
+      "subgroup": "BODY & HEALTH",
+      "class": "B",
+      "canonicalQuery": "Who else is a palliative care near me?"
+    },
+    {
+      "id": "i026-hospice",
+      "label": "HOSPICE",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a hospice near me?"
+    },
+    {
+      "id": "i027-fertility",
+      "label": "FERTILITY",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a fertility near me?"
+    },
+    {
+      "id": "i028-midwife",
+      "label": "MIDWIFE",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a midwife near me?"
+    },
+    {
+      "id": "i029-contraception",
+      "label": "CONTRACEPTION",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a contraception near me?"
+    },
+    {
+      "id": "i030-sti-test",
+      "label": "STI TEST",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a sti test near me?"
+    },
+    {
+      "id": "i031-hearing-aid",
+      "label": "HEARING AID",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a hearing aid near me?"
+    },
+    {
+      "id": "i032-wheelchair",
+      "label": "WHEELCHAIR",
+      "subgroup": "BODY & HEALTH",
+      "class": "B",
+      "canonicalQuery": "Who else is a wheelchair near me?"
+    },
+    {
+      "id": "i033-prosthetics",
+      "label": "PROSTHETICS",
+      "subgroup": "BODY & HEALTH",
+      "class": "A",
+      "canonicalQuery": "Who else is a prosthetics near me?"
+    },
+    {
+      "id": "i034-home-care",
+      "label": "HOME CARE",
+      "subgroup": "BODY & HEALTH",
+      "class": "B",
+      "canonicalQuery": "Who else is a home care near me?"
+    },
+    {
+      "id": "i035-elder-care",
+      "label": "ELDER CARE",
+      "subgroup": "BODY & HEALTH",
+      "class": "B",
+      "canonicalQuery": "Who else is an elder care near me?"
+    },
+    {
+      "id": "i036-dementia-care",
+      "label": "DEMENTIA CARE",
+      "subgroup": "BODY & HEALTH",
+      "class": "B",
+      "canonicalQuery": "Who else is a dementia care near me?"
+    },
+    {
+      "id": "i037-gym",
+      "label": "GYM",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a gym near me?"
+    },
+    {
+      "id": "i038-personal-trainer",
+      "label": "PERSONAL TRAINER",
+      "subgroup": "FITNESS & SPORT",
+      "class": "B",
+      "canonicalQuery": "Who else is a personal trainer near me?"
+    },
+    {
+      "id": "i039-yoga",
+      "label": "YOGA",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a yoga near me?"
+    },
+    {
+      "id": "i040-pilates",
+      "label": "PILATES",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a pilates near me?"
+    },
+    {
+      "id": "i041-swimming",
+      "label": "SWIMMING",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a swimming near me?"
+    },
+    {
+      "id": "i042-running",
+      "label": "RUNNING",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a running near me?"
+    },
+    {
+      "id": "i043-cycling",
+      "label": "CYCLING",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a cycling near me?"
+    },
+    {
+      "id": "i044-climbing",
+      "label": "CLIMBING",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a climbing near me?"
+    },
+    {
+      "id": "i045-martial-arts",
+      "label": "MARTIAL ARTS",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a martial arts near me?"
+    },
+    {
+      "id": "i046-dance",
+      "label": "DANCE",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a dance near me?"
+    },
+    {
+      "id": "i047-football",
+      "label": "FOOTBALL",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a football near me?"
+    },
+    {
+      "id": "i048-tennis",
+      "label": "TENNIS",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a tennis near me?"
+    },
+    {
+      "id": "i049-golf",
+      "label": "GOLF",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a golf near me?"
+    },
+    {
+      "id": "i050-skiing",
+      "label": "SKIING",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a skiing near me?"
+    },
+    {
+      "id": "i051-surfing",
+      "label": "SURFING",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a surfing near me?"
+    },
+    {
+      "id": "i052-boxing",
+      "label": "BOXING",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a boxing near me?"
+    },
+    {
+      "id": "i053-crossfit",
+      "label": "CROSSFIT",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a crossfit near me?"
+    },
+    {
+      "id": "i054-sports-team",
+      "label": "SPORTS TEAM",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a sports team near me?"
+    },
+    {
+      "id": "i055-sports-coach",
+      "label": "SPORTS COACH",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a sports coach near me?"
+    },
+    {
+      "id": "i056-sports-gear",
+      "label": "SPORTS GEAR",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a sports gear near me?"
+    },
+    {
+      "id": "i057-stadium",
+      "label": "STADIUM",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a stadium near me?"
+    },
+    {
+      "id": "i058-pool",
+      "label": "POOL",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a pool near me?"
+    },
+    {
+      "id": "i059-sauna",
+      "label": "SAUNA",
+      "subgroup": "FITNESS & SPORT",
+      "class": "A",
+      "canonicalQuery": "Who else is a sauna near me?"
+    },
+    {
+      "id": "i060-restaurant",
+      "label": "RESTAURANT",
+      "subgroup": "FOOD & DRINK",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else has a restaurant?"
+    },
+    {
+      "id": "i061-fast-food",
+      "label": "FAST FOOD",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a fast food?"
+    },
+    {
+      "id": "i062-cafe",
+      "label": "CAFE",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a cafe?"
+    },
+    {
+      "id": "i063-bakery",
+      "label": "BAKERY",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a bakery?"
+    },
+    {
+      "id": "i064-grocery",
+      "label": "GROCERY",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a grocery?"
+    },
+    {
+      "id": "i065-butcher",
+      "label": "BUTCHER",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a butcher?"
+    },
+    {
+      "id": "i066-fishmonger",
+      "label": "FISHMONGER",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a fishmonger?"
+    },
+    {
+      "id": "i067-greengrocer",
+      "label": "GREENGROCER",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a greengrocer?"
+    },
+    {
+      "id": "i068-food-delivery",
+      "label": "FOOD DELIVERY",
+      "subgroup": "FOOD & DRINK",
+      "class": "C",
+      "extension": "geo-radius",
+      "canonicalQuery": "Who else has a food delivery?"
+    },
+    {
+      "id": "i069-meal-kit",
+      "label": "MEAL KIT",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a meal kit?"
+    },
+    {
+      "id": "i070-food-sharing",
+      "label": "FOOD SHARING",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a food sharing?"
+    },
+    {
+      "id": "i071-catering",
+      "label": "CATERING",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a catering?"
+    },
+    {
+      "id": "i072-cooking-class",
+      "label": "COOKING CLASS",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a cooking class?"
+    },
+    {
+      "id": "i073-recipe",
+      "label": "RECIPE",
+      "subgroup": "FOOD & DRINK",
+      "class": "D",
+      "canonicalQuery": "Who else has a recipe?"
+    },
+    {
+      "id": "i074-diet-plan",
+      "label": "DIET PLAN",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a diet plan?"
+    },
+    {
+      "id": "i075-vegan-food",
+      "label": "VEGAN FOOD",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a vegan food?"
+    },
+    {
+      "id": "i076-halal-food",
+      "label": "HALAL FOOD",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a halal food?"
+    },
+    {
+      "id": "i077-kosher-food",
+      "label": "KOSHER FOOD",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a kosher food?"
+    },
+    {
+      "id": "i078-wine",
+      "label": "WINE",
+      "subgroup": "FOOD & DRINK",
+      "class": "E",
+      "canonicalQuery": "Who else has a wine?"
+    },
+    {
+      "id": "i079-beer",
+      "label": "BEER",
+      "subgroup": "FOOD & DRINK",
+      "class": "E",
+      "canonicalQuery": "Who else has a beer?"
+    },
+    {
+      "id": "i080-cocktail",
+      "label": "COCKTAIL",
+      "subgroup": "FOOD & DRINK",
+      "class": "E",
+      "canonicalQuery": "Who else has a cocktail?"
+    },
+    {
+      "id": "i081-water",
+      "label": "WATER",
+      "subgroup": "FOOD & DRINK",
+      "class": "E",
+      "canonicalQuery": "Who else has a water?"
+    },
+    {
+      "id": "i082-coffee",
+      "label": "COFFEE",
+      "subgroup": "FOOD & DRINK",
+      "class": "E",
+      "canonicalQuery": "Who else has a coffee?"
+    },
+    {
+      "id": "i083-tea",
+      "label": "TEA",
+      "subgroup": "FOOD & DRINK",
+      "class": "E",
+      "canonicalQuery": "Who else has a tea?"
+    },
+    {
+      "id": "i084-snack",
+      "label": "SNACK",
+      "subgroup": "FOOD & DRINK",
+      "class": "E",
+      "canonicalQuery": "Who else has a snack?"
+    },
+    {
+      "id": "i085-picnic",
+      "label": "PICNIC",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a picnic?"
+    },
+    {
+      "id": "i086-food-bank",
+      "label": "FOOD BANK",
+      "subgroup": "FOOD & DRINK",
+      "class": "A",
+      "canonicalQuery": "Who else has a food bank?"
+    },
+    {
+      "id": "i087-house",
+      "label": "HOUSE",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a house near me?"
+    },
+    {
+      "id": "i088-apartment",
+      "label": "APARTMENT",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else has a 1-bedroom apartment near me?"
+    },
+    {
+      "id": "i089-flat-share",
+      "label": "FLAT SHARE",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a flat share near me?"
+    },
+    {
+      "id": "i090-student-housing",
+      "label": "STUDENT HOUSING",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a student housing near me?"
+    },
+    {
+      "id": "i091-social-housing",
+      "label": "SOCIAL HOUSING",
+      "subgroup": "HOME & LIVING",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a social housing near me?"
+    },
+    {
+      "id": "i092-mortgage",
+      "label": "MORTGAGE",
+      "subgroup": "HOME & LIVING",
+      "class": "B",
+      "canonicalQuery": "Who else is a mortgage near me?"
+    },
+    {
+      "id": "i093-rent",
+      "label": "RENT",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a rent near me?"
+    },
+    {
+      "id": "i094-estate-agent",
+      "label": "ESTATE AGENT",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an estate agent near me?"
+    },
+    {
+      "id": "i095-landlord",
+      "label": "LANDLORD",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a landlord near me?"
+    },
+    {
+      "id": "i096-property-survey",
+      "label": "PROPERTY SURVEY",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a property survey near me?"
+    },
+    {
+      "id": "i097-interior-design",
+      "label": "INTERIOR DESIGN",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an interior design near me?"
+    },
+    {
+      "id": "i098-architect",
+      "label": "ARCHITECT",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an architect near me?"
+    },
+    {
+      "id": "i099-renovation",
+      "label": "RENOVATION",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a renovation near me?"
+    },
+    {
+      "id": "i100-builder",
+      "label": "BUILDER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a builder near me?"
+    },
+    {
+      "id": "i101-plumber",
+      "label": "PLUMBER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a plumber near me?"
+    },
+    {
+      "id": "i102-electrician",
+      "label": "ELECTRICIAN",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an electrician near me?"
+    },
+    {
+      "id": "i103-painter",
+      "label": "PAINTER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a painter near me?"
+    },
+    {
+      "id": "i104-tiler",
+      "label": "TILER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a tiler near me?"
+    },
+    {
+      "id": "i105-carpenter",
+      "label": "CARPENTER",
+      "subgroup": "HOME & LIVING",
+      "class": "B",
+      "canonicalQuery": "Who else is a carpenter near me?"
+    },
+    {
+      "id": "i106-glazier",
+      "label": "GLAZIER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a glazier near me?"
+    },
+    {
+      "id": "i107-roofer",
+      "label": "ROOFER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a roofer near me?"
+    },
+    {
+      "id": "i108-timberman",
+      "label": "TIMBERMAN",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a timberman near me?"
+    },
+    {
+      "id": "i109-locksmith",
+      "label": "LOCKSMITH",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a locksmith near me?"
+    },
+    {
+      "id": "i110-cleaner",
+      "label": "CLEANER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a cleaner near me?"
+    },
+    {
+      "id": "i111-janitor",
+      "label": "JANITOR",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a janitor near me?"
+    },
+    {
+      "id": "i112-gardener",
+      "label": "GARDENER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a gardener near me?"
+    },
+    {
+      "id": "i113-landscaper",
+      "label": "LANDSCAPER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a landscaper near me?"
+    },
+    {
+      "id": "i114-pest-control",
+      "label": "PEST CONTROL",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a pest control near me?"
+    },
+    {
+      "id": "i115-mover",
+      "label": "MOVER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a mover near me?"
+    },
+    {
+      "id": "i116-storage",
+      "label": "STORAGE",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a storage near me?"
+    },
+    {
+      "id": "i117-furniture",
+      "label": "FURNITURE",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a furniture near me?"
+    },
+    {
+      "id": "i118-appliance",
+      "label": "APPLIANCE",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an appliance near me?"
+    },
+    {
+      "id": "i119-appliance-repair",
+      "label": "APPLIANCE REPAIR",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an appliance repair near me?"
+    },
+    {
+      "id": "i120-home-security",
+      "label": "HOME SECURITY",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a home security near me?"
+    },
+    {
+      "id": "i121-smart-home",
+      "label": "SMART HOME",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a smart home near me?"
+    },
+    {
+      "id": "i122-solar-panels",
+      "label": "SOLAR PANELS",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a solar panels near me?"
+    },
+    {
+      "id": "i123-insulation",
+      "label": "INSULATION",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an insulation near me?"
+    },
+    {
+      "id": "i124-heating",
+      "label": "HEATING",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a heating near me?"
+    },
+    {
+      "id": "i125-air-conditioning",
+      "label": "AIR CONDITIONING",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an air conditioning near me?"
+    },
+    {
+      "id": "i126-water-softener",
+      "label": "WATER SOFTENER",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a water softener near me?"
+    },
+    {
+      "id": "i127-internet",
+      "label": "INTERNET",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is an internet near me?"
+    },
+    {
+      "id": "i128-tv",
+      "label": "TV",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a tv near me?"
+    },
+    {
+      "id": "i129-phone",
+      "label": "PHONE",
+      "subgroup": "HOME & LIVING",
+      "class": "A",
+      "canonicalQuery": "Who else is a phone near me?"
+    },
+    {
+      "id": "i130-car",
+      "label": "CAR",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a car near me?"
+    },
+    {
+      "id": "i131-car-repair",
+      "label": "CAR REPAIR",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "B",
+      "canonicalQuery": "Who else is a car repair near me?"
+    },
+    {
+      "id": "i132-car-wash",
+      "label": "CAR WASH",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a car wash near me?"
+    },
+    {
+      "id": "i133-car-rental",
+      "label": "CAR RENTAL",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a car rental near me?"
+    },
+    {
+      "id": "i134-car-charging",
+      "label": "CAR CHARGING",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a car charging near me?"
+    },
+    {
+      "id": "i135-garage",
+      "label": "GARAGE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "B",
+      "canonicalQuery": "Who else is a garage near me?"
+    },
+    {
+      "id": "i136-parking",
+      "label": "PARKING",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "C",
+      "extension": "inventory",
+      "canonicalQuery": "Who else is a parking near me?"
+    },
+    {
+      "id": "i137-taxi",
+      "label": "TAXI",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else can give me a ride?"
+    },
+    {
+      "id": "i138-rideshare",
+      "label": "RIDESHARE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else can give me a ride?"
+    },
+    {
+      "id": "i139-bus",
+      "label": "BUS",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a bus near me?"
+    },
+    {
+      "id": "i140-train",
+      "label": "TRAIN",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a train near me?"
+    },
+    {
+      "id": "i141-metro",
+      "label": "METRO",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a metro near me?"
+    },
+    {
+      "id": "i142-tram",
+      "label": "TRAM",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a tram near me?"
+    },
+    {
+      "id": "i143-ferry",
+      "label": "FERRY",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a ferry near me?"
+    },
+    {
+      "id": "i144-flight",
+      "label": "FLIGHT",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a flight near me?"
+    },
+    {
+      "id": "i145-bike",
+      "label": "BIKE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a bike near me?"
+    },
+    {
+      "id": "i146-bike-repair",
+      "label": "BIKE REPAIR",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "B",
+      "canonicalQuery": "Who else is a bike repair near me?"
+    },
+    {
+      "id": "i147-cycle-shop",
+      "label": "CYCLE SHOP",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "B",
+      "canonicalQuery": "Who else is a cycle shop near me?"
+    },
+    {
+      "id": "i148-e-scooter",
+      "label": "E-SCOOTER",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is an e-scooter near me?"
+    },
+    {
+      "id": "i149-scooter",
+      "label": "SCOOTER",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a scooter near me?"
+    },
+    {
+      "id": "i150-motorbike",
+      "label": "MOTORBIKE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a motorbike near me?"
+    },
+    {
+      "id": "i151-boat",
+      "label": "BOAT",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a boat near me?"
+    },
+    {
+      "id": "i152-moving-service",
+      "label": "MOVING SERVICE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a moving service near me?"
+    },
+    {
+      "id": "i153-bus-shuttle",
+      "label": "BUS SHUTTLE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a bus shuttle near me?"
+    },
+    {
+      "id": "i154-airport-transfer",
+      "label": "AIRPORT TRANSFER",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is an airport transfer near me?"
+    },
+    {
+      "id": "i155-hitchhike",
+      "label": "HITCHHIKE",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "A",
+      "canonicalQuery": "Who else is a hitchhike near me?"
+    },
+    {
+      "id": "i156-bike-messenger",
+      "label": "BIKE MESSENGER",
+      "subgroup": "TRANSPORT & MOBILITY",
+      "class": "C",
+      "extension": "geo-radius",
+      "canonicalQuery": "Who else is a bike messenger near me?"
+    },
+    {
+      "id": "i157-bank",
+      "label": "BANK",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a bank near me?"
+    },
+    {
+      "id": "i158-atm",
+      "label": "ATM",
+      "subgroup": "FINANCE",
+      "class": "B",
+      "canonicalQuery": "Who else is an atm near me?"
+    },
+    {
+      "id": "i159-savings",
+      "label": "SAVINGS",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a savings near me?"
+    },
+    {
+      "id": "i160-loan",
+      "label": "LOAN",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a loan near me?"
+    },
+    {
+      "id": "i161-mortgage",
+      "label": "MORTGAGE",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a mortgage near me?"
+    },
+    {
+      "id": "i162-insurance",
+      "label": "INSURANCE",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is an insurance near me?"
+    },
+    {
+      "id": "i163-investment",
+      "label": "INVESTMENT",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is an investment near me?"
+    },
+    {
+      "id": "i164-pension",
+      "label": "PENSION",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a pension near me?"
+    },
+    {
+      "id": "i165-tax",
+      "label": "TAX",
+      "subgroup": "FINANCE",
+      "class": "A",
+      "canonicalQuery": "Who else is a tax near me?"
+    },
+    {
+      "id": "i166-accountant",
+      "label": "ACCOUNTANT",
+      "subgroup": "FINANCE",
+      "class": "A",
+      "canonicalQuery": "Who else is an accountant near me?"
+    },
+    {
+      "id": "i167-financial-advisor",
+      "label": "FINANCIAL ADVISOR",
+      "subgroup": "FINANCE",
+      "class": "A",
+      "canonicalQuery": "Who else is a financial advisor near me?"
+    },
+    {
+      "id": "i168-crypto",
+      "label": "CRYPTO",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a crypto near me?"
+    },
+    {
+      "id": "i169-crowdfunding",
+      "label": "CROWDFUNDING",
+      "subgroup": "FINANCE",
+      "class": "A",
+      "canonicalQuery": "Who else is a crowdfunding near me?"
+    },
+    {
+      "id": "i170-donations",
+      "label": "DONATIONS",
+      "subgroup": "FINANCE",
+      "class": "A",
+      "canonicalQuery": "Who else is a donations near me?"
+    },
+    {
+      "id": "i171-budgeting",
+      "label": "BUDGETING",
+      "subgroup": "FINANCE",
+      "class": "A",
+      "canonicalQuery": "Who else is a budgeting near me?"
+    },
+    {
+      "id": "i172-invoice",
+      "label": "INVOICE",
+      "subgroup": "FINANCE",
+      "class": "A",
+      "canonicalQuery": "Who else is an invoice near me?"
+    },
+    {
+      "id": "i173-payroll",
+      "label": "PAYROLL",
+      "subgroup": "FINANCE",
+      "class": "A",
+      "canonicalQuery": "Who else is a payroll near me?"
+    },
+    {
+      "id": "i174-credit-score",
+      "label": "CREDIT SCORE",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a credit score near me?"
+    },
+    {
+      "id": "i175-remittance",
+      "label": "REMITTANCE",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a remittance near me?"
+    },
+    {
+      "id": "i176-wealth",
+      "label": "WEALTH",
+      "subgroup": "FINANCE",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a wealth near me?"
+    },
+    {
+      "id": "i177-job",
+      "label": "JOB",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is hiring?"
+    },
+    {
+      "id": "i178-internship",
+      "label": "INTERNSHIP",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is an internship near me?"
+    },
+    {
+      "id": "i179-freelance",
+      "label": "FREELANCE",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a freelance near me?"
+    },
+    {
+      "id": "i180-contract",
+      "label": "CONTRACT",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a contract near me?"
+    },
+    {
+      "id": "i181-recruiter",
+      "label": "RECRUITER",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a recruiter near me?"
+    },
+    {
+      "id": "i182-resume",
+      "label": "RESUME",
+      "subgroup": "WORK",
+      "class": "B",
+      "canonicalQuery": "Who else is a resume near me?"
+    },
+    {
+      "id": "i183-interview",
+      "label": "INTERVIEW",
+      "subgroup": "WORK",
+      "class": "B",
+      "canonicalQuery": "Who else is an interview near me?"
+    },
+    {
+      "id": "i184-coworking",
+      "label": "COWORKING",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a coworking near me?"
+    },
+    {
+      "id": "i185-mentor",
+      "label": "MENTOR",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a mentor near me?"
+    },
+    {
+      "id": "i186-cofounder",
+      "label": "COFOUNDER",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a cofounder near me?"
+    },
+    {
+      "id": "i187-collaborator",
+      "label": "COLLABORATOR",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a collaborator near me?"
+    },
+    {
+      "id": "i188-consultant",
+      "label": "CONSULTANT",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a consultant near me?"
+    },
+    {
+      "id": "i189-career-coach",
+      "label": "CAREER COACH",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a career coach near me?"
+    },
+    {
+      "id": "i190-temp",
+      "label": "TEMP",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a temp near me?"
+    },
+    {
+      "id": "i191-gig",
+      "label": "GIG",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a gig near me?"
+    },
+    {
+      "id": "i192-remote-work",
+      "label": "REMOTE WORK",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a remote work near me?"
+    },
+    {
+      "id": "i193-union",
+      "label": "UNION",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is an union near me?"
+    },
+    {
+      "id": "i194-apprenticeship",
+      "label": "APPRENTICESHIP",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is an apprenticeship near me?"
+    },
+    {
+      "id": "i195-side-hustle",
+      "label": "SIDE HUSTLE",
+      "subgroup": "WORK",
+      "class": "A",
+      "canonicalQuery": "Who else is a side hustle near me?"
+    },
+    {
+      "id": "i196-volunteer",
+      "label": "JOB",
+      "subgroup": "WORK",
+      "class": "E",
+      "canonicalQuery": "Who else is hiring?"
+    },
+    {
+      "id": "i197-tutor",
+      "label": "TUTOR",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a tutor near me?"
+    },
+    {
+      "id": "i198-teacher",
+      "label": "TEACHER",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a teacher near me?"
+    },
+    {
+      "id": "i199-school",
+      "label": "SCHOOL",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a school near me?"
+    },
+    {
+      "id": "i200-course",
+      "label": "COURSE",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a course near me?"
+    },
+    {
+      "id": "i201-bootcamp",
+      "label": "BOOTCAMP",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a bootcamp near me?"
+    },
+    {
+      "id": "i202-language-lesson",
+      "label": "LANGUAGE LESSON",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a language lesson near me?"
+    },
+    {
+      "id": "i203-music-lesson",
+      "label": "MUSIC LESSON",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a music lesson near me?"
+    },
+    {
+      "id": "i204-test-prep",
+      "label": "TEST PREP",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a test prep near me?"
+    },
+    {
+      "id": "i205-college-counselor",
+      "label": "COLLEGE COUNSELOR",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a college counselor near me?"
+    },
+    {
+      "id": "i206-library",
+      "label": "LIBRARY",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a library near me?"
+    },
+    {
+      "id": "i207-workshop",
+      "label": "WORKSHOP",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a workshop near me?"
+    },
+    {
+      "id": "i208-cooking-class",
+      "label": "COOKING CLASS",
+      "subgroup": "EDUCATION",
+      "class": "E",
+      "canonicalQuery": "Who else is a cooking class near me?"
+    },
+    {
+      "id": "i209-university",
+      "label": "UNIVERSITY",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is an university near me?"
+    },
+    {
+      "id": "i210-preschool",
+      "label": "PRESCHOOL",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a preschool near me?"
+    },
+    {
+      "id": "i211-homeschool",
+      "label": "HOMESCHOOL",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a homeschool near me?"
+    },
+    {
+      "id": "i212-mooc",
+      "label": "MOOC",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a mooc near me?"
+    },
+    {
+      "id": "i213-scholarship",
+      "label": "SCHOLARSHIP",
+      "subgroup": "EDUCATION",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a scholarship near me?"
+    },
+    {
+      "id": "i214-study-group",
+      "label": "STUDY GROUP",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a study group near me?"
+    },
+    {
+      "id": "i215-exchange-year",
+      "label": "EXCHANGE YEAR",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is an exchange year near me?"
+    },
+    {
+      "id": "i216-vocational",
+      "label": "VOCATIONAL",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a vocational near me?"
+    },
+    {
+      "id": "i217-literacy",
+      "label": "LITERACY",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a literacy near me?"
+    },
+    {
+      "id": "i218-stem-camp",
+      "label": "STEM CAMP",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is a stem camp near me?"
+    },
+    {
+      "id": "i219-adult-ed",
+      "label": "ADULT ED",
+      "subgroup": "EDUCATION",
+      "class": "A",
+      "canonicalQuery": "Who else is an adult ed near me?"
+    },
+    {
+      "id": "i220-museum",
+      "label": "MUSEUM",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a museum near me?"
+    },
+    {
+      "id": "i221-gallery",
+      "label": "GALLERY",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a gallery near me?"
+    },
+    {
+      "id": "i222-theater",
+      "label": "THEATER",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a theater near me?"
+    },
+    {
+      "id": "i223-opera",
+      "label": "OPERA",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is an opera near me?"
+    },
+    {
+      "id": "i224-ballet",
+      "label": "BALLET",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a ballet near me?"
+    },
+    {
+      "id": "i225-concert-hall",
+      "label": "CONCERT HALL",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a concert hall near me?"
+    },
+    {
+      "id": "i226-heritage",
+      "label": "HERITAGE",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a heritage near me?"
+    },
+    {
+      "id": "i227-monument",
+      "label": "MONUMENT",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a monument near me?"
+    },
+    {
+      "id": "i228-archive",
+      "label": "ARCHIVE",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is an archive near me?"
+    },
+    {
+      "id": "i229-film-club",
+      "label": "FILM CLUB",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a film club near me?"
+    },
+    {
+      "id": "i230-book-club",
+      "label": "BOOK CLUB",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a book club near me?"
+    },
+    {
+      "id": "i231-choir",
+      "label": "CHOIR",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a choir near me?"
+    },
+    {
+      "id": "i232-orchestra",
+      "label": "ORCHESTRA",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is an orchestra near me?"
+    },
+    {
+      "id": "i233-community-radio",
+      "label": "COMMUNITY RADIO",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a community radio near me?"
+    },
+    {
+      "id": "i234-language-cafe",
+      "label": "LANGUAGE CAFE",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a language cafe near me?"
+    },
+    {
+      "id": "i235-religion",
+      "label": "RELIGION",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a religion near me?"
+    },
+    {
+      "id": "i236-temple",
+      "label": "TEMPLE",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a temple near me?"
+    },
+    {
+      "id": "i237-church",
+      "label": "CHURCH",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a church near me?"
+    },
+    {
+      "id": "i238-mosque",
+      "label": "MOSQUE",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a mosque near me?"
+    },
+    {
+      "id": "i239-synagogue",
+      "label": "SYNAGOGUE",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a synagogue near me?"
+    },
+    {
+      "id": "i240-festival",
+      "label": "FESTIVAL",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a festival near me?"
+    },
+    {
+      "id": "i241-carnival",
+      "label": "CARNIVAL",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a carnival near me?"
+    },
+    {
+      "id": "i242-parade",
+      "label": "PARADE",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a parade near me?"
+    },
+    {
+      "id": "i243-tradition",
+      "label": "TRADITION",
+      "subgroup": "CULTURE",
+      "class": "D",
+      "canonicalQuery": "Who else is a tradition near me?"
+    },
+    {
+      "id": "i244-folk-dance",
+      "label": "FOLK DANCE",
+      "subgroup": "CULTURE",
+      "class": "A",
+      "canonicalQuery": "Who else is a folk dance near me?"
+    },
+    {
+      "id": "i245-babysitter",
+      "label": "BABYSITTER",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a babysitter near me?"
+    },
+    {
+      "id": "i246-nanny",
+      "label": "NANNY",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a nanny near me?"
+    },
+    {
+      "id": "i247-daycare",
+      "label": "DAYCARE",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a daycare near me?"
+    },
+    {
+      "id": "i248-playdate",
+      "label": "PLAYDATE",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a playdate near me?"
+    },
+    {
+      "id": "i249-parenting-class",
+      "label": "PARENTING CLASS",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a parenting class near me?"
+    },
+    {
+      "id": "i250-adoption",
+      "label": "ADOPTION",
+      "subgroup": "FAMILY",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is an adoption near me?"
+    },
+    {
+      "id": "i251-foster-care",
+      "label": "FOSTER CARE",
+      "subgroup": "FAMILY",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a foster care near me?"
+    },
+    {
+      "id": "i252-child-support",
+      "label": "CHILD SUPPORT",
+      "subgroup": "FAMILY",
+      "class": "D",
+      "canonicalQuery": "Who else is a child support near me?"
+    },
+    {
+      "id": "i253-family-therapy",
+      "label": "FAMILY THERAPY",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a family therapy near me?"
+    },
+    {
+      "id": "i254-marriage-counsel",
+      "label": "MARRIAGE COUNSEL",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a marriage counsel near me?"
+    },
+    {
+      "id": "i255-kinship",
+      "label": "KINSHIP",
+      "subgroup": "FAMILY",
+      "class": "D",
+      "canonicalQuery": "Who else is a kinship near me?"
+    },
+    {
+      "id": "i256-teen-mentor",
+      "label": "TEEN MENTOR",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a teen mentor near me?"
+    },
+    {
+      "id": "i257-family-mediation",
+      "label": "FAMILY MEDIATION",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a family mediation near me?"
+    },
+    {
+      "id": "i258-surrogacy",
+      "label": "SURROGACY",
+      "subgroup": "FAMILY",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a surrogacy near me?"
+    },
+    {
+      "id": "i259-childminder",
+      "label": "BABYSITTER",
+      "subgroup": "FAMILY",
+      "class": "E",
+      "canonicalQuery": "Who else is a babysitter near me?"
+    },
+    {
+      "id": "i260-after-school",
+      "label": "AFTER SCHOOL",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is an after school near me?"
+    },
+    {
+      "id": "i261-parents-circle",
+      "label": "PARENTS CIRCLE",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a parents circle near me?"
+    },
+    {
+      "id": "i262-coparent",
+      "label": "COPARENT",
+      "subgroup": "FAMILY",
+      "class": "A",
+      "canonicalQuery": "Who else is a coparent near me?"
+    },
+    {
+      "id": "i263-hairdresser",
+      "label": "HAIRDRESSER",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a hairdresser near me?"
+    },
+    {
+      "id": "i264-barber",
+      "label": "BARBER",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a barber near me?"
+    },
+    {
+      "id": "i265-nails",
+      "label": "NAILS",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a nails near me?"
+    },
+    {
+      "id": "i266-spa",
+      "label": "SPA",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a spa near me?"
+    },
+    {
+      "id": "i267-makeup",
+      "label": "MAKEUP",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a makeup near me?"
+    },
+    {
+      "id": "i268-tanning",
+      "label": "TANNING",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a tanning near me?"
+    },
+    {
+      "id": "i269-waxing",
+      "label": "WAXING",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a waxing near me?"
+    },
+    {
+      "id": "i270-tattoo",
+      "label": "TATTOO",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a tattoo near me?"
+    },
+    {
+      "id": "i271-piercing",
+      "label": "PIERCING",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a piercing near me?"
+    },
+    {
+      "id": "i272-skincare",
+      "label": "SKINCARE",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a skincare near me?"
+    },
+    {
+      "id": "i273-beauty-salon",
+      "label": "BEAUTY SALON",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a beauty salon near me?"
+    },
+    {
+      "id": "i274-lashes",
+      "label": "LASHES",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a lashes near me?"
+    },
+    {
+      "id": "i275-brow-bar",
+      "label": "BROW BAR",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a brow bar near me?"
+    },
+    {
+      "id": "i276-cosmetics",
+      "label": "COSMETICS",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a cosmetics near me?"
+    },
+    {
+      "id": "i277-massage-bar",
+      "label": "MASSAGE BAR",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a massage bar near me?"
+    },
+    {
+      "id": "i278-barbershop",
+      "label": "BARBERSHOP",
+      "subgroup": "BEAUTY",
+      "class": "A",
+      "canonicalQuery": "Who else is a barbershop near me?"
+    },
+    {
+      "id": "i279-vet",
+      "label": "VET",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a vet near me?"
+    },
+    {
+      "id": "i280-pet-sitter",
+      "label": "PET SITTER",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a pet sitter near me?"
+    },
+    {
+      "id": "i281-dog-walker",
+      "label": "DOG WALKER",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a dog walker near me?"
+    },
+    {
+      "id": "i282-groomer",
+      "label": "GROOMER",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a groomer near me?"
+    },
+    {
+      "id": "i283-pet-trainer",
+      "label": "PET TRAINER",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a pet trainer near me?"
+    },
+    {
+      "id": "i284-pet-boarding",
+      "label": "PET BOARDING",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a pet boarding near me?"
+    },
+    {
+      "id": "i285-pet-adoption",
+      "label": "PET ADOPTION",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a pet adoption near me?"
+    },
+    {
+      "id": "i286-pet-food",
+      "label": "PET FOOD",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a pet food near me?"
+    },
+    {
+      "id": "i287-pet-insurance",
+      "label": "PET INSURANCE",
+      "subgroup": "PETS",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a pet insurance near me?"
+    },
+    {
+      "id": "i288-kennel",
+      "label": "PET BOARDING",
+      "subgroup": "PETS",
+      "class": "E",
+      "canonicalQuery": "Who else is a pet boarding near me?"
+    },
+    {
+      "id": "i289-cat-cafe",
+      "label": "CAT CAFE",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a cat cafe near me?"
+    },
+    {
+      "id": "i290-aquarium-shop",
+      "label": "AQUARIUM SHOP",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is an aquarium shop near me?"
+    },
+    {
+      "id": "i291-horse-stable",
+      "label": "HORSE STABLE",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a horse stable near me?"
+    },
+    {
+      "id": "i292-pet-cemetery",
+      "label": "PET CEMETERY",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a pet cemetery near me?"
+    },
+    {
+      "id": "i293-wildlife-rescue",
+      "label": "WILDLIFE RESCUE",
+      "subgroup": "PETS",
+      "class": "A",
+      "canonicalQuery": "Who else is a wildlife rescue near me?"
+    },
+    {
+      "id": "i294-clothing",
+      "label": "CLOTHING",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a clothing?"
+    },
+    {
+      "id": "i295-shoes",
+      "label": "SHOES",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a shoes?"
+    },
+    {
+      "id": "i296-tailor",
+      "label": "TAILOR",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a tailor?"
+    },
+    {
+      "id": "i297-dry-cleaner",
+      "label": "DRY CLEANER",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a dry cleaner?"
+    },
+    {
+      "id": "i298-fashion-designer",
+      "label": "FASHION DESIGNER",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a fashion designer?"
+    },
+    {
+      "id": "i299-vintage",
+      "label": "VINTAGE",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a vintage?"
+    },
+    {
+      "id": "i300-thrift",
+      "label": "THRIFT",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a thrift?"
+    },
+    {
+      "id": "i301-jewelry",
+      "label": "JEWELRY",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a jewelry?"
+    },
+    {
+      "id": "i302-watch",
+      "label": "WATCH",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a watch?"
+    },
+    {
+      "id": "i303-handbag",
+      "label": "HANDBAG",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a handbag?"
+    },
+    {
+      "id": "i304-alterations",
+      "label": "ALTERATIONS",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has an alterations?"
+    },
+    {
+      "id": "i305-uniform",
+      "label": "UNIFORM",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has an uniform?"
+    },
+    {
+      "id": "i306-costume",
+      "label": "COSTUME",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a costume?"
+    },
+    {
+      "id": "i307-streetwear",
+      "label": "STREETWEAR",
+      "subgroup": "FASHION",
+      "class": "A",
+      "canonicalQuery": "Who else has a streetwear?"
+    },
+    {
+      "id": "i308-date",
+      "label": "DATE",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else should I date?"
+    },
+    {
+      "id": "i309-friend",
+      "label": "FRIEND",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a friend?"
+    },
+    {
+      "id": "i310-hangout",
+      "label": "HANGOUT",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a hangout?"
+    },
+    {
+      "id": "i311-activity-partner",
+      "label": "ACTIVITY PARTNER",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants an activity partner?"
+    },
+    {
+      "id": "i312-matchmaker",
+      "label": "MATCHMAKER",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a matchmaker?"
+    },
+    {
+      "id": "i313-relationship",
+      "label": "RELATIONSHIP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a relationship?"
+    },
+    {
+      "id": "i314-meetup",
+      "label": "MEETUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a meetup?"
+    },
+    {
+      "id": "i315-club",
+      "label": "CLUB",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a club?"
+    },
+    {
+      "id": "i316-community",
+      "label": "COMMUNITY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a community?"
+    },
+    {
+      "id": "i317-neighbor",
+      "label": "NEIGHBOR",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a neighbor?"
+    },
+    {
+      "id": "i318-language-exchange",
+      "label": "LANGUAGE EXCHANGE",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a language exchange?"
+    },
+    {
+      "id": "i319-dining-companion",
+      "label": "DINING COMPANION",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a dining companion?"
+    },
+    {
+      "id": "i320-travel-companion",
+      "label": "TRAVEL COMPANION",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a travel companion?"
+    },
+    {
+      "id": "i321-accountability-partner",
+      "label": "ACCOUNTABILITY PARTNER",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants an accountability partner?"
+    },
+    {
+      "id": "i322-support-group",
+      "label": "SUPPORT GROUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a support group?"
+    },
+    {
+      "id": "i323-volunteer-buddy",
+      "label": "VOLUNTEER BUDDY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a volunteer buddy?"
+    },
+    {
+      "id": "i324-faith-group",
+      "label": "FAITH GROUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a faith group?"
+    },
+    {
+      "id": "i325-sports-buddy",
+      "label": "SPORTS BUDDY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a sports buddy?"
+    },
+    {
+      "id": "i327-game-night",
+      "label": "GAME NIGHT",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a game night?"
+    },
+    {
+      "id": "i328-new-in-town",
+      "label": "NEW IN TOWN",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a new in town?"
+    },
+    {
+      "id": "i329-coworking-buddy",
+      "label": "COWORKING BUDDY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a coworking buddy?"
+    },
+    {
+      "id": "i330-parents-group",
+      "label": "PARENTS GROUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a parents group?"
+    },
+    {
+      "id": "i331-lgbtq-space",
+      "label": "LGBTQ SPACE",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a lgbtq space?"
+    },
+    {
+      "id": "i332-senior-social",
+      "label": "SENIOR SOCIAL",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a senior social?"
+    },
+    {
+      "id": "i333-youth-group",
+      "label": "YOUTH GROUP",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "A",
+      "canonicalQuery": "Who else wants a youth group?"
+    },
+    {
+      "id": "i334-host-family",
+      "label": "HOST FAMILY",
+      "subgroup": "SOCIAL & COMMUNITY",
+      "class": "B",
+      "canonicalQuery": "Who else wants a host family?"
+    },
+    {
+      "id": "i335-recycling",
+      "label": "RECYCLING",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a recycling near me?"
+    },
+    {
+      "id": "i336-compost",
+      "label": "COMPOST",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a compost near me?"
+    },
+    {
+      "id": "i337-solar-coop",
+      "label": "SOLAR COOP",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a solar coop near me?"
+    },
+    {
+      "id": "i338-community-garden",
+      "label": "COMMUNITY GARDEN",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a community garden near me?"
+    },
+    {
+      "id": "i339-tree-planting",
+      "label": "TREE PLANTING",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a tree planting near me?"
+    },
+    {
+      "id": "i340-climate-group",
+      "label": "CLIMATE GROUP",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a climate group near me?"
+    },
+    {
+      "id": "i341-repair-cafe",
+      "label": "REPAIR CAFE",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a repair cafe near me?"
+    },
+    {
+      "id": "i342-tool-library",
+      "label": "TOOL LIBRARY",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a tool library near me?"
+    },
+    {
+      "id": "i343-zero-waste",
+      "label": "ZERO WASTE",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a zero waste near me?"
+    },
+    {
+      "id": "i344-water-quality",
+      "label": "WATER QUALITY",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a water quality near me?"
+    },
+    {
+      "id": "i345-air-quality",
+      "label": "AIR QUALITY",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is an air quality near me?"
+    },
+    {
+      "id": "i346-wildlife",
+      "label": "WILDLIFE",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a wildlife near me?"
+    },
+    {
+      "id": "i347-park-cleanup",
+      "label": "PARK CLEANUP",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a park cleanup near me?"
+    },
+    {
+      "id": "i348-bike-advocacy",
+      "label": "BIKE ADVOCACY",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a bike advocacy near me?"
+    },
+    {
+      "id": "i349-transit-advocacy",
+      "label": "TRANSIT ADVOCACY",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a transit advocacy near me?"
+    },
+    {
+      "id": "i350-energy-audit",
+      "label": "ENERGY AUDIT",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is an energy audit near me?"
+    },
+    {
+      "id": "i351-conservation",
+      "label": "CONSERVATION",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a conservation near me?"
+    },
+    {
+      "id": "i352-mutual-aid",
+      "label": "MUTUAL AID",
+      "subgroup": "ENV",
+      "class": "A",
+      "canonicalQuery": "Who else is a mutual aid near me?"
+    },
+    {
+      "id": "i353-airbnb",
+      "label": "AIRBNB",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else has an airbnb?"
+    },
+    {
+      "id": "i354-hotel",
+      "label": "HOTEL",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a hotel near me?"
+    },
+    {
+      "id": "i355-hostel",
+      "label": "HOSTEL",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a hostel near me?"
+    },
+    {
+      "id": "i356-short-stay",
+      "label": "SHORT STAY",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a short stay near me?"
+    },
+    {
+      "id": "i357-travel-agent",
+      "label": "TRAVEL AGENT",
+      "subgroup": "TRAVEL",
+      "class": "A",
+      "canonicalQuery": "Who else is a travel agent near me?"
+    },
+    {
+      "id": "i358-tour-guide",
+      "label": "TOUR GUIDE",
+      "subgroup": "TRAVEL",
+      "class": "A",
+      "canonicalQuery": "Who else is a tour guide near me?"
+    },
+    {
+      "id": "i359-camping",
+      "label": "CAMPING",
+      "subgroup": "TRAVEL",
+      "class": "A",
+      "canonicalQuery": "Who else is a camping near me?"
+    },
+    {
+      "id": "i360-glamping",
+      "label": "GLAMPING",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a glamping near me?"
+    },
+    {
+      "id": "i361-homestay",
+      "label": "HOMESTAY",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a homestay near me?"
+    },
+    {
+      "id": "i362-couchsurf",
+      "label": "COUCHSURF",
+      "subgroup": "TRAVEL",
+      "class": "A",
+      "canonicalQuery": "Who else is a couchsurf near me?"
+    },
+    {
+      "id": "i363-vacation-rental",
+      "label": "AIRBNB",
+      "subgroup": "TRAVEL",
+      "class": "E",
+      "canonicalQuery": "Who else has an airbnb?"
+    },
+    {
+      "id": "i364-resort",
+      "label": "RESORT",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a resort near me?"
+    },
+    {
+      "id": "i365-cruise",
+      "label": "CRUISE",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a cruise near me?"
+    },
+    {
+      "id": "i366-road-trip",
+      "label": "ROAD TRIP",
+      "subgroup": "TRAVEL",
+      "class": "A",
+      "canonicalQuery": "Who else is a road trip near me?"
+    },
+    {
+      "id": "i367-day-trip",
+      "label": "DAY TRIP",
+      "subgroup": "TRAVEL",
+      "class": "A",
+      "canonicalQuery": "Who else is a day trip near me?"
+    },
+    {
+      "id": "i368-eco-lodge",
+      "label": "ECO LODGE",
+      "subgroup": "TRAVEL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is an eco lodge near me?"
+    },
+    {
+      "id": "i369-photographer",
+      "label": "PHOTOGRAPHER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a photographer near me?"
+    },
+    {
+      "id": "i370-videographer",
+      "label": "VIDEOGRAPHER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a videographer near me?"
+    },
+    {
+      "id": "i371-dj",
+      "label": "DJ",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a dj near me?"
+    },
+    {
+      "id": "i372-band",
+      "label": "BAND",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a band near me?"
+    },
+    {
+      "id": "i373-writer",
+      "label": "WRITER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a writer near me?"
+    },
+    {
+      "id": "i374-illustrator",
+      "label": "ILLUSTRATOR",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is an illustrator near me?"
+    },
+    {
+      "id": "i375-designer",
+      "label": "DESIGNER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a designer near me?"
+    },
+    {
+      "id": "i376-potter",
+      "label": "POTTER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a potter near me?"
+    },
+    {
+      "id": "i377-woodworker",
+      "label": "WOODWORKER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a woodworker near me?"
+    },
+    {
+      "id": "i378-filmmaker",
+      "label": "FILMMAKER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a filmmaker near me?"
+    },
+    {
+      "id": "i379-podcaster",
+      "label": "PODCASTER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a podcaster near me?"
+    },
+    {
+      "id": "i380-painter-art",
+      "label": "PAINTER ART",
+      "subgroup": "CREATIVE",
+      "class": "B",
+      "canonicalQuery": "Who else is a painter art near me?"
+    },
+    {
+      "id": "i381-sculptor",
+      "label": "SCULPTOR",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a sculptor near me?"
+    },
+    {
+      "id": "i382-composer",
+      "label": "COMPOSER",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a composer near me?"
+    },
+    {
+      "id": "i383-open-mic",
+      "label": "OPEN MIC",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is an open mic near me?"
+    },
+    {
+      "id": "i384-studio-space",
+      "label": "STUDIO SPACE",
+      "subgroup": "CREATIVE",
+      "class": "A",
+      "canonicalQuery": "Who else is a studio space near me?"
+    },
+    {
+      "id": "i385-lawyer",
+      "label": "LAWYER",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a lawyer near me?"
+    },
+    {
+      "id": "i386-notary",
+      "label": "NOTARY",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a notary near me?"
+    },
+    {
+      "id": "i387-paralegal",
+      "label": "PARALEGAL",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a paralegal near me?"
+    },
+    {
+      "id": "i388-immigration",
+      "label": "IMMIGRATION",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is an immigration near me?"
+    },
+    {
+      "id": "i389-wills",
+      "label": "WILLS",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a wills near me?"
+    },
+    {
+      "id": "i390-estate",
+      "label": "ESTATE",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is an estate near me?"
+    },
+    {
+      "id": "i391-contract-review",
+      "label": "CONTRACT REVIEW",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a contract review near me?"
+    },
+    {
+      "id": "i392-patent",
+      "label": "PATENT",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a patent near me?"
+    },
+    {
+      "id": "i393-trademark",
+      "label": "TRADEMARK",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a trademark near me?"
+    },
+    {
+      "id": "i394-small-claims",
+      "label": "SMALL CLAIMS",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a small claims near me?"
+    },
+    {
+      "id": "i395-mediation",
+      "label": "MEDIATION",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a mediation near me?"
+    },
+    {
+      "id": "i396-apostille",
+      "label": "APOSTILLE",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is an apostille near me?"
+    },
+    {
+      "id": "i397-incorporation",
+      "label": "INCORPORATION",
+      "subgroup": "LEGAL",
+      "class": "A",
+      "canonicalQuery": "Who else is an incorporation near me?"
+    },
+    {
+      "id": "i398-legal-aid",
+      "label": "LEGAL AID",
+      "subgroup": "LEGAL",
+      "class": "C",
+      "extension": "eligibility",
+      "canonicalQuery": "Who else is a legal aid near me?"
+    },
+    {
+      "id": "i399-attorney",
+      "label": "LAWYER",
+      "subgroup": "LEGAL",
+      "class": "E",
+      "canonicalQuery": "Who else is a lawyer near me?"
+    },
+    {
+      "id": "i400-ai-tools",
+      "label": "AI TOOLS",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can summarize this PDF?"
+    },
+    {
+      "id": "i401-pdf-summarizer",
+      "label": "PDF SUMMARIZER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with pdf summarizer?"
+    },
+    {
+      "id": "i402-web-browser",
+      "label": "WEB BROWSER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with web browser?"
+    },
+    {
+      "id": "i403-translator",
+      "label": "TRANSLATOR",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with translator?"
+    },
+    {
+      "id": "i404-verifier",
+      "label": "VERIFIER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with verifier?"
+    },
+    {
+      "id": "i405-failover",
+      "label": "FAILOVER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "B",
+      "canonicalQuery": "Who else can help with failover?"
+    },
+    {
+      "id": "i406-delegate",
+      "label": "DELEGATE",
+      "subgroup": "DIGITAL & TECH",
+      "class": "B",
+      "canonicalQuery": "Who else can help with delegate?"
+    },
+    {
+      "id": "i407-cheap-runner",
+      "label": "CHEAP RUNNER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with cheap runner?"
+    },
+    {
+      "id": "i408-workflow",
+      "label": "WORKFLOW",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with workflow?"
+    },
+    {
+      "id": "i409-capability-index",
+      "label": "CAPABILITY INDEX",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with capability index?"
+    },
+    {
+      "id": "i410-voice-router",
+      "label": "VOICE ROUTER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with voice router?"
+    },
+    {
+      "id": "i411-mcp-server",
+      "label": "MCP SERVER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with mcp server?"
+    },
+    {
+      "id": "i412-price-quote",
+      "label": "PRICE QUOTE",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with price quote?"
+    },
+    {
+      "id": "i413-scheduler",
+      "label": "SCHEDULER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with scheduler?"
+    },
+    {
+      "id": "i414-embedding-index",
+      "label": "EMBEDDING INDEX",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with embedding index?"
+    },
+    {
+      "id": "i415-researcher",
+      "label": "RESEARCHER",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with researcher?"
+    },
+    {
+      "id": "i416-evaluator",
+      "label": "EVALUATOR",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with evaluator?"
+    },
+    {
+      "id": "i417-moderator",
+      "label": "MODERATOR",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with moderator?"
+    },
+    {
+      "id": "i418-automation",
+      "label": "AUTOMATION",
+      "subgroup": "DIGITAL & TECH",
+      "class": "A",
+      "canonicalQuery": "Who else can help with automation?"
+    },
+    {
+      "id": "i419-app-builder",
+      "label": "AI TOOLS",
+      "subgroup": "DIGITAL & TECH",
+      "class": "E",
+      "canonicalQuery": "Who else can summarize this PDF?"
+    },
+    {
+      "id": "i420-concert",
+      "label": "CONCERT",
+      "subgroup": "EVENTS",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is going to a concert?"
+    },
+    {
+      "id": "i421-movie",
+      "label": "MOVIE",
+      "subgroup": "EVENTS",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is going to a movie?"
+    },
+    {
+      "id": "i422-ticket",
+      "label": "TICKET",
+      "subgroup": "EVENTS",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is going to a ticket?"
+    },
+    {
+      "id": "i423-conference",
+      "label": "CONFERENCE",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a conference?"
+    },
+    {
+      "id": "i424-wedding",
+      "label": "WEDDING",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a wedding?"
+    },
+    {
+      "id": "i425-funeral",
+      "label": "FUNERAL",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a funeral?"
+    },
+    {
+      "id": "i426-birthday",
+      "label": "BIRTHDAY",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a birthday?"
+    },
+    {
+      "id": "i427-gala",
+      "label": "GALA",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a gala?"
+    },
+    {
+      "id": "i428-trade-show",
+      "label": "TRADE SHOW",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a trade show?"
+    },
+    {
+      "id": "i429-sports-event",
+      "label": "SPORTS EVENT",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a sports event?"
+    },
+    {
+      "id": "i430-watch-party",
+      "label": "WATCH PARTY",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a watch party?"
+    },
+    {
+      "id": "i431-opening-night",
+      "label": "OPENING NIGHT",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to an opening night?"
+    },
+    {
+      "id": "i432-lecture",
+      "label": "LECTURE",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a lecture?"
+    },
+    {
+      "id": "i433-protest",
+      "label": "PROTEST",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a protest?"
+    },
+    {
+      "id": "i434-market",
+      "label": "MARKET",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a market?"
+    },
+    {
+      "id": "i435-fair",
+      "label": "FAIR",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a fair?"
+    },
+    {
+      "id": "i436-expo",
+      "label": "EXPO",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to an expo?"
+    },
+    {
+      "id": "i437-networking-night",
+      "label": "NETWORKING NIGHT",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a networking night?"
+    },
+    {
+      "id": "i438-reunion",
+      "label": "REUNION",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a reunion?"
+    },
+    {
+      "id": "i439-commencement",
+      "label": "COMMENCEMENT",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a commencement?"
+    },
+    {
+      "id": "i440-hackathon",
+      "label": "HACKATHON",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a hackathon?"
+    },
+    {
+      "id": "i441-pop-up",
+      "label": "POP-UP",
+      "subgroup": "EVENTS",
+      "class": "A",
+      "canonicalQuery": "Who else is going to a pop-up?"
+    },
+    {
+      "id": "i442-corner-shop",
+      "label": "CORNER SHOP",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a corner shop near me?"
+    },
+    {
+      "id": "i443-hardware-store",
+      "label": "HARDWARE STORE",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a hardware store near me?"
+    },
+    {
+      "id": "i444-laundromat",
+      "label": "LAUNDROMAT",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a laundromat near me?"
+    },
+    {
+      "id": "i445-farmers-market",
+      "label": "FARMERS MARKET",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a farmers market near me?"
+    },
+    {
+      "id": "i446-town-hall",
+      "label": "TOWN HALL",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a town hall near me?"
+    },
+    {
+      "id": "i447-community-center",
+      "label": "COMMUNITY CENTER",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a community center near me?"
+    },
+    {
+      "id": "i448-lost-and-found",
+      "label": "LOST AND FOUND",
+      "subgroup": "LOCAL",
+      "class": "D",
+      "canonicalQuery": "Who else is a lost and found near me?"
+    },
+    {
+      "id": "i449-notice-board",
+      "label": "NOTICE BOARD",
+      "subgroup": "LOCAL",
+      "class": "D",
+      "canonicalQuery": "Who else is a notice board near me?"
+    },
+    {
+      "id": "i450-neighborhood-watch",
+      "label": "NEIGHBORHOOD WATCH",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a neighborhood watch near me?"
+    },
+    {
+      "id": "i451-open-now-shop",
+      "label": "OPEN NOW SHOP",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is an open now shop near me?"
+    },
+    {
+      "id": "i452-repair-shop",
+      "label": "REPAIR SHOP",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a repair shop near me?"
+    },
+    {
+      "id": "i453-copy-shop",
+      "label": "COPY SHOP",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a copy shop near me?"
+    },
+    {
+      "id": "i454-key-cutting",
+      "label": "KEY CUTTING",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a key cutting near me?"
+    },
+    {
+      "id": "i455-charity-shop",
+      "label": "CHARITY SHOP",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a charity shop near me?"
+    },
+    {
+      "id": "i456-municipal-service",
+      "label": "MUNICIPAL SERVICE",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a municipal service near me?"
+    },
+    {
+      "id": "i457-local-guide",
+      "label": "LOCAL GUIDE",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a local guide near me?"
+    },
+    {
+      "id": "i458-post-office",
+      "label": "POST OFFICE",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a post office near me?"
+    },
+    {
+      "id": "i459-fire-station",
+      "label": "FIRE STATION",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a fire station near me?"
+    },
+    {
+      "id": "i460-permit-desk",
+      "label": "PERMIT DESK",
+      "subgroup": "LOCAL",
+      "class": "A",
+      "canonicalQuery": "Who else is a permit desk near me?"
+    },
+    {
+      "id": "i461-room-booking",
+      "label": "ROOM BOOKING",
+      "subgroup": "LOCAL",
+      "class": "C",
+      "extension": "reservation",
+      "canonicalQuery": "Who else is a room booking near me?"
+    },
+    {
+      "id": "i462-doctor-alias",
+      "label": "DOCTOR",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a doctor near me?"
+    },
+    {
+      "id": "i463-dentist-alias",
+      "label": "DENTIST",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a dentist near me?"
+    },
+    {
+      "id": "i464-restaurant-alias",
+      "label": "RESTAURANT",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a restaurant near me?"
+    },
+    {
+      "id": "i465-apartment-alias",
+      "label": "APARTMENT",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else has a 1-bedroom apartment near me?"
+    },
+    {
+      "id": "i466-plumber-alias",
+      "label": "PLUMBER",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a plumber near me?"
+    },
+    {
+      "id": "i467-rideshare-alias",
+      "label": "RIDESHARE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else can give me a ride?"
+    },
+    {
+      "id": "i468-date-alias",
+      "label": "DATE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else should I date?"
+    },
+    {
+      "id": "i469-bank-alias",
+      "label": "BANK",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a bank near me?"
+    },
+    {
+      "id": "i470-gym-alias",
+      "label": "GYM",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a gym near me?"
+    },
+    {
+      "id": "i471-yoga-alias",
+      "label": "YOGA",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a yoga near me?"
+    },
+    {
+      "id": "i472-cafe-alias",
+      "label": "CAFE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a cafe near me?"
+    },
+    {
+      "id": "i473-house-alias",
+      "label": "HOUSE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a house near me?"
+    },
+    {
+      "id": "i474-taxi-alias",
+      "label": "TAXI",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else can give me a ride?"
+    },
+    {
+      "id": "i475-job-alias",
+      "label": "JOB",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is hiring?"
+    },
+    {
+      "id": "i476-nurse-alias",
+      "label": "NURSE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a nurse near me?"
+    },
+    {
+      "id": "i477-pharmacy-alias",
+      "label": "PHARMACY",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a pharmacy near me?"
+    },
+    {
+      "id": "i478-hospital-alias",
+      "label": "HOSPITAL",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a hospital near me?"
+    },
+    {
+      "id": "i479-cleaner-alias",
+      "label": "CLEANER",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a cleaner near me?"
+    },
+    {
+      "id": "i480-electrician-alias",
+      "label": "ELECTRICIAN",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is an electrician near me?"
+    },
+    {
+      "id": "i481-train-alias",
+      "label": "TRAIN",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a train near me?"
+    },
+    {
+      "id": "i482-bus-alias",
+      "label": "BUS",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a bus near me?"
+    },
+    {
+      "id": "i483-flight-alias",
+      "label": "FLIGHT",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a flight near me?"
+    },
+    {
+      "id": "i484-coffee-alias",
+      "label": "COFFEE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a coffee near me?"
+    },
+    {
+      "id": "i485-wine-alias",
+      "label": "WINE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a wine near me?"
+    },
+    {
+      "id": "i486-grocery-alias",
+      "label": "GROCERY",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a grocery near me?"
+    },
+    {
+      "id": "i487-rent-alias",
+      "label": "RENT",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a rent near me?"
+    },
+    {
+      "id": "i488-landlord-alias",
+      "label": "LANDLORD",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a landlord near me?"
+    },
+    {
+      "id": "i489-mover-alias",
+      "label": "MOVER",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a mover near me?"
+    },
+    {
+      "id": "i490-storage-alias",
+      "label": "STORAGE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a storage near me?"
+    },
+    {
+      "id": "i491-internet-alias",
+      "label": "INTERNET",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is an internet near me?"
+    },
+    {
+      "id": "i492-car-alias",
+      "label": "CAR",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a car near me?"
+    },
+    {
+      "id": "i493-parking-alias",
+      "label": "PARKING",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a parking near me?"
+    },
+    {
+      "id": "i494-loan-alias",
+      "label": "LOAN",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a loan near me?"
+    },
+    {
+      "id": "i495-insurance-alias",
+      "label": "INSURANCE",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is an insurance near me?"
+    },
+    {
+      "id": "i496-tax-alias",
+      "label": "TAX",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a tax near me?"
+    },
+    {
+      "id": "i497-tutor-alias",
+      "label": "TUTOR",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a tutor near me?"
+    },
+    {
+      "id": "i498-school-alias",
+      "label": "SCHOOL",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a school near me?"
+    },
+    {
+      "id": "i499-museum-alias",
+      "label": "MUSEUM",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a museum near me?"
+    },
+    {
+      "id": "i500-friend-alias",
+      "label": "FRIEND",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a friend near me?"
+    },
+    {
+      "id": "i501-vet-alias",
+      "label": "VET",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a vet near me?"
+    },
+    {
+      "id": "i502-hotel-alias",
+      "label": "HOTEL",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a hotel near me?"
+    },
+    {
+      "id": "i503-photographer-alias",
+      "label": "PHOTOGRAPHER",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a photographer near me?"
+    },
+    {
+      "id": "i504-concert-alias",
+      "label": "CONCERT",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a concert near me?"
+    },
+    {
+      "id": "i505-clothing-alias",
+      "label": "CLOTHING",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a clothing near me?"
+    },
+    {
+      "id": "i506-notary-alias",
+      "label": "NOTARY",
+      "subgroup": "MISC",
+      "class": "E",
+      "canonicalQuery": "Who else is a notary near me?"
+    }
+  ]
+}

@@ -1,6 +1,10 @@
 import { AuthButtons } from "@/components/AuthButtons";
 
-export function SiteNav({ current }: { current?: "home" | "ais" | "box" | "join" | "me" | "matches" }) {
+export function SiteNav({
+  current,
+}: {
+  current?: "home" | "ais" | "box" | "join" | "me" | "matches" | "universe";
+}) {
   return (
     <nav className="nav">
       <a className="logo" href="/">
@@ -18,6 +22,9 @@ export function SiteNav({ current }: { current?: "home" | "ais" | "box" | "join"
         </a>
         <a className={current === "box" ? "ghost current" : "ghost"} href="/universal">
           One box
+        </a>
+        <a className={current === "universe" ? "ghost current" : "ghost"} href="/universe">
+          Universe
         </a>
         <a className={current === "ais" ? "ghost current" : "ghost"} href="/ais">
           For AIs
