@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { DM_Sans, Fraunces } from "next/font/google";
+import { Figtree, Newsreader } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
-const dm = DM_Sans({
+const sans = Figtree({
   subsets: ["latin"],
-  variable: "--font-dm",
+  variable: "--font-figtree",
 });
 
-const fraunces = Fraunces({
+const display = Newsreader({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-newsreader",
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -31,16 +32,32 @@ export const metadata: Metadata = {
   },
 };
 
+const clerkAppearance = {
+  variables: {
+    colorBackground: "#12100d",
+    colorInputBackground: "#1a1713",
+    colorText: "#f3ece3",
+    colorTextSecondary: "#9a9084",
+    colorPrimary: "#d07a45",
+    colorNeutral: "#f3ece3",
+    borderRadius: "0.9rem",
+  },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   const inner = (
-    <html lang="en">
-      <body className={`${dm.variable} ${fraunces.variable}`}>
+    <html lang="en" className={`${sans.variable} ${display.variable}`}>
+      <body>
         {children}
         <SiteFooter />
       </body>
     </html>
   );
   if (!publishableKey) return inner;
-  return <ClerkProvider publishableKey={publishableKey}>{inner}</ClerkProvider>;
+  return (
+    <ClerkProvider publishableKey={publishableKey} appearance={clerkAppearance}>
+      {inner}
+    </ClerkProvider>
+  );
 }

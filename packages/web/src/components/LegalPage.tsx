@@ -12,7 +12,7 @@ export function LegalPage({
     <div className="app">
       <SiteNav />
       <section className="search-panel legal-page">
-        <div className="eyebrow">WhoElse · launch stub</div>
+        <div className="eyebrow">who else?</div>
         <h1>{title}</h1>
         {children}
       </section>
