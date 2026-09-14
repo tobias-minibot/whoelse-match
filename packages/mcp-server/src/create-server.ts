@@ -16,6 +16,7 @@ import {
   gatewayRegister,
   gatewayReputation,
   gatewayWriteReceipt,
+  gatewayCompile,
   requireCaller,
   toMachineFindResult,
   type Caller,
@@ -414,6 +415,20 @@ export function createWhoElseMcpServer(
     },
     async ({ entityId }) => {
       const result = await gatewayReputation(network, entityId, caller);
+      return json(result.body);
+    },
+  );
+
+  server.tool(
+    "whoelse.compile",
+    "Sentinel v0: classify arbitrary language as WHOELSE_COMPILABLE | PARTIALLY_COMPILABLE | NOT_WHOELSE. Returns IR (intent, constraints, exclusions), optional SEEK draft, optional whoelse.find. Does not force every sentence into a match. Same engine — never a second matcher.",
+    {
+      text: z.string().describe("Arbitrary language. Not required to start with Who else."),
+      find: z.boolean().optional().describe("If true and compilable/partial, run whoelse.find on the compiled intent."),
+      limit: z.number().int().min(1).max(20).optional(),
+    },
+    async ({ text, find, limit }) => {
+      const result = await gatewayCompile(network, { text, find, limit }, caller);
       return json(result.body);
     },
   );

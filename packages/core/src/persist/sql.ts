@@ -165,8 +165,22 @@ CREATE INDEX IF NOT EXISTS receipts_counterparty_idx ON receipts (counterparty_e
 CREATE INDEX IF NOT EXISTS match_messages_match_idx ON match_messages (match_id);
 `;
 
+/** First-party usage events. Counts only — not vanity metrics. */
+export const ANALYTICS_SQL = `
+CREATE TABLE IF NOT EXISTS usage_events (
+  id text PRIMARY KEY,
+  name text NOT NULL,
+  at timestamptz NOT NULL,
+  principal_id text,
+  payload jsonb
+);
+
+CREATE INDEX IF NOT EXISTS usage_events_name_at_idx ON usage_events (name, at DESC);
+`;
+
 export const MIGRATION_FILES = [
   { id: "0000_init", sql: INIT_SQL },
   { id: "0001_onboarding", sql: ONBOARDING_SQL },
   { id: "0002_loop", sql: LOOP_SQL },
+  { id: "0003_analytics", sql: ANALYTICS_SQL },
 ] as const;

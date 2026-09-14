@@ -166,6 +166,18 @@ export const matchMessages = pgTable(
   (t) => [index("match_messages_match_idx").on(t.matchId)],
 );
 
+export const usageEvents = pgTable(
+  "usage_events",
+  {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    at: timestamp("at", { withTimezone: true }).notNull(),
+    principalId: text("principal_id"),
+    payload: jsonb("payload").$type<Record<string, unknown>>(),
+  },
+  (t) => [index("usage_events_name_at_idx").on(t.name, t.at)],
+);
+
 export const reputations = pgTable("reputations", {
   entityId: text("entity_id").primaryKey(),
   completionReliability: doublePrecision("completion_reliability").notNull(),

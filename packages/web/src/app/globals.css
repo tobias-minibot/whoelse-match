@@ -145,6 +145,62 @@ button.auth-btn {
   border-color: var(--coral);
 }
 
+.lens-primary {
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.lens-primary button {
+  font-size: 1rem;
+  padding: 10px 18px;
+}
+.lens-primary button.active {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: #fff;
+}
+.lens-more {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.lens-more summary {
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.lens-more .mode-tabs { margin-bottom: 0; }
+
+.sentinel {
+  background: #f4f0ff;
+  border: 1px solid #d8d0ef;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-top: 12px;
+}
+.klass {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  font-size: 0.82rem;
+}
+.klass.ok { color: #1b5e20; }
+.klass.partial { color: #e65100; }
+.klass.no { color: #9a1f1f; }
+
+.site-footer {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 18px 22px 40px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+.site-footer a { color: var(--muted); }
+.legal-page ul.plain { margin: 8px 0 16px 18px; }
+.legal-page .lede { max-width: 42rem; }
+
 .facts {
   margin: 8px 0 0;
   font-size: 0.88rem;

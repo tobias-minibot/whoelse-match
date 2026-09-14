@@ -2,6 +2,7 @@ import type { Account, AgentCredential, Ownership, Principal, WriteAudit } from 
 import type { IdentitySnapshot } from "../identity.js";
 import { hydratePublications } from "../publications.js";
 import type { Entity, InvokeReceipt, MatchRecord, Publication, ReputationRecord, ThreadMessage } from "../types.js";
+import { emptyCounts, isUsageName, type UsageEvent, type UsageName, type UsageSummary } from "../usage.js";
 import type { SqlClient } from "./client.js";
 import { applyMigrations } from "./client.js";
 
@@ -407,6 +408,44 @@ export class PostgresRepository {
       [bucket, start],
     );
     return Number(rows[0]?.count ?? 1);
+  }
+
+  async insertUsage(e: UsageEvent): Promise<void> {
+    await this.client.query(
+      `INSERT INTO usage_events (id, name, at, principal_id, payload)
+       VALUES ($1, $2, $3::timestamptz, $4, $5::jsonb)
+       ON CONFLICT (id) DO NOTHING`,
+      [e.id, e.name, e.at, e.principalId ?? null, JSON.stringify(e.payload ?? {})],
+    );
+  }
+
+  async usageStats(recentLimit = 20): Promise<UsageSummary> {
+    const countRows = await this.client.query<{ name: string; n: string | number }>(
+      `SELECT name, count(*)::int AS n FROM usage_events GROUP BY name`,
+    );
+    const counts = emptyCounts();
+    let total = 0;
+    for (const row of countRows) {
+      if (!isUsageName(row.name)) continue;
+      const n = Number(row.n ?? 0);
+      counts[row.name as UsageName] = n;
+      total += n;
+    }
+    const recentRows = await this.client.query<Record<string, unknown>>(
+      `SELECT id, name, at, principal_id, payload FROM usage_events ORDER BY at DESC LIMIT $1`,
+      [recentLimit],
+    );
+    return {
+      counts,
+      total,
+      recent: recentRows.filter((r) => isUsageName(String(r.name))).map((r) => ({
+        id: String(r.id),
+        name: String(r.name) as UsageName,
+        at: asIso(r.at),
+        principalId: r.principal_id ? String(r.principal_id) : undefined,
+        payload: r.payload ? asJson<Record<string, unknown>>(r.payload) : undefined,
+      })),
+    };
   }
 }
 

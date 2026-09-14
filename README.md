@@ -20,7 +20,9 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 - **Human web (live):** https://whoelse-dating.vercel.app
 - **One box (no category):** https://whoelse-dating.vercel.app/universal
 - **For AIs / remote MCP:** https://whoelse-dating.vercel.app/ais — endpoint `https://whoelse-dating.vercel.app/api/mcp`
-  Tools: `whoelse.find`, `whoelse.register`, `whoelse.publish`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.match`, `whoelse.act`, `whoelse.receipt`, `whoelse.reputation`, `whoelse.matches`, `whoelse.feedback`. Never `jobs.find`.
+  Tools: `whoelse.find`, `whoelse.compile`, `whoelse.register`, `whoelse.publish`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.match`, `whoelse.act`, `whoelse.receipt`, `whoelse.reputation`, `whoelse.matches`, `whoelse.feedback`. Never `jobs.find`. Copy/paste config + example agent: `docs/MCP.md`.
+- **Legal:** `/privacy` · `/terms` · `/contact`
+- **Launch status:** `LAUNCH_BLOCKERS.md`
 - **Landing:** deploy `landing/` to Vercel, or open it from the app at `/landing/index.html`
 - **Pitch deck:** `pitch/whoelse-match-pitch.pptx`
 - **Brand clip (10s):** `brand/brand-clip-10s.mp4`
@@ -30,7 +32,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Product (this repo)
 
-- **Human surface:** Next.js App Router — 15 experimental lenses on `/` (Dating … Local) plus a **one-box** at `/universal` with no required category. Primary interaction is **Who else?** Dating stays sectioned. Jobs / factory / one-box mix types. Tabs are costumes, not matchers.
+- **Human surface:** Next.js App Router. Public face is **three lenses** — Dating, Agents, Experts — plus a **one-box** at `/universal`. Other factory costumes sit under “More costumes”. Same cards / loop. Primary interaction is **Who else?** Dating stays sectioned. Tabs are costumes, not matchers. **Compile** is Sentinel v0 (`whoelse.compile`).
 - **AI surface:** Streamable HTTP MCP at `/api/mcp` (same Vercel app) plus stdio `pnpm mcp`. Primary tool **`whoelse.find`**. Same `@whoelse/core` engine and `data/seed.json` as the web app.
 - **Thin HTTP API** — the dating UI’s adapter; not a second matcher. Agents invoke via `POST /api/agents/:id/invoke` (demo stub).
 
@@ -220,6 +222,7 @@ pnpm mcp                # stdio (local / Cursor desktop)
 pnpm mcp:tools          # must list whoelse.find
 pnpm mcp:smoke          # capability + dating via whoelse.find
 pnpm mcp:http-dogfood   # real HTTP SDK client (needs WHOELSE_MCP_URL or local :3000)
+pnpm example:agent      # compile + find (+ writes if WHOELSE_AGENT_KEY)
 pnpm test               # core + MCP stdio + Streamable HTTP client tests
 pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfood queries
 ```
@@ -228,13 +231,16 @@ pnpm dogfood            # print top-5 (id, type, name, score, why) for the dogfo
 
 **Outputs:** `{ matches: [{ id, type, name, description, score, why, attributes, trust, publications, matched, next }], pairs: [{ offerId, seekId, offerEntityId, seekEntityId, capability, score }] }`
 
-Cursor / Claude — remote (preferred):
+Cursor / Claude — remote (preferred). Writes need a Bearer key:
 
 ```json
 {
   "mcpServers": {
     "whoelse": {
-      "url": "https://whoelse-dating.vercel.app/api/mcp"
+      "url": "https://whoelse-dating.vercel.app/api/mcp",
+      "headers": {
+        "Authorization": "Bearer wek_YOUR_KEY"
+      }
     }
   }
 }
@@ -262,6 +268,8 @@ Same engine. Used by the web app.
 
 | Method | Path | Body |
 | --- | --- | --- |
+| POST | `/api/compile` | `{ text, find?, limit? }` Sentinel v0. Also `GET /api/compile?text=&find=1` |
+| GET | `/api/stats` | Network object counts + recorded usage events (not vanity) |
 | POST | `/api/whoelse` | `{ context, predicate?, constraints?, exclude?, mode?, entityId?, matchId?, limit? }` |
 | POST | `/api/whoelse/more-like` | `{ entityId, context?, exclude?, mode?, limit? }` |
 | POST | `/api/whoelse/explain` | `{ entityId, context, entityContextId? }` |
@@ -270,7 +278,7 @@ Same engine. Used by the web app.
 | POST | `/api/interest` | Human interest recorded (stub — no message sent) |
 | GET | `/api/entities/:id` | One entity |
 | GET | `/api/health` | Seed counts + whether OpenAI is configured |
-| POST | `/api/mcp` | Streamable HTTP MCP (stateless). find / register / publish / match / act / receipt / reputation / invoke / delegate. |
+| POST | `/api/mcp` | Streamable HTTP MCP (stateless). find / compile / register / publish / match / act / receipt / reputation / invoke / delegate. |
 | GET / POST | `/api/matches` | Auth. List party matches, or explicitly propose/save a MATCH (find never writes this). |
 | GET | `/api/matches/:id` | Auth. One MATCH + receipts + thread. Party only. |
 | POST | `/api/matches/:id/act` | Auth. connect / intro / message / accept / decline / invoke / delegate / negotiate / handoff. Writes a receipt. |
@@ -296,8 +304,9 @@ Same engine. Used by the web app.
 - `/onboarding` — signed-in human path: name, bio, HUMAN label, OFFER/SEEK, 18+ affirmation
 - `/me` — edit publications; withdraw is durable
 - `/matches` — durable MATCH list, act, receipts, thread, recursive Who else? from a match
-- `/ais` — MCP URL, Cursor config, tools, example call/result
-- Tabs: **15 lenses** (Dating, Apt, Jobs, Rides, Services, Products, Experts, Capital, Travel, Events, Childcare, Collab, Compute, Data, Local). Dating home is unchanged. Tabs are costumes; `/universal` is the no-category box. Jobs + factory mixed lenses do **not** force `side` — NL infers it. Travel reuses apartment listing/seeker.
+- `/ais` — public MCP DX: endpoint, auth, Cursor/Claude copy-paste, tool order, example agent
+- `/privacy` `/terms` `/contact` — launch legal stubs
+- Tabs: **Dating · Agents · Experts** first (same cards, same loop). Other costumes under **More costumes**. `/universal` is the no-category box + Compile. Jobs + factory mixed lenses do **not** force `side` — NL infers it.
 - Apartment SEEK: **What are you looking for?** + **Who else?**
 - Apartment I HAVE: **I have…** + **Who else needs this?**
 - Apartment results stay cards-with-why, plus reverse **Who else needs this?** / **Who else has this?**
@@ -403,9 +412,9 @@ Callers cannot overwrite an existing entity id (409) or spoof `human` / `ai` typ
 
 ### Schema + migrations
 
-Drizzle schema: `packages/core/src/persist/schema.ts`. SQL: `packages/core/drizzle/0000_init.sql` + `0001_onboarding.sql` + `0002_loop.sql`.
+Drizzle schema: `packages/core/src/persist/schema.ts`. SQL: `packages/core/drizzle/0000_init.sql` + `0001_onboarding.sql` + `0002_loop.sql` + `0003_analytics.sql`.
 
-Tables: `principals` (plus `age_affirmed_at` / `age_affirmation_version`), `accounts`, `agent_credentials`, `entities` (`owner_principal_id`), `ownership`, `publications` (OFFER/SEEK + lifecycle), `matches` (one row per SEEK↔OFFER pair), `receipts`, `match_messages`, `reputations`, `write_audit`, `rate_counters` (Postgres-backed write budgets — no extra paid infra).
+Tables: `principals` (plus `age_affirmed_at` / `age_affirmation_version`), `accounts`, `agent_credentials`, `entities` (`owner_principal_id`), `ownership`, `publications` (OFFER/SEEK + lifecycle), `matches` (one row per SEEK↔OFFER pair), `receipts`, `match_messages`, `reputations`, `usage_events` (signup/onboard/find/match/act/receipt/compile), `write_audit`, `rate_counters` (Postgres-backed write budgets — no extra paid infra).
 
 ```bash
 # from repo root after vercel env pull / sourcing .env.local

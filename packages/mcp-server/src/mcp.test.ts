@@ -64,6 +64,7 @@ describe("MCP whoelse.find", () => {
     assert.ok(names.includes("whoelse.act"));
     assert.ok(names.includes("whoelse.receipt"));
     assert.ok(names.includes("whoelse.reputation"));
+    assert.ok(names.includes("whoelse.compile"));
     assert.ok(!names.some((n) => /apartment|jobs\.|rides\.|services\./i.test(n)), `no vertical tool: ${names.join(", ")}`);
   });
 
@@ -228,5 +229,29 @@ describe("MCP whoelse.find", () => {
     const ids = found.matches.map((m) => m.id);
     assert.ok(!ids.includes("agent-inbox-clerk"));
     assert.ok(!ids.includes("agent-holdwright"));
+  });
+
+  it("compiles a locked Sentinel example without inventing a vertical tool", async () => {
+    const result = await client.callTool({
+      name: "whoelse.compile",
+      arguments: { text: "What's the weather in Berlin?" },
+    });
+    const text = (result.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const body = JSON.parse(text) as { classification: string };
+    assert.equal(body.classification, "NOT_WHOELSE");
+    const yes = await client.callTool({
+      name: "whoelse.compile",
+      arguments: { text: "Who else can summarize this PDF?", find: true, limit: 3 },
+    });
+    const yesText = (yes.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const compiled = JSON.parse(yesText) as { classification: string; find?: { candidates?: unknown[] } };
+    assert.equal(compiled.classification, "WHOELSE_COMPILABLE");
+    assert.ok((compiled.find?.candidates?.length ?? 0) > 0);
   });
 });
