@@ -573,8 +573,8 @@ export function DiscoverApp() {
       {result && dating && (
         <Sectioned
           blocks={[
-            { title: "Humans", items: datingHumans, empty: "No human matches in this slice." },
-            { title: "AIs", items: datingAis, empty: "No AI matches in this slice." },
+            { title: "Humans", items: datingHumans, empty: "No one else like that — yet." },
+            { title: "AIs", items: datingAis, empty: "No labeled AIs in this slice." },
             others.length
               ? {
                   title: "Also in the network",
@@ -601,7 +601,7 @@ export function DiscoverApp() {
             {
               title: "Who else",
               items: visible,
-              empty: "No matches in this slice.",
+              empty: "No one else like that — yet.",
             },
           ]}
           playground={result.pool === "playground"}
@@ -621,7 +621,7 @@ export function DiscoverApp() {
             {
               title: side === "offer" ? "Who else needs this" : "Who else has this",
               items: side === "offer" ? seekCards : offerCards,
-              empty: "No matches in this slice.",
+              empty: "No one else like that — yet.",
             },
             (side === "offer" ? offerCards : seekCards).length
               ? {
@@ -716,7 +716,7 @@ function Sectioned({
             <h2 className="section-title">{block.title}</h2>
             {block.note && <p className="empty">{block.note}</p>}
             <div className="cards">
-              {block.items.length === 0 && block.empty && <p className="empty">{block.empty}</p>}
+              {block.items.length === 0 && block.empty && <p className="empty section-empty">{block.empty}</p>}
               {block.items.map((c) => (
                 <ResultCard
                   key={c.entity.id}
