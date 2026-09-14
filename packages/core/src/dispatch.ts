@@ -4,6 +4,7 @@ import { findPreferLive, getPlaygroundEngine, type DiscoveryPool } from "./playg
 import type { Candidate, WhoElseConstraints, WhoElseRequest, WhoElseResult } from "./types.js";
 import type { CompoundIR, IntentEdge, IntentEdgeKind } from "./compound.js";
 import { composedFrom } from "./compound.js";
+import { SPEECH_ALIASES } from "./vocab.js";
 
 export interface DispatchNode {
   id: string;
@@ -433,6 +434,41 @@ export function reconcileDispatch(ir: CompoundIR, plan: DispatchPlan, nodes: Nod
   };
 }
 
+function entityBlob(entity: { name: string; description: string; offers?: string[]; seeks?: string[]; attributes?: Record<string, unknown> }): string {
+  const interests = entity.attributes?.interests;
+  const extra = Array.isArray(interests) ? interests.map(String) : [];
+  return [entity.name, entity.description, ...(entity.offers ?? []), ...(entity.seeks ?? []), ...extra]
+    .join(" ")
+    .toLowerCase();
+}
+
+function hasPhrase(blob: string, phrase: string): boolean {
+  const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`\\b${escaped}\\b`, "i").test(blob);
+}
+
+function mentionsIntent(entity: { name: string; description: string; offers?: string[]; seeks?: string[]; attributes?: Record<string, unknown> }, label: string): boolean {
+  const blob = entityBlob(entity);
+  if (label === "DATE") {
+    return ["romantically", "romantic", "romance", "might like", "someone i like", "go out with"].some((alias) =>
+      hasPhrase(blob, alias),
+    );
+  }
+  if (hasPhrase(blob, label.toLowerCase())) return true;
+  return (SPEECH_ALIASES[label] ?? []).some((alias) => hasPhrase(blob, alias));
+}
+
+function filterNodeHits(node: DispatchNode, result: WhoElseResult): WhoElseResult {
+  const candidates = result.candidates.filter((c) => mentionsIntent(c.entity, node.label));
+  return {
+    ...result,
+    candidates,
+    humans: candidates.filter((c) => c.entity.type === "human"),
+    ais: candidates.filter((c) => c.entity.type === "ai"),
+    byType: group(candidates),
+  };
+}
+
 async function runNode(
   find: (request: WhoElseRequest) => Promise<WhoElseResult>,
   ir: CompoundIR,
@@ -444,9 +480,9 @@ async function runNode(
     constraints: node.constraints,
     exclude: opts.exclude ?? ir.exclusions,
     requester: opts.requester,
-    limit: Math.max(opts.limit ?? 8, 8),
+    limit: Math.max(opts.limit ?? 8, 12),
   });
-  return { node, result };
+  return { node, result: filterNodeHits(node, result) };
 }
 
 export async function dispatchOnEngine(

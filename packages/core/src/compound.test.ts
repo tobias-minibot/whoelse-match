@@ -98,6 +98,8 @@ describe("multi-intent dispatch", () => {
       const cov = outcome.reconciliation.coverage["human-elise-vardy"] ?? [];
       assert.ok(cov.includes("DATE") && cov.includes("TENNIS"), JSON.stringify(cov));
     }
+    const names = outcome.result.candidates.map((c) => c.entity.name).join(" ");
+    assert.doesNotMatch(names, /childcare|Foggy Bottom parent/i);
   });
 
   it("compileAsync(find) uses dispatch, not a second matcher", async () => {
