@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { Figtree, Newsreader } from "next/font/google";
+import { Inter, Newsreader } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
-const sans = Figtree({
+const sans = Inter({
   subsets: ["latin"],
-  variable: "--font-figtree",
+  variable: "--font-inter",
+  display: "swap",
 });
 
 const display = Newsreader({
   subsets: ["latin"],
   variable: "--font-newsreader",
   style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -34,13 +36,13 @@ export const metadata: Metadata = {
 
 const clerkAppearance = {
   variables: {
-    colorBackground: "#12100d",
-    colorInputBackground: "#1a1713",
-    colorText: "#f3ece3",
-    colorTextSecondary: "#9a9084",
-    colorPrimary: "#d07a45",
-    colorNeutral: "#f3ece3",
-    borderRadius: "0.9rem",
+    colorBackground: "#000000",
+    colorInputBackground: "#0f1113",
+    colorText: "#e7e9ea",
+    colorTextSecondary: "#8b98a5",
+    colorPrimary: "#e37a3d",
+    colorNeutral: "#e7e9ea",
+    borderRadius: "0.75rem",
   },
 };
 

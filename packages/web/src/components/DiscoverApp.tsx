@@ -402,16 +402,19 @@ export function DiscoverApp() {
   const cta = loading ? "Looking…" : HAS_SIDES.includes(vertical) && costume !== "any" && side === "offer" ? "Who else needs this?" : "Who else?";
 
   return (
-    <div className={`app app-stage${result ? " has-results" : ""}`}>
+    <div
+      className={`app app-stage${result ? " has-results" : ""}${loading ? " is-looking" : ""}`}
+      aria-busy={loading}
+    >
       <SiteNav current="home" sparse />
 
       <JoinHint />
 
       {playground && (
-        <div className="banner banner-playground" role="status">
+        <p className="notice notice-playground" role="status">
           <strong>Playground.</strong> A preview, so you can feel the question before the room
           fills. Live matches, when they exist, come first — never mixed in.
-        </div>
+        </p>
       )}
 
       <section className="search-panel magic-panel">
@@ -422,6 +425,8 @@ export function DiscoverApp() {
           <textarea
             value={query}
             placeholder="Who else can do this? Who else wants this?"
+            rows={2}
+            autoComplete="off"
             onChange={(e) => {
               setQuery(e.target.value);
               setActiveChip(-1);
@@ -803,7 +808,7 @@ function ResultCard({
       {candidate.explanation.surprisingDifference && (
         <p className="diff">{candidate.explanation.surprisingDifference}</p>
       )}
-      <button className="btn btn-coral btn-whoelse" type="button" onClick={onWhoElse}>
+      <button className="btn-loop" type="button" onClick={onWhoElse}>
         Who else like this?
       </button>
       <div className="actions actions-quiet">
