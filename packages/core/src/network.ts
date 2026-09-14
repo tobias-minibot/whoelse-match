@@ -5,9 +5,11 @@ import type { PostgresRepository } from "./persist/repository.js";
 import { RateLimiter } from "./rate-limit.js";
 import type { SeedMode } from "./seed-policy.js";
 import type { Entity } from "./types.js";
+import { UsageLog } from "./usage.js";
 
 export class WhoElseNetwork {
   readonly rateLimit: RateLimiter;
+  readonly usage: UsageLog;
 
   constructor(
     readonly engine: WhoElseEngine,
@@ -17,6 +19,7 @@ export class WhoElseNetwork {
     rateLimit?: RateLimiter,
   ) {
     this.rateLimit = rateLimit ?? new RateLimiter(persist);
+    this.usage = new UsageLog();
   }
 
   static memory(engine: WhoElseEngine, identity: IdentityLedger, seedMode: SeedMode = "demo"): WhoElseNetwork {

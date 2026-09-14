@@ -49,6 +49,7 @@ export async function GET() {
       "whoelse.invoke",
       "whoelse.delegate",
       "whoelse.feedback",
+      "whoelse.compile",
     ],
   });
 }

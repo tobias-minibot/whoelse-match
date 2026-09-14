@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { CompilePanel, type CompilePayload } from "@/components/CompilePanel";
 import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
 import { fetchMe, type MePayload } from "@/lib/me";
@@ -24,12 +25,14 @@ export function UniversalBox() {
   const [asClerk, setAsClerk] = useState(false);
   const [me, setMe] = useState<MePayload | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [compiled, setCompiled] = useState<CompilePayload | null>(null);
+  const [compiling, setCompiling] = useState(false);
 
   useEffect(() => {
     void fetchMe().then(setMe);
   }, []);
 
-  async function ask() {
+  async function ask(context = query) {
     setLoading(true);
     setError(null);
     try {
@@ -37,7 +40,7 @@ export function UniversalBox() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          context: query,
+          context,
           limit: 8,
           requester: asClerk ? "agent-inbox-clerk" : undefined,
         }),
@@ -48,6 +51,28 @@ export function UniversalBox() {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function compileQuery() {
+    setCompiling(true);
+    try {
+      const res = await fetch("/api/compile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: query, find: false }),
+      });
+      setCompiled((await res.json()) as CompilePayload);
+    } catch (err) {
+      setCompiled({
+        classification: "NOT_WHOELSE",
+        reason: err instanceof Error ? err.message : "compile failed",
+        confidence: 0,
+        ir: { intent: query, constraints: {}, exclusions: [] },
+        error: err instanceof Error ? err.message : "compile failed",
+      });
+    } finally {
+      setCompiling(false);
     }
   }
 
@@ -100,9 +125,9 @@ export function UniversalBox() {
     <div className="app">
       <SiteNav current="box" />
       <p className="doctrine">
-        <strong>One box. No category required.</strong> Entities publish OFFER/SEEK; this box calls the same{" "}
-        <code>whoelse.find</code>. Verticals are views, not engines.{" "}
-        <a href="/">Costume tabs for comparison →</a>
+        <strong>One box. No category required.</strong> Same <code>whoelse.find</code> as Dating / Agents /
+        Experts. Compile is Sentinel v0 — it will not force every sentence into a match.{" "}
+        <a href="/">Three lenses →</a>
       </p>
       <JoinHint />
       <div className="banner banner-demo">
@@ -127,7 +152,17 @@ export function UniversalBox() {
           <button className="btn btn-coral" type="button" onClick={() => void ask()} disabled={loading}>
             {loading ? "Looking…" : "Who else?"}
           </button>
+          <button className="btn btn-ink" type="button" onClick={() => void compileQuery()} disabled={compiling}>
+            {compiling ? "Compiling…" : "Compile"}
+          </button>
         </div>
+        <CompilePanel
+          result={compiled}
+          onUseIntent={(intent) => {
+            setQuery(intent);
+            void ask(intent);
+          }}
+        />
         <div className="chips">
           {EXAMPLES.map((ex) => (
             <button key={ex} type="button" className={query === ex ? "active" : ""} onClick={() => setQuery(ex)}>

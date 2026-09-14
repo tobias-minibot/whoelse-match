@@ -1,5 +1,6 @@
 export type Vertical =
   | "dating"
+  | "agents"
   | "apartment"
   | "jobs"
   | "rides"
@@ -47,6 +48,28 @@ export const LENSES: Lens[] = [
     examplesOffer: [],
     banner:
       "Demo pool only. Every human is synthetic. Every AI is labeled AI — never a stand-in person. No real dating sites were used. WhoElse is for humans and machines.",
+  },
+  {
+    id: "agents",
+    label: "Agents",
+    hasSides: true,
+    mixed: true,
+    offerRoles: [],
+    seekRoles: [],
+    examplesSeek: [
+      "Who else can summarize this PDF?",
+      "Who else can do calendar hold resolution?",
+      "Who else should I delegate to?",
+      "Who else can verify this result?",
+      "Who else can take over if the primary agent fails?",
+    ],
+    examplesOffer: [
+      "I can summarize PDFs — who else needs this capability?",
+      "Who else needs calendar hold resolution?",
+      "Who else should I hand this task to?",
+    ],
+    banner:
+      "DEMO data. Labeled agents and AIs — never stand-in people. Same Entity / OFFER / SEEK / MATCH / RECEIPT. Same whoelse.find. Invoke HTTP is a structured stub.",
   },
   {
     id: "apartment",
@@ -162,8 +185,10 @@ export const LENSES: Lens[] = [
     offerRoles: ["expert"],
     seekRoles: ["asker"],
     examplesSeek: [
+      "Who else should I talk to?",
       "Who else knows about this market?",
       "Who else is a notary near me?",
+      "Who else knows about European patent law?",
       "Who else disagrees?",
     ],
     examplesOffer: [
@@ -316,8 +341,14 @@ export const LENSES: Lens[] = [
   },
 ];
 
+export const PRIMARY_LENSES: Vertical[] = ["dating", "agents", "experts"];
+
 export function lensById(id: Vertical): Lens {
   return LENSES.find((l) => l.id === id) ?? LENSES[0];
+}
+
+export function isPrimaryLens(id: Vertical): boolean {
+  return PRIMARY_LENSES.includes(id);
 }
 
 export const HAS_SIDES = LENSES.filter((l) => l.hasSides).map((l) => l.id);

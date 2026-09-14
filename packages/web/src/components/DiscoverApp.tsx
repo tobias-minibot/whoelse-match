@@ -4,12 +4,15 @@ import { useEffect, useMemo, useState } from "react";
 import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
 import { fetchMe, type MePayload } from "@/lib/me";
+import { CompilePanel, type CompilePayload } from "@/components/CompilePanel";
 import {
   examplesFor,
   FORCE_SIDE,
   HAS_SIDES,
   LENSES,
   OFFER_SIDE_ROLES,
+  PRIMARY_LENSES,
+  isPrimaryLens,
   lensById,
   type MarketSide,
   type Vertical,
@@ -49,6 +52,8 @@ export function DiscoverApp() {
   const [chatInput, setChatInput] = useState("");
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [me, setMe] = useState<MePayload | null>(null);
+  const [compiled, setCompiled] = useState<CompilePayload | null>(null);
+  const [compiling, setCompiling] = useState(false);
 
   useEffect(() => {
     void fetchMe().then((payload) => setMe(payload));
@@ -307,39 +312,80 @@ export function DiscoverApp() {
     setChatLog((prev) => [...prev, { role: "assistant", content: data.reply ?? data.error }]);
   }
 
+  async function compileQuery() {
+    setCompiling(true);
+    try {
+      const res = await fetch("/api/compile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: query, find: false }),
+      });
+      setCompiled((await res.json()) as CompilePayload);
+    } catch {
+      setCompiled({
+        classification: "NOT_WHOELSE",
+        reason: "Compile failed — is the server running?",
+        confidence: 0,
+        ir: { intent: query, constraints: {}, exclusions: [] },
+        error: "Compile failed — is the server running?",
+      });
+    } finally {
+      setCompiling(false);
+    }
+  }
+
   const heading =
     vertical === "dating"
       ? "Who are you looking for?"
-      : side === "offer"
-        ? "I have…"
-        : "What are you looking for?";
+      : vertical === "agents"
+        ? side === "offer"
+          ? "I can…"
+          : "Who else can do this?"
+        : vertical === "experts"
+          ? side === "offer"
+            ? "I can brief…"
+            : "Who else should I talk to?"
+          : side === "offer"
+            ? "I have…"
+            : "What are you looking for?";
   const cta =
     loading ? "Looking…" : HAS_SIDES.includes(vertical) && side === "offer" ? "Who else needs this?" : "Who else?";
 
   const banner = lens.banner;
   const eyebrow =
     vertical === "dating"
-      ? "Dating vertical · humans & AIs"
-      : lens.mixed
-        ? `${lens.label} · mixed types · tab is a lens, pool is shared`
-        : `${lens.label} · ${side === "offer" ? "I HAVE · who else needs this?" : "I NEED · who else has this?"}`;
+      ? "Dating · humans & labeled AIs · same loop"
+      : vertical === "agents"
+        ? "Agents · labeled machines · same Entity / OFFER / SEEK / MATCH / RECEIPT"
+        : vertical === "experts"
+          ? "Experts · who else should I talk to? · same cards"
+          : lens.mixed
+            ? `${lens.label} · mixed types · tab is a lens, pool is shared`
+            : `${lens.label} · ${side === "offer" ? "I HAVE · who else needs this?" : "I NEED · who else has this?"}`;
 
   const emptyCopy =
     vertical === "dating"
       ? "Ask who else — not swipe. Results split humans then AIs so the type is never ambiguous."
-      : lens.mixed
-        ? "Same Who else? Mixed types, type on the badge. The tab is a lens — whoelse.find does not fork."
-        : side === "offer"
-          ? "Describe what you have. WhoElse finds who needs it — the reverse marketplace question."
-          : "Describe what you need. Same Who else? as dating. Not a listings grid.";
+      : vertical === "agents"
+        ? "Same Who else? Same cards. Agents stay labeled. Invoke is a stub — find and receipts are real."
+        : vertical === "experts"
+          ? "Same Who else? Find who to talk to. Not a guru score. Type stays on the badge."
+          : lens.mixed
+            ? "Same Who else? Mixed types, type on the badge. The tab is a lens — whoelse.find does not fork."
+            : side === "offer"
+              ? "Describe what you have. WhoElse finds who needs it — the reverse marketplace question."
+              : "Describe what you need. Same Who else? as dating. Not a listings grid.";
+
+  const moreLenses = LENSES.filter((v) => !isPrimaryLens(v.id));
 
   return (
     <div className="app">
       <SiteNav current="home" />
 
       <p className="doctrine">
-        <strong>Humans ask Who Else. Agents call WhoElse. Same network.</strong>{" "}
-        <a href="/universal">One box (no category)</a>
+        <strong>Three lenses. Same cards. Same loop.</strong> Dating · Agents · Experts sit on one
+        Entity / OFFER / SEEK / MATCH / RECEIPT core.{" "}
+        <a href="/universal">One box</a>
         {" · "}
         <a href="/ais">Connect an agent →</a>
         {" · "}
@@ -359,20 +405,40 @@ export function DiscoverApp() {
       </div>
 
       <section className="search-panel">
-        <div className="mode-tabs" role="tablist" aria-label="Vertical">
-          {LENSES.map((v) => (
-            <button
-              key={v.id}
-              type="button"
-              role="tab"
-              aria-selected={vertical === v.id}
-              className={vertical === v.id ? "active" : ""}
-              onClick={() => switchVertical(v.id)}
-            >
-              {v.label}
-            </button>
-          ))}
+        <div className="mode-tabs lens-primary" role="tablist" aria-label="Primary lenses">
+          {PRIMARY_LENSES.map((id) => {
+            const v = lensById(id);
+            return (
+              <button
+                key={v.id}
+                type="button"
+                role="tab"
+                aria-selected={vertical === v.id}
+                className={vertical === v.id ? "active" : ""}
+                onClick={() => switchVertical(v.id)}
+              >
+                {v.label}
+              </button>
+            );
+          })}
         </div>
+        <details className="lens-more" open={!isPrimaryLens(vertical)}>
+          <summary>More costumes — same engine, not new products</summary>
+          <div className="mode-tabs" role="tablist" aria-label="More costumes">
+            {moreLenses.map((v) => (
+              <button
+                key={v.id}
+                type="button"
+                role="tab"
+                aria-selected={vertical === v.id}
+                className={vertical === v.id ? "active" : ""}
+                onClick={() => switchVertical(v.id)}
+              >
+                {v.label}
+              </button>
+            ))}
+          </div>
+        </details>
 
         {HAS_SIDES.includes(vertical) && (
           <div className="mode-tabs side-tabs" role="tablist" aria-label="Offer or seek">
@@ -417,7 +483,17 @@ export function DiscoverApp() {
           <button className="btn btn-coral" type="button" onClick={askWhoElse} disabled={loading}>
             {cta}
           </button>
+          <button className="btn btn-ink" type="button" onClick={() => void compileQuery()} disabled={compiling}>
+            {compiling ? "Compiling…" : "Compile"}
+          </button>
         </div>
+        <CompilePanel
+          result={compiled}
+          onUseIntent={(intent) => {
+            setQuery(intent);
+            void runFind(intent, { constraints: marketConstraints() });
+          }}
+        />
         <div className="chips">
           {examples.map((example, i) => (
             <button

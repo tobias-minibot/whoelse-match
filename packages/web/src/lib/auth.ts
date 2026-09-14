@@ -1,4 +1,4 @@
-import { persistIdentity, type Caller, type WhoElseNetwork } from "@whoelse/core";
+import { persistIdentity, recordUsage, type Caller, type WhoElseNetwork } from "@whoelse/core";
 
 function bearerToken(req: Request): string | null {
   const header = req.headers.get("authorization") ?? req.headers.get("Authorization");
@@ -34,7 +34,10 @@ export async function resolveCaller(req: Request, network: WhoElseNetwork): Prom
     }
     const existed = [...network.identity.principals.values()].some((p) => p.clerkUserId === userId);
     const caller = network.identity.upsertClerkHuman(userId, displayName);
-    if (!existed) await persistIdentity(network);
+    if (!existed) {
+      await persistIdentity(network);
+      void recordUsage(network, { name: "signup", principalId: caller.principalId });
+    }
     return caller;
   } catch {
     return null;

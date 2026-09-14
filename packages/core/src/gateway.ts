@@ -27,7 +27,9 @@ import {
   toPublicWhoElseResult,
 } from "./public-dto.js";
 import { ipBucket, principalBucket, type RateAction } from "./rate-limit.js";
+import { compileAsync, type CompileOptions } from "./compile.js";
 import type { ActionType, PublicationSpec, ReceiptStatus, RegistrationSpec, WhoElseRequest } from "./types.js";
+import type { UsageEvent, UsageName } from "./usage.js";
 import {
   AGE_AFFIRMATION_TEXT,
   AGE_AFFIRMATION_VERSION,
@@ -118,6 +120,19 @@ function audit(
   void network.persist?.appendAudit(row);
 }
 
+export async function recordUsage(
+  network: WhoElseNetwork,
+  event: { name: UsageName; principalId?: string; payload?: Record<string, unknown> },
+): Promise<UsageEvent | undefined> {
+  try {
+    const full = network.usage.record(event);
+    await network.persist?.insertUsage(full);
+    return full;
+  } catch {
+    return undefined;
+  }
+}
+
 export async function gatewayFind(
   network: WhoElseNetwork,
   request: WhoElseRequest,
@@ -131,6 +146,11 @@ export async function gatewayFind(
       network.identity.assertOwns(caller, request.requester);
     }
     const result = await network.engine.whoelseAsync(request);
+    void recordUsage(network, {
+      name: "find",
+      principalId: caller?.principalId,
+      payload: { query: request.context ?? request.matchId ?? request.entityId, n: result.candidates.length },
+    });
     return { ok: true as const, status: 200 as const, body: toPublicWhoElseResult(result) };
   } catch (err) {
     return fromError(err);
@@ -422,6 +442,11 @@ export async function gatewayOnboard(
     await persistWrite(network, entity, who);
     await persistIdentity(network);
     const stored = network.engine.store.get(entity.id)!;
+    void recordUsage(network, {
+      name: "onboard",
+      principalId: who.principalId,
+      payload: { entityId: stored.id, findable: isPubliclyFindable(stored), affirmed },
+    });
     return {
       ok: true,
       status: 200,
@@ -562,6 +587,11 @@ export async function gatewayProposeMatch(
     });
     audit(network, who, "match", requesterEntityId, { matchId: match.id, candidateEntityId: input.candidateEntityId });
     await persistLoopObjects(network, { matches: [network.engine.store.match(match.id)!], receipts: [receipt] });
+    void recordUsage(network, {
+      name: "match_propose",
+      principalId: who.principalId,
+      payload: { matchId: match.id, candidateEntityId: input.candidateEntityId },
+    });
     return {
       ok: true as const,
       status: 200 as const,
@@ -661,6 +691,11 @@ export async function gatewayAct(
       outcome: input.outcome,
     });
     audit(network, who, `act:${input.action}`, actorEntityId, { matchId: input.matchId, receiptId: result.receipt.id });
+    void recordUsage(network, {
+      name: "act",
+      principalId: who.principalId,
+      payload: { matchId: input.matchId, action: input.action, receiptId: result.receipt.id },
+    });
     await persistLoopObjects(network, {
       matches: [result.match],
       receipts: [result.receipt],
@@ -724,6 +759,11 @@ export async function gatewayWriteReceipt(
     });
     const match = input.matchId ? network.engine.store.match(input.matchId) : undefined;
     audit(network, who, "receipt", actorEntityId, { receiptId: receipt.id, status: input.status });
+    void recordUsage(network, {
+      name: "receipt",
+      principalId: who.principalId,
+      payload: { receiptId: receipt.id, status: input.status },
+    });
     await persistLoopObjects(network, { receipts: [receipt], matches: match ? [match] : [] });
     return {
       ok: true as const,
@@ -739,6 +779,65 @@ export async function gatewayWriteReceipt(
   } catch (err) {
     return fromError(err);
   }
+}
+
+export async function gatewayCompile(
+  network: WhoElseNetwork,
+  input: { text?: string; context?: string; intent?: string; find?: boolean; limit?: number },
+  caller: Caller | null,
+  meta?: RequestMeta,
+) {
+  try {
+    const text = String(input.text ?? input.context ?? input.intent ?? "").trim();
+    if (!text) return fail(400, "text required");
+    if (input.find) await enforceAnonRead(network, caller, meta);
+    const compiled = await compileAsync(text, network.engine, {
+      find: Boolean(input.find),
+      limit: input.limit ?? 5,
+    } satisfies CompileOptions);
+    void recordUsage(network, {
+      name: "compile",
+      principalId: caller?.principalId,
+      payload: { classification: compiled.classification, find: Boolean(input.find) },
+    });
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: {
+        classification: compiled.classification,
+        reason: compiled.reason,
+        confidence: compiled.confidence,
+        locked: compiled.locked,
+        usedLlm: compiled.usedLlm,
+        ir: compiled.ir,
+        seekDraft: compiled.seekDraft,
+        find: compiled.find ? toPublicWhoElseResult(compiled.find) : undefined,
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+export async function gatewayStats(network: WhoElseNetwork) {
+  const usage = network.persist ? await network.persist.usageStats() : network.usage.summarize();
+  return {
+    ok: true as const,
+    status: 200 as const,
+    body: {
+      persistence: network.persist ? "postgres" : "memory",
+      seedMode: network.seedMode,
+      network: network.engine.store.stats(),
+      events: usage.counts,
+      recent: usage.recent.map((e) => ({
+        name: e.name,
+        at: e.at,
+        payload: e.payload,
+      })),
+      totalEvents: usage.total,
+      note: "Recorded product events. Not vanity metrics. Empty production is expected until people join.",
+    },
+  };
 }
 
 export async function gatewayReputation(

@@ -1,7 +1,11 @@
-import { getEngine } from "@/lib/engine";
+import { NextResponse } from "next/server";
+import { gatewayStats } from "@whoelse/core";
+import { getNetwork } from "@/lib/engine";
 
 export const runtime = "nodejs";
 
 export async function GET() {
-  return Response.json((await getEngine()).store.stats());
+  const network = await getNetwork();
+  const result = await gatewayStats(network);
+  return NextResponse.json(result.body, { status: result.status });
 }

@@ -17,13 +17,15 @@ export * from "./boot.js";
 export * from "./visibility.js";
 export * from "./onboarding.js";
 export * from "./rate-limit.js";
+export * from "./compile.js";
+export * from "./usage.js";
 export { hasOpenAi } from "./openai.js";
 export { toMachineFindResult, toMachineMatch, toMachinePair } from "./machine.js";
 export type { MachineFindResult, MachineMatch, MachineNextStep, MachinePublicationPair } from "./machine.js";
 export { PostgresRepository } from "./persist/repository.js";
 export { getNeonClient, neonClient, applyMigrations, resetNeonClient } from "./persist/client.js";
 export type { SqlClient } from "./persist/client.js";
-export { INIT_SQL, ONBOARDING_SQL, LOOP_SQL, MIGRATION_FILES } from "./persist/sql.js";
+export { INIT_SQL, ONBOARDING_SQL, LOOP_SQL, ANALYTICS_SQL, MIGRATION_FILES } from "./persist/sql.js";
 export {
   computeReputation,
   reputationBoost,
