@@ -24,6 +24,52 @@ describe("intent vocab", () => {
     assert.ok(canonical.some((i) => i.id === "i308-date" && i.label === "DATE"));
     assert.ok(canonical.some((i) => i.id === "i048-tennis" && i.kind === "activity"));
   });
+
+  it("ships the 451 product CSV as a TSV slice of the same labels", () => {
+    const raw = readFileSync(join(ROOT, "data/intent-vocab-451.tsv"), "utf8");
+    const lines = raw.trim().split("\n");
+    assert.equal(lines[0], "Original#\tLABEL\tCategory\tWho Else? Question");
+    const rows = lines.slice(1).map((line) => {
+      const [n, label, category, question] = line.split("\t");
+      return { n, label, category, question };
+    });
+    assert.ok(rows.length >= 400, `got ${rows.length}`);
+    assert.equal(rows.length, 452);
+    const required = [
+      "DATE",
+      "TENNIS",
+      "RESTAURANT",
+      "APARTMENT",
+      "SCHOOL",
+      "FLIGHT",
+      "HOTEL",
+      "JOB",
+      "REMOTE WORK",
+      "AI TOOLS",
+      "PERSONAL TRAINER",
+      "RUNNING",
+      "BABYSITTER",
+      "DOCTOR",
+      "INSURANCE",
+      "PHOTOGRAPHER",
+      "WEDDING",
+      "VEGAN FOOD",
+      "METRO",
+      "LAWYER",
+      "INVESTMENT",
+    ];
+    const labels = new Set(rows.map((r) => r.label));
+    for (const label of required) assert.ok(labels.has(label), label);
+    const date = rows.find((r) => r.label === "DATE");
+    const tennis = rows.find((r) => r.label === "TENNIS");
+    assert.equal(date?.n, "308");
+    assert.equal(date?.question, "Who else should I date?");
+    assert.equal(tennis?.n, "48");
+    assert.match(tennis?.question ?? "", /tennis/i);
+    const vocab = loadIntentVocab();
+    const canonical = new Set(vocab.intents.filter((i) => i.canonical).map((i) => i.label));
+    for (const row of rows) assert.ok(canonical.has(row.label), row.label);
+  });
 });
 
 describe("compound IR", () => {

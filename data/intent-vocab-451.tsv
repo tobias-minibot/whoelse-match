@@ -1,0 +1,453 @@
+Original#	LABEL	Category	Who Else? Question
+1	DOCTOR	BODY & HEALTH	Who else is a doctor near me?
+2	DENTIST	BODY & HEALTH	Who else is a dentist near me?
+3	NURSE	BODY & HEALTH	Who else is a nurse near me?
+4	PHARMACY	BODY & HEALTH	Who else is a pharmacy near me?
+5	HOSPITAL	BODY & HEALTH	Who else is a hospital near me?
+6	SURGEON	BODY & HEALTH	Who else is a surgeon near me?
+7	PHYSIOTHERAPIST	BODY & HEALTH	Who else is a physiotherapist near me?
+8	CHIROPRACTOR	BODY & HEALTH	Who else is a chiropractor near me?
+9	OPTICIAN	BODY & HEALTH	Who else is an optician near me?
+10	AUDIOLOGIST	BODY & HEALTH	Who else is an audiologist near me?
+11	DERMATOLOGIST	BODY & HEALTH	Who else is a dermatologist near me?
+12	GYNAECOLOGIST	BODY & HEALTH	Who else is a gynaecologist near me?
+13	PSYCHIATRIST	BODY & HEALTH	Who else is a psychiatrist near me?
+14	PSYCHOLOGIST	BODY & HEALTH	Who else is a psychologist near me?
+15	THERAPIST	BODY & HEALTH	Who else is a therapist near me?
+16	COUNSELLOR	BODY & HEALTH	Who else is a counsellor near me?
+17	NUTRITIONIST	BODY & HEALTH	Who else is a nutritionist near me?
+18	DIETICIAN	BODY & HEALTH	Who else is a dietician near me?
+19	BLOOD TEST	BODY & HEALTH	Who else is a blood test near me?
+20	VACCINATION	BODY & HEALTH	Who else is a vaccination near me?
+21	AMBULANCE	BODY & HEALTH	Who else is an ambulance within 5 km?
+22	1ST AID	BODY & HEALTH	Who else is a first aid near me?
+23	REHAB	BODY & HEALTH	Who else is a rehab near me?
+24	ADDICTION	BODY & HEALTH	Who else is an addiction near me?
+25	PALLIATIVE CARE	BODY & HEALTH	Who else is a palliative care near me?
+26	HOSPICE	BODY & HEALTH	Who else is a hospice near me?
+27	FERTILITY	BODY & HEALTH	Who else is a fertility near me?
+28	MIDWIFE	BODY & HEALTH	Who else is a midwife near me?
+29	CONTRACEPTION	BODY & HEALTH	Who else is a contraception near me?
+30	STI TEST	BODY & HEALTH	Who else is a sti test near me?
+31	HEARING AID	BODY & HEALTH	Who else is a hearing aid near me?
+32	WHEELCHAIR	BODY & HEALTH	Who else is a wheelchair near me?
+33	PROSTHETICS	BODY & HEALTH	Who else is a prosthetics near me?
+34	HOME CARE	BODY & HEALTH	Who else is a home care near me?
+35	ELDER CARE	BODY & HEALTH	Who else is an elder care near me?
+36	DEMENTIA CARE	BODY & HEALTH	Who else is a dementia care near me?
+37	GYM	FITNESS & SPORT	Who else is a gym near me?
+38	PERSONAL TRAINER	FITNESS & SPORT	Who else is a personal trainer near me?
+39	YOGA	FITNESS & SPORT	Who else is a yoga near me?
+40	PILATES	FITNESS & SPORT	Who else is a pilates near me?
+41	SWIMMING	FITNESS & SPORT	Who else is a swimming near me?
+42	RUNNING	FITNESS & SPORT	Who else is a running near me?
+43	CYCLING	FITNESS & SPORT	Who else is a cycling near me?
+44	CLIMBING	FITNESS & SPORT	Who else is a climbing near me?
+45	MARTIAL ARTS	FITNESS & SPORT	Who else is a martial arts near me?
+46	DANCE	FITNESS & SPORT	Who else is a dance near me?
+47	FOOTBALL	FITNESS & SPORT	Who else is a football near me?
+48	TENNIS	FITNESS & SPORT	Who else is a tennis near me?
+49	GOLF	FITNESS & SPORT	Who else is a golf near me?
+50	SKIING	FITNESS & SPORT	Who else is a skiing near me?
+51	SURFING	FITNESS & SPORT	Who else is a surfing near me?
+52	BOXING	FITNESS & SPORT	Who else is a boxing near me?
+53	CROSSFIT	FITNESS & SPORT	Who else is a crossfit near me?
+54	SPORTS TEAM	FITNESS & SPORT	Who else is a sports team near me?
+55	SPORTS COACH	FITNESS & SPORT	Who else is a sports coach near me?
+56	SPORTS GEAR	FITNESS & SPORT	Who else is a sports gear near me?
+57	STADIUM	FITNESS & SPORT	Who else is a stadium near me?
+58	POOL	FITNESS & SPORT	Who else is a pool near me?
+59	SAUNA	FITNESS & SPORT	Who else is a sauna near me?
+60	RESTAURANT	FOOD & DRINK	Who else has a restaurant table Friday?
+61	FAST FOOD	FOOD & DRINK	Who else has a fast food?
+62	CAFE	FOOD & DRINK	Who else has a cafe?
+63	BAKERY	FOOD & DRINK	Who else has a bakery?
+64	GROCERY	FOOD & DRINK	Who else has a grocery?
+65	BUTCHER	FOOD & DRINK	Who else has a butcher?
+66	FISHMONGER	FOOD & DRINK	Who else has a fishmonger?
+67	GREENGROCER	FOOD & DRINK	Who else has a greengrocer?
+68	FOOD DELIVERY	FOOD & DRINK	Who else is a food delivery within 5 km?
+69	MEAL KIT	FOOD & DRINK	Who else has a meal kit?
+70	FOOD SHARING	FOOD & DRINK	Who else has a food sharing?
+71	CATERING	FOOD & DRINK	Who else has a catering?
+72	COOKING CLASS	FOOD & DRINK	Who else has a cooking class?
+73	RECIPE	FOOD & DRINK	Who else has a recipe?
+74	DIET PLAN	FOOD & DRINK	Who else has a diet plan?
+75	VEGAN FOOD	FOOD & DRINK	Who else has a vegan food?
+76	HALAL FOOD	FOOD & DRINK	Who else has a halal food?
+77	KOSHER FOOD	FOOD & DRINK	Who else has a kosher food?
+78	WINE	FOOD & DRINK	Who else has a wine?
+79	BEER	FOOD & DRINK	Who else has a beer?
+80	COCKTAIL	FOOD & DRINK	Who else has a cocktail?
+81	WATER	FOOD & DRINK	Who else has a water?
+82	COFFEE	FOOD & DRINK	Who else has a coffee?
+83	TEA	FOOD & DRINK	Who else has a tea?
+84	SNACK	FOOD & DRINK	Who else has a snack?
+85	PICNIC	FOOD & DRINK	Who else has a picnic?
+86	FOOD BANK	FOOD & DRINK	Who else has a food bank?
+87	HOUSE	HOME & LIVING	Who else is a house near me?
+88	APARTMENT	HOME & LIVING	Who else has a 1-bedroom apartment near me?
+89	FLAT SHARE	HOME & LIVING	Who else is a flat share near me?
+90	STUDENT HOUSING	HOME & LIVING	Who else is a student housing near me?
+91	SOCIAL HOUSING	HOME & LIVING	Who else has a social housing I qualify for?
+92	MORTGAGE	HOME & LIVING	Who else is a mortgage near me?
+93	RENT	HOME & LIVING	Who else is a rent near me?
+94	ESTATE AGENT	HOME & LIVING	Who else is an estate agent near me?
+95	LANDLORD	HOME & LIVING	Who else is a landlord near me?
+96	PROPERTY SURVEY	HOME & LIVING	Who else is a property survey near me?
+97	INTERIOR DESIGN	HOME & LIVING	Who else is an interior design near me?
+98	ARCHITECT	HOME & LIVING	Who else is an architect near me?
+99	RENOVATION	HOME & LIVING	Who else is a renovation near me?
+100	BUILDER	HOME & LIVING	Who else is a builder near me?
+101	PLUMBER	HOME & LIVING	Who else is a plumber near me?
+102	ELECTRICIAN	HOME & LIVING	Who else is an electrician near me?
+103	PAINTER	HOME & LIVING	Who else is a painter near me?
+104	TILER	HOME & LIVING	Who else is a tiler near me?
+105	CARPENTER	HOME & LIVING	Who else is a carpenter near me?
+106	GLAZIER	HOME & LIVING	Who else is a glazier near me?
+107	ROOFER	HOME & LIVING	Who else is a roofer near me?
+108	TIMBERMAN	HOME & LIVING	Who else is a timberman near me?
+109	LOCKSMITH	HOME & LIVING	Who else is a locksmith near me?
+110	CLEANER	HOME & LIVING	Who else is a cleaner near me?
+111	JANITOR	HOME & LIVING	Who else is a janitor near me?
+112	GARDENER	HOME & LIVING	Who else is a gardener near me?
+113	LANDSCAPER	HOME & LIVING	Who else is a landscaper near me?
+114	PEST CONTROL	HOME & LIVING	Who else is a pest control near me?
+115	MOVER	HOME & LIVING	Who else is a mover near me?
+116	STORAGE	HOME & LIVING	Who else is a storage near me?
+117	FURNITURE	HOME & LIVING	Who else is a furniture near me?
+118	APPLIANCE	HOME & LIVING	Who else is an appliance near me?
+119	APPLIANCE REPAIR	HOME & LIVING	Who else is an appliance repair near me?
+120	HOME SECURITY	HOME & LIVING	Who else is a home security near me?
+121	SMART HOME	HOME & LIVING	Who else is a smart home near me?
+122	SOLAR PANELS	HOME & LIVING	Who else is a solar panels near me?
+123	INSULATION	HOME & LIVING	Who else is an insulation near me?
+124	HEATING	HOME & LIVING	Who else is a heating near me?
+125	AIR CONDITIONING	HOME & LIVING	Who else is an air conditioning near me?
+126	WATER SOFTENER	HOME & LIVING	Who else is a water softener near me?
+127	INTERNET	HOME & LIVING	Who else is an internet near me?
+128	TV	HOME & LIVING	Who else is a tv near me?
+129	PHONE	HOME & LIVING	Who else is a phone near me?
+130	CAR	TRANSPORT & MOBILITY	Who else is a car near me?
+131	CAR REPAIR	TRANSPORT & MOBILITY	Who else is a car repair near me?
+132	CAR WASH	TRANSPORT & MOBILITY	Who else is a car wash near me?
+133	CAR RENTAL	TRANSPORT & MOBILITY	Who else has a bookable car rental?
+134	CAR CHARGING	TRANSPORT & MOBILITY	Who else is a car charging near me?
+135	GARAGE	TRANSPORT & MOBILITY	Who else is a garage near me?
+136	PARKING	TRANSPORT & MOBILITY	Who else has parking with spots remaining?
+137	TAXI	TRANSPORT & MOBILITY	Who else can give me a ride?
+138	RIDESHARE	TRANSPORT & MOBILITY	Who else can give me a ride?
+139	BUS	TRANSPORT & MOBILITY	Who else is a bus near me?
+140	TRAIN	TRANSPORT & MOBILITY	Who else is a train near me?
+141	METRO	TRANSPORT & MOBILITY	Who else is a metro near me?
+142	TRAM	TRANSPORT & MOBILITY	Who else is a tram near me?
+143	FERRY	TRANSPORT & MOBILITY	Who else is a ferry near me?
+144	FLIGHT	TRANSPORT & MOBILITY	Who else has a bookable flight?
+145	BIKE	TRANSPORT & MOBILITY	Who else is a bike near me?
+146	BIKE REPAIR	TRANSPORT & MOBILITY	Who else is a bike repair near me?
+147	CYCLE SHOP	TRANSPORT & MOBILITY	Who else is a cycle shop near me?
+148	E-SCOOTER	TRANSPORT & MOBILITY	Who else is an e-scooter near me?
+149	SCOOTER	TRANSPORT & MOBILITY	Who else is a scooter near me?
+150	MOTORBIKE	TRANSPORT & MOBILITY	Who else is a motorbike near me?
+151	BOAT	TRANSPORT & MOBILITY	Who else is a boat near me?
+152	MOVING SERVICE	TRANSPORT & MOBILITY	Who else is a moving service near me?
+153	BUS SHUTTLE	TRANSPORT & MOBILITY	Who else is a bus shuttle near me?
+154	AIRPORT TRANSFER	TRANSPORT & MOBILITY	Who else is an airport transfer near me?
+155	HITCHHIKE	TRANSPORT & MOBILITY	Who else is a hitchhike near me?
+156	BIKE MESSENGER	TRANSPORT & MOBILITY	Who else is a bike messenger within 5 km?
+157	BANK	FINANCE	Who else has a bank I qualify for?
+158	ATM	FINANCE	Who else is an atm near me?
+159	SAVINGS	FINANCE	Who else has a savings I qualify for?
+160	LOAN	FINANCE	Who else has a loan I qualify for?
+162	INSURANCE	FINANCE	Who else has an insurance I qualify for?
+163	INVESTMENT	FINANCE	Who else has an investment I qualify for?
+164	PENSION	FINANCE	Who else has a pension I qualify for?
+165	TAX	FINANCE	Who else is a tax near me?
+166	ACCOUNTANT	FINANCE	Who else is an accountant near me?
+167	FINANCIAL ADVISOR	FINANCE	Who else is a financial advisor near me?
+168	CRYPTO	FINANCE	Who else has a crypto I qualify for?
+169	CROWDFUNDING	FINANCE	Who else is a crowdfunding near me?
+170	DONATIONS	FINANCE	Who else is a donations near me?
+171	BUDGETING	FINANCE	Who else is a budgeting near me?
+172	INVOICE	FINANCE	Who else is an invoice near me?
+173	PAYROLL	FINANCE	Who else is a payroll near me?
+174	CREDIT SCORE	FINANCE	Who else has a credit score I qualify for?
+175	REMITTANCE	FINANCE	Who else has a remittance I qualify for?
+176	WEALTH	FINANCE	Who else has a wealth I qualify for?
+177	JOB	WORK	Who else is hiring?
+178	INTERNSHIP	WORK	Who else is an internship near me?
+179	FREELANCE	WORK	Who else is a freelance near me?
+180	CONTRACT	WORK	Who else is a contract near me?
+181	RECRUITER	WORK	Who else is a recruiter near me?
+182	RESUME	WORK	Who else is a resume near me?
+183	INTERVIEW	WORK	Who else is an interview near me?
+184	COWORKING	WORK	Who else is a coworking near me?
+185	MENTOR	WORK	Who else is a mentor near me?
+186	COFOUNDER	WORK	Who else is a cofounder near me?
+187	COLLABORATOR	WORK	Who else is a collaborator near me?
+188	CONSULTANT	WORK	Who else is a consultant near me?
+189	CAREER COACH	WORK	Who else is a career coach near me?
+190	TEMP	WORK	Who else is a temp near me?
+191	GIG	WORK	Who else is a gig near me?
+192	REMOTE WORK	WORK	Who else is a remote work near me?
+193	UNION	WORK	Who else is an union near me?
+194	APPRENTICESHIP	WORK	Who else is an apprenticeship near me?
+195	SIDE HUSTLE	WORK	Who else is a side hustle near me?
+197	TUTOR	EDUCATION	Who else is a tutor near me?
+198	TEACHER	EDUCATION	Who else is a teacher near me?
+199	SCHOOL	EDUCATION	Who else is a school near me?
+200	COURSE	EDUCATION	Who else is a course near me?
+201	BOOTCAMP	EDUCATION	Who else is a bootcamp near me?
+202	LANGUAGE LESSON	EDUCATION	Who else is a language lesson near me?
+203	MUSIC LESSON	EDUCATION	Who else is a music lesson near me?
+204	TEST PREP	EDUCATION	Who else is a test prep near me?
+205	COLLEGE COUNSELOR	EDUCATION	Who else is a college counselor near me?
+206	LIBRARY	EDUCATION	Who else is a library near me?
+207	WORKSHOP	EDUCATION	Who else is a workshop near me?
+209	UNIVERSITY	EDUCATION	Who else is an university near me?
+210	PRESCHOOL	EDUCATION	Who else is a preschool near me?
+211	HOMESCHOOL	EDUCATION	Who else is a homeschool near me?
+212	MOOC	EDUCATION	Who else is a mooc near me?
+213	SCHOLARSHIP	EDUCATION	Who else has a scholarship I qualify for?
+214	STUDY GROUP	EDUCATION	Who else is a study group near me?
+215	EXCHANGE YEAR	EDUCATION	Who else is an exchange year near me?
+216	VOCATIONAL	EDUCATION	Who else is a vocational near me?
+217	LITERACY	EDUCATION	Who else is a literacy near me?
+218	STEM CAMP	EDUCATION	Who else is a stem camp near me?
+219	ADULT ED	EDUCATION	Who else is an adult ed near me?
+220	MUSEUM	CULTURE	Who else is a museum near me?
+221	GALLERY	CULTURE	Who else is a gallery near me?
+222	THEATER	CULTURE	Who else is a theater near me?
+223	OPERA	CULTURE	Who else is an opera near me?
+224	BALLET	CULTURE	Who else is a ballet near me?
+225	CONCERT HALL	CULTURE	Who else is a concert hall near me?
+226	HERITAGE	CULTURE	Who else is a heritage near me?
+227	MONUMENT	CULTURE	Who else is a monument near me?
+228	ARCHIVE	CULTURE	Who else is an archive near me?
+229	FILM CLUB	CULTURE	Who else is a film club near me?
+230	BOOK CLUB	CULTURE	Who else is a book club near me?
+231	CHOIR	CULTURE	Who else is a choir near me?
+232	ORCHESTRA	CULTURE	Who else is an orchestra near me?
+233	COMMUNITY RADIO	CULTURE	Who else is a community radio near me?
+234	LANGUAGE CAFE	CULTURE	Who else is a language cafe near me?
+235	RELIGION	CULTURE	Who else is a religion near me?
+236	TEMPLE	CULTURE	Who else is a temple near me?
+237	CHURCH	CULTURE	Who else is a church near me?
+238	MOSQUE	CULTURE	Who else is a mosque near me?
+239	SYNAGOGUE	CULTURE	Who else is a synagogue near me?
+240	FESTIVAL	CULTURE	Who else is a festival near me?
+241	CARNIVAL	CULTURE	Who else is a carnival near me?
+242	PARADE	CULTURE	Who else is a parade near me?
+243	TRADITION	CULTURE	Who else is a tradition near me?
+244	FOLK DANCE	CULTURE	Who else is a folk dance near me?
+245	BABYSITTER	FAMILY	Who else is a babysitter near me?
+246	NANNY	FAMILY	Who else is a nanny near me?
+247	DAYCARE	FAMILY	Who else is a daycare near me?
+248	PLAYDATE	FAMILY	Who else is a playdate near me?
+249	PARENTING CLASS	FAMILY	Who else is a parenting class near me?
+250	ADOPTION	FAMILY	Who else has an adoption I qualify for?
+251	FOSTER CARE	FAMILY	Who else has a foster care I qualify for?
+252	CHILD SUPPORT	FAMILY	Who else is a child support near me?
+253	FAMILY THERAPY	FAMILY	Who else is a family therapy near me?
+254	MARRIAGE COUNSEL	FAMILY	Who else is a marriage counsel near me?
+255	KINSHIP	FAMILY	Who else is a kinship near me?
+256	TEEN MENTOR	FAMILY	Who else is a teen mentor near me?
+257	FAMILY MEDIATION	FAMILY	Who else is a family mediation near me?
+258	SURROGACY	FAMILY	Who else has a surrogacy I qualify for?
+260	AFTER SCHOOL	FAMILY	Who else is an after school near me?
+261	PARENTS CIRCLE	FAMILY	Who else is a parents circle near me?
+262	COPARENT	FAMILY	Who else is a coparent near me?
+263	HAIRDRESSER	BEAUTY	Who else is a hairdresser near me?
+264	BARBER	BEAUTY	Who else is a barber near me?
+265	NAILS	BEAUTY	Who else is a nails near me?
+266	SPA	BEAUTY	Who else is a spa near me?
+267	MAKEUP	BEAUTY	Who else is a makeup near me?
+268	TANNING	BEAUTY	Who else is a tanning near me?
+269	WAXING	BEAUTY	Who else is a waxing near me?
+270	TATTOO	BEAUTY	Who else is a tattoo near me?
+271	PIERCING	BEAUTY	Who else is a piercing near me?
+272	SKINCARE	BEAUTY	Who else is a skincare near me?
+273	BEAUTY SALON	BEAUTY	Who else is a beauty salon near me?
+274	LASHES	BEAUTY	Who else is a lashes near me?
+275	BROW BAR	BEAUTY	Who else is a brow bar near me?
+276	COSMETICS	BEAUTY	Who else is a cosmetics near me?
+277	MASSAGE BAR	BEAUTY	Who else is a massage bar near me?
+278	BARBERSHOP	BEAUTY	Who else is a barbershop near me?
+279	VET	PETS	Who else is a vet near me?
+280	PET SITTER	PETS	Who else is a pet sitter near me?
+281	DOG WALKER	PETS	Who else is a dog walker near me?
+282	GROOMER	PETS	Who else is a groomer near me?
+283	PET TRAINER	PETS	Who else is a pet trainer near me?
+284	PET BOARDING	PETS	Who else is a pet boarding near me?
+285	PET ADOPTION	PETS	Who else is a pet adoption near me?
+286	PET FOOD	PETS	Who else is a pet food near me?
+287	PET INSURANCE	PETS	Who else has a pet insurance I qualify for?
+289	CAT CAFE	PETS	Who else is a cat cafe near me?
+290	AQUARIUM SHOP	PETS	Who else is an aquarium shop near me?
+291	HORSE STABLE	PETS	Who else is a horse stable near me?
+292	PET CEMETERY	PETS	Who else is a pet cemetery near me?
+293	WILDLIFE RESCUE	PETS	Who else is a wildlife rescue near me?
+294	CLOTHING	FASHION	Who else has a clothing?
+295	SHOES	FASHION	Who else has a shoes?
+296	TAILOR	FASHION	Who else has a tailor?
+297	DRY CLEANER	FASHION	Who else has a dry cleaner?
+298	FASHION DESIGNER	FASHION	Who else has a fashion designer?
+299	VINTAGE	FASHION	Who else has a vintage?
+300	THRIFT	FASHION	Who else has a thrift?
+301	JEWELRY	FASHION	Who else has a jewelry?
+302	WATCH	FASHION	Who else has a watch?
+303	HANDBAG	FASHION	Who else has a handbag?
+304	ALTERATIONS	FASHION	Who else has an alterations?
+305	UNIFORM	FASHION	Who else has an uniform?
+306	COSTUME	FASHION	Who else has a costume?
+307	STREETWEAR	FASHION	Who else has a streetwear?
+308	DATE	SOCIAL & COMMUNITY	Who else should I date?
+309	FRIEND	SOCIAL & COMMUNITY	Who else wants a friend?
+310	HANGOUT	SOCIAL & COMMUNITY	Who else wants a hangout?
+311	ACTIVITY PARTNER	SOCIAL & COMMUNITY	Who else wants an activity partner?
+312	MATCHMAKER	SOCIAL & COMMUNITY	Who else wants a matchmaker?
+313	RELATIONSHIP	SOCIAL & COMMUNITY	Who else wants a relationship?
+314	MEETUP	SOCIAL & COMMUNITY	Who else wants a meetup?
+315	CLUB	SOCIAL & COMMUNITY	Who else wants a club?
+316	COMMUNITY	SOCIAL & COMMUNITY	Who else wants a community?
+317	NEIGHBOR	SOCIAL & COMMUNITY	Who else wants a neighbor?
+318	LANGUAGE EXCHANGE	SOCIAL & COMMUNITY	Who else wants a language exchange?
+319	DINING COMPANION	SOCIAL & COMMUNITY	Who else wants a dining companion?
+320	TRAVEL COMPANION	SOCIAL & COMMUNITY	Who else wants a travel companion?
+321	ACCOUNTABILITY PARTNER	SOCIAL & COMMUNITY	Who else wants an accountability partner?
+322	SUPPORT GROUP	SOCIAL & COMMUNITY	Who else wants a support group?
+323	VOLUNTEER BUDDY	SOCIAL & COMMUNITY	Who else wants a volunteer buddy?
+324	FAITH GROUP	SOCIAL & COMMUNITY	Who else wants a faith group?
+325	SPORTS BUDDY	SOCIAL & COMMUNITY	Who else wants a sports buddy?
+326	GAME NIGHT	SOCIAL & COMMUNITY	Who else wants a game night?
+327	NEW IN TOWN	SOCIAL & COMMUNITY	Who else wants a new in town?
+328	COWORKING BUDDY	SOCIAL & COMMUNITY	Who else wants a coworking buddy?
+329	PARENTS GROUP	SOCIAL & COMMUNITY	Who else wants a parents group?
+330	LGBTQ SPACE	SOCIAL & COMMUNITY	Who else wants a lgbtq space?
+331	SENIOR SOCIAL	SOCIAL & COMMUNITY	Who else wants a senior social?
+332	YOUTH GROUP	SOCIAL & COMMUNITY	Who else wants a youth group?
+333	HOST FAMILY	SOCIAL & COMMUNITY	Who else wants a host family?
+334	RECYCLING	ENV	Who else is a recycling near me?
+335	COMPOST	ENV	Who else is a compost near me?
+336	SOLAR COOP	ENV	Who else is a solar coop near me?
+337	COMMUNITY GARDEN	ENV	Who else is a community garden near me?
+338	TREE PLANTING	ENV	Who else is a tree planting near me?
+339	CLIMATE GROUP	ENV	Who else is a climate group near me?
+340	REPAIR CAFE	ENV	Who else is a repair cafe near me?
+341	TOOL LIBRARY	ENV	Who else is a tool library near me?
+342	ZERO WASTE	ENV	Who else is a zero waste near me?
+343	WATER QUALITY	ENV	Who else is a water quality near me?
+344	AIR QUALITY	ENV	Who else is an air quality near me?
+345	WILDLIFE	ENV	Who else is a wildlife near me?
+346	PARK CLEANUP	ENV	Who else is a park cleanup near me?
+347	BIKE ADVOCACY	ENV	Who else is a bike advocacy near me?
+348	TRANSIT ADVOCACY	ENV	Who else is a transit advocacy near me?
+349	ENERGY AUDIT	ENV	Who else is an energy audit near me?
+350	CONSERVATION	ENV	Who else is a conservation near me?
+351	MUTUAL AID	ENV	Who else is a mutual aid near me?
+352	AIRBNB	TRAVEL	Who else has a bookable airbnb?
+353	HOTEL	TRAVEL	Who else has a bookable hotel?
+354	HOSTEL	TRAVEL	Who else has a bookable hostel?
+355	SHORT STAY	TRAVEL	Who else has a bookable short stay?
+356	TRAVEL AGENT	TRAVEL	Who else is a travel agent near me?
+357	TOUR GUIDE	TRAVEL	Who else is a tour guide near me?
+358	CAMPING	TRAVEL	Who else is a camping near me?
+359	GLAMPING	TRAVEL	Who else has a bookable glamping?
+360	HOMESTAY	TRAVEL	Who else has a bookable homestay?
+361	COUCHSURF	TRAVEL	Who else is a couchsurf near me?
+363	RESORT	TRAVEL	Who else has a bookable resort?
+364	CRUISE	TRAVEL	Who else has a bookable cruise?
+365	ROAD TRIP	TRAVEL	Who else is a road trip near me?
+366	DAY TRIP	TRAVEL	Who else is a day trip near me?
+367	ECO LODGE	TRAVEL	Who else has a bookable eco lodge?
+368	PHOTOGRAPHER	CREATIVE	Who else is a photographer near me?
+369	VIDEOGRAPHER	CREATIVE	Who else is a videographer near me?
+370	DJ	CREATIVE	Who else is a dj near me?
+371	BAND	CREATIVE	Who else is a band near me?
+372	WRITER	CREATIVE	Who else is a writer near me?
+373	ILLUSTRATOR	CREATIVE	Who else is an illustrator near me?
+374	DESIGNER	CREATIVE	Who else is a designer near me?
+375	POTTER	CREATIVE	Who else is a potter near me?
+376	WOODWORKER	CREATIVE	Who else is a woodworker near me?
+377	FILMMAKER	CREATIVE	Who else is a filmmaker near me?
+378	PODCASTER	CREATIVE	Who else is a podcaster near me?
+379	PAINTER ART	CREATIVE	Who else is a painter art near me?
+380	SCULPTOR	CREATIVE	Who else is a sculptor near me?
+381	COMPOSER	CREATIVE	Who else is a composer near me?
+382	OPEN MIC	CREATIVE	Who else is an open mic near me?
+383	STUDIO SPACE	CREATIVE	Who else is a studio space near me?
+384	LAWYER	LEGAL	Who else is a lawyer near me?
+385	NOTARY	LEGAL	Who else is a notary near me?
+386	PARALEGAL	LEGAL	Who else is a paralegal near me?
+387	IMMIGRATION	LEGAL	Who else is an immigration near me?
+388	WILLS	LEGAL	Who else is a wills near me?
+389	ESTATE	LEGAL	Who else is an estate near me?
+390	CONTRACT REVIEW	LEGAL	Who else is a contract review near me?
+391	PATENT	LEGAL	Who else is a patent near me?
+392	TRADEMARK	LEGAL	Who else is a trademark near me?
+393	SMALL CLAIMS	LEGAL	Who else is a small claims near me?
+394	MEDIATION	LEGAL	Who else is a mediation near me?
+395	APOSTILLE	LEGAL	Who else is an apostille near me?
+396	INCORPORATION	LEGAL	Who else is an incorporation near me?
+397	LEGAL AID	LEGAL	Who else has a legal aid I qualify for?
+399	AI TOOLS	DIGITAL & TECH	Who else can summarize this PDF?
+400	PDF SUMMARIZER	DIGITAL & TECH	Who else can help with pdf summarizer?
+401	WEB BROWSER	DIGITAL & TECH	Who else can help with web browser?
+402	TRANSLATOR	DIGITAL & TECH	Who else can help with translator?
+403	VERIFIER	DIGITAL & TECH	Who else can help with verifier?
+404	FAILOVER	DIGITAL & TECH	Who else can help with failover?
+405	DELEGATE	DIGITAL & TECH	Who else can help with delegate?
+406	CHEAP RUNNER	DIGITAL & TECH	Who else can help with cheap runner?
+407	WORKFLOW	DIGITAL & TECH	Who else can help with workflow?
+408	CAPABILITY INDEX	DIGITAL & TECH	Who else can help with capability index?
+409	VOICE ROUTER	DIGITAL & TECH	Who else can help with voice router?
+410	MCP SERVER	DIGITAL & TECH	Who else can help with mcp server?
+411	PRICE QUOTE	DIGITAL & TECH	Who else can help with price quote?
+412	SCHEDULER	DIGITAL & TECH	Who else can help with scheduler?
+413	EMBEDDING INDEX	DIGITAL & TECH	Who else can help with embedding index?
+414	RESEARCHER	DIGITAL & TECH	Who else can help with researcher?
+415	EVALUATOR	DIGITAL & TECH	Who else can help with evaluator?
+416	MODERATOR	DIGITAL & TECH	Who else can help with moderator?
+417	AUTOMATION	DIGITAL & TECH	Who else can help with automation?
+419	CONCERT	EVENTS	Who else has a bookable concert?
+420	MOVIE	EVENTS	Who else has a bookable movie?
+421	TICKET	EVENTS	Who else has a bookable ticket?
+422	CONFERENCE	EVENTS	Who else is going to a conference?
+423	WEDDING	EVENTS	Who else is going to a wedding?
+424	FUNERAL	EVENTS	Who else is going to a funeral?
+425	BIRTHDAY	EVENTS	Who else is going to a birthday?
+426	GALA	EVENTS	Who else is going to a gala?
+427	TRADE SHOW	EVENTS	Who else is going to a trade show?
+428	SPORTS EVENT	EVENTS	Who else is going to a sports event?
+429	WATCH PARTY	EVENTS	Who else is going to a watch party?
+430	OPENING NIGHT	EVENTS	Who else is going to an opening night?
+431	LECTURE	EVENTS	Who else is going to a lecture?
+432	PROTEST	EVENTS	Who else is going to a protest?
+433	MARKET	EVENTS	Who else is going to a market?
+434	FAIR	EVENTS	Who else is going to a fair?
+435	EXPO	EVENTS	Who else is going to an expo?
+436	NETWORKING NIGHT	EVENTS	Who else is going to a networking night?
+437	REUNION	EVENTS	Who else is going to a reunion?
+438	COMMENCEMENT	EVENTS	Who else is going to a commencement?
+439	HACKATHON	EVENTS	Who else is going to a hackathon?
+440	POP-UP	EVENTS	Who else is going to a pop-up?
+441	CORNER SHOP	LOCAL	Who else is a corner shop near me?
+442	HARDWARE STORE	LOCAL	Who else is a hardware store near me?
+443	LAUNDROMAT	LOCAL	Who else is a laundromat near me?
+444	FARMERS MARKET	LOCAL	Who else is a farmers market near me?
+445	TOWN HALL	LOCAL	Who else is a town hall near me?
+446	COMMUNITY CENTER	LOCAL	Who else is a community center near me?
+447	LOST AND FOUND	LOCAL	Who else is a lost and found near me?
+448	NOTICE BOARD	LOCAL	Who else is a notice board near me?
+449	NEIGHBORHOOD WATCH	LOCAL	Who else is a neighborhood watch near me?
+450	OPEN NOW SHOP	LOCAL	Who else is an open now shop near me?
+451	REPAIR SHOP	LOCAL	Who else is a repair shop near me?
+452	COPY SHOP	LOCAL	Who else is a copy shop near me?
+453	KEY CUTTING	LOCAL	Who else is a key cutting near me?
+454	CHARITY SHOP	LOCAL	Who else is a charity shop near me?
+455	MUNICIPAL SERVICE	LOCAL	Who else is a municipal service near me?
+456	LOCAL GUIDE	LOCAL	Who else is a local guide near me?
+457	POST OFFICE	LOCAL	Who else is a post office near me?
+458	FIRE STATION	LOCAL	Who else is a fire station near me?
+459	PERMIT DESK	LOCAL	Who else is a permit desk near me?
+460	ROOM BOOKING	LOCAL	Who else has a bookable room booking?

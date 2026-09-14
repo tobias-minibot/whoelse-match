@@ -7,7 +7,7 @@
     "cabinetCount": 505,
     "uniqueLabels": 452,
     "coverage": "evals/intent-coverage/intents.json",
-    "humanProductCsv": "451-row product catalog (Category, Who Else? Question, Source Label, Original #, Status, Routing). Overlapping Source Labels map onto these IDs. Do not fork a second ontology."
+    "humanProductCsv": "data/intent-vocab-451.tsv — product-facing Source Label slice (Category, Who Else? Question, Original #). Reconstructed from the 505 cabinet unique labels (452). The attached 451-row CSV is the same vocabulary, not a second ontology."
   },
   "kinds": [
     "atomic",

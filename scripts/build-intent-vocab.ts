@@ -62,7 +62,38 @@ type CatalogIntent = {
   alias_of?: string;
 };
 
-type CoverageRow = { id: string; class: string; duplicateLabel: boolean; aliasOf?: string };
+type CoverageRow = {
+  id: string;
+  class: string;
+  duplicateLabel: boolean;
+  aliasOf?: string;
+  canonicalQuery?: string;
+};
+
+/** Product-facing Source Labels Tobias listed on the 451-row CSV. Same strings as the 505 cabinet. */
+const PRODUCT_SLICE_REQUIRED = [
+  "DATE",
+  "TENNIS",
+  "RESTAURANT",
+  "APARTMENT",
+  "SCHOOL",
+  "FLIGHT",
+  "HOTEL",
+  "JOB",
+  "REMOTE WORK",
+  "AI TOOLS",
+  "PERSONAL TRAINER",
+  "RUNNING",
+  "BABYSITTER",
+  "DOCTOR",
+  "INSURANCE",
+  "PHOTOGRAPHER",
+  "WEDDING",
+  "VEGAN FOOD",
+  "METRO",
+  "LAWYER",
+  "INVESTMENT",
+] as const;
 
 const catalog = JSON.parse(
   readFileSync(join(ROOT, "legacy/intent-protocol/intent-protocol.production-v0.3.compact.json"), "utf8"),
@@ -109,7 +140,7 @@ const vocab = {
     uniqueLabels: firstByLabel.size,
     coverage: "evals/intent-coverage/intents.json",
     humanProductCsv:
-      "451-row product catalog (Category, Who Else? Question, Source Label, Original #, Status, Routing). Overlapping Source Labels map onto these IDs. Do not fork a second ontology.",
+      "data/intent-vocab-451.tsv — product-facing Source Label slice (Category, Who Else? Question, Original #). Reconstructed from the 505 cabinet unique labels (452). The attached 451-row CSV is the same vocabulary, not a second ontology.",
   },
   kinds: ["atomic", "entity", "activity", "need", "service"],
   compose: {
@@ -128,3 +159,38 @@ mkdirSync(outDir, { recursive: true });
 const outPath = join(outDir, "intent-vocab.json");
 writeFileSync(outPath, `${JSON.stringify(vocab, null, 2)}\n`);
 console.log(`wrote ${outPath} (${intents.length} rows, ${firstByLabel.size} unique labels)`);
+
+function tsvCell(value: string | number): string {
+  const text = String(value);
+  if (/[\t\n\r"]/.test(text)) return `"${text.replace(/"/g, '""')}"`;
+  return text;
+}
+
+const productRows = intents
+  .filter((row) => row.canonical)
+  .sort((a, b) => a.n - b.n || a.label.localeCompare(b.label));
+
+const missing = PRODUCT_SLICE_REQUIRED.filter((label) => !productRows.some((row) => row.label === label));
+if (missing.length) {
+  throw new Error(`intent-vocab-451.tsv missing required Source Labels: ${missing.join(", ")}`);
+}
+if (productRows.length < 400) {
+  throw new Error(`intent-vocab-451.tsv expected ≥400 unique Source Labels, got ${productRows.length}`);
+}
+
+const tsvPath = join(outDir, "intent-vocab-451.tsv");
+const tsvLines = [
+  ["Original#", "LABEL", "Category", "Who Else? Question"].join("\t"),
+  ...productRows.map((row) =>
+    [
+      row.n,
+      row.label,
+      row.category,
+      coverageById.get(row.id)?.canonicalQuery ?? `Who else is a ${row.label.toLowerCase()}?`,
+    ]
+      .map(tsvCell)
+      .join("\t"),
+  ),
+];
+writeFileSync(tsvPath, `${tsvLines.join("\n")}\n`);
+console.log(`wrote ${tsvPath} (${productRows.length} unique Source Labels)`);
