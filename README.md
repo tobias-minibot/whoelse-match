@@ -18,7 +18,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 ## Live / existing collateral
 
 - **Human web (live):** https://whoelse-dating.vercel.app
-- **One box (no category):** https://whoelse-dating.vercel.app/universal
+- **Share a query:** https://whoelse-dating.vercel.app/q?q=Who+else+can+fix+this%3F or `/who-else/fix-this`
 - **For AIs / remote MCP:** https://whoelse-dating.vercel.app/ais — endpoint `https://whoelse-dating.vercel.app/api/mcp`
   Tools: `whoelse.find`, `whoelse.compile`, `whoelse.register`, `whoelse.publish`, `whoelse.invoke`, `whoelse.delegate`, `whoelse.match`, `whoelse.act`, `whoelse.receipt`, `whoelse.reputation`, `whoelse.matches`, `whoelse.feedback`. Never `jobs.find`. Copy/paste config + example agent: `docs/MCP.md`.
 - **Legal:** `/privacy` · `/terms` · `/contact`
@@ -32,7 +32,7 @@ Same entity model. Same matching engine. Same discovery pool. Different interfac
 
 ## Product (this repo)
 
-- **Human surface:** Next.js App Router. Public face is **three lenses** — Dating, Agents, Experts — plus a **one-box** at `/universal`. Other factory costumes sit under “More costumes”. Same cards / loop. Primary interaction is **Who else?** Dating stays sectioned. Tabs are costumes, not matchers. **Compile** is Sentinel v0 (`whoelse.compile`).
+- **Human surface:** Next.js App Router. Public face is **one Who else? box**. Dating, Agents, and Experts are costumes. Other factory costumes sit under “More costumes”. Primary interaction is **Who else?** then **Who else like this?** on every card. Share URLs at `/q` and `/who-else/[slug]`. When the live pool has no useful matches, a labeled **Playground** (in-memory demo seed) answers so a cold visitor still feels magic — never mixed with live, never presented as real people. **Compile** is Sentinel v0 under the hood (`whoelse.compile`).
 - **AI surface:** Streamable HTTP MCP at `/api/mcp` (same Vercel app) plus stdio `pnpm mcp`. Primary tool **`whoelse.find`**. Same `@whoelse/core` engine and `data/seed.json` as the web app.
 - **Thin HTTP API** — the dating UI’s adapter; not a second matcher. Agents invoke via `POST /api/agents/:id/invoke` (demo stub).
 
@@ -305,15 +305,17 @@ Same engine. Used by the web app.
 - `/onboarding` — signed-in human path: name, bio, HUMAN label, OFFER/SEEK, 18+ affirmation
 - `/me` — edit publications; withdraw is durable
 - `/matches` — durable MATCH list, act, receipts, thread, recursive Who else? from a match
+- `/` — magic Who else? box (costumes optional). `/universal` redirects here.
+- `/q?q=` and `/who-else/[slug]` — shareable query links with OG cards
 - `/ais` — public MCP DX: endpoint, auth, Cursor/Claude copy-paste, tool order, example agent
 - `/privacy` `/terms` `/contact` — launch legal stubs
-- Tabs: **Dating · Agents · Experts** first (same cards, same loop). Other costumes under **More costumes**. `/universal` is the no-category box + Compile. Jobs + factory mixed lenses do **not** force `side` — NL infers it.
+- Costumes: **Any** default, then Dating · Agents · Experts. Other costumes under **More costumes**. Dating stays sectioned. Jobs + factory mixed lenses do **not** force `side` — NL infers it.
 - Apartment SEEK: **What are you looking for?** + **Who else?**
 - Apartment I HAVE: **I have…** + **Who else needs this?**
 - Apartment results stay cards-with-why, plus reverse **Who else needs this?** / **Who else has this?**
-- Loud **DEMO data** banner on every non-dating tab. No Zillow / LinkedIn / Uber clone.
+- Labeled **Playground** banner when results come from the demo corpus (live empty, or local demo seed). Never mixed with live. No fake “online now”.
 - Cards: HUMAN / AI badge, why, commonalities, surprising difference
-- Actions: **Propose match** (explicit save) · **Who else?** (recursive exemplar) · **More like this** (peers mode) · **Less like this** · **Chat**
+- Actions: **Who else like this?** (recursive) · **Share** · **Propose match** · **More like this** · **Less like this** · **Chat**
   - AI chat = labeled stub (or OpenAI persona if keyed)
   - Human chat = interest recorded stub
 - Default layout: **Humans** section, then **AIs** section (trust)

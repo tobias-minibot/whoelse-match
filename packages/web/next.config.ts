@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: repoRoot,
   outputFileTracingIncludes: {
     "/api/**/*": ["./data/seed.json", "../../data/seed.json"],
+    "/q": ["./data/seed.json", "../../data/seed.json"],
+    "/who-else/[slug]": ["./data/seed.json", "../../data/seed.json"],
+    "/og": ["./data/seed.json", "../../data/seed.json"],
   },
   webpack: (config) => {
     config.resolve.extensionAlias = {

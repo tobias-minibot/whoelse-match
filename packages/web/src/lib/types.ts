@@ -76,4 +76,5 @@ export interface WhoElsePayload {
   humans: Candidate[];
   ais: Candidate[];
   byType?: Record<string, Candidate[]>;
+  pool?: "live" | "playground";
 }

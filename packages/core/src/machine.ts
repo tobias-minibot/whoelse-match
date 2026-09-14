@@ -96,6 +96,8 @@ export interface MachineFindResult {
   query: string;
   mode: string;
   usedOpenAiRerank: boolean;
+  /** live = real network; playground = labeled demo corpus. Never mixed. */
+  pool?: "live" | "playground";
   matches: MachineMatch[];
   /** High-confidence OFFER↔SEEK pairs. Entity matches stay in `matches`. */
   pairs: MachinePublicationPair[];
@@ -205,6 +207,7 @@ export function toMachineFindResult(result: WhoElseResult): MachineFindResult {
     query: result.query,
     mode: result.inferredMode,
     usedOpenAiRerank: result.usedOpenAiRerank,
+    pool: result.pool,
     matches: result.candidates.map(toMachineMatch),
     pairs: (result.pairs ?? []).map(toMachinePair),
   };

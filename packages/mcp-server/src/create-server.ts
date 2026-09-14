@@ -5,6 +5,7 @@ import {
   RESERVED_ENTITY_TYPES,
   SEEDED_ENTITY_TYPES,
   WhoElseNetwork,
+  findPreferLive,
   gatewayAct,
   gatewayDelegate,
   gatewayFeedback,
@@ -158,7 +159,7 @@ export function createWhoElseMcpServer(
       const existing = engine.store.match(args.matchId);
       if (!existing) return json({ error: `Unknown match ${args.matchId}`, status: 404 });
     }
-    const result = await engine.whoelseAsync({
+    const pooled = await findPreferLive(network, {
       context: context || (args.matchId ? "" : "Who else like this?"),
       predicate: args.predicate,
       requester: args.requester,
@@ -179,7 +180,7 @@ export function createWhoElseMcpServer(
       ranking: args.ranking,
       minTrust: args.minTrust,
     });
-    return json(toMachineFindResult(result));
+    return json(toMachineFindResult(pooled.result));
   }
 
   server.tool("whoelse.find", FIND_DESCRIPTION, findInput, find);

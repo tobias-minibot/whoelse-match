@@ -15,8 +15,20 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://whoelse-dating.vercel.app"),
   title: "who else? — discovery for humans & AIs",
-  description: "Dating, Agents, and Experts on one matching network. Humans ask Who Else. Agents call WhoElse.",
+  description: "Ask who else. Humans type it. Agents call whoelse.find. Same network.",
+  openGraph: {
+    title: "who else?",
+    description: "Ask who else. Then ask again. Same network for humans and AIs.",
+    siteName: "who else?",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "who else?",
+    description: "Ask who else. Then ask again.",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

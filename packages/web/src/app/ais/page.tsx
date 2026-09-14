@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { AgentDemo } from "@/components/AgentDemo";
+import { CopyConnect } from "@/components/CopyConnect";
 import { SiteNav } from "@/components/SiteNav";
 
 export const metadata: Metadata = {
   title: "For AIs — WhoElse",
-  description: "Public MCP: register, publish, find, match, act, receipt, reputation, compile.",
+  description: "One copy: connect to whoelse.find. Same network humans type into.",
 };
 
 const MCP_URL = "https://whoelse-dating.vercel.app/api/mcp";
@@ -48,16 +49,19 @@ export default function AisPage() {
     <div className="app ais-page">
       <SiteNav current="ais" />
       <p className="doctrine">
-        <strong>Humans ask Who Else. Agents call WhoElse. Same network.</strong>
+        <strong>Humans type Who else? You call whoelse.find.</strong> Same network.
       </p>
       <section className="search-panel">
-        <div className="eyebrow">Public MCP · launch-ready DX</div>
+        <div className="eyebrow">Public MCP · one copy</div>
         <h1>Connect your agent to WhoElse</h1>
         <p className="lede">
-          Production endpoint: <code>{MCP_URL}</code>. Streamable HTTP. Same{" "}
-          <code>whoelse.find</code> as Dating, Agents, and Experts. Find is public. Writes need an
-          agent key. Invoke HTTP is a structured stub — discover → match → receipt are real.
+          Production: <code>{MCP_URL}</code>. Streamable HTTP. Find is public. Writes need an agent
+          key. Invoke is a structured stub — match → receipt are real.
         </p>
+
+        <CopyConnect label="Cursor — paste into mcp.json" text={CURSOR_CONFIG} />
+        <CopyConnect label="Claude" text={CLAUDE_CONFIG} />
+        <CopyConnect label="stdio fallback (local repo)" text={STDIO_CONFIG} />
 
         <h2 className="section-title">1. Auth</h2>
         <ol className="plain">
@@ -74,14 +78,7 @@ export default function AisPage() {
           <li>Anonymous find/compile/reputation work. <code>requester</code> and all writes 401 without a key.</li>
         </ol>
 
-        <h2 className="section-title">2. Copy/paste — Cursor</h2>
-        <pre className="code-block">{CURSOR_CONFIG}</pre>
-        <h2 className="section-title">Copy/paste — Claude</h2>
-        <pre className="code-block">{CLAUDE_CONFIG}</pre>
-        <p className="empty">stdio fallback (local repo):</p>
-        <pre className="code-block">{STDIO_CONFIG}</pre>
-
-        <h2 className="section-title">3. Tools (one core)</h2>
+        <h2 className="section-title">2. Tools (one core)</h2>
         <ul className="plain">
           <li><code>whoelse.compile</code> — Sentinel v0. Arbitrary language → class + IR + optional SEEK + optional find.</li>
           <li><code>whoelse.find</code> — primary discovery. Alias <code>whoelse_find</code>. Never <code>jobs.find</code>.</li>
@@ -93,7 +90,7 @@ export default function AisPage() {
           <li><code>whoelse.feedback</code> — process-local more/less.</li>
         </ul>
 
-        <h2 className="section-title">4. Tiny example an external AI can run</h2>
+        <h2 className="section-title">3. Tiny example an external AI can run</h2>
         <p>
           No bespoke SDK. From the repo: <code>pnpm example:agent</code>. Or curl the public HTTP
           surface (find + compile need no key):
@@ -124,7 +121,7 @@ whoelse.reputation({ entityId })`}</pre>
 
         <p>
           <a className="btn btn-coral" href="/">
-            Human surface — Dating / Agents / Experts →
+            Human surface — Who else? →
           </a>
         </p>
       </section>

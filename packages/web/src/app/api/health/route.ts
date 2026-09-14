@@ -1,4 +1,4 @@
-import { hasOpenAi } from "@whoelse/core";
+import { hasOpenAi, getPlaygroundEngine } from "@whoelse/core";
 import { getNetwork } from "@/lib/engine";
 
 export const runtime = "nodejs";
@@ -35,6 +35,11 @@ export async function GET() {
     local: byVertical.local ?? 0,
     byType,
     byVertical,
+    playground: {
+      available: true,
+      entities: getPlaygroundEngine().store.all().length,
+      note: "Labeled demo corpus. Used only when live find has no useful matches. Never mixed in.",
+    },
     openAi: hasOpenAi(),
     mcpTools: [
       "whoelse.find",

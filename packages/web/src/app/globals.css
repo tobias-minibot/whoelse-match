@@ -116,6 +116,12 @@ button.auth-btn {
   color: #5c4a12;
 }
 
+.banner-playground {
+  background: #fff4d6;
+  border-color: #e6c56e;
+  color: #5c4a12;
+}
+
 .mode-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -157,6 +163,10 @@ button.auth-btn {
   background: var(--coral);
   border-color: var(--coral);
   color: #fff;
+}
+.costume-row .lens-primary button {
+  font-size: 0.85rem;
+  padding: 7px 12px;
 }
 .lens-more {
   margin: 0 0 14px;
@@ -226,6 +236,85 @@ button.auth-btn {
   box-shadow: var(--shadow);
   padding: 22px;
   margin-bottom: 22px;
+}
+
+.magic-panel {
+  padding: 28px 24px 22px;
+}
+
+.magic-lede {
+  margin-top: -6px;
+  margin-bottom: 18px;
+  font-size: 1.05rem;
+}
+
+.magic-row {
+  align-items: stretch;
+}
+
+.magic-row textarea {
+  min-height: 88px;
+  font-size: 1.05rem;
+}
+
+.magic-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .magic-actions {
+    flex-direction: row;
+    width: 100%;
+  }
+  .magic-actions .btn {
+    flex: 1;
+  }
+}
+
+.amaze-chips button {
+  font-weight: 600;
+}
+
+.costume-row {
+  margin-top: 18px;
+}
+
+.costume-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.heard-details {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.heard-details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.copy-connect {
+  margin: 12px 0 16px;
+}
+
+.copy-connect-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--deep);
 }
 
 .eyebrow {

@@ -1,4 +1,4 @@
-import { toPublicWhoElseResult } from "@whoelse/core";
+import { getPlaygroundEngine, toPublicWhoElseResult } from "@whoelse/core";
 import { getEngine } from "@/lib/engine";
 
 export const runtime = "nodejs";
@@ -7,9 +7,12 @@ export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const entityId = String(body.entityId ?? "");
   if (!entityId) return Response.json({ error: "entityId required", status: 400 }, { status: 400 });
+  const live = await getEngine();
+  const engine = live.store.get(entityId) ? live : getPlaygroundEngine();
   try {
-    const result = (await getEngine()).reciprocal(entityId, { context: body.context, limit: body.limit ?? 5 });
-    return Response.json(toPublicWhoElseResult(result));
+    const result = engine.reciprocal(entityId, { context: body.context, limit: body.limit ?? 5 });
+    const pool = live.store.get(entityId) ? undefined : ("playground" as const);
+    return Response.json(toPublicWhoElseResult(pool ? { ...result, pool } : result));
   } catch (err) {
     return Response.json({ error: err instanceof Error ? err.message : String(err), status: 404 }, { status: 404 });
   }

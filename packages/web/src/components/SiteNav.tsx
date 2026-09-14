@@ -3,7 +3,7 @@ import { AuthButtons } from "@/components/AuthButtons";
 export function SiteNav({
   current,
 }: {
-  current?: "home" | "ais" | "box" | "join" | "me" | "matches" | "universe";
+  current?: "home" | "ais" | "join" | "me" | "matches" | "universe";
 }) {
   return (
     <nav className="nav">
@@ -19,9 +19,6 @@ export function SiteNav({
         </a>
         <a className={current === "matches" ? "ghost current" : "ghost"} href="/matches">
           Matches
-        </a>
-        <a className={current === "box" ? "ghost current" : "ghost"} href="/universal">
-          One box
         </a>
         <a className={current === "universe" ? "ghost current" : "ghost"} href="/universe">
           Universe
