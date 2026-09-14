@@ -232,9 +232,14 @@ export function DiscoverApp() {
 
   function pickIntent(hit: IntentSearchHit) {
     const next = refineWhoElseQuery(query, hit);
+    const appending = /\bwho else\b/i.test(query.trim()) && next !== query.trim() && / and /i.test(next);
     setQuery(next);
     setActiveChip(-1);
-    setPicked((prev) => (prev.some((p) => p.id === hit.id) ? prev : [...prev, { id: hit.id, label: hit.label }]));
+    setPicked((prev) => {
+      const row = { id: hit.id, label: hit.label };
+      if (appending) return prev.some((p) => p.id === hit.id) ? prev : [...prev, row];
+      return [row];
+    });
     suggest.setOpen(false);
   }
 
@@ -467,6 +472,7 @@ export function DiscoverApp() {
                 setQuery(e.target.value);
                 setActiveChip(-1);
                 suggest.setOpen(true);
+                if (!e.target.value.trim()) setPicked([]);
               }}
               onFocus={() => suggest.setOpen(true)}
               onBlur={() => window.setTimeout(() => suggest.setOpen(false), 120)}
@@ -499,11 +505,13 @@ export function DiscoverApp() {
           items={picked}
           onRemove={(id) => setPicked((prev) => prev.filter((p) => p.id !== id))}
         />
-        <p className="intent-browse">
-          <a href="/universe">All intents</a>
-          <span aria-hidden="true"> · </span>
-          type to search the vocab
-        </p>
+        {!suggest.visible && (
+          <p className="intent-browse">
+            <a href="/universe">All intents</a>
+            <span aria-hidden="true"> · </span>
+            type to search the vocab
+          </p>
+        )}
         <div className="chips amaze-chips">
           {examples.map((example, i) => (
             <button

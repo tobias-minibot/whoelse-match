@@ -83,8 +83,13 @@ export function UniversalBox() {
 
   function pickIntent(hit: IntentSearchHit) {
     const next = refineWhoElseQuery(query, hit);
+    const appending = /\bwho else\b/i.test(query.trim()) && next !== query.trim() && / and /i.test(next);
     setQuery(next);
-    setPicked((prev) => (prev.some((p) => p.id === hit.id) ? prev : [...prev, { id: hit.id, label: hit.label }]));
+    setPicked((prev) => {
+      const row = { id: hit.id, label: hit.label };
+      if (appending) return prev.some((p) => p.id === hit.id) ? prev : [...prev, row];
+      return [row];
+    });
     suggest.setOpen(false);
   }
 
@@ -156,6 +161,7 @@ export function UniversalBox() {
               onChange={(e) => {
                 setQuery(e.target.value);
                 suggest.setOpen(true);
+                if (!e.target.value.trim()) setPicked([]);
               }}
               onFocus={() => suggest.setOpen(true)}
               onBlur={() => window.setTimeout(() => suggest.setOpen(false), 120)}

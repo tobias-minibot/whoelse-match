@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { UNIVERSE_CONCEPTS, conceptToSearchable, type UniverseConcept } from "@/lib/intent-catalog";
-import { searchIntents } from "@whoelse/core/vocab-search";
+import { intentQuestion, searchIntents } from "@whoelse/core/vocab-search";
 
 const CLASS_COPY: Record<string, string> = {
   A: "Fully covered — ENTITY + OFFER/SEEK + constraints + MATCH",
@@ -145,12 +145,13 @@ export function UniverseBrowser({
 }
 
 function UniverseRow({ row }: { row: UniverseConcept }) {
-  const href = `/?q=${encodeURIComponent(row.canonicalQuery)}`;
+  const question = intentQuestion(conceptToSearchable(row));
+  const href = `/?q=${encodeURIComponent(question)}`;
   return (
     <li>
       <code>{row.id}</code>
       <a href={href}>{row.label}</a>
-      <span className="universe-q">{row.canonicalQuery}</span>
+      <span className="universe-q">{question}</span>
       <em>{row.subgroup}</em>
       {row.extension ? <em>{row.extension}</em> : null}
     </li>
