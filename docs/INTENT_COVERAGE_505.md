@@ -75,6 +75,8 @@ Machine path: `whoelse.find` / `whoelse.compile` (`POST /api/compile`). Human pa
 4. Run local `compileLanguage` on each canonical query (heuristics only; no OpenAI required).
 5. Optionally sample production `POST /api/compile` (`pnpm coverage:505:probe`) — polite batch, no writes, not required for the numbers.
 
+**Production probe (2026-09-14):** 29 intents × 2 texts = 58 requests to `https://whoelse-dating.vercel.app/api/compile`. **58/58 HTTP 200**, all `WHOELSE_COMPILABLE` (canonical “Who else…?” plus `{LABEL} who else?`). That is the operator/Sentinel claim. It does **not** move C/D/E into A — compile accepts the sentence; representability is the A–E layer. Artifact: [`evals/intent-coverage/probe-results.json`](../evals/intent-coverage/probe-results.json).
+
 Classification order: **E → D → C → B → A**.
 
 | Class | Rule |

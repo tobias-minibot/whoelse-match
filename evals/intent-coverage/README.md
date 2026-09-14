@@ -19,6 +19,8 @@ pnpm coverage:505:test
 pnpm coverage:505:probe   # optional; polite sample of production /api/compile
 ```
 
+`pnpm test` also runs `coverage:505:test` so the 505 denominator cannot silently drift.
+
 ## Classes
 
 | Class | Meaning |

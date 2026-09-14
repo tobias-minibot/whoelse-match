@@ -16,7 +16,7 @@
     "mcp:smoke": "pnpm --filter @whoelse/mcp-server smoke",
     "mcp:http-dogfood": "pnpm --filter @whoelse/mcp-server http-dogfood",
     "example:agent": "npx tsx scripts/example-agent.ts",
-    "test": "pnpm --filter @whoelse/core test && pnpm --filter @whoelse/mcp-server test",
+    "test": "pnpm --filter @whoelse/core test && pnpm --filter @whoelse/mcp-server test && pnpm coverage:505:test",
     "db:migrate": "pnpm --filter @whoelse/core migrate",
     "db:seed": "pnpm --filter @whoelse/core seed",
     "dogfood": "pnpm --filter @whoelse/core exec tsx scripts/dogfood.ts",
