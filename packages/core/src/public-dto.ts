@@ -227,6 +227,7 @@ export function toPublicWhoElseResult(result: WhoElseResult) {
     inferredView: result.inferredView,
     universal: result.universal,
     usedOpenAiRerank: result.usedOpenAiRerank,
+    pool: result.pool,
     candidates,
     pairs: result.pairs,
     humans,

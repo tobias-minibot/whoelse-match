@@ -439,6 +439,8 @@ export interface WhoElseResult {
   inferredView?: InferredView;
   universal?: UniversalQuery;
   usedOpenAiRerank: boolean;
+  /** live = real network; playground = labeled demo corpus. Never mixed. */
+  pool?: "live" | "playground";
   candidates: Candidate[];
   /** High-confidence OFFER↔SEEK pairs (score ≥ 0.85). Alongside entity candidates. */
   pairs: PublicationPair[];

@@ -10,6 +10,11 @@
       "types": "./dist/index.d.ts",
       "import": "./src/index.ts",
       "default": "./dist/index.js"
+    },
+    "./amaze": {
+      "types": "./src/amaze.ts",
+      "import": "./src/amaze.ts",
+      "default": "./dist/amaze.js"
     }
   },
   "scripts": {

@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useParams, useSearchParams } from "next/navigation";
 import { JoinHint } from "@/components/JoinHint";
 import { SiteNav } from "@/components/SiteNav";
 import { fetchMe, type MePayload } from "@/lib/me";
 import { CompilePanel, type CompilePayload } from "@/components/CompilePanel";
+import { AMAZE_PROMPTS, amazeBySlug, parseShareParams, sharePath } from "@/lib/share";
 import {
   examplesFor,
   FORCE_SIDE,
@@ -18,6 +20,8 @@ import {
   type Vertical,
 } from "@/lib/lenses";
 import type { Candidate, Entity, WhoElsePayload } from "@/lib/types";
+
+type Costume = Vertical | "any";
 
 type TrailItem = {
   label: string;
@@ -38,9 +42,11 @@ function roleOf(e: Entity): string {
 }
 
 export function DiscoverApp() {
-  const [vertical, setVertical] = useState<Vertical>("dating");
+  const searchParams = useSearchParams();
+  const params = useParams();
+  const [costume, setCostume] = useState<Costume>("any");
   const [side, setSide] = useState<MarketSide>("seek");
-  const [query, setQuery] = useState(examplesFor("dating", "seek")[0]);
+  const [query, setQuery] = useState(AMAZE_PROMPTS[0].query);
   const [activeChip, setActiveChip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<WhoElsePayload | null>(null);
@@ -54,12 +60,26 @@ export function DiscoverApp() {
   const [me, setMe] = useState<MePayload | null>(null);
   const [compiled, setCompiled] = useState<CompilePayload | null>(null);
   const [compiling, setCompiling] = useState(false);
+  const [liveEmpty, setLiveEmpty] = useState(false);
+  const hydrated = useRef(false);
 
   useEffect(() => {
     void fetchMe().then((payload) => setMe(payload));
+    void fetch("/api/health")
+      .then((res) => res.json())
+      .then((health) => {
+        const n = Object.values(health.byType ?? {}).reduce(
+          (sum: number, count) => sum + Number(count ?? 0),
+          0,
+        );
+        setLiveEmpty(health.seedMode === "empty" && n === 0);
+      })
+      .catch(() => undefined);
   }, []);
 
-  const examples = examplesFor(vertical, side);
+  const vertical: Vertical = costume === "any" ? "dating" : costume;
+  const examples = costume === "any" ? AMAZE_PROMPTS.map((p) => p.query) : examplesFor(vertical, side);
+  const playground = result?.pool === "playground" || (!result && liveEmpty);
 
   const visible = useMemo(
     () => (result?.candidates ?? []).filter((c) => !hidden.has(c.entity.id)),
@@ -88,14 +108,10 @@ export function DiscoverApp() {
   const others = useMemo(
     () =>
       visible.filter((c) => {
-        if (vertical === "dating") {
-          return !isDatingHuman(c.entity) && c.entity.type !== "ai";
-        }
-        if (lens.mixed) return false;
-        const role = roleOf(c.entity);
-        return !lens.offerRoles.includes(role) && !lens.seekRoles.includes(role);
+        if (costume !== "dating") return false;
+        return !isDatingHuman(c.entity) && c.entity.type !== "ai";
       }),
-    [visible, vertical, lens],
+    [visible, costume],
   );
 
   function flash(message: string) {
@@ -103,15 +119,28 @@ export function DiscoverApp() {
     window.setTimeout(() => setToast(null), 4000);
   }
 
-  function switchVertical(next: Vertical) {
-    setVertical(next);
+  function syncUrl(context: string, extras: { entityId?: string } = {}) {
+    const path = sharePath(context, {
+      entityId: extras.entityId,
+      costume: costume === "any" ? undefined : costume,
+    });
+    window.history.replaceState(null, "", path);
+  }
+
+  function switchCostume(next: Costume) {
+    setCostume(next);
     setResult(null);
     setTrail([]);
     setSeen([]);
     setHidden(new Set());
     setActiveChip(0);
     setSide("seek");
-    setQuery(examplesFor(next, "seek")[0]);
+    setCompiled(null);
+    if (next === "any") {
+      setQuery(AMAZE_PROMPTS[0].query);
+    } else {
+      setQuery(examplesFor(next, "seek")[0]);
+    }
   }
 
   function switchSide(next: MarketSide) {
@@ -125,7 +154,7 @@ export function DiscoverApp() {
   }
 
   function marketConstraints(s: MarketSide = side): Record<string, unknown> | undefined {
-    // NL infers side/roles. Forcing a tab side hid complementary matches (jobs + factory).
+    if (costume === "any") return undefined;
     if (!FORCE_SIDE.includes(vertical)) return undefined;
     return { side: s === "offer" ? "seek" : "offer" };
   }
@@ -159,6 +188,7 @@ export function DiscoverApp() {
       const ids = data.candidates.map((c) => c.entity.id);
       setSeen((prev) => [...new Set([...prev, ...ids, extras.entityId ?? ""])].filter(Boolean));
       setHidden(new Set());
+      syncUrl(context, { entityId: extras.entityId });
     } catch {
       flash("Discovery failed — is the server running?");
     } finally {
@@ -166,11 +196,15 @@ export function DiscoverApp() {
     }
   }
 
-  function askWhoElse() {
+  function askWhoElse(nextQuery = query) {
+    const q = nextQuery.trim();
+    if (!q) return;
+    setQuery(q);
     const constraints = marketConstraints();
-    const next: TrailItem = { label: query, context: query, exclude: seen, constraints };
+    const next: TrailItem = { label: q, context: q, exclude: seen, constraints };
     setTrail((t) => [...t, next]);
-    void runFind(query, { constraints });
+    void runFind(q, { constraints });
+    void compileQuiet(q);
   }
 
   function recursiveWhoElse(candidate: Candidate) {
@@ -312,135 +346,184 @@ export function DiscoverApp() {
     setChatLog((prev) => [...prev, { role: "assistant", content: data.reply ?? data.error }]);
   }
 
-  async function compileQuery() {
+  async function compileQuiet(text: string) {
     setCompiling(true);
     try {
       const res = await fetch("/api/compile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: query, find: false }),
+        body: JSON.stringify({ text, find: false }),
       });
       setCompiled((await res.json()) as CompilePayload);
     } catch {
-      setCompiled({
-        classification: "NOT_WHOELSE",
-        reason: "Compile failed — is the server running?",
-        confidence: 0,
-        ir: { intent: query, constraints: {}, exclusions: [] },
-        error: "Compile failed — is the server running?",
-      });
+      setCompiled(null);
     } finally {
       setCompiling(false);
     }
   }
 
-  const heading =
-    vertical === "dating"
-      ? "Who are you looking for?"
-      : vertical === "agents"
-        ? side === "offer"
-          ? "I can…"
-          : "Who else can do this?"
-        : vertical === "experts"
-          ? side === "offer"
-            ? "I can brief…"
-            : "Who else should I talk to?"
-          : side === "offer"
-            ? "I have…"
-            : "What are you looking for?";
-  const cta =
-    loading ? "Looking…" : HAS_SIDES.includes(vertical) && side === "offer" ? "Who else needs this?" : "Who else?";
+  async function copyLink(targetQuery = query, entityId?: string) {
+    const url = `${window.location.origin}${sharePath(targetQuery, {
+      entityId,
+      costume: costume === "any" ? undefined : costume,
+    })}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      flash("Link copied — send it to a friend.");
+    } catch {
+      flash(url);
+    }
+  }
 
-  const banner = lens.banner;
-  const eyebrow =
-    vertical === "dating"
-      ? "Dating · humans & labeled AIs · same loop"
-      : vertical === "agents"
-        ? "Agents · labeled machines · same Entity / OFFER / SEEK / MATCH / RECEIPT"
-        : vertical === "experts"
-          ? "Experts · who else should I talk to? · same cards"
-          : lens.mixed
-            ? `${lens.label} · mixed types · tab is a lens, pool is shared`
-            : `${lens.label} · ${side === "offer" ? "I HAVE · who else needs this?" : "I NEED · who else has this?"}`;
+  useEffect(() => {
+    if (hydrated.current) return;
+    hydrated.current = true;
+    const slug = typeof params.slug === "string" ? params.slug : undefined;
+    const featured = slug ? amazeBySlug(slug) : undefined;
+    const parsed = parseShareParams(searchParams);
+    if (parsed.costume && parsed.costume !== "any") {
+      setCostume(parsed.costume as Vertical);
+    }
+    const nextQuery = parsed.query || featured?.query;
+    if (!nextQuery) return;
+    setQuery(nextQuery);
+    setActiveChip(AMAZE_PROMPTS.findIndex((p) => p.query === nextQuery));
+    const like = parsed.entityId;
+    setTrail([{ label: nextQuery, context: nextQuery, entityId: like, exclude: like ? [like] : [] }]);
+    void runFind(nextQuery, { entityId: like, exclude: like ? [like] : [] });
+    void compileQuiet(nextQuery);
+    // First paint only — shared links should run immediately.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const emptyCopy =
-    vertical === "dating"
-      ? "Ask who else — not swipe. Results split humans then AIs so the type is never ambiguous."
-      : vertical === "agents"
-        ? "Same Who else? Same cards. Agents stay labeled. Invoke is a stub — find and receipts are real."
-        : vertical === "experts"
-          ? "Same Who else? Find who to talk to. Not a guru score. Type stays on the badge."
-          : lens.mixed
-            ? "Same Who else? Mixed types, type on the badge. The tab is a lens — whoelse.find does not fork."
-            : side === "offer"
-              ? "Describe what you have. WhoElse finds who needs it — the reverse marketplace question."
-              : "Describe what you need. Same Who else? as dating. Not a listings grid.";
-
+  const mixed = costume === "any" || lens.mixed || costume === "agents" || costume === "experts";
+  const dating = costume === "dating";
   const moreLenses = LENSES.filter((v) => !isPrimaryLens(v.id));
+  const cta = loading ? "Looking…" : HAS_SIDES.includes(vertical) && costume !== "any" && side === "offer" ? "Who else needs this?" : "Who else?";
 
   return (
     <div className="app">
       <SiteNav current="home" />
 
       <p className="doctrine">
-        <strong>Three lenses. Same cards. Same loop.</strong> Dating · Agents · Experts sit on one
-        Entity / OFFER / SEEK / MATCH / RECEIPT core.{" "}
-        <a href="/universal">One box</a>
-        {" · "}
-        <a href="/ais">Connect an agent →</a>
+        Type it like a text. Ask again from any card.{" "}
+        <a href="/ais">For AIs →</a>
         {" · "}
         <a href="/onboarding">Join as a human</a>
       </p>
 
       <JoinHint />
 
-      <div className={`banner ${vertical !== "dating" ? "banner-demo" : ""}`}>
-        {vertical !== "dating" ? (
-          <>
-            <strong>DEMO data.</strong> {banner.replace(/^DEMO data\.\s*/, "")}
-          </>
-        ) : (
-          banner
-        )}
-      </div>
-
-      <section className="search-panel">
-        <div className="mode-tabs lens-primary" role="tablist" aria-label="Primary lenses">
-          {PRIMARY_LENSES.map((id) => {
-            const v = lensById(id);
-            return (
-              <button
-                key={v.id}
-                type="button"
-                role="tab"
-                aria-selected={vertical === v.id}
-                className={vertical === v.id ? "active" : ""}
-                onClick={() => switchVertical(v.id)}
-              >
-                {v.label}
-              </button>
-            );
-          })}
+      {playground && (
+        <div className="banner banner-playground" role="status">
+          <strong>Playground — not the live network yet.</strong> These cards are labeled demo so
+          you can feel Who else? before people show up. Live matches, when they exist, come first.
+          Never mixed in.
         </div>
-        <details className="lens-more" open={!isPrimaryLens(vertical)}>
-          <summary>More costumes — same engine, not new products</summary>
-          <div className="mode-tabs" role="tablist" aria-label="More costumes">
-            {moreLenses.map((v) => (
-              <button
-                key={v.id}
-                type="button"
-                role="tab"
-                aria-selected={vertical === v.id}
-                className={vertical === v.id ? "active" : ""}
-                onClick={() => switchVertical(v.id)}
-              >
-                {v.label}
-              </button>
-            ))}
-          </div>
-        </details>
+      )}
+      {!playground && result?.pool === "live" && (
+        <div className="banner">
+          Live network. Type is on the badge. Recursive Who else? is the product.
+        </div>
+      )}
 
-        {HAS_SIDES.includes(vertical) && (
+      <section className="search-panel magic-panel">
+        <div className="eyebrow">Who else?</div>
+        <h1>Who else can do this — or wants this?</h1>
+        <p className="lede magic-lede">
+          One box. No categories required. Dating, agents, and experts are costumes on the same
+          question.
+        </p>
+        <div className="search-row magic-row">
+          <textarea
+            value={query}
+            placeholder="Who else can fix this? Who else wants to meet tonight?"
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setActiveChip(-1);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                askWhoElse();
+              }
+            }}
+            aria-label="Who else?"
+          />
+          <div className="magic-actions">
+            <button className="btn btn-coral" type="button" onClick={() => askWhoElse()} disabled={loading}>
+              {cta}
+            </button>
+            <button className="btn btn-soft" type="button" onClick={() => void copyLink()} disabled={!query.trim()}>
+              Copy link
+            </button>
+          </div>
+        </div>
+        <div className="chips amaze-chips">
+          {examples.map((example, i) => (
+            <button
+              key={example}
+              type="button"
+              className={activeChip === i ? "active" : ""}
+              onClick={() => {
+                setQuery(example);
+                setActiveChip(i);
+                askWhoElse(example);
+              }}
+            >
+              {chipLabel(example)}
+            </button>
+          ))}
+        </div>
+
+        <div className="costume-row">
+          <span className="costume-label">Costume</span>
+          <div className="mode-tabs lens-primary" role="tablist" aria-label="Costumes">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={costume === "any"}
+              className={costume === "any" ? "active" : ""}
+              onClick={() => switchCostume("any")}
+            >
+              Any
+            </button>
+            {PRIMARY_LENSES.map((id) => {
+              const v = lensById(id);
+              return (
+                <button
+                  key={v.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={costume === v.id}
+                  className={costume === v.id ? "active" : ""}
+                  onClick={() => switchCostume(v.id)}
+                >
+                  {v.label}
+                </button>
+              );
+            })}
+          </div>
+          <details className="lens-more" open={costume !== "any" && !isPrimaryLens(vertical)}>
+            <summary>More costumes</summary>
+            <div className="mode-tabs" role="tablist" aria-label="More costumes">
+              {moreLenses.map((v) => (
+                <button
+                  key={v.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={costume === v.id}
+                  className={costume === v.id ? "active" : ""}
+                  onClick={() => switchCostume(v.id)}
+                >
+                  {v.label}
+                </button>
+              ))}
+            </div>
+          </details>
+        </div>
+
+        {HAS_SIDES.includes(vertical) && costume !== "any" && (
           <div className="mode-tabs side-tabs" role="tablist" aria-label="Offer or seek">
             <button
               type="button"
@@ -463,70 +546,16 @@ export function DiscoverApp() {
           </div>
         )}
 
-        <div className="eyebrow">{eyebrow}</div>
-        <h1>{heading}</h1>
-        <div className="search-row">
-          <textarea
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setActiveChip(-1);
+        <details className="heard-details">
+          <summary>{compiling ? "Hearing that…" : compiled ? "How WhoElse heard this" : "Compile stays offstage"}</summary>
+          <CompilePanel
+            result={compiled}
+            onUseIntent={(intent) => {
+              setQuery(intent);
+              void runFind(intent, { constraints: marketConstraints() });
             }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                askWhoElse();
-              }
-            }}
-            aria-label={heading}
           />
-          <button className="btn btn-coral" type="button" onClick={askWhoElse} disabled={loading}>
-            {cta}
-          </button>
-          <button className="btn btn-ink" type="button" onClick={() => void compileQuery()} disabled={compiling}>
-            {compiling ? "Compiling…" : "Compile"}
-          </button>
-        </div>
-        <CompilePanel
-          result={compiled}
-          onUseIntent={(intent) => {
-            setQuery(intent);
-            void runFind(intent, { constraints: marketConstraints() });
-          }}
-        />
-        <div className="chips">
-          {examples.map((example, i) => (
-            <button
-              key={example}
-              type="button"
-              className={activeChip === i ? "active" : ""}
-              onClick={() => {
-                setQuery(example);
-                setActiveChip(i);
-              }}
-            >
-              {example.length > 52 ? `${example.slice(0, 50)}…` : example}
-            </button>
-          ))}
-        </div>
-        {result && (
-          <div className="meta-row">
-            mode <strong>{result.inferredMode}</strong>
-            {result.inferredVertical ? ` · NL reads as ${result.inferredVertical}` : ""}
-            {result.inferredVertical && result.inferredVertical !== vertical
-              ? " · tab is a costume, pool is shared"
-              : ""}
-            {result.inferredConstraints.side ? ` · side ${String(result.inferredConstraints.side)}` : ""}
-            {Array.isArray(result.inferredConstraints.roles)
-              ? ` · roles ${(result.inferredConstraints.roles as string[]).join("/")}`
-              : ""}
-            {result.inferredConstraints.city ? ` · city ${String(result.inferredConstraints.city)}` : ""}
-            {result.inferredConstraints.neighborhood
-              ? ` · near ${String(result.inferredConstraints.neighborhood)}`
-              : ""}
-            {result.usedOpenAiRerank ? " · OpenAI rerank on" : " · local TF-IDF + structured match"}
-          </div>
-        )}
+        </details>
       </section>
 
       {trail.length > 0 && (
@@ -551,9 +580,14 @@ export function DiscoverApp() {
         </div>
       )}
 
-      {!result && <p className="empty">{emptyCopy}</p>}
+      {!result && (
+        <p className="empty magic-empty">
+          Press Who else? or tap a spark. Every card has <strong>Who else like this?</strong> — that is
+          how it gets addictive.
+        </p>
+      )}
 
-      {result && vertical === "dating" && (
+      {result && dating && (
         <Sectioned
           blocks={[
             { title: "Humans", items: datingHumans, empty: "No human matches in this slice." },
@@ -567,27 +601,9 @@ export function DiscoverApp() {
                 }
               : null,
           ]}
-          vertical={vertical}
+          playground={result.pool === "playground"}
           onWhoElse={recursiveWhoElse}
-          onMore={moreLikeThis}
-          onLess={(c) => void lessLikeThis(c)}
-          onChat={(c) => void chatOrInterest(c)}
-          onPropose={(c) => void proposeMatch(c)}
-        />
-      )}
-
-      {result && vertical !== "dating" && lens.mixed && (
-        <Sectioned
-          blocks={[
-            {
-              title: "Who else — mixed rank (type on the badge)",
-              items: visible,
-              empty: "No matches in this slice.",
-              note: "Lens only. Same whoelse.find. Type stays louder than rank.",
-            },
-          ]}
-          vertical={vertical}
-          onWhoElse={recursiveWhoElse}
+          onShare={(c) => void copyLink(`Who else like ${c.entity.name}?`, c.entity.id)}
           onReverse={reverseWhoElse}
           onMore={moreLikeThis}
           onLess={(c) => void lessLikeThis(c)}
@@ -596,7 +612,27 @@ export function DiscoverApp() {
         />
       )}
 
-      {result && vertical !== "dating" && !lens.mixed && (
+      {result && !dating && mixed && (
+        <Sectioned
+          blocks={[
+            {
+              title: "Who else",
+              items: visible,
+              empty: "No matches in this slice.",
+            },
+          ]}
+          playground={result.pool === "playground"}
+          onWhoElse={recursiveWhoElse}
+          onShare={(c) => void copyLink(`Who else like ${c.entity.name}?`, c.entity.id)}
+          onReverse={reverseWhoElse}
+          onMore={moreLikeThis}
+          onLess={(c) => void lessLikeThis(c)}
+          onChat={(c) => void chatOrInterest(c)}
+          onPropose={(c) => void proposeMatch(c)}
+        />
+      )}
+
+      {result && !dating && !mixed && (
         <Sectioned
           blocks={[
             {
@@ -611,10 +647,17 @@ export function DiscoverApp() {
                   empty: "",
                 }
               : null,
-            others.length ? { title: "Also in the network", items: others, empty: "" } : null,
+            visible.filter((c) => !offerCards.includes(c) && !seekCards.includes(c)).length
+              ? {
+                  title: "Also in the network",
+                  items: visible.filter((c) => !offerCards.includes(c) && !seekCards.includes(c)),
+                  empty: "",
+                }
+              : null,
           ]}
-          vertical={vertical}
+          playground={result.pool === "playground"}
           onWhoElse={recursiveWhoElse}
+          onShare={(c) => void copyLink(`Who else like ${c.entity.name}?`, c.entity.id)}
           onReverse={reverseWhoElse}
           onMore={moreLikeThis}
           onLess={(c) => void lessLikeThis(c)}
@@ -654,10 +697,17 @@ export function DiscoverApp() {
   );
 }
 
+function chipLabel(example: string): string {
+  const featured = AMAZE_PROMPTS.find((p) => p.query === example);
+  if (featured) return featured.label;
+  return example.length > 42 ? `${example.slice(0, 40)}…` : example;
+}
+
 function Sectioned({
   blocks,
-  vertical,
+  playground,
   onWhoElse,
+  onShare,
   onReverse,
   onMore,
   onLess,
@@ -665,8 +715,9 @@ function Sectioned({
   onPropose,
 }: {
   blocks: ({ title: string; items: Candidate[]; empty: string; note?: string } | null)[];
-  vertical: Vertical;
+  playground: boolean;
   onWhoElse: (c: Candidate) => void;
+  onShare: (c: Candidate) => void;
   onReverse?: (c: Candidate) => void;
   onMore: (c: Candidate) => void;
   onLess: (c: Candidate) => void;
@@ -687,8 +738,9 @@ function Sectioned({
                 <ResultCard
                   key={c.entity.id}
                   candidate={c}
-                  vertical={vertical}
+                  playground={playground}
                   onWhoElse={() => onWhoElse(c)}
+                  onShare={() => onShare(c)}
                   onReverse={onReverse ? () => onReverse(c) : undefined}
                   onMore={() => onMore(c)}
                   onLess={() => onLess(c)}
@@ -706,8 +758,9 @@ function Sectioned({
 
 function ResultCard({
   candidate,
-  vertical,
+  playground,
   onWhoElse,
+  onShare,
   onReverse,
   onMore,
   onLess,
@@ -715,8 +768,9 @@ function ResultCard({
   onPropose,
 }: {
   candidate: Candidate;
-  vertical: Vertical;
+  playground: boolean;
   onWhoElse: () => void;
+  onShare: () => void;
   onReverse?: () => void;
   onMore: () => void;
   onLess: () => void;
@@ -736,7 +790,7 @@ function ResultCard({
   );
   const facts = listingFacts(e);
   const evidence = evidenceLine(e);
-  const showReverse = vertical !== "dating" && onReverse;
+  const showReverse = Boolean(onReverse);
 
   return (
     <article className="card">
@@ -746,7 +800,8 @@ function ResultCard({
           <div>
             <h3>{e.name}</h3>
             <p>
-              {loc || (e.type === "ai" || e.type === "agent" ? "not geo-bound" : "location unset")} · {demo}
+              {loc || (e.type === "ai" || e.type === "agent" ? "not geo-bound" : "location unset")} ·{" "}
+              {playground || e.provenance !== "user" ? demo : "live"}
             </p>
           </div>
         </div>
@@ -766,26 +821,29 @@ function ResultCard({
         <p className="diff">{candidate.explanation.surprisingDifference}</p>
       )}
       <div className="actions">
-        <button className="btn btn-ink btn-sm" type="button" onClick={onPropose}>
-          Propose match
-        </button>
         <button className="btn btn-coral btn-sm" type="button" onClick={onWhoElse}>
-          Who else?
+          Who else like this?
+        </button>
+        <button className="btn btn-soft btn-sm" type="button" onClick={onShare}>
+          Share
         </button>
         {showReverse && (
           <button className="btn btn-ink btn-sm" type="button" onClick={onReverse}>
             {OFFER_SIDE_ROLES.includes(roleOf(e)) ? "Who else needs this?" : "Who else has this?"}
           </button>
         )}
+        <button className="btn btn-ink btn-sm" type="button" onClick={onPropose}>
+          Propose match
+        </button>
         <button className="btn btn-soft btn-sm" type="button" onClick={onMore}>
           More like this
         </button>
         <button className="btn btn-soft btn-sm" type="button" onClick={onLess}>
           Less like this
         </button>
-        {(vertical === "dating" || e.type === "ai" || e.type === "agent") && (
+        {(e.type === "human" || e.type === "ai" || e.type === "agent") && (
           <button className={`btn btn-sm ${e.type === "human" ? "btn-ink" : "btn-ai"}`} type="button" onClick={onChat}>
-            {e.type === "human" ? "Chat (interest)" : e.type === "ai" || e.type === "agent" ? "Chat" : "Open"}
+            {e.type === "human" ? "Chat (interest)" : "Chat"}
           </button>
         )}
       </div>

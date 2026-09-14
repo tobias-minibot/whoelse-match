@@ -123,7 +123,7 @@ export function UniversalBox() {
 
   return (
     <div className="app">
-      <SiteNav current="box" />
+      <SiteNav current="home" />
       <p className="doctrine">
         <strong>One box. No category required.</strong> Same <code>whoelse.find</code> as Dating / Agents /
         Experts. Compile is Sentinel v0 — it will not force every sentence into a match.{" "}

@@ -28,6 +28,7 @@ import {
 } from "./public-dto.js";
 import { ipBucket, principalBucket, type RateAction } from "./rate-limit.js";
 import { compileAsync, type CompileOptions } from "./compile.js";
+import { findPreferLive } from "./playground.js";
 import type { ActionType, PublicationSpec, ReceiptStatus, RegistrationSpec, WhoElseRequest } from "./types.js";
 import type { UsageEvent, UsageName } from "./usage.js";
 import {
@@ -145,13 +146,17 @@ export async function gatewayFind(
       requireCaller(caller);
       network.identity.assertOwns(caller, request.requester);
     }
-    const result = await network.engine.whoelseAsync(request);
+    const pooled = await findPreferLive(network, request);
     void recordUsage(network, {
       name: "find",
       principalId: caller?.principalId,
-      payload: { query: request.context ?? request.matchId ?? request.entityId, n: result.candidates.length },
+      payload: {
+        query: request.context ?? request.matchId ?? request.entityId,
+        n: pooled.result.candidates.length,
+        pool: pooled.pool,
+      },
     });
-    return { ok: true as const, status: 200 as const, body: toPublicWhoElseResult(result) };
+    return { ok: true as const, status: 200 as const, body: toPublicWhoElseResult(pooled.result) };
   } catch (err) {
     return fromError(err);
   }
@@ -792,9 +797,19 @@ export async function gatewayCompile(
     if (!text) return fail(400, "text required");
     if (input.find) await enforceAnonRead(network, caller, meta);
     const compiled = await compileAsync(text, network.engine, {
-      find: Boolean(input.find),
+      find: false,
       limit: input.limit ?? 5,
     } satisfies CompileOptions);
+    let find = compiled.find;
+    if (input.find && compiled.classification !== "NOT_WHOELSE") {
+      const pooled = await findPreferLive(network, {
+        context: compiled.ir.intent,
+        constraints: compiled.ir.constraints,
+        exclude: compiled.ir.exclusions,
+        limit: input.limit ?? 5,
+      });
+      find = pooled.result;
+    }
     void recordUsage(network, {
       name: "compile",
       principalId: caller?.principalId,
@@ -811,7 +826,7 @@ export async function gatewayCompile(
         usedLlm: compiled.usedLlm,
         ir: compiled.ir,
         seekDraft: compiled.seekDraft,
-        find: compiled.find ? toPublicWhoElseResult(compiled.find) : undefined,
+        find: find ? toPublicWhoElseResult(find) : undefined,
       },
     };
   } catch (err) {

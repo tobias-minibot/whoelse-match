@@ -1,5 +1,5 @@
-import { UniversalBox } from "@/components/UniversalBox";
+import { redirect } from "next/navigation";
 
 export default function UniversalPage() {
-  return <UniversalBox />;
+  redirect("/");
 }

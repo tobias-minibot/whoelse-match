@@ -19,6 +19,8 @@ export * from "./onboarding.js";
 export * from "./rate-limit.js";
 export * from "./compile.js";
 export * from "./usage.js";
+export * from "./playground.js";
+export * from "./amaze.js";
 export { hasOpenAi } from "./openai.js";
 export { toMachineFindResult, toMachineMatch, toMachinePair } from "./machine.js";
 export type { MachineFindResult, MachineMatch, MachineNextStep, MachinePublicationPair } from "./machine.js";
