@@ -55,6 +55,7 @@ export async function GET() {
       "whoelse.delegate",
       "whoelse.feedback",
       "whoelse.compile",
+      "whoelse.dispatch",
     ],
   });
 }

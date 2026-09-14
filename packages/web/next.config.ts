@@ -9,10 +9,10 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@whoelse/core", "@whoelse/mcp-server"],
   outputFileTracingRoot: repoRoot,
   outputFileTracingIncludes: {
-    "/api/**/*": ["./data/seed.json", "../../data/seed.json"],
-    "/q": ["./data/seed.json", "../../data/seed.json"],
-    "/who-else/[slug]": ["./data/seed.json", "../../data/seed.json"],
-    "/og": ["./data/seed.json", "../../data/seed.json"],
+    "/api/**/*": ["./data/seed.json", "../../data/seed.json", "../../data/intent-vocab.json"],
+    "/q": ["./data/seed.json", "../../data/seed.json", "../../data/intent-vocab.json"],
+    "/who-else/[slug]": ["./data/seed.json", "../../data/seed.json", "../../data/intent-vocab.json"],
+    "/og": ["./data/seed.json", "../../data/seed.json", "../../data/intent-vocab.json"],
   },
   webpack: (config) => {
     config.resolve.extensionAlias = {

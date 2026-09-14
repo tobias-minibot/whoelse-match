@@ -18,6 +18,7 @@ import {
   gatewayReputation,
   gatewayWriteReceipt,
   gatewayCompile,
+  gatewayDispatch,
   requireCaller,
   toMachineFindResult,
   type Caller,
@@ -422,14 +423,27 @@ export function createWhoElseMcpServer(
 
   server.tool(
     "whoelse.compile",
-    "Sentinel v0: classify arbitrary language as WHOELSE_COMPILABLE | PARTIALLY_COMPILABLE | NOT_WHOELSE. Returns IR (intent, constraints, exclusions), optional SEEK draft, optional whoelse.find. Does not force every sentence into a match. Same engine — never a second matcher.",
+    "Sentinel: classify language as WHOELSE_COMPILABLE | PARTIALLY_COMPILABLE | NOT_WHOELSE. Returns compound IR (intents[], relations, slots). One NL request may contain many vocab labels. Optional find dispatches in parallel and reconciles. Same engine — never date.find or tennis.find.",
     {
-      text: z.string().describe("Arbitrary language. Not required to start with Who else."),
-      find: z.boolean().optional().describe("If true and compilable/partial, run whoelse.find on the compiled intent."),
+      text: z.string().describe("Arbitrary language. Not required to start with Who else. May contain multiple intents."),
+      find: z.boolean().optional().describe("If true and compilable/partial, dispatch compound IR (or atomic find)."),
       limit: z.number().int().min(1).max(20).optional(),
     },
     async ({ text, find, limit }) => {
       const result = await gatewayCompile(network, { text, find, limit }, caller);
+      return json(result.body);
+    },
+  );
+
+  server.tool(
+    "whoelse.dispatch",
+    "Compile a (possibly compound) request, run whoelse.find per ready graph node in parallel, reconcile into one ranked result. DATE∩TENNIS intersects; FLIGHT→HOTEL sequences. Never a vertical engine. Atomic whoelse.find remains for a single intent.",
+    {
+      text: z.string().describe("Natural language. Humans speak naturally; this compiles to WhoElse IR."),
+      limit: z.number().int().min(1).max(20).optional(),
+    },
+    async ({ text, limit }) => {
+      const result = await gatewayDispatch(network, { text, limit }, caller);
       return json(result.body);
     },
   );

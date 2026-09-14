@@ -65,7 +65,8 @@ describe("MCP whoelse.find", () => {
     assert.ok(names.includes("whoelse.receipt"));
     assert.ok(names.includes("whoelse.reputation"));
     assert.ok(names.includes("whoelse.compile"));
-    assert.ok(!names.some((n) => /apartment|jobs\.|rides\.|services\./i.test(n)), `no vertical tool: ${names.join(", ")}`);
+    assert.ok(names.includes("whoelse.dispatch"));
+    assert.ok(!names.some((n) => /apartment|jobs\.|rides\.|services\.|date\.|tennis\./i.test(n)), `no vertical tool: ${names.join(", ")}`);
   });
 
   it("registers then finds then delegates without a vertical tool", async () => {
@@ -253,5 +254,32 @@ describe("MCP whoelse.find", () => {
     const compiled = JSON.parse(yesText) as { classification: string; find?: { candidates?: unknown[] } };
     assert.equal(compiled.classification, "WHOELSE_COMPILABLE");
     assert.ok((compiled.find?.candidates?.length ?? 0) > 0);
+  });
+
+  it("dispatches DATE ∩ TENNIS as one reconciled result, not two engines", async () => {
+    const result = await client.callTool({
+      name: "whoelse.dispatch",
+      arguments: {
+        text: "Find me someone nearby I might like who wants to play tennis tonight.",
+        limit: 8,
+      },
+    });
+    const text = (result.content as { type: string; text?: string }[])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text ?? "")
+      .join("\n");
+    const body = JSON.parse(text) as {
+      ir?: { intents?: { label: string }[]; relations?: { kind: string }[] };
+      plan?: { strategy?: string; waves?: string[][] };
+      result?: { candidates?: { entity: { id: string; name: string } }[]; composedFrom?: string[] };
+      reconciliation?: { strategy?: string };
+    };
+    const labels = (body.ir?.intents ?? []).map((i) => i.label);
+    assert.ok(labels.includes("DATE") && labels.includes("TENNIS"), JSON.stringify(labels));
+    assert.equal(body.plan?.strategy, "intersect");
+    assert.ok((body.plan?.waves?.[0]?.length ?? 0) >= 2, "DATE and TENNIS should dispatch in one wave");
+    assert.ok((body.result?.candidates?.length ?? 0) > 0);
+    assert.ok(body.result?.composedFrom?.includes("DATE"));
+    assert.ok(body.result?.composedFrom?.includes("TENNIS"));
   });
 });

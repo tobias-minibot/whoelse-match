@@ -6,6 +6,7 @@ export const USAGE_NAMES = [
   "act",
   "receipt",
   "compile",
+  "dispatch",
 ] as const;
 
 export type UsageName = (typeof USAGE_NAMES)[number];
@@ -62,6 +63,7 @@ export function emptyCounts(): Record<UsageName, number> {
     act: 0,
     receipt: 0,
     compile: 0,
+    dispatch: 0,
   };
 }
 

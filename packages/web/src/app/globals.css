@@ -195,6 +195,13 @@ button.auth-btn:hover {
   margin: 0 0 8px;
   color: var(--quiet);
 }
+.compose-whisper {
+  text-align: left;
+  margin: 0 0 14px;
+  color: var(--quiet);
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+}
 .app-stage.has-results .banner-playground,
 .app-stage.has-results .notice-playground {
   text-align: left;

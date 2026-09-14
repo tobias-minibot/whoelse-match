@@ -170,6 +170,23 @@ export function DiscoverApp() {
   ) {
     setLoading(true);
     try {
+      if (!extras.entityId && !extras.mode) {
+        const compiledRes = await fetch("/api/compile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: context, find: true, limit: 8 }),
+        });
+        const compiledData = (await compiledRes.json()) as CompilePayload;
+        setCompiled(compiledData);
+        if (compiledData.find) {
+          setResult(compiledData.find);
+          const ids = compiledData.find.candidates.map((c) => c.entity.id);
+          setSeen((prev) => [...new Set([...prev, ...ids, extras.entityId ?? ""])].filter(Boolean));
+          setHidden(new Set());
+          syncUrl(context, { entityId: extras.entityId });
+          return;
+        }
+      }
       const path = extras.entityId ? "/api/whoelse/more-like" : "/api/whoelse";
       const res = await fetch(path, {
         method: "POST",
@@ -204,7 +221,6 @@ export function DiscoverApp() {
     const next: TrailItem = { label: q, context: q, exclude: seen, constraints };
     setTrail((t) => [...t, next]);
     void runFind(q, { constraints });
-    void compileQuiet(q);
   }
 
   function recursiveWhoElse(candidate: Candidate) {
@@ -391,7 +407,7 @@ export function DiscoverApp() {
     const like = parsed.entityId;
     setTrail([{ label: nextQuery, context: nextQuery, entityId: like, exclude: like ? [like] : [] }]);
     void runFind(nextQuery, { entityId: like, exclude: like ? [like] : [] });
-    void compileQuiet(nextQuery);
+    if (like) void compileQuiet(nextQuery);
     // First paint only — shared links should run immediately.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -573,6 +589,13 @@ export function DiscoverApp() {
 
       {!result && (
         <p className="empty magic-empty">Tap a spark. Then ask again from any card.</p>
+      )}
+
+      {result?.composedFrom && result.composedFrom.length > 1 && (
+        <p className="compose-whisper" role="status">
+          composed from {result.composedFrom.join(" + ")}
+          {result.composition?.strategy ? ` · ${result.composition.strategy}` : ""}
+        </p>
       )}
 
       {result && dating && (

@@ -28,6 +28,9 @@ import {
 } from "./public-dto.js";
 import { ipBucket, principalBucket, type RateAction } from "./rate-limit.js";
 import { compileAsync, type CompileOptions } from "./compile.js";
+import { dispatchCompound } from "./dispatch.js";
+import type { CompoundIR } from "./compound.js";
+import type { DispatchPlan, Reconciliation } from "./dispatch.js";
 import { findPreferLive } from "./playground.js";
 import type { ActionType, PublicationSpec, ReceiptStatus, RegistrationSpec, WhoElseRequest } from "./types.js";
 import type { UsageEvent, UsageName } from "./usage.js";
@@ -801,19 +804,34 @@ export async function gatewayCompile(
       limit: input.limit ?? 5,
     } satisfies CompileOptions);
     let find = compiled.find;
+    let plan = compiled.plan;
     if (input.find && compiled.classification !== "NOT_WHOELSE") {
-      const pooled = await findPreferLive(network, {
-        context: compiled.ir.intent,
-        constraints: compiled.ir.constraints,
-        exclude: compiled.ir.exclusions,
-        limit: input.limit ?? 5,
-      });
-      find = pooled.result;
+      if (compiled.ir.intents.length > 1) {
+        const dispatched = await dispatchCompound(network, compiled.ir, {
+          limit: input.limit ?? 5,
+          exclude: compiled.ir.exclusions,
+        });
+        find = dispatched.result;
+        plan = dispatched.plan;
+        compiled.dispatch = dispatched;
+      } else {
+        const pooled = await findPreferLive(network, {
+          context: compiled.ir.intent,
+          constraints: compiled.ir.constraints,
+          exclude: compiled.ir.exclusions,
+          limit: input.limit ?? 5,
+        });
+        find = pooled.result;
+      }
     }
     void recordUsage(network, {
       name: "compile",
       principalId: caller?.principalId,
-      payload: { classification: compiled.classification, find: Boolean(input.find) },
+      payload: {
+        classification: compiled.classification,
+        find: Boolean(input.find),
+        intents: compiled.ir.intents.map((i) => i.label),
+      },
     });
     return {
       ok: true as const,
@@ -826,7 +844,68 @@ export async function gatewayCompile(
         usedLlm: compiled.usedLlm,
         ir: compiled.ir,
         seekDraft: compiled.seekDraft,
+        plan,
         find: find ? toPublicWhoElseResult(find) : undefined,
+      },
+    };
+  } catch (err) {
+    return fromError(err);
+  }
+}
+
+export async function gatewayDispatch(
+  network: WhoElseNetwork,
+  input: { text?: string; context?: string; intent?: string; limit?: number },
+  caller: Caller | null,
+  meta?: RequestMeta,
+): Promise<
+  GatewayResult<{
+    classification: string;
+    reason: string;
+    ir: CompoundIR;
+    plan?: DispatchPlan;
+    reconciliation?: Reconciliation;
+    result?: ReturnType<typeof toPublicWhoElseResult>;
+  }>
+> {
+  try {
+    const text = String(input.text ?? input.context ?? input.intent ?? "").trim();
+    if (!text) return fail(400, "text required");
+    await enforceAnonRead(network, caller, meta);
+    const compiled = await compileAsync(text, network.engine, { find: false, limit: input.limit ?? 8 });
+    if (compiled.classification === "NOT_WHOELSE") {
+      return {
+        ok: true as const,
+        status: 200 as const,
+        body: {
+          classification: compiled.classification,
+          reason: compiled.reason,
+          ir: compiled.ir,
+          plan: compiled.plan,
+          reconciliation: undefined,
+          result: undefined,
+        },
+      };
+    }
+    const dispatched = await dispatchCompound(network, compiled.ir, {
+      limit: input.limit ?? 8,
+      exclude: compiled.ir.exclusions,
+    });
+    void recordUsage(network, {
+      name: "dispatch",
+      principalId: caller?.principalId,
+      payload: { intents: compiled.ir.intents.map((i) => i.label), strategy: dispatched.plan.strategy },
+    });
+    return {
+      ok: true as const,
+      status: 200 as const,
+      body: {
+        classification: compiled.classification,
+        reason: compiled.reason,
+        ir: compiled.ir,
+        plan: dispatched.plan,
+        reconciliation: dispatched.reconciliation,
+        result: toPublicWhoElseResult(dispatched.result),
       },
     };
   } catch (err) {
