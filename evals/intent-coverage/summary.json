@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T01:18:32.804Z",
+  "generatedAt": "2026-09-14T02:04:06.010Z",
   "denominator": {
     "catalog": "legacy/intent-protocol/intent-protocol.production-v0.3.compact.json",
     "count": 505,
@@ -14,16 +14,16 @@
     "note": "Denominator is the v0.3 compact cabinet (PR #10): 505 IDs (i001–i325, i327–i506; skip i326). 172 attested + 333 reconstructed-to-fill. Same 505 set for every count. Not the July 506 DATING-split snapshot, not protocol-v2 452+54."
   },
   "counts": {
-    "A": 371,
+    "A": 409,
     "B": 31,
-    "C": 38,
+    "C": 0,
     "D": 6,
     "E": 59
   },
   "effectiveCoverage": {
-    "numerator": 402,
+    "numerator": 440,
     "denominator": 505,
-    "percent": 79.6,
+    "percent": 87.1,
     "formula": "A+B / 505"
   },
   "uiLenses": [
@@ -31,70 +31,7 @@
     "agents",
     "experts"
   ],
-  "extensions": [
-    {
-      "extension": "eligibility",
-      "intents": 18,
-      "ids": [
-        "i091-social-housing",
-        "i157-bank",
-        "i159-savings",
-        "i160-loan",
-        "i161-mortgage",
-        "i162-insurance",
-        "i163-investment",
-        "i164-pension",
-        "i168-crypto",
-        "i174-credit-score",
-        "i175-remittance",
-        "i176-wealth",
-        "i213-scholarship",
-        "i250-adoption",
-        "i251-foster-care",
-        "i258-surrogacy",
-        "i287-pet-insurance",
-        "i398-legal-aid"
-      ]
-    },
-    {
-      "extension": "reservation",
-      "intents": 16,
-      "ids": [
-        "i060-restaurant",
-        "i133-car-rental",
-        "i144-flight",
-        "i353-airbnb",
-        "i354-hotel",
-        "i355-hostel",
-        "i356-short-stay",
-        "i360-glamping",
-        "i361-homestay",
-        "i364-resort",
-        "i365-cruise",
-        "i368-eco-lodge",
-        "i420-concert",
-        "i421-movie",
-        "i422-ticket",
-        "i461-room-booking"
-      ]
-    },
-    {
-      "extension": "geo-radius",
-      "intents": 3,
-      "ids": [
-        "i021-ambulance",
-        "i068-food-delivery",
-        "i156-bike-messenger"
-      ]
-    },
-    {
-      "extension": "inventory",
-      "intents": 1,
-      "ids": [
-        "i136-parking"
-      ]
-    }
-  ],
+  "extensions": [],
   "deprecations": [
     {
       "id": "i078-wine",

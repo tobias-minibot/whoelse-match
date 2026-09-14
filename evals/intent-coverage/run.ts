@@ -141,7 +141,7 @@ function main() {
           label: r.label,
           subgroup: r.subgroup,
           class: r.class,
-          extension: r.extension,
+          extension: r.extension ?? null,
           canonicalQuery: r.canonicalQuery,
         })),
       },

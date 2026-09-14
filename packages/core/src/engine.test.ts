@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { WhoElseEngine } from "./engine.js";
+import type { Entity } from "./types.js";
 
 const engine = WhoElseEngine.fromSeed();
 const fromEntities = WhoElseEngine.fromEntities(engine.store.all());
@@ -418,5 +419,118 @@ describe("rides and services slices", () => {
     const blob = result.candidates.map((c) => `${c.entity.name} ${c.entity.offers.join(" ")}`).join(" ");
     assert.match(blob, /plumb|leak|handyman/i);
     assert.ok(result.candidates.some((c) => c.entity.attributes.licensed === true));
+  });
+});
+
+function stubEntity(
+  id: string,
+  name: string,
+  offers: string[],
+  attributes: Record<string, unknown> = {},
+  extra: Partial<Entity> = {},
+): Entity {
+  const now = "2026-09-14T00:00:00.000Z";
+  return {
+    id,
+    type: extra.type ?? "service",
+    name,
+    description: extra.description ?? `${name}. DEMO synthetic — not production inventory.`,
+    offers,
+    seeks: extra.seeks ?? ["customer"],
+    capabilities: offers,
+    attributes: { synthetic: true, ...attributes },
+    preferences: {},
+    metadata: { demo: true, demoLabel: "synthetic test" },
+    provenance: "synthetic",
+    created_at: now,
+    trust: { status: "stub" },
+    ...extra,
+  };
+}
+
+describe("reusable eligibility / reservation / inventory / radius constraints", () => {
+  const pool = WhoElseEngine.fromEntities([
+    stubEntity("loan-qualify", "Credit-union loan", ["loan", "credit union loan"], {
+      role: "listing",
+      eligible: true,
+      creditScore: 620,
+      membership: "credit union",
+    }),
+    stubEntity("loan-gated", "Prime-only loan", ["loan"], {
+      role: "listing",
+      eligible: true,
+      creditScore: 800,
+    }),
+    stubEntity("loan-closed", "Closed loan desk", ["loan"], { role: "listing", eligible: false }),
+    stubEntity(
+      "table-friday",
+      "Friday table",
+      ["restaurant", "restaurant table"],
+      { role: "listing", reservation: true, when: "friday", remaining: 4 },
+    ),
+    stubEntity("table-full", "Booked-out room", ["restaurant"], {
+      role: "listing",
+      reservation: false,
+      remaining: 0,
+    }),
+    stubEntity(
+      "pub-hold",
+      "Hold on publication",
+      ["hotel"],
+      { role: "listing" },
+      {
+        publications: [
+          {
+            id: "pub-offer-pub-hold-hotel",
+            entityId: "pub-hold",
+            kind: "offer",
+            capability: "hotel",
+            phrases: ["hotel", "bookable hotel"],
+            constraints: [{ key: "reservation", op: "truthy", value: true }],
+            status: "active",
+            created_at: "2026-09-14T00:00:00.000Z",
+            updated_at: "2026-09-14T00:00:00.000Z",
+          },
+        ],
+      },
+    ),
+    stubEntity("lot-open", "Open lot", ["parking"], { role: "listing", remaining: 12 }),
+    stubEntity("lot-full", "Full lot", ["parking"], { role: "listing", remaining: 0 }),
+    stubEntity("ambu-wide", "Wide-radius ambulance", ["ambulance"], { role: "provider", radiusKm: 20 }),
+    stubEntity("ambu-tiny", "Tiny-radius ambulance", ["ambulance"], { role: "provider", radiusKm: 2 }),
+    stubEntity("noise-date", "Maya", ["voice assistants"], { role: undefined }, { type: "human", seeks: ["date"] }),
+  ]);
+
+  it("hard-filters eligibility without a bank engine", () => {
+    const result = pool.whoelse({ context: "Who else has a loan I qualify for with credit score 720?", limit: 8 });
+    assert.ok(result.inferredConstraints.attributes?.some((a) => a.key === "eligible"));
+    const ids = result.candidates.map((c) => c.entity.id);
+    assert.ok(ids.includes("loan-qualify"), ids.join(","));
+    assert.ok(!ids.includes("loan-closed"));
+    assert.ok(!ids.includes("loan-gated"), "800 min credit must not pass 720");
+    const src = Object.getOwnPropertyNames(WhoElseEngine.prototype).join(" ");
+    assert.doesNotMatch(src, /bankFind|restaurantFind|parkingFind|ambulanceFind/);
+  });
+
+  it("hard-filters reservation and remaining; publication constraints count", () => {
+    const table = pool.whoelse({ context: "Who else has a restaurant table Friday?", limit: 8 });
+    const tableIds = table.candidates.map((c) => c.entity.id);
+    assert.ok(tableIds.includes("table-friday"), tableIds.join(","));
+    assert.ok(!tableIds.includes("table-full"));
+    const hotel = pool.whoelse({ context: "Who else has a bookable hotel?", limit: 8 });
+    assert.ok(hotel.candidates.some((c) => c.entity.id === "pub-hold"));
+    const parking = pool.whoelse({ context: "Who else has parking with spots remaining?", limit: 8 });
+    const lots = parking.candidates.map((c) => c.entity.id);
+    assert.ok(lots.includes("lot-open"));
+    assert.ok(!lots.includes("lot-full"));
+  });
+
+  it("radius is distance, not city equality, and does not default to Washington", () => {
+    const result = pool.whoelse({ context: "Who else is an ambulance within 5 km?", limit: 8 });
+    assert.equal(result.inferredConstraints.radiusKm, 5);
+    assert.notEqual(result.inferredConstraints.city, "Washington");
+    const ids = result.candidates.map((c) => c.entity.id);
+    assert.ok(ids.includes("ambu-wide"), ids.join(","));
+    assert.ok(!ids.includes("ambu-tiny"));
   });
 });

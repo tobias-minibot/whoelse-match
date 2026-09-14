@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { WhoElseEngine } from "./engine.js";
 import { parseUniversal } from "./parse.js";
-import { UNIVERSAL_PRIMITIVES } from "./types.js";
+import { CONSTRAINT_KEY_FAMILIES, UNIVERSAL_PRIMITIVES } from "./types.js";
 import { explainTrust } from "./trust.js";
 
 const engine = WhoElseEngine.fromSeed();
@@ -18,6 +18,10 @@ describe("universal primitives", () => {
       "ACTION",
       "MATCH",
     ]);
+    assert.ok(CONSTRAINT_KEY_FAMILIES.eligibility.includes("eligible"));
+    assert.ok(CONSTRAINT_KEY_FAMILIES.reservation.includes("reservation"));
+    assert.ok(CONSTRAINT_KEY_FAMILIES.inventory.includes("remaining"));
+    assert.ok(CONSTRAINT_KEY_FAMILIES.geo.includes("radiusKm"));
   });
 
   it("parses NL into side, view, hard constraints, evidence, state — not a vertical engine", () => {

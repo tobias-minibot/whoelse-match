@@ -3,15 +3,12 @@ import type { CoverageClass, ExpectedIR } from "./types.js";
 import type { CatalogIntent } from "./types.js";
 
 /**
- * A–E against the CURRENT generic core (PR #17):
+ * A–E against the generic core:
  *   ENTITY (open type) + OFFER/SEEK publications + CONSTRAINT + MATCH
  * via whoelse.find / whoelse.compile.
  *
- * This is NOT “can the HTTP API accept a sentence?” (that is 505/505).
- * It is whether a useful matching request is already representable
- * without a new matching primitive.
- *
- * UI primary lenses (Dating / Agents / Experts) are costumes, not coverage.
+ * Constraint families now include eligible / reservation / remaining / radiusKm
+ * as reusable keys (not bank.find or restaurant.find).
  */
 
 export type Classified = {
@@ -156,6 +153,13 @@ function canonicalQuery(row: CatalogIntent): string {
   if (row.label === "JOB") return "Who else is hiring?";
   if (row.label === "AI TOOLS") return "Who else can summarize this PDF?";
   if (row.label === "APARTMENT") return "Who else has a 1-bedroom apartment near me?";
+  if (row.label === "RESTAURANT") return "Who else has a restaurant table Friday?";
+  if (row.label === "PARKING") return "Who else has parking with spots remaining?";
+  if (ELIGIBILITY.has(row.label) || (row.label === "MORTGAGE" && row.subgroup === "FINANCE")) {
+    return `Who else has ${a} ${p} I qualify for?`;
+  }
+  if (RESERVATION.has(row.label)) return `Who else has a bookable ${p}?`;
+  if (GEO_RADIUS.has(row.label)) return `Who else is ${a} ${p} within 5 km?`;
   if (row.subgroup === "DIGITAL & TECH") return `Who else can help with ${p}?`;
   if (row.subgroup === "SOCIAL & COMMUNITY") return `Who else wants ${a} ${p}?`;
   if (row.subgroup === "EVENTS") return `Who else is going to ${a} ${p}?`;
@@ -176,7 +180,7 @@ function paraphrases(row: CatalogIntent): string[] {
   ];
 }
 
-function expectedIr(row: CatalogIntent, notes: string): ExpectedIR {
+function expectedIr(row: CatalogIntent, notes: string, family?: string): ExpectedIR {
   const constraints: Record<string, unknown> = {};
   if (row.routing === "geo-anchored") constraints.city = "(soft; infer from language or near-me default)";
   if (row.slots.includes("budget") || row.slots.includes("price") || row.slots.some((s) => s.endsWith("price"))) {
@@ -184,6 +188,18 @@ function expectedIr(row: CatalogIntent, notes: string): ExpectedIR {
   }
   if (row.slots.includes("availability") || row.slots.includes("schedule")) {
     constraints.availability = "soft phrase or availableFrom";
+  }
+  if (family === "eligibility") {
+    constraints.eligible = "AttributeConstraint eligible (+ income|creditScore|membership)";
+  }
+  if (family === "reservation") {
+    constraints.reservation = "AttributeConstraint reservation (bookable slot / hold); when optional";
+  }
+  if (family === "inventory") {
+    constraints.remaining = "AttributeConstraint remaining (count, not inStock boolean)";
+  }
+  if (family === "geo-radius") {
+    constraints.radiusKm = "WhoElseConstraints.radiusKm — distance, not city equality";
   }
   return {
     side: sideOf(row),
@@ -198,7 +214,7 @@ function finish(
   row: CatalogIntent,
   cls: CoverageClass,
   reason: string,
-  extra?: { extension?: string },
+  extra?: { extension?: string; family?: string },
 ): Classified {
   const notes = extra?.extension
     ? `${reason} Missing reusable primitive: ${extra.extension}.`
@@ -209,7 +225,7 @@ function finish(
     extension: extra?.extension,
     canonicalQuery: canonicalQuery(row),
     paraphrases: paraphrases(row),
-    expectedIr: expectedIr(row, notes),
+    expectedIr: expectedIr(row, notes, extra?.family ?? extra?.extension),
   };
 }
 
@@ -233,32 +249,47 @@ export function classifyIntent(row: CatalogIntent): Classified {
   const dReason = CONTENT_OR_PROCESS[row.label];
   if (dReason) return finish(row, "D", dReason);
 
-  // Two-market finance mortgage (HOME mortgage is handled as B leak below).
+  // Two-market finance mortgage (HOME mortgage stays B leak below).
   if (row.label === "MORTGAGE" && row.subgroup === "FINANCE") {
-    return finish(row, "C", "Useful request is a product I qualify for, not a yellow-pages bank noun.", {
-      extension: "eligibility",
-    });
+    return finish(
+      row,
+      "A",
+      "Useful request is a product I qualify for. Representable as SEEK/OFFER + CONSTRAINT eligible (not a yellow-pages bank noun, not bank.find).",
+      { family: "eligibility" },
+    );
   }
 
   if (ELIGIBILITY.has(row.label)) {
-    return finish(row, "C", "Useful match depends on who qualifies (income, credit, membership, status).", {
-      extension: "eligibility",
-    });
+    return finish(
+      row,
+      "A",
+      "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+      { family: "eligibility" },
+    );
   }
   if (RESERVATION.has(row.label)) {
-    return finish(row, "C", "Useful match is who has a bookable unit at a time — not merely the noun.", {
-      extension: "reservation",
-    });
+    return finish(
+      row,
+      "A",
+      "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+      { family: "reservation" },
+    );
   }
   if (INVENTORY.has(row.label)) {
-    return finish(row, "C", "Useful match is remaining capacity (spots), not a parking-place noun.", {
-      extension: "inventory",
-    });
+    return finish(
+      row,
+      "A",
+      "Useful match is remaining capacity (spots). Representable as CONSTRAINT remaining — not boolean inStock, not parking.find.",
+      { family: "inventory" },
+    );
   }
   if (GEO_RADIUS.has(row.label)) {
-    return finish(row, "C", "Useful match is distance/ETA, not city equality (near-me currently defaults to DC).", {
-      extension: "geo-radius",
-    });
+    return finish(
+      row,
+      "A",
+      "Useful match is distance/ETA, not city equality. Representable as CONSTRAINT radiusKm; near-me no longer forces Washington when a radius is stated.",
+      { family: "geo-radius" },
+    );
   }
 
   const leak = SLOT_LEAK[row.label];

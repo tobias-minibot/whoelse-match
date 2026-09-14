@@ -26,6 +26,26 @@ export const UNIVERSAL_PRIMITIVES = [
 /** Derived — stored on ENTITY.attributes, not a second graph or calendar. */
 export const DERIVED_PRIMITIVES = ["RELATION", "STATE", "VIEW"] as const;
 
+/**
+ * Well-known CONSTRAINT keys. Open strings — verticals add *values*, not matchers.
+ * Eligibility / reservation / remaining / radiusKm are reusable families
+ * (not bank.find, restaurant.find, parking.find, or ambulance.find).
+ */
+export const CONSTRAINT_KEY_FAMILIES = {
+  geo: ["city", "region", "neighborhood", "origin", "destination", "radiusKm"],
+  money: ["price", "budget", "rent", "rate", "ticketSize", "currency"],
+  space: ["bedrooms", "pets", "furnished", "listingKind"],
+  time: ["availableFrom", "availableTo", "when", "start", "durationMonths", "durationWeeks"],
+  state: ["state", "inStock", "openNow", "deliverToday", "urgency", "licensed"],
+  party: ["seats"],
+  /** Requirements / credentials / qualifiers published on the OFFER or SEEK. */
+  eligibility: ["eligible", "income", "creditScore", "membership"],
+  /** Bookable slot / hold at a time. ACTION `book` may follow; find only matches inventory-at-time. */
+  reservation: ["reservation"],
+  /** Remaining count — not boolean `inStock`. */
+  inventory: ["remaining"],
+} as const;
+
 export type UniversalPrimitive = (typeof UNIVERSAL_PRIMITIVES)[number];
 
 /** Seeded now. Open string so later types do not require a core fork. */
@@ -210,6 +230,8 @@ export interface UniversalQuery {
     neighborhood?: string;
     cheaper?: boolean;
     labels?: string[];
+    /** Coverage / distance in km. City equality is not a hard gate when set. */
+    radiusKm?: number;
   };
   evidenceNeeds: EvidenceKind[];
   state?: { op: AttributeOp; value: string };
@@ -334,6 +356,11 @@ export interface WhoElseConstraints {
   roles?: string[];
   /** Optional changing-state filter (open / full / departing / completed). */
   state?: string;
+  /**
+   * Coverage / distance in km (geo-radius). When set, city equality is not a
+   * hard gate — “within 5 km” is not “Washington, DC”.
+   */
+  radiusKm?: number;
 }
 
 export interface WhoElseRequest {

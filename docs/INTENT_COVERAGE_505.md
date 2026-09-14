@@ -6,19 +6,23 @@
 
 | Class | Count | / 505 |
 | --- | ---: | ---: |
-| **A — fully covered** | **371** | 73.5% |
+| **A — fully covered** | **409** | 81.0% |
 | **B — covered with normalization** | **31** | 6.1% |
-| **C — needs one reusable extension** | **38** | 7.5% |
+| **C — needs one reusable extension** | **0** | 0.0% |
 | **D — not yet representable** | **6** | 1.2% |
 | **E — bad / duplicate / obsolete** | **59** | 11.7% |
-| **Effective coverage = A+B** | **402** | **79.6%** |
+| **Effective coverage = A+B** | **440** | **87.1%** |
 
 ```
 UI lenses = Dating / Agents / Experts = 3
-Semantic coverage = A+B / 505 = 402 / 505 = 79.6%
+Semantic coverage = A+B / 505 = 440 / 505 = 87.1%
 ```
 
 Those are different numbers on purpose. Lenses are costumes over one `whoelse.find`. Coverage is whether a useful request compiles to **ENTITY + OFFER/SEEK + CONSTRAINT + MATCH** without a new matching primitive.
+
+**Before this PR (audit, PR #18):** A 371 / B 31 / C 38 / D 6 / E 59; A+B = 402/505 = 79.6%.
+
+**After:** A 409 / B 31 / C 0 / D 6 / E 59; A+B = 440/505 = 87.1% (+38 A, +7.5 pp). All 18 eligibility + 16 reservation + 3 geo-radius + 1 inventory C rows moved to A. Same `whoelse.find`. No restaurant.find / bank.find.
 
 Machine artifacts: [`evals/intent-coverage/intents.json`](../evals/intent-coverage/intents.json), [`evals/intent-coverage/summary.json`](../evals/intent-coverage/summary.json). Human index: [`/universe`](../packages/web/src/app/universe/page.tsx).
 
@@ -59,11 +63,11 @@ ENTITY (open type)
 
 Machine path: `whoelse.find` / `whoelse.compile` (`POST /api/compile`). Human path: one-box + three primary lenses (Dating, Agents, Experts). Other factory lenses still exist behind “more” — they are views, not matchers.
 
-**Already first-class constraint families:** city / region / neighborhood, price|budget|rent|rate, bedrooms / pets / furnished, origin / destination / seats, licensed, urgency, state, inStock, openNow, deliverToday, availableFrom / when, evidence kinds (license, verified, portfolio, outcome, reference, receipt), side + roles.
+**Already first-class constraint families:** city / region / neighborhood, price|budget|rent|rate, bedrooms / pets / furnished, origin / destination / seats, licensed, urgency, state, inStock, openNow, deliverToday, availableFrom / when, evidence kinds (license, verified, portfolio, outcome, reference, receipt), side + roles, **eligible** (income / creditScore / membership), **reservation** (bookable slot / hold), **remaining** (count, not boolean inStock), **radiusKm** (distance, not city equality).
 
-**Already adjacent, not find:** ACTION (`invoke` / `delegate` / `connect` / …). Booking, paying, and filing are not WhoElse.
+**Already adjacent, not find:** ACTION (`invoke` / `delegate` / `connect` / …). Booking, paying, and filing are not WhoElse. `reservation` on find is inventory-at-time; ACTION `book` may follow.
 
-**Missing reusable concepts (C only when the *useful* request needs them):** eligibility, reservation / bookable inventory, remaining capacity, geo radius (today “near me” hard-defaults to Washington, DC).
+**C is empty.** The audit’s four missing families shipped as keys on the same CONSTRAINT object. D (content / process / genealogy / bulletin) and E (aliases / SKUs) stay out of architecture.
 
 ---
 
@@ -83,7 +87,7 @@ Classification order: **E → D → C → B → A**.
 | --- | --- |
 | **E** | `alias_of` set (52 rows) **or** SKU-as-intent overgeneration (WATER, TEA, BEER, COFFEE, WINE, SNACK, COCKTAIL). Deprecate. Do not invent architecture to keep the ID. |
 | **D** | The useful request is not find(compatible entities): content, abstract category, enforcement process, genealogy, bulletin, lost-item inventory. |
-| **C** | Same `whoelse.find`; the *primary useful* request needs one missing reusable primitive (not a vertical engine). |
+| **C** | Same `whoelse.find`; the *primary useful* request needs one missing reusable primitive (not a vertical engine). **Empty after eligibility / reservation / remaining / radiusKm shipped.** |
 | **B** | Generic engine works after alias / leaked-slot remap / Sentinel / DATE-family normalization. No new primitive. |
 | **A** | Noun-find is already a useful request on ENTITY + OFFER/SEEK + existing constraints + MATCH. Specialty, vibe, reason ride in the sentence. |
 
@@ -94,34 +98,36 @@ Mechanical wrap of `{LABEL} who else?` → `Who else is a {label}?` is **not** e
 ## 4. Exact counts
 
 ```
-A / 505 = 371 / 505
+A / 505 = 409 / 505
 B / 505 =  31 / 505
-C / 505 =  38 / 505
+C / 505 =   0 / 505
 D / 505 =   6 / 505
 E / 505 =  59 / 505
-A+B / 505 = 402 / 505 = 79.6%
+A+B / 505 = 440 / 505 = 87.1%
 ```
 
-371+31+38+6+59 = 505.
+409+31+0+6+59 = 505.
 
-Attested vs fill does not change the denominator. Deep rows (`DOCTOR`, `RESTAURANT`, `DATE`, `AIRBNB`, `LAWYER`): A, C (restaurant + Airbnb reservation), A, C, A.
+Attested vs fill does not change the denominator. Deep rows (`DOCTOR`, `RESTAURANT`, `DATE`, `AIRBNB`, `LAWYER`): A, A (reservation), A, A (reservation), A.
 
 ---
 
-## 5. Top C extensions (by leverage)
+## 5. Shipped C extensions (reusable keys, not engines)
 
-Add **one reusable concept**, not a restaurant engine / bank engine / airline engine.
+One reusable concept each. Same `whoelse.find`.
 
-| Rank | Extension | Intents unlocked | What to add (generic) | Examples |
+| Rank | Extension | Intents unlocked | What shipped (generic) | Examples |
 | ---: | --- | ---: | --- | --- |
-| 1 | **eligibility** | **18** | Constraint family `{ key: "eligible", op, value }` / evidence of qualification (income, credit, membership, status). Same find. | BANK, LOAN, FINANCE MORTGAGE, INSURANCE, SCHOLARSHIP, SOCIAL HOUSING, LEGAL AID, ADOPTION, PET INSURANCE |
-| 2 | **reservation** | **16** | Bookable unit at time T (remaining capacity + hold). ACTION `book` may follow; the *match* needs inventory-at-time. | RESTAURANT, HOTEL, AIRBNB, FLIGHT, CONCERT, TICKET, CAR RENTAL, ROOM BOOKING |
-| 3 | **geo-radius** | **3** | Distance / ETA, not city equality. “Near me” must not mean “Washington”. | AMBULANCE, FOOD DELIVERY, BIKE MESSENGER |
-| 4 | **inventory** | **1** | Remaining count (not boolean `inStock`). | PARKING |
+| 1 | **eligibility** | **18 → A** | `{ key: "eligible", op, value }` plus `income` / `creditScore` / `membership`. | BANK, LOAN, FINANCE MORTGAGE, INSURANCE, SCHOLARSHIP, SOCIAL HOUSING, LEGAL AID, ADOPTION, PET INSURANCE |
+| 2 | **reservation** | **16 → A** | `{ key: "reservation", op: "truthy" }` bookable unit at time T (`when` optional). ACTION `book` is still not find. | RESTAURANT, HOTEL, AIRBNB, FLIGHT, CONCERT, TICKET, CAR RENTAL, ROOM BOOKING |
+| 3 | **geo-radius** | **3 → A** | `radiusKm` on the query. City equality is not a hard gate; “within 5 km” does not mean Washington. | AMBULANCE, FOOD DELIVERY, BIKE MESSENGER |
+| 4 | **inventory** | **1 → A** | `{ key: "remaining", op: "gte", value }` — remaining count, not boolean `inStock`. | PARKING |
 
-`licensed`, `availability` (phrase), and `inStock` (boolean) already exist. Doctor / plumber / pharmacy stay **A**: “who else is a cardiologist near me this week?” is useful without insurance-network matching or a calendar grid. Those refinements can wait.
+`licensed`, `availability` (phrase), and `inStock` (boolean) already existed. Doctor / plumber / pharmacy stay **A**: “who else is a cardiologist near me this week?” is useful without insurance-network matching or a calendar grid.
 
-Two-market `MORTGAGE`: HOME `i092` is **B** (housing shirt on a finance product). FINANCE `i161` is **C** (eligibility). Do not merge them into one ID.
+Two-market `MORTGAGE`: HOME `i092` is **B** (housing shirt on a finance product). FINANCE `i161` is **A** (eligibility). Do not merge them into one ID.
+
+“Near me” without a radius still defaults to Washington, DC for the dating seed. An explicit `within N km/miles` skips that default.
 
 ---
 

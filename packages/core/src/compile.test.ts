@@ -37,6 +37,21 @@ describe("whoelse.compile / Sentinel v0", () => {
     assert.ok(result.ir.constraints.attributes?.some((a) => a.key === "bedrooms" || a.key === "rent" || a.key === "budget"));
   });
 
+  it("emits eligibility and reservation slots on compile IR; booking stays partial", () => {
+    const loan = compileLanguage("Who else has a loan I qualify for?");
+    assert.equal(loan.classification, "WHOELSE_COMPILABLE");
+    assert.ok(loan.ir.constraints.attributes?.some((a) => a.key === "eligible"));
+    const table = compileLanguage("Who else has a restaurant table Friday?");
+    assert.equal(table.classification, "WHOELSE_COMPILABLE");
+    assert.ok(table.ir.constraints.attributes?.some((a) => a.key === "reservation"));
+    const radius = compileLanguage("Who else is an ambulance within 5 km?");
+    assert.equal(radius.classification, "WHOELSE_COMPILABLE");
+    assert.equal(radius.ir.constraints.radiusKm, 5);
+    assert.notEqual(radius.ir.constraints.city, "Washington");
+    const book = compileLanguage("Book me a restaurant Friday");
+    assert.equal(book.classification, "PARTIALLY_COMPILABLE");
+  });
+
   it("optional find uses the same engine, not a second matcher", async () => {
     const engine = WhoElseEngine.fromSeed();
     const result = await compileAsync("Who else can summarize this PDF?", engine, { find: true, limit: 3 });

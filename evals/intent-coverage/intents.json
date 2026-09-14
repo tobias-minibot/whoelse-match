@@ -1013,10 +1013,9 @@
       "reason"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is distance/ETA, not city equality (near-me currently defaults to DC).",
-    "extension": "geo-radius",
-    "canonicalQuery": "Who else is an ambulance near me?",
+    "class": "A",
+    "reason": "Useful match is distance/ETA, not city equality. Representable as CONSTRAINT radiusKm; near-me no longer forces Washington when a radius is stated.",
+    "canonicalQuery": "Who else is an ambulance within 5 km?",
     "paraphrases": [
       "AMBULANCE who else?",
       "Looking for an ambulance",
@@ -1028,20 +1027,27 @@
       "capability": "ambulance",
       "entityType": "service",
       "constraints": {
-        "city": "(soft; infer from language or near-me default)"
+        "city": "(soft; infer from language or near-me default)",
+        "radiusKm": "WhoElseConstraints.radiusKm — distance, not city equality"
       },
-      "notes": "Useful match is distance/ETA, not city equality (near-me currently defaults to DC). Missing reusable primitive: geo-radius."
+      "notes": "Useful match is distance/ETA, not city equality. Representable as CONSTRAINT radiusKm; near-me no longer forces Washington when a radius is stated."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is an ambulance near me?",
-      "capability": "an ambulance near me",
+      "intent": "Who else is an ambulance within 5 km?",
+      "capability": "an ambulance within 5 km",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "radiusKm": 5,
+        "attributes": [
+          {
+            "key": "radiusKm",
+            "op": "gte",
+            "value": 5
+          }
+        ]
       }
     }
   },
@@ -2985,10 +2991,9 @@
       "budget"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else has a restaurant?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a restaurant table Friday?",
     "paraphrases": [
       "RESTAURANT who else?",
       "Looking for a restaurant",
@@ -3000,19 +3005,32 @@
       "capability": "restaurant",
       "entityType": "product",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
-      "reason": "Language maps to find(compatible entities) under constraints.",
-      "confidence": 0.9,
-      "locked": false,
-      "intent": "Who else has a restaurant?",
-      "capability": "a restaurant",
+      "reason": "Bookable slot is a reservation CONSTRAINT. WhoElse finds who has it; it does not book.",
+      "confidence": 1,
+      "locked": true,
+      "intent": "Who else has a restaurant table Friday?",
+      "capability": "restaurant reservation",
       "constraints": {
-        "side": "offer"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          },
+          {
+            "key": "when",
+            "op": "eq",
+            "value": "friday"
+          }
+        ]
       }
     }
   },
@@ -3370,10 +3388,9 @@
       "hours"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is distance/ETA, not city equality (near-me currently defaults to DC).",
-    "extension": "geo-radius",
-    "canonicalQuery": "Who else has a food delivery?",
+    "class": "A",
+    "reason": "Useful match is distance/ETA, not city equality. Representable as CONSTRAINT radiusKm; near-me no longer forces Washington when a radius is stated.",
+    "canonicalQuery": "Who else is a food delivery within 5 km?",
     "paraphrases": [
       "FOOD DELIVERY who else?",
       "Looking for a food delivery",
@@ -3385,19 +3402,27 @@
       "capability": "food delivery",
       "entityType": "product",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "radiusKm": "WhoElseConstraints.radiusKm — distance, not city equality"
       },
-      "notes": "Useful match is distance/ETA, not city equality (near-me currently defaults to DC). Missing reusable primitive: geo-radius."
+      "notes": "Useful match is distance/ETA, not city equality. Representable as CONSTRAINT radiusKm; near-me no longer forces Washington when a radius is stated."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else has a food delivery?",
-      "capability": "a food delivery",
+      "intent": "Who else is a food delivery within 5 km?",
+      "capability": "a food delivery within 5 km",
       "constraints": {
-        "side": "offer"
+        "radiusKm": 5,
+        "attributes": [
+          {
+            "key": "radiusKm",
+            "op": "gte",
+            "value": 5
+          }
+        ]
       }
     }
   },
@@ -4491,10 +4516,9 @@
       "trust"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a social housing near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a social housing I qualify for?",
     "paraphrases": [
       "SOCIAL HOUSING who else?",
       "Looking for a social housing",
@@ -4507,20 +4531,27 @@
       "entityType": "service",
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
       },
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a social housing near me?",
-      "capability": "a social housing near me",
+      "intent": "Who else has a social housing I qualify for?",
+      "capability": "a social housing I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -6601,10 +6632,9 @@
       "origin"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a car rental near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable car rental?",
     "paraphrases": [
       "CAR RENTAL who else?",
       "Looking for a car rental",
@@ -6617,20 +6647,27 @@
       "entityType": "service",
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a car rental near me?",
-      "capability": "a car rental near me",
+      "intent": "Who else has a bookable car rental?",
+      "capability": "a bookable car rental",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -6751,10 +6788,9 @@
       "party-size"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match is remaining capacity (spots), not a parking-place noun.",
-    "extension": "inventory",
-    "canonicalQuery": "Who else is a parking near me?",
+    "class": "A",
+    "reason": "Useful match is remaining capacity (spots). Representable as CONSTRAINT remaining — not boolean inStock, not parking.find.",
+    "canonicalQuery": "Who else has parking with spots remaining?",
     "paraphrases": [
       "PARKING who else?",
       "Looking for a parking",
@@ -6766,20 +6802,27 @@
       "capability": "parking",
       "entityType": "service",
       "constraints": {
-        "city": "(soft; infer from language or near-me default)"
+        "city": "(soft; infer from language or near-me default)",
+        "remaining": "AttributeConstraint remaining (count, not inStock boolean)"
       },
-      "notes": "Useful match is remaining capacity (spots), not a parking-place noun. Missing reusable primitive: inventory."
+      "notes": "Useful match is remaining capacity (spots). Representable as CONSTRAINT remaining — not boolean inStock, not parking.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a parking near me?",
-      "capability": "a parking near me",
+      "intent": "Who else has parking with spots remaining?",
+      "capability": "parking with spots remaining",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "remaining",
+            "op": "gte",
+            "value": 1
+          }
+        ]
       }
     }
   },
@@ -7162,10 +7205,9 @@
       "preference"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a flight near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable flight?",
     "paraphrases": [
       "FLIGHT who else?",
       "Looking for a flight",
@@ -7177,20 +7219,27 @@
       "capability": "flight",
       "entityType": "service",
       "constraints": {
-        "city": "(soft; infer from language or near-me default)"
+        "city": "(soft; infer from language or near-me default)",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a flight near me?",
-      "capability": "a flight near me",
+      "intent": "Who else has a bookable flight?",
+      "capability": "a bookable flight",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -7761,10 +7810,9 @@
       "origin"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is distance/ETA, not city equality (near-me currently defaults to DC).",
-    "extension": "geo-radius",
-    "canonicalQuery": "Who else is a bike messenger near me?",
+    "class": "A",
+    "reason": "Useful match is distance/ETA, not city equality. Representable as CONSTRAINT radiusKm; near-me no longer forces Washington when a radius is stated.",
+    "canonicalQuery": "Who else is a bike messenger within 5 km?",
     "paraphrases": [
       "BIKE MESSENGER who else?",
       "Looking for a bike messenger",
@@ -7777,20 +7825,27 @@
       "entityType": "service",
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "radiusKm": "WhoElseConstraints.radiusKm — distance, not city equality"
       },
-      "notes": "Useful match is distance/ETA, not city equality (near-me currently defaults to DC). Missing reusable primitive: geo-radius."
+      "notes": "Useful match is distance/ETA, not city equality. Representable as CONSTRAINT radiusKm; near-me no longer forces Washington when a radius is stated."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a bike messenger near me?",
-      "capability": "a bike messenger near me",
+      "intent": "Who else is a bike messenger within 5 km?",
+      "capability": "a bike messenger within 5 km",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "radiusKm": 5,
+        "attributes": [
+          {
+            "key": "radiusKm",
+            "op": "gte",
+            "value": 5
+          }
+        ]
       }
     }
   },
@@ -7812,10 +7867,9 @@
       "timeline"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a bank near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a bank I qualify for?",
     "paraphrases": [
       "BANK who else?",
       "Looking for a bank",
@@ -7826,19 +7880,27 @@
       "side": "offer",
       "capability": "bank",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a bank near me?",
-      "capability": "a bank near me",
+      "intent": "Who else has a bank I qualify for?",
+      "capability": "a bank I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -7907,10 +7969,9 @@
       "timeline"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a savings near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a savings I qualify for?",
     "paraphrases": [
       "SAVINGS who else?",
       "Looking for a savings",
@@ -7921,19 +7982,27 @@
       "side": "offer",
       "capability": "savings",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a savings near me?",
-      "capability": "a savings near me",
+      "intent": "Who else has a savings I qualify for?",
+      "capability": "a savings I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -7955,10 +8024,9 @@
       "timeline"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a loan near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a loan I qualify for?",
     "paraphrases": [
       "LOAN who else?",
       "Looking for a loan",
@@ -7969,19 +8037,27 @@
       "side": "offer",
       "capability": "loan",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
-      "reason": "Language maps to find(compatible entities) under constraints.",
-      "confidence": 0.9,
-      "locked": false,
-      "intent": "Who else is a loan near me?",
-      "capability": "a loan near me",
+      "reason": "Eligibility is a CONSTRAINT on the same find — not bank.find.",
+      "confidence": 1,
+      "locked": true,
+      "intent": "Who else has a loan I qualify for?",
+      "capability": "loan",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -8003,10 +8079,9 @@
       "timeline"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful request is a product I qualify for, not a yellow-pages bank noun.",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a mortgage near me?",
+    "class": "A",
+    "reason": "Useful request is a product I qualify for. Representable as SEEK/OFFER + CONSTRAINT eligible (not a yellow-pages bank noun, not bank.find).",
+    "canonicalQuery": "Who else has a mortgage I qualify for?",
     "paraphrases": [
       "MORTGAGE who else?",
       "Looking for a mortgage",
@@ -8017,19 +8092,27 @@
       "side": "offer",
       "capability": "mortgage",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful request is a product I qualify for, not a yellow-pages bank noun. Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful request is a product I qualify for. Representable as SEEK/OFFER + CONSTRAINT eligible (not a yellow-pages bank noun, not bank.find)."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a mortgage near me?",
-      "capability": "a mortgage near me",
+      "intent": "Who else has a mortgage I qualify for?",
+      "capability": "a mortgage I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -8051,10 +8134,9 @@
       "timeline"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is an insurance near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has an insurance I qualify for?",
     "paraphrases": [
       "INSURANCE who else?",
       "Looking for an insurance",
@@ -8065,19 +8147,27 @@
       "side": "offer",
       "capability": "insurance",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is an insurance near me?",
-      "capability": "an insurance near me",
+      "intent": "Who else has an insurance I qualify for?",
+      "capability": "an insurance I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -8099,10 +8189,9 @@
       "timeline"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is an investment near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has an investment I qualify for?",
     "paraphrases": [
       "INVESTMENT who else?",
       "Looking for an investment",
@@ -8113,19 +8202,27 @@
       "side": "offer",
       "capability": "investment",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is an investment near me?",
-      "capability": "an investment near me",
+      "intent": "Who else has an investment I qualify for?",
+      "capability": "an investment I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -8147,10 +8244,9 @@
       "timeline"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a pension near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a pension I qualify for?",
     "paraphrases": [
       "PENSION who else?",
       "Looking for a pension",
@@ -8161,19 +8257,27 @@
       "side": "offer",
       "capability": "pension",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a pension near me?",
-      "capability": "a pension near me",
+      "intent": "Who else has a pension I qualify for?",
+      "capability": "a pension I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -8338,10 +8442,9 @@
       "timeline"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a crypto near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a crypto I qualify for?",
     "paraphrases": [
       "CRYPTO who else?",
       "Looking for a crypto",
@@ -8352,19 +8455,27 @@
       "side": "offer",
       "capability": "crypto",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a crypto near me?",
-      "capability": "a crypto near me",
+      "intent": "Who else has a crypto I qualify for?",
+      "capability": "a crypto I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -8621,10 +8732,9 @@
       "timeline"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a credit score near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a credit score I qualify for?",
     "paraphrases": [
       "CREDIT SCORE who else?",
       "Looking for a credit score",
@@ -8635,19 +8745,27 @@
       "side": "offer",
       "capability": "credit score",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a credit score near me?",
-      "capability": "a credit score near me",
+      "intent": "Who else has a credit score I qualify for?",
+      "capability": "a credit score I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -8669,10 +8787,9 @@
       "timeline"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a remittance near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a remittance I qualify for?",
     "paraphrases": [
       "REMITTANCE who else?",
       "Looking for a remittance",
@@ -8683,19 +8800,27 @@
       "side": "offer",
       "capability": "remittance",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a remittance near me?",
-      "capability": "a remittance near me",
+      "intent": "Who else has a remittance I qualify for?",
+      "capability": "a remittance I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -8717,10 +8842,9 @@
       "timeline"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a wealth near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a wealth I qualify for?",
     "paraphrases": [
       "WEALTH who else?",
       "Looking for a wealth",
@@ -8731,19 +8855,27 @@
       "side": "offer",
       "capability": "wealth",
       "entityType": "service",
-      "constraints": {},
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "constraints": {
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
+      },
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a wealth near me?",
-      "capability": "a wealth near me",
+      "intent": "Who else has a wealth I qualify for?",
+      "capability": "a wealth I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -10517,10 +10649,9 @@
       "schedule"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a scholarship near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a scholarship I qualify for?",
     "paraphrases": [
       "SCHOLARSHIP who else?",
       "Looking for a scholarship",
@@ -10532,20 +10663,27 @@
       "capability": "scholarship",
       "entityType": "service",
       "constraints": {
-        "availability": "soft phrase or availableFrom"
+        "availability": "soft phrase or availableFrom",
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
       },
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a scholarship near me?",
-      "capability": "a scholarship near me",
+      "intent": "Who else has a scholarship I qualify for?",
+      "capability": "a scholarship I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -12374,10 +12512,9 @@
       "location"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is an adoption near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has an adoption I qualify for?",
     "paraphrases": [
       "ADOPTION who else?",
       "Looking for an adoption",
@@ -12391,20 +12528,27 @@
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
         "price": "optional AttributeConstraint price|budget|rate",
-        "availability": "soft phrase or availableFrom"
+        "availability": "soft phrase or availableFrom",
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
       },
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is an adoption near me?",
-      "capability": "an adoption near me",
+      "intent": "Who else has an adoption I qualify for?",
+      "capability": "an adoption I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -12426,10 +12570,9 @@
       "location"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a foster care near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a foster care I qualify for?",
     "paraphrases": [
       "FOSTER CARE who else?",
       "Looking for a foster care",
@@ -12443,20 +12586,27 @@
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
         "price": "optional AttributeConstraint price|budget|rate",
-        "availability": "soft phrase or availableFrom"
+        "availability": "soft phrase or availableFrom",
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
       },
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a foster care near me?",
-      "capability": "a foster care near me",
+      "intent": "Who else has a foster care I qualify for?",
+      "capability": "a foster care I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -12784,10 +12934,9 @@
       "location"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a surrogacy near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a surrogacy I qualify for?",
     "paraphrases": [
       "SURROGACY who else?",
       "Looking for a surrogacy",
@@ -12801,20 +12950,27 @@
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
         "price": "optional AttributeConstraint price|budget|rate",
-        "availability": "soft phrase or availableFrom"
+        "availability": "soft phrase or availableFrom",
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
       },
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a surrogacy near me?",
-      "capability": "a surrogacy near me",
+      "intent": "Who else has a surrogacy I qualify for?",
+      "capability": "a surrogacy I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -14269,10 +14425,9 @@
       "location"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a pet insurance near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a pet insurance I qualify for?",
     "paraphrases": [
       "PET INSURANCE who else?",
       "Looking for a pet insurance",
@@ -14286,20 +14441,27 @@
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
         "price": "optional AttributeConstraint price|budget|rate",
-        "availability": "soft phrase or availableFrom"
+        "availability": "soft phrase or availableFrom",
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
       },
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a pet insurance near me?",
-      "capability": "a pet insurance near me",
+      "intent": "Who else has a pet insurance I qualify for?",
+      "capability": "a pet insurance I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -17342,10 +17504,9 @@
       "budget"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else has an airbnb?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable airbnb?",
     "paraphrases": [
       "AIRBNB who else?",
       "Looking for an airbnb",
@@ -17357,19 +17518,27 @@
       "capability": "airbnb",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else has an airbnb?",
-      "capability": "an airbnb",
+      "intent": "Who else has a bookable airbnb?",
+      "capability": "a bookable airbnb",
       "constraints": {
-        "side": "offer"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -17391,10 +17560,9 @@
       "lodging"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a hotel near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable hotel?",
     "paraphrases": [
       "HOTEL who else?",
       "Looking for a hotel",
@@ -17406,23 +17574,29 @@
       "capability": "hotel",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a hotel near me?",
-      "capability": "a hotel near me",
+      "intent": "Who else has a bookable hotel?",
+      "capability": "a bookable hotel",
       "constraints": {
-        "city": "Washington",
-        "region": "DC",
         "side": "offer",
         "roles": [
           "listing"
+        ],
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
         ]
       }
     }
@@ -17445,10 +17619,9 @@
       "lodging"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a hostel near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable hostel?",
     "paraphrases": [
       "HOSTEL who else?",
       "Looking for a hostel",
@@ -17460,23 +17633,29 @@
       "capability": "hostel",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a hostel near me?",
-      "capability": "a hostel near me",
+      "intent": "Who else has a bookable hostel?",
+      "capability": "a bookable hostel",
       "constraints": {
-        "city": "Washington",
-        "region": "DC",
         "side": "offer",
         "roles": [
           "listing"
+        ],
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
         ]
       }
     }
@@ -17499,10 +17678,9 @@
       "lodging"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a short stay near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable short stay?",
     "paraphrases": [
       "SHORT STAY who else?",
       "Looking for a short stay",
@@ -17514,20 +17692,27 @@
       "capability": "short stay",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a short stay near me?",
-      "capability": "a short stay near me",
+      "intent": "Who else has a bookable short stay?",
+      "capability": "a bookable short stay",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -17696,10 +17881,9 @@
       "lodging"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a glamping near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable glamping?",
     "paraphrases": [
       "GLAMPING who else?",
       "Looking for a glamping",
@@ -17711,20 +17895,27 @@
       "capability": "glamping",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a glamping near me?",
-      "capability": "a glamping near me",
+      "intent": "Who else has a bookable glamping?",
+      "capability": "a bookable glamping",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -17746,10 +17937,9 @@
       "lodging"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a homestay near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable homestay?",
     "paraphrases": [
       "HOMESTAY who else?",
       "Looking for a homestay",
@@ -17761,20 +17951,27 @@
       "capability": "homestay",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a homestay near me?",
-      "capability": "a homestay near me",
+      "intent": "Who else has a bookable homestay?",
+      "capability": "a bookable homestay",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -17848,7 +18045,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of i353-airbnb. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else has an airbnb?",
+    "canonicalQuery": "Who else has a bookable airbnb?",
     "paraphrases": [
       "AIRBNB who else?",
       "Looking for an airbnb",
@@ -17870,10 +18067,17 @@
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else has an airbnb?",
-      "capability": "an airbnb",
+      "intent": "Who else has a bookable airbnb?",
+      "capability": "a bookable airbnb",
       "constraints": {
-        "side": "offer"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -17895,10 +18099,9 @@
       "lodging"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a resort near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable resort?",
     "paraphrases": [
       "RESORT who else?",
       "Looking for a resort",
@@ -17911,20 +18114,27 @@
       "entityType": "resource",
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a resort near me?",
-      "capability": "a resort near me",
+      "intent": "Who else has a bookable resort?",
+      "capability": "a bookable resort",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -17946,10 +18156,9 @@
       "lodging"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a cruise near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable cruise?",
     "paraphrases": [
       "CRUISE who else?",
       "Looking for a cruise",
@@ -17962,20 +18171,27 @@
       "entityType": "resource",
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a cruise near me?",
-      "capability": "a cruise near me",
+      "intent": "Who else has a bookable cruise?",
+      "capability": "a bookable cruise",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -18097,10 +18313,9 @@
       "lodging"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is an eco lodge near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable eco lodge?",
     "paraphrases": [
       "ECO LODGE who else?",
       "Looking for an eco lodge",
@@ -18113,20 +18328,27 @@
       "entityType": "resource",
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is an eco lodge near me?",
-      "capability": "an eco lodge near me",
+      "intent": "Who else has a bookable eco lodge?",
+      "capability": "a bookable eco lodge",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -19608,10 +19830,9 @@
       "availability"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match depends on who qualifies (income, credit, membership, status).",
-    "extension": "eligibility",
-    "canonicalQuery": "Who else is a legal aid near me?",
+    "class": "A",
+    "reason": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find.",
+    "canonicalQuery": "Who else has a legal aid I qualify for?",
     "paraphrases": [
       "LEGAL AID who else?",
       "Looking for a legal aid",
@@ -19624,20 +19845,27 @@
       "entityType": "service",
       "constraints": {
         "price": "optional AttributeConstraint price|budget|rate",
-        "availability": "soft phrase or availableFrom"
+        "availability": "soft phrase or availableFrom",
+        "eligible": "AttributeConstraint eligible (+ income|creditScore|membership)"
       },
-      "notes": "Useful match depends on who qualifies (income, credit, membership, status). Missing reusable primitive: eligibility."
+      "notes": "Useful match is who qualifies (income, credit, membership, status). Representable as CONSTRAINT eligible on the same whoelse.find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a legal aid near me?",
-      "capability": "a legal aid near me",
+      "intent": "Who else has a legal aid I qualify for?",
+      "capability": "a legal aid I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -20591,10 +20819,9 @@
       "budget"
     ],
     "duplicateLabel": true,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is going to a concert?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable concert?",
     "paraphrases": [
       "CONCERT who else?",
       "Looking for a concert",
@@ -20606,21 +20833,26 @@
       "capability": "concert",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is going to a concert?",
-      "capability": "going to a concert",
+      "intent": "Who else has a bookable concert?",
+      "capability": "a bookable concert",
       "constraints": {
         "side": "offer",
-        "roles": [
-          "listing"
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
         ]
       }
     }
@@ -20643,10 +20875,9 @@
       "budget"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is going to a movie?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable movie?",
     "paraphrases": [
       "MOVIE who else?",
       "Looking for a movie",
@@ -20658,21 +20889,26 @@
       "capability": "movie",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is going to a movie?",
-      "capability": "going to a movie",
+      "intent": "Who else has a bookable movie?",
+      "capability": "a bookable movie",
       "constraints": {
         "side": "offer",
-        "roles": [
-          "listing"
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
         ]
       }
     }
@@ -20695,10 +20931,9 @@
       "budget"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is going to a ticket?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable ticket?",
     "paraphrases": [
       "TICKET who else?",
       "Looking for a ticket",
@@ -20710,21 +20945,26 @@
       "capability": "ticket",
       "entityType": "resource",
       "constraints": {
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is going to a ticket?",
-      "capability": "going to a ticket",
+      "intent": "Who else has a bookable ticket?",
+      "capability": "a bookable ticket",
       "constraints": {
         "side": "offer",
-        "roles": [
-          "listing"
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
         ]
       }
     }
@@ -22679,10 +22919,9 @@
       "fulfillment"
     ],
     "duplicateLabel": false,
-    "class": "C",
-    "reason": "Useful match is who has a bookable unit at a time — not merely the noun.",
-    "extension": "reservation",
-    "canonicalQuery": "Who else is a room booking near me?",
+    "class": "A",
+    "reason": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find.",
+    "canonicalQuery": "Who else has a bookable room booking?",
     "paraphrases": [
       "ROOM BOOKING who else?",
       "Looking for a room booking",
@@ -22695,20 +22934,27 @@
       "entityType": "product",
       "constraints": {
         "city": "(soft; infer from language or near-me default)",
-        "price": "optional AttributeConstraint price|budget|rate"
+        "price": "optional AttributeConstraint price|budget|rate",
+        "reservation": "AttributeConstraint reservation (bookable slot / hold); when optional"
       },
-      "notes": "Useful match is who has a bookable unit at a time — not merely the noun. Missing reusable primitive: reservation."
+      "notes": "Useful match is who has a bookable unit at a time. Representable as CONSTRAINT reservation; ACTION book may follow but is not find."
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a room booking near me?",
-      "capability": "a room booking near me",
+      "intent": "Who else has a bookable room booking?",
+      "capability": "a bookable room booking",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -22833,7 +23079,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of alias:RESTAURANT. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else is a restaurant near me?",
+    "canonicalQuery": "Who else has a restaurant table Friday?",
     "paraphrases": [
       "RESTAURANT who else?",
       "Looking for a restaurant",
@@ -22851,14 +23097,25 @@
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
-      "reason": "Language maps to find(compatible entities) under constraints.",
-      "confidence": 0.9,
-      "locked": false,
-      "intent": "Who else is a restaurant near me?",
-      "capability": "a restaurant near me",
+      "reason": "Bookable slot is a reservation CONSTRAINT. WhoElse finds who has it; it does not book.",
+      "confidence": 1,
+      "locked": true,
+      "intent": "Who else has a restaurant table Friday?",
+      "capability": "restaurant reservation",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          },
+          {
+            "key": "when",
+            "op": "eq",
+            "value": "friday"
+          }
+        ]
       }
     }
   },
@@ -23100,7 +23357,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of alias:BANK. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else is a bank near me?",
+    "canonicalQuery": "Who else has a bank I qualify for?",
     "paraphrases": [
       "BANK who else?",
       "Looking for a bank",
@@ -23121,11 +23378,17 @@
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a bank near me?",
-      "capability": "a bank near me",
+      "intent": "Who else has a bank I qualify for?",
+      "capability": "a bank I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -23812,7 +24075,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of alias:FLIGHT. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else is a flight near me?",
+    "canonicalQuery": "Who else has a bookable flight?",
     "paraphrases": [
       "FLIGHT who else?",
       "Looking for a flight",
@@ -23833,11 +24096,17 @@
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a flight near me?",
-      "capability": "a flight near me",
+      "intent": "Who else has a bookable flight?",
+      "capability": "a bookable flight",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -24312,7 +24581,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of alias:PARKING. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else is a parking near me?",
+    "canonicalQuery": "Who else has parking with spots remaining?",
     "paraphrases": [
       "PARKING who else?",
       "Looking for a parking",
@@ -24333,11 +24602,17 @@
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a parking near me?",
-      "capability": "a parking near me",
+      "intent": "Who else has parking with spots remaining?",
+      "capability": "parking with spots remaining",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "remaining",
+            "op": "gte",
+            "value": 1
+          }
+        ]
       }
     }
   },
@@ -24362,7 +24637,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of alias:LOAN. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else is a loan near me?",
+    "canonicalQuery": "Who else has a loan I qualify for?",
     "paraphrases": [
       "LOAN who else?",
       "Looking for a loan",
@@ -24381,14 +24656,20 @@
     },
     "compile": {
       "classification": "WHOELSE_COMPILABLE",
-      "reason": "Language maps to find(compatible entities) under constraints.",
-      "confidence": 0.9,
-      "locked": false,
-      "intent": "Who else is a loan near me?",
-      "capability": "a loan near me",
+      "reason": "Eligibility is a CONSTRAINT on the same find — not bank.find.",
+      "confidence": 1,
+      "locked": true,
+      "intent": "Who else has a loan I qualify for?",
+      "capability": "loan",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -24413,7 +24694,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of alias:INSURANCE. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else is an insurance near me?",
+    "canonicalQuery": "Who else has an insurance I qualify for?",
     "paraphrases": [
       "INSURANCE who else?",
       "Looking for an insurance",
@@ -24435,11 +24716,17 @@
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is an insurance near me?",
-      "capability": "an insurance near me",
+      "intent": "Who else has an insurance I qualify for?",
+      "capability": "an insurance I qualify for",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "eligible",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
@@ -24770,7 +25057,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of alias:HOTEL. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else is a hotel near me?",
+    "canonicalQuery": "Who else has a bookable hotel?",
     "paraphrases": [
       "HOTEL who else?",
       "Looking for a hotel",
@@ -24792,14 +25079,19 @@
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a hotel near me?",
-      "capability": "a hotel near me",
+      "intent": "Who else has a bookable hotel?",
+      "capability": "a bookable hotel",
       "constraints": {
-        "city": "Washington",
-        "region": "DC",
         "side": "offer",
         "roles": [
           "listing"
+        ],
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
         ]
       }
     }
@@ -24876,7 +25168,7 @@
     "duplicateLabel": true,
     "class": "E",
     "reason": "Duplicate/alias of alias:CONCERT. Deprecate this ID; keep the canonical sentence.",
-    "canonicalQuery": "Who else is a concert near me?",
+    "canonicalQuery": "Who else has a bookable concert?",
     "paraphrases": [
       "CONCERT who else?",
       "Looking for a concert",
@@ -24898,11 +25190,17 @@
       "reason": "Language maps to find(compatible entities) under constraints.",
       "confidence": 0.9,
       "locked": false,
-      "intent": "Who else is a concert near me?",
-      "capability": "a concert near me",
+      "intent": "Who else has a bookable concert?",
+      "capability": "a bookable concert",
       "constraints": {
-        "city": "Washington",
-        "region": "DC"
+        "side": "offer",
+        "attributes": [
+          {
+            "key": "reservation",
+            "op": "truthy",
+            "value": true
+          }
+        ]
       }
     }
   },
